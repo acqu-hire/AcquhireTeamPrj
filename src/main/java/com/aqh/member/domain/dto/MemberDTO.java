@@ -21,4 +21,4 @@ public class MemberDTO {
 	private String phoneNumber;	// 전화번호
 	private String email;		// 이메일
 	private String regDate;		// 가입일
-}
+} 
