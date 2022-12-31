@@ -7,7 +7,7 @@ public class BoardDTO {
     private enum menu {
         QNA, COMMUNITY, EVENT, NOTICE
     }
-  
+
     private enum category {
         QNA_TECH,QNA_CAREER,QNA_ETC,
         COMMUNITY_LIFE,COMMUNITY_GROUP,
