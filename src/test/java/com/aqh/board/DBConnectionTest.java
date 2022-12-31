@@ -29,4 +29,4 @@ public class DBConnectionTest {
 			log.info("Connection >> "+ connection);
 			assertTrue(connection != null);
 	}
-}
+} 
