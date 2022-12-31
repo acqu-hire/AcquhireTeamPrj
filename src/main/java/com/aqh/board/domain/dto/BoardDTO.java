@@ -1,5 +1,8 @@
 package com.aqh.board.domain.dto;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class BoardDTO {
     private enum menu {
         QNA, COMMUNITY, EVENT, NOTICE
