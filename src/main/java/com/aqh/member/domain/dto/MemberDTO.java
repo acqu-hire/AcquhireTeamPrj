@@ -1,7 +1,5 @@
 package com.aqh.member.domain.dto;
 
-import java.util.Date;
-
 import org.springframework.stereotype.Component;
 
 import lombok.Getter;
