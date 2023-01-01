@@ -9,6 +9,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	</settings>
 	<typeAliases>
 		<typeAlias alias="BoardDTO" type="com.aqh.board.domain.dto.BoardDTO"/>
-		<typeAlias alias="BoardDTO" type="com.aqh.board.domain.dto.MemberDTO"/>
+		<typeAlias alias="MemberDTO" type="com.aqh.board.domain.dto.MemberDTO"/>
 	</typeAliases>
 </configuration> 
