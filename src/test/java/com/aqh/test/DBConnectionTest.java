@@ -1,4 +1,4 @@
-package com.aqh.board;
+package com.aqh.test;
 
 import static org.junit.Assert.assertTrue;
 
