@@ -1,10 +1,10 @@
 package com.aqh.board.domain.dto;
 
+import org.apache.ibatis.type.Alias;
 import org.springframework.stereotype.Component;
 
 import lombok.Builder;
 
-@Component
 public class BoardDTO {
 
 	public enum Menu {

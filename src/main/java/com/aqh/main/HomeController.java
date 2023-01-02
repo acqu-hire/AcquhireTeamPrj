@@ -1,15 +1,14 @@
-package com.aqh.board.controller;
+package com.aqh.main;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/QnA")
-public class QnAController {
-
-	@GetMapping("/boardList")
-	public String qnaBoardList() {
-		return "board/qnaBoardList";
+public class HomeController {
+	
+	@RequestMapping("/")
+	public String main() {
+		return "index";
 	}
 }
