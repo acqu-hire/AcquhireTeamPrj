@@ -11,7 +11,7 @@ import com.aqh.board.domain.dto.BoardDTO;
 
 @Repository
 @EnableAspectJAutoProxy(proxyTargetClass = true)
-public class CommunityBoardDAO {
+public class CommunityDAO {
 
     @Autowired
     SqlSessionTemplate sessionTemplate;

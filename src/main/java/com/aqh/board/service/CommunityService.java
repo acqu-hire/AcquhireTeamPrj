@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.aqh.board.domain.dao.CommunityBoardDAO;
+import com.aqh.board.domain.dao.CommunityDAO;
 import com.aqh.board.domain.dto.BoardDTO;
 
 /**
@@ -18,7 +18,7 @@ import com.aqh.board.domain.dto.BoardDTO;
 public class CommunityService {
 
     @Autowired
-    private CommunityBoardDAO communityBoardDAO;
+    private CommunityDAO communityBoardDAO;
 
     // CREATE
     public void createPost(BoardDTO boardDTO) {
