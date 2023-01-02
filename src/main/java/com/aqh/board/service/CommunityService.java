@@ -38,8 +38,8 @@ public class CommunityService {
         return communityBoardDAO.getGroupPostList();
     };
 
-    public BoardDTO getPost() {
-        return communityBoardDAO.getPost();
+    public BoardDTO getPost(int bNo) {
+        return communityBoardDAO.getPost(bNo);
     };
 
     public long getTotal() {

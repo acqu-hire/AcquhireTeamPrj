@@ -26,6 +26,7 @@ public class CommunityDAO {
 
     public List<BoardDTO> getAllCommunityPostList() {
         return sessionTemplate.selectList("getAllCommunityPostList");
+
     };
 
     public List<BoardDTO> getLifePostList() {
@@ -36,8 +37,8 @@ public class CommunityDAO {
         return sessionTemplate.selectList("getGroupPostList");
     };
 
-    public BoardDTO getPost() {
-        return sessionTemplate.selectOne("getPost");
+    public BoardDTO getPost(int bNo) {
+        return sessionTemplate.selectOne("getPost", bNo);
     };
 
     public long getTotal() {
