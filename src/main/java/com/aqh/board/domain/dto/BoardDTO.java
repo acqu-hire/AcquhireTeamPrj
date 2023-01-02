@@ -2,27 +2,47 @@ package com.aqh.board.domain.dto;
 
 import org.springframework.stereotype.Component;
 
+import lombok.Builder;
+
 @Component
 public class BoardDTO {
-	private enum menu {
+
+	public enum Menu {
 		QNA, COMMUNITY, EVENT, NOTICE
 	}
 
-	private enum category {
+	public enum Category {
 		QNA_TECH, QNA_CAREER, QNA_ETC,
 		COMMUNITY_LIFE, COMMUNITY_GROUP,
 		EVENT_IT_EVENT, EVENT_MARKETING,
 		NOTICE_NOTICE, NOTICE_EVENT
+
 	}
 
 	private String id; // 회원 아이디
 
-	private Long bNo; // 게시글 번호
-	private Long readCount; // 게시글 조회수
+	private Menu menu; // 메뉴
+	private Category category; // 카테고리
+	private long bNo; // 게시글 번호
+	private long readCount; // 게시글 조회수
 	private String file; // 게시글 파일
 	private String title; // 게시글 제목
 	private String writeDay; // 게시글 작성일
 	private String contents; // 게시글 내용
+
+	@Builder
+	public BoardDTO(String id, Menu menu, Category category, long bNo, long readCount, String file, String title,
+			String writeDay, String contents) {
+		this.id = id;
+		this.menu = menu;
+		this.category = category;
+		this.bNo = bNo;
+		this.readCount = readCount;
+		this.file = file;
+		this.title = title;
+		this.writeDay = writeDay;
+		this.contents = contents;
+	}
 
 	public String getId() {
 		return id;
@@ -82,8 +102,9 @@ public class BoardDTO {
 
 	@Override
 	public String toString() {
-		return "BoardDTO [id=" + id + ", bNo=" + bNo + ", readCount=" + readCount + ", file=" + file + ", title="
-				+ title + ", writeDay=" + writeDay + ", contents=" + contents + "]";
+		return "BoardDTO [id=" + id + ", menu=" + menu + ", category=" + category + ", bNo=" + bNo + ", readCount="
+				+ readCount + ", file=" + file + ", title=" + title + ", writeDay=" + writeDay + ", contents="
+				+ contents + "]";
 	}
 
 }
