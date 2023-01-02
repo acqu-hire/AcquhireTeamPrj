@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aqh.board.domain.dao.CommunityDAO">
+
+    <!-- CREATE -->
+    <insert id="createPost"> INSERT INTO `teamproject`.`board`
+        ('member_id','menu','category','count','file','title','contents','writeDay') VALUES
+        (#{id},#{menu},#{category},#{readcount},#{file},#{title},{contents},sysdate()) </insert>
+    <!-- READ -->
+    <select id="getAllCommunityPostList" resultType="BoardDTO"> SELECT * FROM teamproject.board
+        where menu = "COMMUNITY" </select>
+    <select id="getLifePostList" resultType="BoardDTO"> SELECT * FROM teamproject.board where
+        category = "COMMUNITY_LIFE" </select>
+
+    <select id="getGroupPostList" resultType="BoardDTO"> SELECT * FROM teamproject.board where
+        category = "COMMUNITY_GROUP"; </select>
+
+    <select id="getPost" resultType="BoardDTO"> SELECT * FROM teamproject.board where BNO = #{bNo}; </select>
+
+    <select id="getTotal" resultType="_int"> SELECT count(*) FROM teamproject.board; </select>
+    <!-- UPDATE -->
+    <update id="updatePost"> </update>
+    <!-- DELETE -->
+    <delete id="deletePost"> </delete>
+</mapper>
