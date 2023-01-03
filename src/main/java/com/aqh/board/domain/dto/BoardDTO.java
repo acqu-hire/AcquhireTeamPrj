@@ -1,8 +1,5 @@
 package com.aqh.board.domain.dto;
 
-import org.apache.ibatis.type.Alias;
-import org.springframework.stereotype.Component;
-
 import lombok.Builder;
 
 public class BoardDTO {
@@ -29,6 +26,9 @@ public class BoardDTO {
 	private String title; // 게시글 제목
 	private String writeDay; // 게시글 작성일
 	private String contents; // 게시글 내용
+
+	public BoardDTO() {
+	}
 
 	@Builder
 	public BoardDTO(String id, Menu menu, Category category, long bNo, long readCount, String file, String title,
