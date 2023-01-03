@@ -1,11 +1,7 @@
 package com.aqh.board.domain.dto;
 
-import org.apache.ibatis.type.Alias;
-import org.springframework.stereotype.Component;
-
 import lombok.Builder;
 
-@Component
 public class BoardDTO {
 
 	public enum Menu {
@@ -39,7 +35,7 @@ public class BoardDTO {
 		this.contents = contents;
 		this.menu = menu;
 	}
-	
+
 	@Builder
 	public BoardDTO(String id, Menu menu, Category category, long bNo, long readCount, String file, String title,
 			String writeDay, String contents) {
