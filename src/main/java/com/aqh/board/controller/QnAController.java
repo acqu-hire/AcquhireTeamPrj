@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/QnA")
 public class QnAController {
 
-	@GetMapping("/boardList")
+	@GetMapping("/QnAList")
 	public String qnaBoardList() {
 		return "board/qnaBoardList";
 	}
