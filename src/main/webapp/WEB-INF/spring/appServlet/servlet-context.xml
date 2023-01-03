@@ -30,4 +30,6 @@
 		<beans:property name="defaultEncoding" value="UTF-8" />
 	</beans:bean>
 	
+	<view-controller path="/" view-name="index"/>
+	
 </beans:beans>
