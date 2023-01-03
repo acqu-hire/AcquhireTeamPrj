@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import lombok.Builder;
 
+@Component
 public class BoardDTO {
 
 	public enum Menu {
@@ -30,6 +31,8 @@ public class BoardDTO {
 	private String writeDay; // 게시글 작성일
 	private String contents; // 게시글 내용
 
+	public BoardDTO() {}
+	
 	@Builder
 	public BoardDTO(String id, Menu menu, Category category, long bNo, long readCount, String file, String title,
 			String writeDay, String contents) {
