@@ -95,8 +95,12 @@ public class QnADAOTest {
 		BoardDTO boardDTO2 = new BoardDTO("aaaa", "insert 테스트", "insert 테스트 중입니다.", Menu.QNA);
 		qnaDao.insert(boardDTO);
 		qnaDao.insert(boardDTO2);
+		List<BoardDTO> list = qnaDao.selectAll();
+		assertTrue(list.size() == 2);
 		
 		long bNo = qnaDao.selectAll().get(0).getbNo();
-		
+		qnaDao.delete(bNo);
+		list = qnaDao.selectAll();
+		assertTrue(list.size() == 1);
 	}
 }
