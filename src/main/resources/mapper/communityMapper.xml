@@ -13,11 +13,12 @@
         category = "COMMUNITY_LIFE" </select>
 
     <select id="getGroupPostList" resultType="BoardDTO"> SELECT * FROM teamproject.board where
-        category = "COMMUNITY_GROUP"; </select>
+        category = "COMMUNITY_GROUP" </select>
 
-    <select id="getPost" resultType="BoardDTO"> SELECT * FROM teamproject.board where BNO = #{bNo}; </select>
+    <select id="getPost" resultType="BoardDTO"> SELECT * FROM teamproject.board where BNO = #{bNo} </select>
 
-    <select id="getTotal" resultType="_int"> SELECT count(*) FROM teamproject.board; </select>
+    <select id="getTotal" resultType="int"> SELECT count(*) FROM teamproject.board where category =
+        "COMMUNITY"</select>
     <!-- UPDATE -->
     <update id="updatePost"> </update>
     <!-- DELETE -->
