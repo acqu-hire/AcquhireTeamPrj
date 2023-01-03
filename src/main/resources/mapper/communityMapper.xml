@@ -18,9 +18,8 @@
         "COMMUNITY"</select>
     <!-- UPDATE -->
     <update id="updatePost"> UPDATE teamproject.board SET category = #{category},file =
-        #{file},title = #{title},contents = #{contents} <trim prefix="WHERE">
-            <if test=" id != null">id = #{id} AND</if>
-            <if test=" bNo != null">bNo = #{bNo}</if>
+        #{file},title = #{title},contents = #{contents} <trim prefix="WHERE"><if test=" bNo != null">bNo
+        = #{bNo}</if>
         </trim>
     </update>
     <!-- DELETE -->
