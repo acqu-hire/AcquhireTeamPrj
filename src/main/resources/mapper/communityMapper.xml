@@ -3,23 +3,26 @@
 <mapper namespace="com.aqh.board.domain.dao.CommunityDAO">
 
     <!-- CREATE -->
-    <insert id="createPost"> INSERT INTO `teamproject`.`board`
-        ('member_id','menu','category','count','file','title','contents','writeDay') VALUES
-        (#{id},#{menu},#{category},#{readcount},#{file},#{title},{contents},sysdate()) </insert>
+    <insert id="createPost" parameterType="BoardDTO"> INSERT INTO TEAMPROJECT.BOARD
+        (id,menu,category,file,writeDay,title,contents) VALUES
+        (#{id},#{menu},#{category},#{file},sysdate(),#{title},#{contents}); </insert>
     <!-- READ -->
     <select id="getAllCommunityPostList" resultType="BoardDTO"> SELECT * FROM teamproject.board
         where menu = "COMMUNITY" </select>
     <select id="getLifePostList" resultType="BoardDTO"> SELECT * FROM teamproject.board where
         category = "COMMUNITY_LIFE" </select>
-
     <select id="getGroupPostList" resultType="BoardDTO"> SELECT * FROM teamproject.board where
-        category = "COMMUNITY_GROUP"; </select>
-
-    <select id="getPost" resultType="BoardDTO"> SELECT * FROM teamproject.board where BNO = #{bNo}; </select>
-
-    <select id="getTotal" resultType="_int"> SELECT count(*) FROM teamproject.board; </select>
+        category = "COMMUNITY_GROUP" </select>
+    <select id="getPost" resultType="BoardDTO"> SELECT * FROM teamproject.board where BNO = #{bNo} </select>
+    <select id="getTotal" resultType="int"> SELECT count(*) FROM teamproject.board where category =
+        "COMMUNITY"</select>
     <!-- UPDATE -->
-    <update id="updatePost"> </update>
+    <update id="updatePost"> UPDATE teamproject.board SET category = #{category},file =
+        #{file},title = #{title},contents = #{contents} <trim prefix="WHERE">
+            <if test=" id != null">id = #{id} AND</if>
+            <if test=" bNo != null">bNo = #{bNo}</if>
+        </trim>
+    </update>
     <!-- DELETE -->
-    <delete id="deletePost"> </delete>
+    <delete id="deletePost" parameterType="int"> DELETE FROM teamproject.board WHERE bNo = #{bNo} </delete>
 </mapper>
