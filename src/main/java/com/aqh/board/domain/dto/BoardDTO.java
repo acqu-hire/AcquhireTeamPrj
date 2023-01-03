@@ -33,6 +33,13 @@ public class BoardDTO {
 
 	public BoardDTO() {}
 	
+	public BoardDTO(String id, String title, String contents, Menu menu) {
+		this.id = id;
+		this.title = title;
+		this.contents = contents;
+		this.menu = menu;
+	}
+	
 	@Builder
 	public BoardDTO(String id, Menu menu, Category category, long bNo, long readCount, String file, String title,
 			String writeDay, String contents) {
@@ -55,19 +62,19 @@ public class BoardDTO {
 		this.id = id;
 	}
 
-	public Long getbNo() {
+	public long getbNo() {
 		return bNo;
 	}
 
-	public void setbNo(Long bNo) {
+	public void setbNo(long bNo) {
 		this.bNo = bNo;
 	}
 
-	public Long getReadCount() {
+	public long getReadCount() {
 		return readCount;
 	}
 
-	public void setReadCount(Long readCount) {
+	public void setReadCount(long readCount) {
 		this.readCount = readCount;
 	}
 
