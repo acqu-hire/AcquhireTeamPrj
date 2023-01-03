@@ -27,7 +27,13 @@ public class BoardDTO {
 	private String writeDay; // 게시글 작성일
 	private String contents; // 게시글 내용
 
-	public BoardDTO() {
+	public BoardDTO() {}
+	
+	public BoardDTO(String id, String title, String contents, Menu menu) {
+		this.id = id;
+		this.title = title;
+		this.contents = contents;
+		this.menu = menu;
 	}
 
 	@Builder
@@ -52,19 +58,19 @@ public class BoardDTO {
 		this.id = id;
 	}
 
-	public Long getbNo() {
+	public long getbNo() {
 		return bNo;
 	}
 
-	public void setbNo(Long bNo) {
+	public void setbNo(long bNo) {
 		this.bNo = bNo;
 	}
 
-	public Long getReadCount() {
+	public long getReadCount() {
 		return readCount;
 	}
 
-	public void setReadCount(Long readCount) {
+	public void setReadCount(long readCount) {
 		this.readCount = readCount;
 	}
 
