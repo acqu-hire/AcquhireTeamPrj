@@ -38,10 +38,9 @@
 						</div>
 						<div class="card-body">
  							<div align="center">
-								<button type="button" class="btn btn-primary float-end" name="kind" value="QNA_ALL">전체</button>								
-								<button type="button" class="btn btn-primary float-end" name="kind" value="QNA_TECH">기술</button>
-								<button type="button" class="btn btn-primary float-end" name="kind" value="QNA_CAREER">커리어</button>
-								<button type="button" class="btn btn-primary float-end" name="kind" value="QNA_ETC">기타</button>
+								<button type="button" class="btn btn-primary float-end" name="kind" value="NOTICE_ALL">전체</button>								
+								<button type="button" class="btn btn-primary float-end" name="kind" value="NOTICE_NOTICE">공지사항</button>
+								<button type="button" class="btn btn-primary float-end" name="kind" value="NOTICE_EVENT">이벤트</button>
 							</div>
 							<div class="d-flex justify-content-end">
 								<a class="btn btn-warning float-end" href="./BoardInsertView.do"> <i class="fas fa-edit"></i> 글 작성

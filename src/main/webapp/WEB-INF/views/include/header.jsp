@@ -34,7 +34,7 @@
 					      </li>
 					</c:when>
 					<c:otherwise> --%>
-						<li class="nav-item"><a class="nav-link" href="#">공지사항</a></li>
+						<li class="nav-item"><a class="nav-link" href="<c:url value='/notice/menu_select_all_view' />">공지사항</a></li>
 						<li class="nav-item"><a class="nav-link" href="<c:url value='/QnA/list' />">QnA</a></li>
 						<li class="nav-item"><a class="nav-link" href="#">이벤트</a></li>
 						<li class="nav-item"><a class="nav-link" href="<c:url value='/community/select_all_view' />">커뮤니티</a></li>
