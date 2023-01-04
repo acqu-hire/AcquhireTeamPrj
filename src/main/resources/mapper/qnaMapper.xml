@@ -2,10 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aqh.board.domain.dao.QnAMapper">
 	
-	<select id="boardCount" resultType="int">
+	<select id="boardCount" resultType="int" parameterType="BoardDTO">
 		SELECT count(*) 
-		FROM board 
+		FROM board
 		WHERE menu='QNA'
+		<if test="category != null and !category.equals('')">
+			AND category=#{category} 
+		</if>
 	</select>
 	
 	<update id="readCountUp" parameterType="long">
@@ -14,10 +17,13 @@
 		WHERE bNo=#{bNo} AND menu='QNA'
 	</update>
 	
-	<select id="selectAll" resultType="BoardDTO">
+	<select id="selectAll" resultType="BoardDTO" parameterType="BoardDTO">
 		SELECT bNo, title, id, writeDay, readCount
 		FROM board 
-		WHERE menu='QNA'
+		WHERE menu='QNA' 
+		<if test="category != null and !category.equals('')">
+			AND category=#{category} 
+		</if>
 		ORDER BY writeDay DESC;
 	</select>
 	

@@ -17,6 +17,25 @@
 <script src="https://kit.fontawesome.com/58abbffa46.js" ></script>
 </head>
 <body>
+<!-- <script type="text/javascript">
+	$(function() {
+		$("button[name='category']").on('click', function() {
+			var category = $(this).val();
+			$.ajax({
+				url : "/QnA/categoryList",
+				type : "POST",
+				headers : {"pragma" : "no-cache"},
+				data : {"category" : category},
+				success : function(data){
+					$('body').html(data);
+				},
+				error : function(data) {
+					alert('error!!');
+				}
+			});
+		})
+	});
+</script> -->
 	<!-- Header -->
 
 	<%@ include file="../../include/header.jsp"%>
@@ -38,10 +57,10 @@
 						</div>
 						<div class="card-body">
  							<div align="center">
-								<button type="button" class="btn btn-primary float-end" name="kind" value="QNA_ALL">전체</button>								
-								<button type="button" class="btn btn-primary float-end" name="kind" value="QNA_TECH">기술</button>
-								<button type="button" class="btn btn-primary float-end" name="kind" value="QNA_CAREER">커리어</button>
-								<button type="button" class="btn btn-primary float-end" name="kind" value="QNA_ETC">기타</button>
+								<a class="btn btn-primary float-end" href="./list">전체</a>								
+								<a class="btn btn-primary float-end" href="./list?category=QNA_TECH">기술</a>
+								<a class="btn btn-primary float-end" href="./list?category=QNA_CAREER">커리어</a>
+								<a class="btn btn-primary float-end" href="./list?category=QNA_ETC">기타</a>
 							</div>
 							<div class="d-flex justify-content-end">
 								<a class="btn btn-warning float-end" href="./write"> <i class="fas fa-edit"></i> 글 작성
