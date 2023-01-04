@@ -63,7 +63,7 @@
  						<div class="col-12 text-right">
 							<input type="button" value="글수정" class="btn btn-success" onclick="location.href='./update?bNo=${boardDTO.bNo}'"> 
 							<input type="button" value="글삭제" class="btn btn-warning" onclick="location.href='./delete?bNo=${boardDTO.bNo}'">
-							<button type="button" class="btn btn-primary" onclick="location.href='./BoardList.do'">전체 게시글보기</button>
+							<button type="button" class="btn btn-primary" onclick="location.href='./list'">전체 게시글보기</button>
 						</div>
 					</div>
 				</div>

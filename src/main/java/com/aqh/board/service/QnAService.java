@@ -14,16 +14,16 @@ public class QnAService {
 	@Autowired
 	QnADAO qnaDao;
 	
-	public int getBoardCnt() {
-		return qnaDao.boardCount();
+	public int getBoardCnt(BoardDTO boardDTO) {
+		return qnaDao.boardCount(boardDTO);
 	}
 	
 	public int readCntUp(long bNo) {
 		return qnaDao.readCountUp(bNo);
 	}
 	
-	public List<BoardDTO> selectAll() {
-		return qnaDao.selectAll();
+	public List<BoardDTO> selectAll(BoardDTO boardDTO) {
+		return qnaDao.selectAll(boardDTO);
 	}
 	
 	public BoardDTO selectDetail(long bNo) {
