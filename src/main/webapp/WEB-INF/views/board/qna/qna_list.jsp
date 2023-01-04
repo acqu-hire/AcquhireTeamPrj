@@ -44,7 +44,7 @@
 								<button type="button" class="btn btn-primary float-end" name="kind" value="QNA_ETC">기타</button>
 							</div>
 							<div class="d-flex justify-content-end">
-								<a class="btn btn-warning float-end" href="./BoardInsertView.do"> <i class="fas fa-edit"></i> 글 작성
+								<a class="btn btn-warning float-end" href="./write"> <i class="fas fa-edit"></i> 글 작성
 								</a>
 							</div>
 							<table class="table table-hover table-striped text-center"  style="table-layout: fixed">
