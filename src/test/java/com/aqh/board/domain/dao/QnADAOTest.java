@@ -13,8 +13,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.BoardDTO.Menu;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
+@Slf4j
 public class QnADAOTest {
 
 	@Autowired
@@ -102,5 +105,65 @@ public class QnADAOTest {
 		qnaDao.delete(bNo);
 		list = qnaDao.selectAll();
 		assertTrue(list.size() == 1);
+	}
+	
+	@Test
+	public void updateTest() throws Exception {
+		qnaDao.deleteAll();
+		assertTrue(qnaDao.boardCount() == 0);
+		
+		BoardDTO boardDTO = new BoardDTO("asdf", "하이", "안녕하세요", Menu.QNA);
+		qnaDao.insert(boardDTO);
+		List<BoardDTO> list = qnaDao.selectAll();
+		assertTrue(list.size() == 1);
+		
+		long bNo = qnaDao.selectAll().get(0).getbNo();
+		boardDTO.setbNo(bNo);
+		assertTrue(qnaDao.selectDetail(bNo).getId().equals(boardDTO.getId()));
+		
+		boardDTO.setTitle("수정타이틀");
+		boardDTO.setContents("내용 수정 테스트");
+		assertTrue(qnaDao.update(boardDTO) == 1);
+		
+		assertTrue(qnaDao.selectDetail(bNo).getTitle().equals(boardDTO.getTitle()));
+		assertTrue(qnaDao.selectDetail(bNo).getContents().equals(boardDTO.getContents()));
+		
+	}
+	
+	@Test
+	public void readCountUpTest() throws Exception {
+		qnaDao.deleteAll();
+		assertTrue(qnaDao.boardCount() == 0);
+		
+		BoardDTO boardDTO = new BoardDTO("asdf", "하이", "안녕하세요", Menu.QNA);
+		qnaDao.insert(boardDTO);
+		long bNo = qnaDao.selectAll().get(0).getbNo();
+		log.info("long bNo = " + bNo);
+		assertTrue(qnaDao.selectDetail(bNo).getReadCount() == 0);
+		
+		qnaDao.readCountUp(bNo);
+		assertTrue(qnaDao.selectDetail(bNo).getReadCount() == 1);
+	}
+	
+	@Test
+	public void boardCountTest() throws Exception {
+		qnaDao.deleteAll();
+		assertTrue(qnaDao.boardCount() == 0);
+		
+		BoardDTO boardDTO = new BoardDTO("asdf", "하이", "안녕하세요", Menu.QNA);
+		assertTrue(qnaDao.insert(boardDTO) == 1);
+		assertTrue(qnaDao.boardCount() == 1);
+		
+		BoardDTO boardDTO2 = new BoardDTO("aaaa", "insert 테스트", "insert 테스트 중입니다.", Menu.QNA);
+		assertTrue(qnaDao.insert(boardDTO2) == 1);
+		assertTrue(qnaDao.boardCount() == 2);
+		
+		long bNo = qnaDao.selectAll().get(0).getbNo();
+		qnaDao.delete(bNo);
+		assertTrue(qnaDao.boardCount() == 1);
+		bNo = qnaDao.selectAll().get(0).getbNo();
+		qnaDao.delete(bNo);
+		assertTrue(qnaDao.boardCount() == 0);
+		
 	}
 }
