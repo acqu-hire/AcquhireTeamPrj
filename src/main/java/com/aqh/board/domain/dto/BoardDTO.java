@@ -27,8 +27,9 @@ public class BoardDTO {
 	private String writeDay; // 게시글 작성일
 	private String contents; // 게시글 내용
 
-	public BoardDTO() {}
-	
+	public BoardDTO() {
+	}
+
 	public BoardDTO(String id, String title, String contents, Menu menu) {
 		this.id = id;
 		this.title = title;
