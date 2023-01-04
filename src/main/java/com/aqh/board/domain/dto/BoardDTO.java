@@ -51,12 +51,30 @@ public class BoardDTO {
 		this.contents = contents;
 	}
 
+	
+	
 	public String getId() {
 		return id;
 	}
 
 	public void setId(String id) {
 		this.id = id;
+	}
+	
+	public Menu getMenu() {
+		return menu;
+	}
+
+	public void setMenu(Menu menu) {
+		this.menu = menu;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	public long getbNo() {
@@ -113,5 +131,7 @@ public class BoardDTO {
 				+ readCount + ", file=" + file + ", title=" + title + ", writeDay=" + writeDay + ", contents="
 				+ contents + "]";
 	}
+
+	
 
 }
