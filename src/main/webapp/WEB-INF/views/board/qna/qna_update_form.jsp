@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>QnA 작성</title>
+<title>게시글 수정</title>
 <link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.min.css">
 <script src="${contextPath}/resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
 <script src="${contextPath}/resources/js/bootstrap.min.js" type="text/javascript"></script>
@@ -32,30 +32,30 @@
 		    <div class="col-md-8 mt-3 mb-3">
 		    	<div class="card">
 		    	<div class="card-header">
-		        <h2 class="text-center mt-4 mb-4"><strong>질문글 작성</strong></h2>
+		        <h2 class="text-center mt-4 mb-4"><strong>게시글 수정</strong></h2>
 		    	</div>
 			    	<div class="card-body">
-				        <form method="post" name="QnAWriteForm">
+				        <form method="post" name="boardForm">
 				          <table class="table table-striped">
 				            <tr>
+				                <th>게시글 번호</th>
+				                <td><input type="text"  class="form-control" name="bNo" value="${boardDTO.bNo}" readonly></td>
+				            </tr>
+				            <tr>
 				                <th>작성자</th>
-				                <td><input type="text"  class="form-control" name="id" value="aaaa" readonly></td>
+				                <td><input type="text"  class="form-control" name="id" value="${boardDTO.id}" readonly></td>
 				            </tr>
 				            <tr>
 				                <th>제목</th>
-				                <td><input type="text"  class="form-control" name="title"></td>
-				            </tr>
-				            <tr>
-				                <th>비밀번호</th>
-				                <td><input type="password"  class="form-control" name="boardPwd" placeholder="숫자 4자리"></td>
+				                <td><input type="text"  class="form-control" name="title" value="${boardDTO.title}"></td>
 				            </tr>
  				             <tr>
 				                <td>글내용</td>
-				                <td><textarea rows="10" cols="50" name="contents" class="form-control"></textarea></td>
+				                <td><textarea rows="10" cols="50" name="contents" class="form-control">${boardDTO.contents}</textarea></td>
 				            </tr>
 				            <tr>
 				                <td colspan="2"  class="text-right">
-				                    <input type="submit" value="글쓰기" class="btn btn-success">
+				                    <input type="submit" value="글저장" class="btn btn-success">
 				                    <input type="reset" value="다시작성" class="btn btn-warning">
 				                    <button type="button"  class="btn btn-primary" onclick="location.href='./list'">전체 게시글보기</button>
 				                </td>
