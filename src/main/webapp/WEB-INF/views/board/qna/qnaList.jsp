@@ -19,7 +19,7 @@
 <body>
 	<!-- Header -->
 
-	<%@ include file="../include/header.jsp"%>
+	<%@ include file="../../include/header.jsp"%>
 
 	<!-- Header -->
 
@@ -211,7 +211,7 @@
 	</section>
 	<!-- Footer -->
 
-	<%@ include file="../include/footer.jsp"%>
+	<%@ include file="../../include/footer.jsp"%>
 
 	<!-- Footer -->
 
