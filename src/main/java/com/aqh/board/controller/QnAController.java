@@ -30,6 +30,7 @@ public class QnAController {
 		model.addAttribute("boardListCount", boardListCount);
 		model.addAttribute("boardList", list);
 		return "board/qna/qnaList";
+
 	}
 
 	@GetMapping("/listDetail")
