@@ -29,7 +29,7 @@ public class QnAController {
 		log.info("boardListCount = " + boardListCount);
 		model.addAttribute("boardListCount", boardListCount);
 		model.addAttribute("boardList", list);
-		return "board/qna/qnaList";
+		return "board/qna/qna_list";
 
 	}
 
@@ -49,7 +49,28 @@ public class QnAController {
 	
 	@PostMapping("/write")
 	public String qnaInsert(BoardDTO boardDTO) {
+		String id = "aaaa"; // 임시
+		boardDTO.setId(id);
 		service.insert(boardDTO);
-		return "redirect:/board/list";
+		return "redirect:/QnA/list";
+	}
+	
+	@GetMapping("/update")
+	public String qnaUpdateForm(long bNo, Model model) {
+		BoardDTO boardDTO = service.selectDetail(bNo);
+		model.addAttribute("boardDTO", boardDTO);
+		return "board/qna/qna_update_form";
+	}
+	
+	@PostMapping("/update")
+	public String qnaUpdate(BoardDTO boardDTO) {
+		service.update(boardDTO);
+		return "redirect:/QnA/list";
+	}
+	
+	@GetMapping("/delete")
+	public String qnaDelete(long bNo) {
+		service.delete(bNo);
+		return "redirect:/QnA/list";
 	}
 }
