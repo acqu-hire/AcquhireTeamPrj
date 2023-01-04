@@ -13,7 +13,6 @@ import com.aqh.board.service.QnAService;
 
 import lombok.extern.slf4j.Slf4j;
 
-
 @Controller
 @RequestMapping("/QnA")
 @Slf4j
@@ -21,16 +20,16 @@ public class QnAController {
 
 	@Autowired
 	QnAService service;
-	
+
 	@GetMapping("/list")
 	public String qnaBoardList(Model model) {
 		List<BoardDTO> list = service.selectAll();
 		int boardListCount = service.getBoardCnt();
 		model.addAttribute("boardListCount", boardListCount);
-		model.addAttribute("boardList",list);
+		model.addAttribute("boardList", list);
 		return "board/qna/qnaList";
 	}
-	
+
 	@GetMapping("/listDetail")
 	public String boardListDetail(long bNo, Model model) {
 		service.readCntUp(bNo);
