@@ -47,7 +47,7 @@
 			</div>
 		</div>
 
-					<div class="row">
+<!-- 					<div class="row">
 						<div class="col-md-4">
 							<a><img alt="" src="img/cloth.png"></a>
 						</div>
@@ -57,7 +57,7 @@
 						<div class="col-md-4">
 							<a><img alt="" src="img/cloth.png"></a>
 						</div>
-					</div>
+					</div> -->
 <!-- 					<div class="row">
 						<div class="col-md-4"></div>
 						<div class="col-md-4"></div>
