@@ -11,7 +11,7 @@
 
             <head>
                 <meta charset="UTF-8">
-                <title>QnA 게시판</title>
+                <title>커뮤니티 게시판</title>
                 <link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.min.css">
                 <script src="${contextPath}/resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
                 <script src="${contextPath}/resources/js/bootstrap.min.js" type="text/javascript"></script>
@@ -71,7 +71,7 @@
                                                             <th>${board.bNo}</th>
                                                             <td class="text-truncate" style="max-width: 500px;">
                                                                 <a
-                                                                    href="./listDetail?bNo=${board.bNo}">${board.title}</a>
+                                                                    href="./selectdetail_view?bNo=${board.bNo}">${board.title}</a>
                                                             </td>
                                                             <td>${board.id}</td>
                                                             <td>${board.writeDay}</td>
