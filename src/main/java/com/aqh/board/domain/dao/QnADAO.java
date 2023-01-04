@@ -16,16 +16,16 @@ public class QnADAO {
 	
 	String namespace = "com.aqh.board.domain.dao.QnAMapper.";
 	
-	public int boardCount() {
-		return sessionTemplate.selectOne(namespace + "boardCount");
+	public int boardCount(BoardDTO boardDTO) {
+		return sessionTemplate.selectOne(namespace + "boardCount", boardDTO);
 	}
 	
 	public int readCountUp(long bNo) {
 		return sessionTemplate.update(namespace + "readCountUp", bNo);
 	}
 	
-	public List<BoardDTO> selectAll() {
-		return sessionTemplate.selectList(namespace + "selectAll");
+	public List<BoardDTO> selectAll(BoardDTO boardDTO) {
+		return sessionTemplate.selectList(namespace + "selectAll", boardDTO);
 	}
 	
 	public BoardDTO selectDetail(long bNo) {
