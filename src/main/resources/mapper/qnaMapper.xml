@@ -8,11 +8,11 @@
 		WHERE menu='QNA'
 	</select>
 	
-	<select id="readCountUp" resultType="int" parameterType="int">
+	<update id="readCountUp" parameterType="long">
 		UPDATE board 
-		SET readCount=readCount+1 
-		WHERE bNo=#{bNo} AND menu='QNA';
-	</select>
+		SET readCount=readCount+1
+		WHERE bNo=#{bNo} AND menu='QNA'
+	</update>
 	
 	<select id="selectAll" resultType="BoardDTO">
 		SELECT bNo, title, id, writeDay, readCount

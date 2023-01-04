@@ -21,7 +21,7 @@ public class QnADAO {
 	}
 	
 	public int readCountUp(long bNo) {
-		return sessionTemplate.selectOne(namespace + "readCount", bNo);
+		return sessionTemplate.update(namespace + "readCountUp", bNo);
 	}
 	
 	public List<BoardDTO> selectAll() {
