@@ -33,7 +33,7 @@
 						<div class="card-header">
 							<h3 align="center">글목록</h3>
 							<div align="right">
-								전체 글 : <strong>${boardAllCount}</strong>
+								전체 글 : <strong>${boardCategoryCount}</strong>
 							</div>
 						</div>
 						<div class="card-body">
@@ -57,7 +57,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach varStatus="status" var="board" items="${menuSelectAll}">
+									<c:forEach varStatus="status" var="board" items="${categorySelectAll}">
 										<tr>
 											<th>${board.bNo}</th>
 											<%-- <th>${(boardListCount-status.index)-((page-1)*10)}</th> --%>
@@ -70,7 +70,7 @@
 								</tbody>
 							</table>
 							<table class="table table-hover text-center">
-								<c:if test="${boardAllCount==0}">
+								<c:if test="${boardCategoryCount==0}">
 									<tr>
 										<td>등록된 게시글이 없습니다.</td>
 									</tr>

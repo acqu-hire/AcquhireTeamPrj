@@ -26,9 +26,10 @@ public class QnAController {
 
 	@Autowired
 	QnAService service;
-	
+
 	@GetMapping("/list")
 	public String qnaList(Model model, BoardDTO boardDTO) {
+		List<BoardDTO> list = service.selectAll(boardDTO);
 		int boardListCount = service.getBoardCnt(boardDTO);
 //		Map<String, Object> map = new HashMap();
 //		map.put("boardDTO", boardDTO);
@@ -47,12 +48,12 @@ public class QnAController {
 		model.addAttribute("boardDTO", boardDTO);
 		return "board/qna/qna_list_detail";
 	}
-	
+
 	@GetMapping("/write")
 	public String qnaInsertForm() {
 		return "board/qna/qna_write";
 	}
-	
+
 	@PostMapping("/write")
 	public String qnaInsert(BoardDTO boardDTO, @RequestParam(required = false) Category category) {
 		boardDTO.setCategory(category);
@@ -61,7 +62,7 @@ public class QnAController {
 		service.insert(boardDTO);
 		return "redirect:/QnA/list";
 	}
-	
+
 	@GetMapping("/update")
 	public String qnaUpdateForm(long bNo, Model model) {
 		BoardDTO boardDTO = service.selectDetail(bNo);
@@ -71,13 +72,13 @@ public class QnAController {
 		System.out.println("boardDTO = " + boardDTO);
 		return "board/qna/qna_update_form";
 	}
-	
+
 	@PostMapping("/update")
 	public String qnaUpdate(BoardDTO boardDTO) {
 		service.update(boardDTO);
 		return "redirect:/QnA/list";
 	}
-	
+
 	@GetMapping("/delete")
 	public String qnaDelete(long bNo) {
 		service.delete(bNo);

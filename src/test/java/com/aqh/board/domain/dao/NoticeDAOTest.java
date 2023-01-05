@@ -1,7 +1,5 @@
 package com.aqh.board.domain.dao;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,28 +11,38 @@ import com.aqh.board.domain.dto.BoardDTO.Category;
 import com.aqh.board.domain.dto.BoardDTO.Menu;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations="file:src/main/webapp/WEB-INF/spring/root-context.xml")
+@ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/root-context.xml")
 public class NoticeDAOTest {
 
 	@Autowired
-	private NoticeDAO noticeDAO; 
+	private NoticeDAO noticeDAO;
 
-	
-	
 	@Test
 	public void testMenuSelectAll() {
 		System.out.println(noticeDAO.menuSelectAll());
 	}
-	
+
 	@Test
 	public void testCategorySelectAll() {
-		System.out.println(noticeDAO.categorySelectAll(Category.NOTICE_NOTICE));
+		System.out.println(noticeDAO.categorySelectAll("NOTICE_NOTICE"));
+	}
+
+	@Test
+	public void testSelectDetail() {
+		
+		System.out.println(noticeDAO.selectDetail(1));
+	}
+
+	@Test
+	public void testBoardListAllCount() {
+		System.out.println(noticeDAO.BoardListAllCount());
 	}
 	
 	@Test
-	public void testSelectDetail() {
-		System.out.println(noticeDAO.selectDetail(1));
+	public void testCategoryListCount() {
+			System.out.println(noticeDAO.CategoryListCount("NOTICE_EVENT"));
 	}
+	
 	
 	@Test
 	public void testInsert() {
@@ -51,7 +59,7 @@ public class NoticeDAOTest {
 		System.out.println(boardDTO);
 		noticeDAO.insert(boardDTO);
 	}
-	
+
 	@Test
 	public void testUpdate() {
 		BoardDTO boardDTO = BoardDTO.builder()
@@ -67,7 +75,7 @@ public class NoticeDAOTest {
 		System.out.println(boardDTO);
 		noticeDAO.update(boardDTO);
 	}
-	
+
 	@Test
 	public void testDelete() {
 		noticeDAO.delete(3);
