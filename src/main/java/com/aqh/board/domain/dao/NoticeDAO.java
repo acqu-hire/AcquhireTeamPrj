@@ -24,6 +24,12 @@ public class NoticeDAO {
 	public BoardDTO selectDetail(long bNo) {
 		return sqlSessionTemplate.selectOne("noticeSelectDetail", bNo);
 	}
+	public int BoardListAllCount() {
+		return sqlSessionTemplate.selectOne("BoardListAllCount");
+	}
+	public int CategoryListCount(Category category) {
+		return sqlSessionTemplate.selectOne("CategoryListCount", category);
+	}
 	public void insert(BoardDTO boardDTO) {
 		sqlSessionTemplate.insert("noticeInsert", boardDTO);
 	}

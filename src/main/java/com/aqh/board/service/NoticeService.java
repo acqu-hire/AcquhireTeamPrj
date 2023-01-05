@@ -24,6 +24,12 @@ public class NoticeService {
 	public BoardDTO selectDetail(long bNo) {
 		return noticeDAO.selectDetail(bNo);
 	}
+	public int BoardListAllCount() {
+		return noticeDAO.BoardListAllCount();
+	}
+	public int CategoryListCount(Category category) {
+		return noticeDAO.CategoryListCount(category);
+	}
 	public void insert(BoardDTO boardDTO) {
 		noticeDAO.insert(boardDTO);
 	}
