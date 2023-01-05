@@ -14,20 +14,28 @@
 	
 	<!-- 선택조회(게시판 제목 클릭 시) -->
 	<select id="noticeSelectDetail" parameterType="BoardDTO" resultType="BoardDTO">
-		select bNo,id,menu,category,readCount,title,contents,file from board where bNo = #{bNo};
+		select bNo,id,menu,category,readCount,title,contents,file, writeDay from board where bNo = #{bNo};
 	</select>
 	
-	<!-- 글 등록 -->
+	<!-- 게시판 개수 -->
+	<select id="BoardListAllCount" resultType="integer">
+		select count(*) from board;
+	</select>
+	<select id="CategoryListCount" resultType="integer">
+		select count(*) from board where category = #{category};
+	</select>
+	
+	<!-- 등록 -->
 	<select id="noticeInsert" parameterType="BoardDTO" resultType="BoardDTO">
 		insert into board (bNo,id,menu,category,readCount,file,title,writeDay,contents) values(#{bNo},#{id},#{menu},#{category},#{readCount},#{file},#{title},sysdate(),#{contents});
 	</select>
 	
-	<!-- 글 수정 -->
+	<!-- 수정 -->
 	<select id="noticeUpdate" parameterType="BoardDTO" resultType="BoardDTO">
 		update board set menu = #{menu}, category = #{category}, file = #{file}, title = #{title}, contents = #{contents} WHERE `bNo` = #{bNo};
 	</select>
 	
-	<!-- 글 삭제 -->
+	<!-- 삭제 -->
 	<select id="noticeDelete" parameterType="int" resultType="BoardDTO">
 		delete from board where bNo = #{bNo};
 	</select>
