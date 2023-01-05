@@ -13,46 +13,46 @@ import com.aqh.board.domain.dto.BoardDTO;
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class CommunityDAO {
 
-    @Autowired
-    SqlSessionTemplate sessionTemplate;
+	@Autowired
+	SqlSessionTemplate sessionTemplate;
 
-    // CREATE
+	// CREATE
 
-    public void createPost(BoardDTO boardDTO) {
-        sessionTemplate.insert("createPost", boardDTO);
-    };
+	public void createPost(BoardDTO boardDTO) {
+		sessionTemplate.insert("createPost", boardDTO);
+	};
 
-    // READ
+	// READ
 
-    public List<BoardDTO> getAllCommunityPostList() {
-        return sessionTemplate.selectList("getAllCommunityPostList");
+	public List<BoardDTO> getAllCommunityPostList() {
+		return sessionTemplate.selectList("getAllCommunityPostList");
 
-    };
+	};
 
-    public List<BoardDTO> getLifePostList() {
-        return sessionTemplate.selectList("getLifePostList");
-    };
+	public List<BoardDTO> getLifePostList() {
+		return sessionTemplate.selectList("getLifePostList");
+	};
 
-    public List<BoardDTO> getGroupPostList() {
-        return sessionTemplate.selectList("getGroupPostList");
-    };
+	public List<BoardDTO> getGroupPostList() {
+		return sessionTemplate.selectList("getGroupPostList");
+	};
 
-    public BoardDTO getPost(int bNo) {
-        return sessionTemplate.selectOne("getPost", bNo);
-    };
+	public BoardDTO getPost(long bNo) {
+		return sessionTemplate.selectOne("getPost", bNo);
+	};
 
-    public long getTotal() {
-        return sessionTemplate.selectList("getAllCommunityPostList").size();
-    };
+	public long getTotal() {
+		return sessionTemplate.selectList("getAllCommunityPostList").size();
+	};
 
-    // UPDATE
-    public void updatePost(BoardDTO boardDTO) {
-        sessionTemplate.update("updatePost", boardDTO);
-    };
+	// UPDATE
+	public void updatePost(BoardDTO boardDTO) {
+		sessionTemplate.update("updatePost", boardDTO);
+	};
 
-    // DELETE
-    public void deletePost(long bNo) {
-        sessionTemplate.delete("deletePost", bNo);
-    };
+	// DELETE
+	public void deletePost(long bNo) {
+		sessionTemplate.delete("deletePost", bNo);
+	};
 
 }

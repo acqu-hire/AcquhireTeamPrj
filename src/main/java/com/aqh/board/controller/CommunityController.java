@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.aqh.board.domain.dto.BoardDTO;
@@ -26,7 +27,8 @@ public class CommunityController {
 		BOARD_COMMUNITY_SELECT_ALL_VIEW(JSP_ROOT + "/select_all_view"),
 		BOARD_COMMUNITY_SELECT_DETAIL_VIEW(JSP_ROOT + "/selectdetail_view"),
 		BOARD_COMMUNITY_UPDATE(JSP_ROOT + "/update"), BOARD_COMMUNITY_UPDATE_VIEW(JSP_ROOT + "/update_view"),
-		BOARD_COMMUNITY_DELETE(JSP_ROOT + "/delete"), BOARD_COMMUNITY_DELETE_VIEW(JSP_ROOT + "/delete_view");
+		BOARD_COMMUNITY_DELETE(JSP_ROOT + "/delete"), BOARD_COMMUNITY_DELETE_VIEW(JSP_ROOT + "/delete_view"),
+		BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW("redirect:" + "/select_all_view");
 
 		private String returnPath;
 
@@ -53,20 +55,28 @@ public class CommunityController {
 	 */
 	@GetMapping(value = "/insert")
 	public String createCommunityPost() {
-		// TODO: Business logic
 		log.info("PATH " + Path.BOARD_COMMUNITY_INSERT);
 		return Path.BOARD_COMMUNITY_INSERT.getPath();
 	}
 
-	@GetMapping(value = "/insert_view")
-	public String createCommunityInsertPost() {
-		// BoardDTO boardDTO =
-		// BoardDTO.builder().id("admin").bNo(0).menu(Menu.COMMUNITY).category(Category.COMMUNITY_LIFE)
-		// .file("널").title("12123231널").contents("3213").build();
-		// log.info("" + boardDTO);
-		// communityService.createPost(boardDTO);
+	@PostMapping(value = "/insert_view")
+	public String createCommunityInsertPost(int menu, int category, String file, String title, String contents,
+			Model model) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_INSERT_VIEW);
-		return Path.BOARD_COMMUNITY_INSERT_VIEW.getPath();
+
+		Menu menuCheck = Menu.COMMUNITY.ordinal() == menu ? Menu.COMMUNITY : null;
+		Category categoryCheck = Category.COMMUNITY_GROUP.ordinal() == category ? Category.COMMUNITY_GROUP
+				: Category.COMMUNITY_LIFE;
+
+		if (menuCheck == null && categoryCheck == null)
+			return "exception/404.jsp";
+
+		BoardDTO boardDTO = BoardDTO.builder().id("admin").menu(menuCheck).category(categoryCheck).file(file)
+				.title(title).contents(contents).build();
+
+		communityService.createPost(boardDTO);
+		model.addAttribute("boardDTO", boardDTO);
+		return Path.BOARD_COMMUNITY_SELECT_DETAIL_VIEW.getPath();
 	}
 
 	/**
@@ -78,15 +88,15 @@ public class CommunityController {
 	 */
 	@GetMapping(value = "/select_all_view")
 	public String readCommunityPostList(Model model) {
-		model.addAttribute("boardList", communityService.getAllCommunityPostList());
 		log.info("PATH" + Path.BOARD_COMMUNITY_SELECT_ALL_VIEW);
+		model.addAttribute("boardList", communityService.getAllCommunityPostList());
 		return Path.BOARD_COMMUNITY_SELECT_ALL_VIEW.getPath();
 	}
 
 	@GetMapping(value = "/selectdetail_view")
-	public String readCommunitPost(int bNo, Model model) {
-		model.addAttribute("boardDTO", communityService.getPost(bNo));
+	public String readCommunitPost(long bNo, Model model) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_SELECT_DETAIL_VIEW);
+		model.addAttribute("boardDTO", communityService.getPost(bNo));
 		return Path.BOARD_COMMUNITY_SELECT_DETAIL_VIEW.getPath();
 	}
 
@@ -97,16 +107,27 @@ public class CommunityController {
 	 * @return
 	 */
 	@GetMapping(value = "/update")
-	public String updateCommunityPost() {
-		// TODO: Business logic
+	public String updateCommunityPost(Model model, long bNo) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_UPDATE);
+		model.addAttribute("boardDTO", communityService.getPost(bNo));
 		return Path.BOARD_COMMUNITY_UPDATE.getPath();
 	}
 
-	@GetMapping(value = "/update_view")
-	public String updateCommunityPostView() {
-		// TODO: Business logic
+	@PostMapping(value = "/update_view")
+	public String updateCommunityPostView(int menu, int category, String file, String title, String contents) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_UPDATE_VIEW);
+
+		Menu menuCheck = Menu.COMMUNITY.ordinal() == menu ? Menu.COMMUNITY : null;
+		Category categoryCheck = Category.COMMUNITY_GROUP.ordinal() == category ? Category.COMMUNITY_GROUP
+				: Category.COMMUNITY_LIFE;
+
+		if (menuCheck == null && categoryCheck == null)
+			return "exception/404.jsp";
+
+		BoardDTO boardDTO = BoardDTO.builder().id("admin").menu(menuCheck).category(categoryCheck).file(file)
+				.title(title).contents(contents).build();
+
+		communityService.updatePost(boardDTO);
 		return Path.BOARD_COMMUNITY_UPDATE_VIEW.getPath();
 	}
 
@@ -123,7 +144,7 @@ public class CommunityController {
 		return Path.BOARD_COMMUNITY_DELETE.getPath();
 	}
 
-	@GetMapping(value = "/delete_view")
+	@PostMapping(value = "delete_view")
 	public String deleteCommunityPostView() {
 		// TODO: Business logic
 		log.info("PATH " + Path.BOARD_COMMUNITY_DELETE_VIEW);

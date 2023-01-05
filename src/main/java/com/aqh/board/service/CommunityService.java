@@ -17,43 +17,43 @@ import com.aqh.board.domain.dto.BoardDTO;
 @Service
 public class CommunityService {
 
-    @Autowired
-    private CommunityDAO communityBoardDAO;
+	@Autowired
+	private CommunityDAO communityBoardDAO;
 
-    // CREATE
-    public void createPost(BoardDTO boardDTO) {
-        communityBoardDAO.createPost(boardDTO);
-    };
+	// CREATE
+	public void createPost(BoardDTO boardDTO) {
+		communityBoardDAO.createPost(boardDTO);
+	};
 
-    // READ
-    public List<BoardDTO> getAllCommunityPostList() {
-        return communityBoardDAO.getAllCommunityPostList();
-    };
+	// READ
+	public List<BoardDTO> getAllCommunityPostList() {
+		return communityBoardDAO.getAllCommunityPostList();
+	};
 
-    public List<BoardDTO> getLifePostList() {
-        return communityBoardDAO.getLifePostList();
-    };
+	public List<BoardDTO> getLifePostList() {
+		return communityBoardDAO.getLifePostList();
+	};
 
-    public List<BoardDTO> getGroupPostList() {
-        return communityBoardDAO.getGroupPostList();
-    };
+	public List<BoardDTO> getGroupPostList() {
+		return communityBoardDAO.getGroupPostList();
+	};
 
-    public BoardDTO getPost(int bNo) {
-        return communityBoardDAO.getPost(bNo);
-    };
+	public BoardDTO getPost(long bNo) {
+		return communityBoardDAO.getPost(bNo);
+	};
 
-    public long getTotal() {
-        return communityBoardDAO.getTotal();
-    };
+	public long getTotal() {
+		return communityBoardDAO.getTotal();
+	};
 
-    // UPDATE
-    public void updatePost(BoardDTO boardDTO) {
-        communityBoardDAO.updatePost(boardDTO);
-    };
+	// UPDATE
+	public void updatePost(BoardDTO boardDTO) {
+		communityBoardDAO.updatePost(boardDTO);
+	};
 
-    // DELETE
-    public void deletePost(long bNo) {
-        communityBoardDAO.deletePost(bNo);
-    };
+	// DELETE
+	public void deletePost(long bNo) {
+		communityBoardDAO.deletePost(bNo);
+	};
 
 }

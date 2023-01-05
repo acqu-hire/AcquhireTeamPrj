@@ -2,7 +2,6 @@ package com.aqh.board.controller;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,9 +23,9 @@ public class QnAController {
 
 	@Autowired
 	QnAService service;
-	
+
 	@GetMapping("/list")
-	public String qnaList(Model model, BoardDTO boardDTO,@RequestParam(required = false) Category category) {
+	public String qnaList(Model model, BoardDTO boardDTO, @RequestParam(required = false) Category category) {
 		boardDTO.setCategory(category);
 		List<BoardDTO> list = service.selectAll(boardDTO);
 		int boardListCount = service.getBoardCnt(boardDTO);
@@ -46,13 +45,13 @@ public class QnAController {
 		model.addAttribute("boardDTO", boardDTO);
 		return "board/qna/qna_list_detail";
 	}
-	
+
 	@GetMapping("/write")
 	public String qnaInsertForm() {
 		log.info("게시글 작성 폼 이동");
 		return "board/qna/qna_write";
 	}
-	
+
 	@PostMapping("/write")
 	public String qnaInsert(BoardDTO boardDTO, @RequestParam(required = false) Category category) {
 		boardDTO.setCategory(category);
@@ -62,7 +61,7 @@ public class QnAController {
 		service.insert(boardDTO);
 		return "redirect:/QnA/list";
 	}
-	
+
 	@GetMapping("/update")
 	public String qnaUpdateForm(long bNo, Model model) {
 		BoardDTO boardDTO = service.selectDetail(bNo);
@@ -71,14 +70,14 @@ public class QnAController {
 		model.addAttribute("boardDTO", boardDTO);
 		return "board/qna/qna_update_form";
 	}
-	
+
 	@PostMapping("/update")
 	public String qnaUpdate(BoardDTO boardDTO) {
 		log.info("수정 내용 = " + boardDTO);
 		service.update(boardDTO);
 		return "redirect:/QnA/list";
 	}
-	
+
 	@GetMapping("/delete")
 	public String qnaDelete(long bNo) {
 		service.delete(bNo);
