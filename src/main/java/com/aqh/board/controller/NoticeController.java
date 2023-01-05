@@ -13,16 +13,15 @@ import com.aqh.board.service.NoticeService;
 @Controller
 public class NoticeController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(NoticeController.class);
-	
+
 	@Autowired
 	private NoticeService noticeService;
-	
-	@RequestMapping(value="notice/menu_select_all_view" , method = RequestMethod.GET)
+
+	@RequestMapping(value = "notice/menu_select_all_view", method = RequestMethod.GET)
 	public String menuSelectAll(Model model) {
 		model.addAttribute("menuSelectAll", noticeService.menuSelectAll());
-		LOGGER.info("menuSelectAll",model);
+		LOGGER.info("menuSelectAll", model);
 		return "board/notice/noticeList";
 	}
-	
 
 }
