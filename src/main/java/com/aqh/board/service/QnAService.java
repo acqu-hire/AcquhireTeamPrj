@@ -18,12 +18,20 @@ public class QnAService {
 		return qnaDao.boardCount(boardDTO);
 	}
 	
+	public int getBoardCnt() {
+		return qnaDao.boardCount();
+	}
+	
 	public int readCntUp(long bNo) {
 		return qnaDao.readCountUp(bNo);
 	}
 	
 	public List<BoardDTO> selectAll(BoardDTO boardDTO) {
 		return qnaDao.selectAll(boardDTO);
+	}
+
+	public List<BoardDTO> selectAll() {
+		return qnaDao.selectAll();
 	}
 	
 	public BoardDTO selectDetail(long bNo) {

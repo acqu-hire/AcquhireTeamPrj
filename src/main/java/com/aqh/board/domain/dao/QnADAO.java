@@ -20,12 +20,20 @@ public class QnADAO {
 		return sessionTemplate.selectOne(namespace + "boardCount", boardDTO);
 	}
 	
+	public int boardCount() {
+		return sessionTemplate.selectOne(namespace + "boardCount");
+	}
+	
 	public int readCountUp(long bNo) {
 		return sessionTemplate.update(namespace + "readCountUp", bNo);
 	}
 	
 	public List<BoardDTO> selectAll(BoardDTO boardDTO) {
 		return sessionTemplate.selectList(namespace + "selectAll", boardDTO);
+	}
+	
+	public List<BoardDTO> selectAll(){
+		return sessionTemplate.selectList(namespace + "selectAll");
 	}
 	
 	public BoardDTO selectDetail(long bNo) {

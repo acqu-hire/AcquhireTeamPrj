@@ -54,7 +54,8 @@ public class QnAController {
 	}
 	
 	@PostMapping("/write")
-	public String qnaInsert(BoardDTO boardDTO) {
+	public String qnaInsert(BoardDTO boardDTO, @RequestParam(required = false) Category category) {
+		boardDTO.setCategory(category);
 		String id = "aaaa"; // 임시
 		boardDTO.setId(id);
 		log.info("폼 입력값 = " + boardDTO);

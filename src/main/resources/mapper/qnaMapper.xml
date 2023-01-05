@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aqh.board.domain.dao.QnAMapper">
 	
-	<select id="boardCount" resultType="int" parameterType="BoardDTO">
+	<select id="boardCount" resultType="int">
 		SELECT count(*) 
 		FROM board
 		WHERE menu='QNA'
@@ -17,7 +17,7 @@
 		WHERE bNo=#{bNo} AND menu='QNA'
 	</update>
 	
-	<select id="selectAll" resultType="BoardDTO" parameterType="BoardDTO">
+	<select id="selectAll" resultType="BoardDTO">
 		SELECT bNo, title, id, writeDay, readCount
 		FROM board 
 		WHERE menu='QNA' 
@@ -34,8 +34,8 @@
 	</select>
 	
 	<insert id="insert" parameterType="BoardDTO">
-		INSERT INTO board(id, title, contents, writeDay, menu)
-		VALUES (#{id}, #{title}, #{contents}, now(), 'QNA')
+		INSERT INTO board(id, title, contents, writeDay, menu, category)
+		VALUES (#{id}, #{title}, #{contents}, now(), 'QNA', #{category})
 	</insert>
 	
 	<update id="update" parameterType="BoardDTO">
