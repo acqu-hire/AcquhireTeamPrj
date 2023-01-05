@@ -18,7 +18,7 @@ public class NoticeService {
 	public List<BoardDTO> menuSelectAll(){
 		return noticeDAO.menuSelectAll();
 	}
-	public List<BoardDTO> categorySelectAll(Category category){
+	public List<BoardDTO> categorySelectAll(String category){
 		return noticeDAO.categorySelectAll(category);
 	}
 	public BoardDTO selectDetail(long bNo) {
@@ -27,7 +27,7 @@ public class NoticeService {
 	public int BoardListAllCount() {
 		return noticeDAO.BoardListAllCount();
 	}
-	public int CategoryListCount(Category category) {
+	public int CategoryListCount(String category) {
 		return noticeDAO.CategoryListCount(category);
 	}
 	public void insert(BoardDTO boardDTO) {

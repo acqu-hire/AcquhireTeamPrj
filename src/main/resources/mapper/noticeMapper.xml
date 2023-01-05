@@ -8,7 +8,7 @@
 	</select>
 	
 	<!-- 카테고리 전체조회(category 메뉴 클릭 시) -->
-	<select id="categorySelectAll" parameterType="BoardDTO" resultType="BoardDTO">
+	<select id="categorySelectAll" parameterType="String" resultType="BoardDTO">
 		select bNo,id,readCount,title,writeDay from board where category = #{category};
 	</select>
 	
