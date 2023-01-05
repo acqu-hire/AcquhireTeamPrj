@@ -29,9 +29,21 @@ public class NoticeDAOTest {
 
 	@Test
 	public void testSelectDetail() {
+		
 		System.out.println(noticeDAO.selectDetail(1));
 	}
 
+	@Test
+	public void testBoardListAllCount() {
+		System.out.println(noticeDAO.BoardListAllCount());
+	}
+	
+	@Test
+	public void testCategoryListCount() {
+			System.out.println(noticeDAO.CategoryListCount(Category.NOTICE_EVENT));
+	}
+	
+	
 	@Test
 	public void testInsert() {
 		BoardDTO boardDTO = BoardDTO.builder()

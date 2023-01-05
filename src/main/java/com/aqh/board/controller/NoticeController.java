@@ -24,4 +24,23 @@ public class NoticeController {
 		return "board/notice/noticeList";
 	}
 
+	@RequestMapping(value = "notice/select_all_view", method = RequestMethod.GET)
+	public String menuSelectAll(Model model) {
+		model.addAttribute("menuSelectAll", noticeService.menuSelectAll());
+		model.addAttribute("boardAllCount", noticeService.BoardListAllCount());
+		LOGGER.info("menuSelectAll", model);
+		return "board/notice/noticeList";
+	}
+
+	@RequestMapping()
+	public String categorySelectAll() {
+		return "";
+	}
+
+	@RequestMapping(value = "notice/Select_Detail_view", method = RequestMethod.GET)
+	public String noticeSelectDetail(Model model, Integer bNo) {
+		model.addAttribute("selectDetail", noticeService.selectDetail(bNo));
+		return "/board/notice/noticeListDetail";
+	}
+
 }
