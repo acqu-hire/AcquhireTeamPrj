@@ -6,7 +6,10 @@
           <title>A page written in english</title>
           <meta content="text/html; charset=utf-8" />
     </head>  
-
+<form action="./update_view" method="post">
+				 
+            <input type="submit">
+        </form>
 
     <body>     
     ...   
