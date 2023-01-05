@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>QnA 게시판</title>
+<title>공지사항 게시판</title>
 <link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.min.css">
 <script src="${contextPath}/resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
 <script src="${contextPath}/resources/js/bootstrap.min.js" type="text/javascript"></script>
@@ -35,24 +35,36 @@
 				<div class="card-body">
 					<table class="table">
 						<tr>
+							<th>작성자</th>
+							<td>${selectDetail.id}</td>
+						</tr>
+						<tr>
 							<th>게시글 번호</th>
-							<td>${boardDTO.bNo}</td>
+							<td>${selectDetail.bNo}</td>
+						</tr>
+						<tr>
+							<th>게시판메뉴</th>
+							<td>${selectDetail.menu} > ${selectDetail.category}</td>
 						</tr>
 						<tr>
 							<th>조회수</th>
-							<td>${boardDTO.readCount}</td>
+							<td>${selectDetail.readCount}</td>
 						</tr>
 						<tr>
 							<th>작성일</th>
-							<td>${boardDTO.writeDay}</td>
-						</tr>
-						<tr>
-							<th>작성자</th>
-							<td>${boardDTO.id}</td>
+							<td>${selectDetail.writeDay}</td>
 						</tr>
 						<tr>
 							<th>제목</th>
-							<td>${boardDTO.title}</td>
+							<td>${selectDetail.title}</td>
+						</tr>
+						<tr>
+							<th>내용</th>
+							<td>${selectDetail.contents}</td>
+						</tr>
+						<tr>
+							<th>파일</th>
+							<td></td>
 						</tr>
 					</table>
 				<hr/>

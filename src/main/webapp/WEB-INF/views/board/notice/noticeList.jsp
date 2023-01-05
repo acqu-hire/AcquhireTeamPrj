@@ -33,7 +33,7 @@
 						<div class="card-header">
 							<h3 align="center">글목록</h3>
 							<div align="right">
-								전체 글 : <strong>${boardListCount}</strong>
+								전체 글 : <strong>${boardAllCount}</strong>
 							</div>
 						</div>
 						<div class="card-body">
@@ -43,7 +43,7 @@
 								<button type="button" class="btn btn-primary float-end" name="kind" value="NOTICE_EVENT">이벤트</button>
 							</div>
 							<div class="d-flex justify-content-end">
-								<a class="btn btn-warning float-end" href="./BoardInsertView.do"> <i class="fas fa-edit"></i> 글 작성
+								<a class="btn btn-warning float-end" href=""> <i class="fas fa-edit"></i> 글 작성
 								</a>
 							</div>
 							<table class="table table-hover table-striped text-center"  style="table-layout: fixed">
@@ -57,11 +57,11 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach varStatus="status" var="board" items="${boardList}">
+									<c:forEach varStatus="status" var="board" items="${menuSelectAll}">
 										<tr>
 											<th>${board.bNo}</th>
 											<%-- <th>${(boardListCount-status.index)-((page-1)*10)}</th> --%>
-											<td class="text-truncate" style="max-width: 500px;"><a href="./listDetail?bNo=${board.bNo}">${board.title}</a></td>
+											<td class="text-truncate" style="max-width: 500px;"><a href="/notice/Select_Detail_view?bNo=${board.bNo}">${board.title}</a></td>
 											<td>${board.id}</td>
 											<td>${board.writeDay}</td>
 											<td>${board.readCount}</td>
@@ -70,7 +70,7 @@
 								</tbody>
 							</table>
 							<table class="table table-hover text-center">
-								<c:if test="${searchBoardCount==0}">
+								<c:if test="${boardAllCount==0}">
 									<tr>
 										<td>등록된 게시글이 없습니다.</td>
 									</tr>
