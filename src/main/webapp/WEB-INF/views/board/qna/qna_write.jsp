@@ -38,16 +38,28 @@
 				        <form method="post" name="QnAWriteForm">
 				          <table class="table table-striped">
 				            <tr>
+			                	<th>카테고리</th>
+				                	<td>
+				                		<div class="input-group mx-auto">
+											<label for="category"></label>
+												<div class="col-xs-2">
+													<select name="category" class="form-control">
+														<option value="">==카테고리선택==</option>
+														<option value="QNA_TECH">테크</option>
+														<option value="QNA_CAREER">커리어</option>
+														<option value="QNA_ETC">기타</option>
+													</select>
+												</div>
+										</div>
+									</td>
+			            	</tr>
+				            <tr>
 				                <th>작성자</th>
 				                <td><input type="text"  class="form-control" name="id" value="aaaa" readonly></td>
 				            </tr>
 				            <tr>
 				                <th>제목</th>
 				                <td><input type="text"  class="form-control" name="title"></td>
-				            </tr>
-				            <tr>
-				                <th>비밀번호</th>
-				                <td><input type="password"  class="form-control" name="boardPwd" placeholder="숫자 4자리"></td>
 				            </tr>
  				             <tr>
 				                <td>글내용</td>

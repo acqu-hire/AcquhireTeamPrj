@@ -201,7 +201,6 @@
 												<label for="keyword"></label>
 												<div class="col-xs-2">
 													<select name="keyfield" class="form-control">
-														해당 항목을 기본 선택으로 지정하여 검색한다.
 														<option value="all" selected="selected">전체 검색</option>
 														<option value="title">제목</option>
 														<option value="memberId">아이디</option>
