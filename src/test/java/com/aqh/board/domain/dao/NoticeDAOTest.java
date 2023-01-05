@@ -24,7 +24,7 @@ public class NoticeDAOTest {
 
 	@Test
 	public void testCategorySelectAll() {
-		System.out.println(noticeDAO.categorySelectAll(Category.NOTICE_NOTICE));
+		System.out.println(noticeDAO.categorySelectAll("NOTICE_NOTICE"));
 	}
 
 	@Test
@@ -40,7 +40,7 @@ public class NoticeDAOTest {
 	
 	@Test
 	public void testCategoryListCount() {
-			System.out.println(noticeDAO.CategoryListCount(Category.NOTICE_EVENT));
+			System.out.println(noticeDAO.CategoryListCount("NOTICE_EVENT"));
 	}
 	
 	
