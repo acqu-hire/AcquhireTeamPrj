@@ -28,7 +28,7 @@ public class CommunityController {
 		BOARD_COMMUNITY_SELECT_DETAIL_VIEW(JSP_ROOT + "/selectdetail_view"),
 		BOARD_COMMUNITY_UPDATE(JSP_ROOT + "/update"), BOARD_COMMUNITY_UPDATE_VIEW(JSP_ROOT + "/update_view"),
 		BOARD_COMMUNITY_DELETE(JSP_ROOT + "/delete"), BOARD_COMMUNITY_DELETE_VIEW(JSP_ROOT + "/delete_view"),
-		BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW("redirect:" + "/select_all_view");
+		BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW("redirect:" + "/community" + "/select_all_view");
 
 		private String returnPath;
 
@@ -68,15 +68,15 @@ public class CommunityController {
 		Category categoryCheck = Category.COMMUNITY_GROUP.ordinal() == category ? Category.COMMUNITY_GROUP
 				: Category.COMMUNITY_LIFE;
 
-		if (menuCheck == null && categoryCheck == null)
-			return "exception/404.jsp";
+		if (menuCheck == null)
+			return "exception/error404";
 
 		BoardDTO boardDTO = BoardDTO.builder().id("admin").menu(menuCheck).category(categoryCheck).file(file)
 				.title(title).contents(contents).build();
 
 		communityService.createPost(boardDTO);
 		model.addAttribute("boardDTO", boardDTO);
-		return Path.BOARD_COMMUNITY_SELECT_DETAIL_VIEW.getPath();
+		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath();
 	}
 
 	/**
@@ -110,22 +110,19 @@ public class CommunityController {
 	public String updateCommunityPost(Model model, long bNo) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_UPDATE);
 		model.addAttribute("boardDTO", communityService.getPost(bNo));
+		log.info("UPDATE RETURN DTO", communityService.getPost(bNo).toString());
 		return Path.BOARD_COMMUNITY_UPDATE.getPath();
 	}
 
 	@PostMapping(value = "/update_view")
-	public String updateCommunityPostView(int menu, int category, String file, String title, String contents) {
+	public String updateCommunityPostView(BoardDTO boardDTO) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_UPDATE_VIEW);
 
-		Menu menuCheck = Menu.COMMUNITY.ordinal() == menu ? Menu.COMMUNITY : null;
-		Category categoryCheck = Category.COMMUNITY_GROUP.ordinal() == category ? Category.COMMUNITY_GROUP
-				: Category.COMMUNITY_LIFE;
+		log.info("UPDATE VIEW DTO ", boardDTO);
 
-		if (menuCheck == null && categoryCheck == null)
-			return "exception/404.jsp";
-
-		BoardDTO boardDTO = BoardDTO.builder().id("admin").menu(menuCheck).category(categoryCheck).file(file)
-				.title(title).contents(contents).build();
+		// BoardDTO boardDTO =
+		// BoardDTO.builder().id("admin").menu(menuCheck).category(categoryCheck).file(file)
+		// .title(title).contents(contents).build();
 
 		communityService.updatePost(boardDTO);
 		return Path.BOARD_COMMUNITY_UPDATE_VIEW.getPath();
