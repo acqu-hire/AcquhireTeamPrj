@@ -18,17 +18,26 @@
 	</update>
 	
 	<select id="selectAll" resultType="BoardDTO">
-		SELECT bNo, title, id, writeDay, readCount
+ 		SELECT bNo, title, id, DATE_FORMAT(writeDay,'%Y-%m-%d') writeDay, readCount
 		FROM board 
 		WHERE menu='QNA' 
 		<if test="category != null and !category.equals('')">
 			AND category=#{category} 
 		</if>
-		ORDER BY writeDay DESC;
+		ORDER BY writeDay DESC
+<!-- 		SELECT * FROM 
+			(SELECT @rownum:=@rownum+1 AS rownum , bNo, title, id, DATE_FORMAT(writeDay,'%Y-%m-%d') writeDay, readCount
+			FROM board A, (SELECT @rownum:=0) R
+			WHERE menu='QNA'
+			<if test="category != null and !category.equals('')">
+			AND category=#{category} 
+		</if>
+			ORDER BY writeDay DESC) B
+		WHERE rownum between #{startRow} and #{endRow}; -->
 	</select>
 	
 	<select id="selectDetail" parameterType="long" resultType="BoardDTO">
-		SELECT bNo, title, contents, id, writeDay, readCount, file
+		SELECT bNo, title, contents, id, writeDay, readCount, category
 		FROM board
 		WHERE bNo=#{bNo} AND menu='QNA'
 	</select>

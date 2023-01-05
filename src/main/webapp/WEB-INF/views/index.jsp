@@ -14,9 +14,9 @@
 <body>
 
 <!-- Header -->
-
-<%@ include file="include/header.jsp" %>
-
+<jsp:include page="/WEB-INF/views/include/header.jsp" flush="false"/>
+<%-- <%@ include file="include/header.jsp" %>
+ --%>
 <!-- Header -->
 
 <section>
@@ -70,5 +70,6 @@
 <%@ include file="include/footer.jsp" %>
 
 <!-- Footer -->
+
 </body>
 </html>

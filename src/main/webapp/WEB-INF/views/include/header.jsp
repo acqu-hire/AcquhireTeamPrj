@@ -54,6 +54,13 @@
 	</nav>
 	
 </header>
-
+<script type="text/javascript">
+	$(function() {
+		$("ul.navbar-nav li").on("click", function() {
+			$("ul.navbar-nav li").remove("active");
+			$(this).addClass("active");			
+		})
+	})
+</script>
 </body>
 </html>

@@ -1,10 +1,7 @@
 package com.aqh.board.domain.dto;
 
-import org.springframework.stereotype.Component;
-
 import lombok.Builder;
 
-@Component
 public class BoardDTO {
 
 	public enum Menu {
