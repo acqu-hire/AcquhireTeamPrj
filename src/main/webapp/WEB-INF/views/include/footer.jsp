@@ -46,6 +46,6 @@
 	</footer>
 	
 	<!-- Footer -->
-	
+
 </body>
 </html>
