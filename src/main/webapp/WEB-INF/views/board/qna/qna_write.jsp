@@ -55,7 +55,7 @@
 			            	</tr>
 				            <tr>
 				                <th>작성자</th>
-				                <td><input type="text"  class="form-control" name="id" value="aaaa" readonly></td>
+				                <td><input type="text"  class="form-control" name="id" value="bacd" readonly></td>
 				            </tr>
 				            <tr>
 				                <th>제목</th>
@@ -87,5 +87,23 @@
 <%@ include file="../../include/footer.jsp" %>
 
 <!-- Footer -->
+<script type="text/javascript">
+	$(function() {
+		$("form").submit(function() {
+			if($("select[name='category']").val() == ""){
+				alert("카테고리를 선택해주세요.")
+				return false;
+			};
+			if(!$("input[name='title']").val()) {
+				alert("제목을 입력하세요.")
+				return false;
+			}
+			if(!$("textarea[name='contents']").val()) {
+				alert("내용을 입력하세요.")
+				return false;
+			}
+		})
+	});
+</script>
 </body>
 </html>
