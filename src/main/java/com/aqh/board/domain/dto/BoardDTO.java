@@ -51,8 +51,6 @@ public class BoardDTO {
 		this.contents = contents;
 	}
 
-	
-	
 	public String getId() {
 		return id;
 	}
@@ -60,7 +58,7 @@ public class BoardDTO {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	public Menu getMenu() {
 		return menu;
 	}
@@ -131,7 +129,5 @@ public class BoardDTO {
 				+ readCount + ", file=" + file + ", title=" + title + ", writeDay=" + writeDay + ", contents="
 				+ contents + "]";
 	}
-
-	
 
 }

@@ -14,7 +14,7 @@
     <select id="getGroupPostList" resultType="BoardDTO"> SELECT * FROM teamproject.board where
         category = "COMMUNITY_GROUP" </select>
     <select id="getPost" resultType="BoardDTO"> SELECT * FROM teamproject.board where BNO = #{bNo} </select>
-    <select id="getTotal" resultType="int"> SELECT count(*) FROM teamproject.board where category =
+    <select id="getTotal" resultType="long"> SELECT count(*) FROM teamproject.board where category =
         "COMMUNITY"</select>
     <!-- UPDATE -->
     <update id="updatePost"> UPDATE teamproject.board SET category = #{category},file =
@@ -23,5 +23,5 @@
         </trim>
     </update>
     <!-- DELETE -->
-    <delete id="deletePost" parameterType="int"> DELETE FROM teamproject.board WHERE bNo = #{bNo} </delete>
+    <delete id="deletePost" parameterType="long"> DELETE FROM teamproject.board WHERE bNo = #{bNo} </delete>
 </mapper>
