@@ -1,22 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Acqu-Hire</title>
-<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.min.css">
-<script src="${contextPath}/resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
-<script src="${contextPath}/resources/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="https://kit.fontawesome.com/58abbffa46.js" ></script>
+
 </head>
 <body>
 
 <!-- Header -->
-<jsp:include page="/WEB-INF/views/include/header.jsp" flush="false"/>
-<%-- <%@ include file="include/header.jsp" %>
- --%>
+
+<%@ include file="include/header.jsp" %>
+
 <!-- Header -->
 
 <section>
