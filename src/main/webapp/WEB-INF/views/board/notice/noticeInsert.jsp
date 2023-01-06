@@ -11,10 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <title>NOTICE 작성</title>
-<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.min.css">
-<script src="${contextPath}/resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
-<script src="${contextPath}/resources/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="https://kit.fontawesome.com/58abbffa46.js"></script>
+
 </head>
 
 <body>

@@ -13,7 +13,7 @@
 	</select>
 	
 	<!-- 선택조회(게시판 제목 클릭 시) -->
-	<select id="noticeSelectDetail" parameterType="BoardDTO" resultType="BoardDTO">
+	<select id="noticeSelectDetail" resultType="BoardDTO">
 		select bNo,id,menu,category,readCount,title,contents,file, writeDay from board where bNo = #{bNo};
 	</select>
 	
