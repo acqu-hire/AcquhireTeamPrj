@@ -15,8 +15,8 @@ public class NoticeService {
 	@Autowired
 	private NoticeDAO noticeDAO;
 	
-	public List<BoardDTO> menuSelectAll(){
-		return noticeDAO.menuSelectAll();
+	public List<BoardDTO> menuSelectAll(String menu){
+		return noticeDAO.menuSelectAll(menu);
 	}
 	public List<BoardDTO> categorySelectAll(String category){
 		return noticeDAO.categorySelectAll(category);
