@@ -47,7 +47,7 @@
 						<div class="card-header">
 							<h3 align="center">글목록</h3>
 							<div align="right">
-								전체 글 : <strong>${boardListCount}</strong>
+								전체 글 : <strong>${ph.boardListCount}</strong>
 							</div>
 						</div>
 						<div class="card-body">
@@ -103,13 +103,13 @@
 								<!-- Previous Button -->
 
 								<c:choose>
-									<c:when test="${startPage <= 1}">
+									<c:when test="${ph.startPage <= 1}">
 										<li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous-PageBlock"> <span
 												aria-hidden="true">&laquo;</span> <span class="sr-only">페이지 이전블럭 이동</span>
 										</a></li>
 									</c:when>
 									<c:otherwise>
-										<li class="page-item"><a class="page-link" href="./BoardList.do?page=${startPage-1}"
+										<li class="page-item"><a class="page-link" href="./list?page${ph.getQueryString(ph.startPage-1, map.category)}"
 											aria-label="Previous-PageBlock"> <span aria-hidden="true">&laquo;</span> <span class="sr-only">페이지
 													이전블럭 이동</span>
 										</a></li>
@@ -117,13 +117,13 @@
 								</c:choose>
 
 								<c:choose>
-									<c:when test="${page <= 1}">
+									<c:when test="${ph.page <= 1}">
 										<li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous-Page"> <span
 												aria-hidden="true">&lt;</span> <span class="sr-only">이전 페이지 한칸 이동</span>
 										</a></li>
 									</c:when>
 									<c:otherwise>
-										<li class="page-item"><a  class="page-link" href="./BoardList.do?page=${page-1}"
+										<li class="page-item"><a  class="page-link" href="./list?page${ph.getQueryString(ph.page-1, map.category)}"
 											aria-label="Previous-Page"> <span aria-hidden="true">&lt;</span> <span class="sr-only">이전 페이지 한칸
 													이동</span>
 										</a></li>
@@ -135,13 +135,13 @@
 
 								<!-- Page Number -->
 
-								<c:forEach var="pageNumber" begin="${startPage}" end="${endPage}" step="1">
+								<c:forEach var="pageNumber" begin="${ph.startPage}" end="${ph.endPage}" step="1">
 									<c:choose>
-										<c:when test="${pageNumber==page}">
+										<c:when test="${pageNumber==ph.page}">
 											<li class="page-item active"><a class="page-link">${pageNumber}</a></li>
 										</c:when>
 										<c:otherwise>
-											<li class="page-item"><a class="page-link" href="./BoardList.do?page=${pageNumber}">${pageNumber}</a></li>
+											<li class="page-item"><a class="page-link" href="./list${ph.getQueryString(pageNumber, map.category)}">${pageNumber}</a></li>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
@@ -151,26 +151,26 @@
 								<!-- Next Button -->
 
 								<c:choose>
-									<c:when test="${page >= maxPage}">
+									<c:when test="${ph.page >= ph.maxPage}">
 										<li class="page-item disabled"><a class="page-link" href="#" aria-label="Next"> <span
 												aria-hidden="true">&gt;</span> <span class="sr-only">다음 페이지 한칸 이동</span>
 										</a></li>
 									</c:when>
 									<c:otherwise>
-										<li class="page-item"><a class="page-link" href="./BoardList.do?page=${page+1}" aria-label="Next"> <span
+										<li class="page-item"><a class="page-link" href="./list${ph.getQueryString(ph.page+1, map.category)}" aria-label="Next"> <span
 												aria-hidden="true">&gt;</span> <span class="sr-only">다음 페이지 한칸 이동</span>
 										</a></li>
 									</c:otherwise>
 								</c:choose>
 
 								<c:choose>
-									<c:when test="${endPage == maxPage}">
+									<c:when test="${ph.endPage == ph.maxPage}">
 										<li class="page-item disabled"><a class="page-link" href="#" aria-label="Next"> <span
 												aria-hidden="true">&raquo;</span> <span class="sr-only">페이지 다음블럭 이동</span>
 										</a></li>
 									</c:when>
 									<c:otherwise>
-										<li class="page-item"><a class="page-link" href="./BoardList.do?page=${endPage+1}" aria-label="Next">
+										<li class="page-item"><a class="page-link" href="./list${ph.getQueryString(ph.endPage+1, map.category)}" aria-label="Next">
 												<span aria-hidden="true">&raquo;</span> <span class="sr-only">페이지 다음블럭 이동</span>
 										</a></li>
 									</c:otherwise>
