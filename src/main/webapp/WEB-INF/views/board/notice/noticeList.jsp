@@ -38,12 +38,12 @@
 						</div>
 						<div class="card-body">
  							<div align="center">
-								<button type="button" class="btn btn-primary float-end" name="kind" value="NOTICE_ALL">전체</button>								
+								<button type="button" class="btn btn-primary float-end" name="kind" value="NOTICE_ALL" onclick="location.href='./select_all_view' ">전체</button>								
 								<button type="button" class="btn btn-primary float-end" name="kind" value="NOTICE_NOTICE" onclick="location.href='./select_category_view?category=NOTICE_NOTICE' ">공지사항</button>
 								<button type="button" class="btn btn-primary float-end" name="kind" value="NOTICE_EVENT" onclick="location.href='./select_category_view?category=NOTICE_EVENT' ">이벤트</button>
 							</div>
 							<div class="d-flex justify-content-end">
-								<a class="btn btn-warning float-end" href=""> <i class="fas fa-edit"></i> 글 작성
+								<a class="btn btn-warning float-end" href="./insert_view"> <i class="fas fa-edit"></i> 글 작성
 								</a>
 							</div>
 							<table class="table table-hover table-striped text-center"  style="table-layout: fixed">
@@ -61,7 +61,7 @@
 										<tr>
 											<th>${board.bNo}</th>
 											<%-- <th>${(boardListCount-status.index)-((page-1)*10)}</th> --%>
-											<td class="text-truncate" style="max-width: 500px;"><a href="/notice/Select_Detail_view?bNo=${board.bNo}">${board.title}</a></td>
+											<td class="text-truncate" style="max-width: 500px;"><a href="/notice/select_Detail_view?bNo=${board.bNo}">${board.title}</a></td>
 											<td>${board.id}</td>
 											<td>${board.writeDay}</td>
 											<td>${board.readCount}</td>

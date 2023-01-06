@@ -3,8 +3,8 @@
 <mapper namespace="com.aqh.board.domain.dao.NoticeDAO">
 	
 	<!-- 메뉴 전체조회(notice 메뉴 클릭 시) -->
-	<select id="menuSelectAll" parameterType="BoardDTO" resultType="BoardDTO">
-		select bNo,id,menu,category,readCount,file,title,writeDay,contents from board where menu = 'NOTICE';
+	<select id="menuSelectAll" parameterType="String" resultType="BoardDTO">
+		select bNo,id,menu,category,readCount,file,title,writeDay,contents from board where menu = #{menu};
 	</select>
 	
 	<!-- 카테고리 전체조회(category 메뉴 클릭 시) -->
@@ -27,12 +27,12 @@
 	
 	<!-- 등록 -->
 	<select id="noticeInsert" parameterType="BoardDTO" resultType="BoardDTO">
-		insert into board (bNo,id,menu,category,readCount,file,title,writeDay,contents) values(#{bNo},#{id},#{menu},#{category},#{readCount},#{file},#{title},sysdate(),#{contents});
+		insert into board (id,menu,category,title,contents) values(#{id},#{menu},#{category},#{title},#{contents});
 	</select>
 	
 	<!-- 수정 -->
 	<select id="noticeUpdate" parameterType="BoardDTO" resultType="BoardDTO">
-		update board set menu = #{menu}, category = #{category}, file = #{file}, title = #{title}, contents = #{contents} WHERE `bNo` = #{bNo};
+		update board set menu = #{menu}, category = #{category}, title = #{title}, contents = #{contents} WHERE `bNo` = #{bNo};
 	</select>
 	
 	<!-- 삭제 -->
