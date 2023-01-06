@@ -37,22 +37,24 @@ public class NoticeController {
 	@GetMapping(value = "/select_category_view")
 	public String categorySelectAll(Model model, String category) {
 		model.addAttribute("categorySelectAll", noticeService.categorySelectAll(category));
+		log.info("카테고리 확인"+ model);
 		model.addAttribute("boardCategoryCount", noticeService.CategoryListCount(category));
 		log.info("카테고리 게시판 전체 보기" + model);
-		return "/board/notice/noticeCategoryList";
+		return "board/notice/noticeCategoryList";
 	}
 
 
 	@GetMapping(value = "/select_Detail_view")
 	public String noticeSelectDetail(Model model, Integer bNo) {
+		log.info("게시판 내용 1차 확인");
 		model.addAttribute("selectDetail", noticeService.selectDetail(bNo));
 		log.info("게시판 내용 보기" + model);
-		return "/board/notice/noticeListDetail";
+		return "board/notice/noticeListDetail";
 	}
 	
 	@GetMapping(value = "/insert_view")
 	public String insertView() {
-		return "/board/notice/noticeInsert";
+		return "board/notice/noticeInsert";
 	}
 	
 	@PostMapping(value = "/insert")	
@@ -75,14 +77,14 @@ public class NoticeController {
 		log.info("글 등록 정보" + boardDTO);
 		noticeService.insert(boardDTO);
 		model.addAttribute("menuSelectAll", noticeService.menuSelectAll("NOTICE"));
-		
+		model.addAttribute("boardAllCount", noticeService.BoardListAllCount());
 		return "board/notice/noticeList";
 	}
 	
 	@GetMapping(value = "/update_view")
 	public String updateView(Model model,Integer bNo) {
 		model.addAttribute("boardDTO", noticeService.selectDetail(bNo));
-		return "/board/notice/noticeUpdate";
+		return "board/notice/noticeUpdate";
 	}
 	
 	@PostMapping(value = "/update")	
@@ -104,6 +106,7 @@ public class NoticeController {
 		log.info("글 수정 정보" + boardDTO);
 		noticeService.update(boardDTO);
 		model.addAttribute("menuSelectAll", noticeService.menuSelectAll("NOTICE"));
+		model.addAttribute("boardAllCount", noticeService.BoardListAllCount());
 		return "board/notice/noticeList";
 	}
 	
@@ -111,6 +114,7 @@ public class NoticeController {
 	public String delete(Model model,Integer bNo) {
 		noticeService.delete(bNo);
 		model.addAttribute("menuSelectAll", noticeService.menuSelectAll("NOTICE"));
+		model.addAttribute("boardAllCount", noticeService.BoardListAllCount());
 		return "board/notice/noticeList";
 	}
 
