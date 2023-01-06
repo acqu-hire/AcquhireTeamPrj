@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.BoardDTO.Category;
-import com.aqh.board.domain.dto.BoardDTO.Menu;
 import com.aqh.board.service.CommunityService;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @RequestMapping("/community")
@@ -20,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CommunityController {
 
 	private static final String JSP_ROOT = "board/community";
+	private static final String REDIRECT_ROOT = "redirect:/community";
 
 	enum Path {
 
@@ -28,7 +30,7 @@ public class CommunityController {
 		BOARD_COMMUNITY_SELECT_DETAIL_VIEW(JSP_ROOT + "/selectdetail_view"),
 		BOARD_COMMUNITY_UPDATE(JSP_ROOT + "/update"), BOARD_COMMUNITY_UPDATE_VIEW(JSP_ROOT + "/update_view"),
 		BOARD_COMMUNITY_DELETE(JSP_ROOT + "/delete"), BOARD_COMMUNITY_DELETE_VIEW(JSP_ROOT + "/delete_view"),
-		BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW("redirect:" + "/community" + "/select_all_view");
+		BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW(REDIRECT_ROOT + "/select_all_view");
 
 		private String returnPath;
 
@@ -55,27 +57,16 @@ public class CommunityController {
 	 */
 	@GetMapping(value = "/insert")
 	public String createCommunityPost() {
+		// TODO 아이디 확인 추가
 		log.info("PATH " + Path.BOARD_COMMUNITY_INSERT);
 		return Path.BOARD_COMMUNITY_INSERT.getPath();
 	}
 
 	@PostMapping(value = "/insert_view")
-	public String createCommunityInsertPost(int menu, int category, String file, String title, String contents,
-			Model model) {
+	public String createCommunityInsertPost(BoardDTO boardDTO) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_INSERT_VIEW);
-
-		Menu menuCheck = Menu.COMMUNITY.ordinal() == menu ? Menu.COMMUNITY : null;
-		Category categoryCheck = Category.COMMUNITY_GROUP.ordinal() == category ? Category.COMMUNITY_GROUP
-				: Category.COMMUNITY_LIFE;
-
-		if (menuCheck == null)
-			return "exception/error404";
-
-		BoardDTO boardDTO = BoardDTO.builder().id("admin").menu(menuCheck).category(categoryCheck).file(file)
-				.title(title).contents(contents).build();
-
+		System.out.println(boardDTO.toString());
 		communityService.createPost(boardDTO);
-		model.addAttribute("boardDTO", boardDTO);
 		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath();
 	}
 
@@ -93,13 +84,21 @@ public class CommunityController {
 		return Path.BOARD_COMMUNITY_SELECT_ALL_VIEW.getPath();
 	}
 
+	@PostMapping(value="/select_all_view")
+	public String getCategory(Category category) {
+		System.out.println(category.name());
+
+		// ! 여기하고잇엇다람쥐
+		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath();
+	}
+
 	@GetMapping(value = "/selectdetail_view")
 	public String readCommunitPost(long bNo, Model model) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_SELECT_DETAIL_VIEW);
 		model.addAttribute("boardDTO", communityService.getPost(bNo));
 		return Path.BOARD_COMMUNITY_SELECT_DETAIL_VIEW.getPath();
 	}
-
+	
 	/**
 	 * UPDATE PART
 	 * 
@@ -109,8 +108,8 @@ public class CommunityController {
 	@GetMapping(value = "/update")
 	public String updateCommunityPost(Model model, long bNo) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_UPDATE);
+		// TODO 아이디 확인 추가
 		model.addAttribute("boardDTO", communityService.getPost(bNo));
-		log.info("UPDATE RETURN DTO", communityService.getPost(bNo).toString());
 		return Path.BOARD_COMMUNITY_UPDATE.getPath();
 	}
 
@@ -118,14 +117,8 @@ public class CommunityController {
 	public String updateCommunityPostView(BoardDTO boardDTO) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_UPDATE_VIEW);
 
-		log.info("UPDATE VIEW DTO ", boardDTO);
-
-		// BoardDTO boardDTO =
-		// BoardDTO.builder().id("admin").menu(menuCheck).category(categoryCheck).file(file)
-		// .title(title).contents(contents).build();
-
 		communityService.updatePost(boardDTO);
-		return Path.BOARD_COMMUNITY_UPDATE_VIEW.getPath();
+		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath();
 	}
 
 	/**
@@ -135,17 +128,11 @@ public class CommunityController {
 	 * @return
 	 */
 	@GetMapping(value = "/delete")
-	public String deleteCommunityPost() {
-		// TODO: Business logic
+	public String deleteCommunityPost(long bNo, String id) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_DELETE);
-		return Path.BOARD_COMMUNITY_DELETE.getPath();
-	}
-
-	@PostMapping(value = "delete_view")
-	public String deleteCommunityPostView() {
-		// TODO: Business logic
-		log.info("PATH " + Path.BOARD_COMMUNITY_DELETE_VIEW);
-		return Path.BOARD_COMMUNITY_DELETE_VIEW.getPath();
+		// TODO 아이디 확인 추가
+		communityService.deletePost(bNo);
+		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath();
 	}
 
 }
