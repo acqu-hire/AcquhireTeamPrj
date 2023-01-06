@@ -19,7 +19,7 @@ public class NoticeDAOTest {
 
 	@Test
 	public void testMenuSelectAll() {
-		System.out.println(noticeDAO.menuSelectAll());
+		System.out.println(noticeDAO.menuSelectAll("NOTICE"));
 	}
 
 	@Test

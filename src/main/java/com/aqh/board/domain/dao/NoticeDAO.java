@@ -15,8 +15,8 @@ public class NoticeDAO {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
-	public List<BoardDTO> menuSelectAll(){
-		return sqlSessionTemplate.selectList("menuSelectAll");
+	public List<BoardDTO> menuSelectAll(String menu){
+		return sqlSessionTemplate.selectList("menuSelectAll", menu);
 	}
 	public List<BoardDTO> categorySelectAll(String category) {
 		return sqlSessionTemplate.selectList("categorySelectAll", category);
