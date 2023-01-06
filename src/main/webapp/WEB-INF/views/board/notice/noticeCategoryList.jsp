@@ -10,11 +10,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>QnA 게시판</title>
-<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.min.css">
-<script src="${contextPath}/resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
-<script src="${contextPath}/resources/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="https://kit.fontawesome.com/58abbffa46.js" ></script>
+<title>NOTICE 게시판</title>
+
 </head>
 <body>
 	<!-- Header -->
@@ -61,7 +58,7 @@
 										<tr>
 											<th>${board.bNo}</th>
 											<%-- <th>${(boardListCount-status.index)-((page-1)*10)}</th> --%>
-											<td class="text-truncate" style="max-width: 500px;"><a href="/notice/Select_Detail_view?bNo=${board.bNo}">${board.title}</a></td>
+											<td class="text-truncate" style="max-width: 500px;"><a href="./select_Detail_view?bNo=${board.bNo}">${board.title}</a></td>
 											<td>${board.id}</td>
 											<td>${board.writeDay}</td>
 											<td>${board.readCount}</td>
