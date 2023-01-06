@@ -1,12 +1,14 @@
 package com.aqh.board.domain.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.aqh.board.domain.dto.BoardDTO;
+import com.aqh.board.domain.dto.BoardDTO.Category;
 
 @Repository
 public class QnADAO {
@@ -16,8 +18,8 @@ public class QnADAO {
 	
 	String namespace = "com.aqh.board.domain.dao.QnAMapper.";
 	
-	public int boardCount(BoardDTO boardDTO) {
-		return sessionTemplate.selectOne(namespace + "boardCount", boardDTO);
+	public int boardCount(Map map) {
+		return sessionTemplate.selectOne(namespace + "boardCount", map);
 	}
 	
 	public int boardCount() {
@@ -28,8 +30,8 @@ public class QnADAO {
 		return sessionTemplate.update(namespace + "readCountUp", bNo);
 	}
 	
-	public List<BoardDTO> selectAll(BoardDTO boardDTO) {
-		return sessionTemplate.selectList(namespace + "selectAll", boardDTO);
+	public List<BoardDTO> selectAll(Map map) {
+		return sessionTemplate.selectList(namespace + "selectAll", map);
 	}
 	
 	public List<BoardDTO> selectAll(){

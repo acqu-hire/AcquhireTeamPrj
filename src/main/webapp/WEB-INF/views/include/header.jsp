@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<c:set var="path" value="${pageContext.request.servletPath}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +15,7 @@
 <title>Header</title>
 </head>
 <body>
+
 <header>
 	<nav class="navbar navbar-expand-lg navbar-light bg-warning static-top">
 
@@ -22,7 +25,11 @@
 		<a class="navbar-brand" href="<c:url value='/' />"><i class="far fa-smile-wink"></i> Aqh</a>
 		<div class="collapse navbar-collapse" id="navbarMenu">
 			<ul class="navbar-nav mx-auto">
-				<li class="nav-item"><a class="nav-link ${pageContext.request.servletPath == '/WEB-INF/views/index.jsp'?'active':''}" href="<c:url value='/' />"><i class="fa-solid fa-house"></i>Home</a></li>
+				<li class="nav-item">
+					<a class="nav-link ${fn:contains(path ,'index')?'active':''}" href="<c:url value='/' />">
+						<i class="fa-solid fa-house"></i>Home
+					</a>
+				</li>
 <%-- 				<c:choose>
 					<c:when test="${!empty sessionScope.id}">
 						<li class="nav-item"><a class="nav-link" href="#">게시판</a></li>
@@ -39,22 +46,22 @@
 					</c:when>
 					<c:otherwise> --%>
 						<li class="nav-item">
-							<a class="nav-link ${pageContext.request.servletPath == '/WEB-INF/views/board/notice/noticeList.jsp'?'active':''}" href="<c:url value='/notice/select_all_view' />">공지사항</a>
+							<a class="nav-link ${fn:contains(path ,'noticeList')?'active':''}" href="<c:url value='/notice/select_all_view'/>">공지사항</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link ${pageContext.request.servletPath == '/WEB-INF/views/board/qna/qna_list.jsp'?'active':''}" href="<c:url value='/QnA/list' />">QnA</a>
+							<a class="nav-link ${fn:contains(path ,'qna_list')?'active':''}" href="<c:url value='/QnA/list' />">QnA</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link ${pageContext.request.servletPath == '/WEB-INF/views/board/event/event_list.jsp'?'active':''}" href="#">이벤트</a>
+							<a class="nav-link ${fn:contains(path ,'eventList')?'active':''}" href="#">이벤트</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link ${pageContext.request.servletPath == '/WEB-INF/views/board/community/select_all_view.jsp'?'active':''}" href="<c:url value='/community/select_all_view' />">커뮤니티</a>
+							<a class="nav-link ${fn:contains(path ,'select_all_view')?'active':''}" href="<c:url value='/community/select_all_view' />">커뮤니티</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link ${pageContext.request.servletPath == '/WEB-INF/views/board/member/member_register.jsp'?'active':''}" href="#">회원가입</a>
+							<a class="nav-link ${fn:contains(path ,'member_register')?'active':''}" href="#">회원가입</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link ${pageContext.request.servletPath == '/WEB-INF/views/board/login/login.jsp'?'active':''}" href="#">로그인</a>
+							<a class="nav-link ${fn:contains(path ,'login')?'active':''}" href="#">로그인</a>
 						</li>
 				<%-- 	</c:otherwise>
 				</c:choose> --%>
@@ -70,13 +77,5 @@
 	</nav>
 	
 </header>
-<script type="text/javascript">
-	$(function() {
-		$("ul.navbar-nav li").on("click", function() {
-			$("ul.navbar-nav li").remove("active");
-			$(this).addClass("active");			
-		})
-	})
-</script>
 </body>
 </html>
