@@ -1,12 +1,14 @@
 package com.aqh.board.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.aqh.board.domain.dao.QnADAO;
 import com.aqh.board.domain.dto.BoardDTO;
+import com.aqh.board.domain.dto.BoardDTO.Category;
 
 @Service
 public class QnAService {
@@ -14,8 +16,8 @@ public class QnAService {
 	@Autowired
 	QnADAO qnaDao;
 	
-	public int getBoardCnt(BoardDTO boardDTO) {
-		return qnaDao.boardCount(boardDTO);
+	public int getBoardCnt(Map map) {
+		return qnaDao.boardCount(map);
 	}
 	
 	public int getBoardCnt() {
@@ -26,8 +28,8 @@ public class QnAService {
 		return qnaDao.readCountUp(bNo);
 	}
 	
-	public List<BoardDTO> selectAll(BoardDTO boardDTO) {
-		return qnaDao.selectAll(boardDTO);
+	public List<BoardDTO> selectAll(Map map) {
+		return qnaDao.selectAll(map);
 	}
 
 	public List<BoardDTO> selectAll() {

@@ -8,14 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.BoardDTO.Category;
-import com.aqh.board.domain.pagination.Pagination;
+import com.aqh.board.domain.pagehandler.PageHandler;
 import com.aqh.board.service.QnAService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,14 +27,27 @@ public class QnAController {
 	QnAService service;
 
 	@GetMapping("/list")
-	public String qnaList(Model model, BoardDTO boardDTO) {
-		List<BoardDTO> list = service.selectAll(boardDTO);
-		int boardListCount = service.getBoardCnt(boardDTO);
-//		Map<String, Object> map = new HashMap();
-//		map.put("boardDTO", boardDTO);
-//		map
+	public String qnaList(Model model, Category category, Integer page) {
+		if(page == null) page=1;
 		
-		model.addAttribute("boardListCount", boardListCount);
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("category", category);
+		map.put("page", page);
+		
+		int boardListCount = service.getBoardCnt(map);
+		
+		PageHandler ph = new PageHandler(page, boardListCount);
+		
+		map.put("startRow", ph.getStartRow());
+		map.put("endRow", ph.getEndRow());
+		
+		log.info("map = " + map);
+		
+		List<BoardDTO> list = service.selectAll(map);
+		
+		model.addAttribute("ph", ph);
+		model.addAttribute("map", map);
 		model.addAttribute("boardList", list);
 		return "board/qna/qna_list";
 	}
