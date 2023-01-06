@@ -72,11 +72,12 @@
 					${boardDTO.contents}
 					</div>
 					<div class="row">
-<%-- 						<div class="col-12 text-right">
-							<input type="button" value="글수정" class="btn btn-success" onclick="location.href='./BoardUpdateView.do?boardNum=${boardDTO.boardNum}&memberId=${boardDTO.memberId}'"> 
-							<input type="button" value="글삭제" class="btn btn-warning" onclick="location.href='./BoardDeleteConfirm.do?boardNum=${boardDTO.boardNum}&memberId=${boardDTO.memberId}'">
-							<button type="button" class="btn btn-primary" onclick="location.href='./BoardList.do'">전체 게시글보기</button>
-						</div> --%>
+ 						<div class="col-12 text-right">
+							<input type="button" value="글수정" class="btn btn-success" onclick="location.href='./update_view?bNo=${selectDetail.bNo}'"> 
+							<input type="button" value="글삭제" class="btn btn-warning" onclick="location.href='./delete?bNo=${selectDetail.bNo}'">
+							<!-- <input type="button" value="글삭제" class="btn btn-warning" onclick="location.href='./BoardDeleteConfirm.do?boardNum=${boardDTO.boardNum}&memberId=${boardDTO.memberId}'"> -->
+							<button type="button" class="btn btn-primary" onclick="location.href='./select_all_view'">전체 게시글보기</button>
+						</div> 
 					</div>
 				</div>
 			</div>
