@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,7 +35,6 @@ public class QnAController {
 //		Map<String, Object> map = new HashMap();
 //		map.put("boardDTO", boardDTO);
 //		map
-		List<BoardDTO> list = service.selectAll(boardDTO);
 		
 		model.addAttribute("boardListCount", boardListCount);
 		model.addAttribute("boardList", list);
@@ -55,11 +55,11 @@ public class QnAController {
 	}
 
 	@PostMapping("/write")
-	public String qnaInsert(BoardDTO boardDTO, @RequestParam(required = false) Category category) {
-		boardDTO.setCategory(category);
+	public String qnaInsert(BoardDTO boardDTO) {
 		String id = "bacd"; // 임시
 		boardDTO.setId(id);
 		service.insert(boardDTO);
+		System.out.println("boardDTO = " + boardDTO);
 		return "redirect:/QnA/list";
 	}
 
