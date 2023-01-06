@@ -3,25 +3,44 @@
 <mapper namespace="com.aqh.board.domain.dao.CommunityDAO">
 
     <!-- CREATE -->
-    <insert id="createPost" parameterType="BoardDTO"> INSERT INTO TEAMPROJECT.BOARD
+    <insert id="createPost" parameterType="BoardDTO">
+    INSERT INTO BOARD
         (id,menu,category,file,writeDay,title,contents) VALUES
-        (#{id},#{menu},#{category},#{file},sysdate(),#{title},#{contents}); </insert>
+        (#{id},"COMMUNITY",#{category},#{file},sysdate(),#{title},#{contents});
+    </insert>
     <!-- READ -->
-    <select id="getAllCommunityPostList" resultType="BoardDTO"> SELECT * FROM teamproject.board
-        where menu = "COMMUNITY" </select>
-    <select id="getLifePostList" resultType="BoardDTO"> SELECT * FROM teamproject.board where
-        category = "COMMUNITY_LIFE" </select>
-    <select id="getGroupPostList" resultType="BoardDTO"> SELECT * FROM teamproject.board where
-        category = "COMMUNITY_GROUP" </select>
-    <select id="getPost" resultType="BoardDTO"> SELECT * FROM teamproject.board where BNO = #{bNo} </select>
-    <select id="getTotal" resultType="long"> SELECT count(*) FROM teamproject.board where category =
-        "COMMUNITY"</select>
+    
+    <select id="getAllCommunityPostList" resultType="BoardDTO">
+    SELECT * FROM board where menu = "COMMUNITY"
+    </select>
+    
+    <select id="getLifePostList" resultType="BoardDTO">
+    SELECT * FROM board where category = "COMMUNITY_LIFE"
+    </select>
+    
+    <select id="getGroupPostList" resultType="BoardDTO">
+    SELECT * FROM board where category = "COMMUNITY_GROUP"
+    </select>
+    
+    <select id="getPost" resultType="BoardDTO">
+    SELECT * FROM board where BNO = #{bNo}
+    </select>
+    
+    <select id="getTotal" resultType="long">
+    SELECT count(*) FROM board where category = "COMMUNITY"
+    </select>
+    
     <!-- UPDATE -->
-    <update id="updatePost"> UPDATE teamproject.board SET category = #{category},file =
-        #{file},title = #{title},contents = #{contents} <trim prefix="WHERE"><if test=" bNo != null">bNo
-        = #{bNo}</if>
+    <update id="updatePost">
+    UPDATE board SET category = #{category},file = #{file},title = #{title},contents = #{contents}
+    	<trim prefix="WHERE">
+    		<if test=" bNo != null">bNo = #{bNo}</if>
         </trim>
     </update>
+    
     <!-- DELETE -->
-    <delete id="deletePost" parameterType="long"> DELETE FROM teamproject.board WHERE bNo = #{bNo} </delete>
+    <delete id="deletePost" parameterType="long">
+    DELETE FROM board WHERE bNo = #{bNo}
+    </delete>
+    
 </mapper>
