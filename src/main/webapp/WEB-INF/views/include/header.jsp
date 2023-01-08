@@ -17,12 +17,11 @@
 <body>
 
 <header>
-	<nav class="navbar navbar-expand-lg navbar-light bg-warning static-top">
-
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<a class="navbar-brand" href="<c:url value='/' />"><i class="far fa-smile-wink"></i> Aqh</a>
+  <nav class="navbar navbar-expand-lg navbar-light bg-warning static-top">
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu">
+	  <span class="navbar-toggler-icon"></span>
+	</button>
+	<a class="navbar-brand" href="<c:url value='/' />"><i class="far fa-smile-wink"></i> Aqh</a>
 		<div class="collapse navbar-collapse" id="navbarMenu">
 			<ul class="navbar-nav mx-auto">
 				<li class="nav-item">
@@ -45,24 +44,24 @@
 					      </li>
 					</c:when>
 					<c:otherwise> --%>
-						<li class="nav-item">
-							<a class="nav-link ${fn:contains(path ,'noticeList')?'active':''}" href="<c:url value='/notice/select_all_view'/>">공지사항</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link ${fn:contains(path ,'qna_list')?'active':''}" href="<c:url value='/QnA/list' />">QnA</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link ${fn:contains(path ,'eventList')?'active':''}" href="#">이벤트</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link ${fn:contains(path ,'select_all_view')?'active':''}" href="<c:url value='/community/select_all_view' />">커뮤니티</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link ${fn:contains(path ,'member_register')?'active':''}" href="#">회원가입</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link ${fn:contains(path ,'login')?'active':''}" href="#">로그인</a>
-						</li>
+				<li class="nav-item">
+				  <a class="nav-link ${fn:contains(path ,'noticeList')?'active':''}" href="<c:url value='/notice/select_all_view'/>">공지사항</a>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link ${fn:contains(path ,'qna_list')?'active':''}" href="<c:url value='/QnA/list' />">QnA</a>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link ${fn:contains(path ,'eventList')?'active':''}" href="#">이벤트</a>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link ${fn:contains(path ,'select_all_view')?'active':''}" href="<c:url value='/community/select_all_view' />">커뮤니티</a>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link ${fn:contains(path ,'member_register')?'active':''}" href="#">회원가입</a>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link ${fn:contains(path ,'login')?'active':''}" href="#">로그인</a>
+				</li>
 				<%-- 	</c:otherwise>
 				</c:choose> --%>
 			</ul>
@@ -74,7 +73,7 @@
 			</form> -->
 
 		</div>
-	</nav>
+  </nav>
 	
 </header>
 </body>
