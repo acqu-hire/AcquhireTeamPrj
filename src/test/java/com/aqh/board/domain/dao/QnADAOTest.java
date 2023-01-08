@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.aqh.board.domain.dto.BoardDTO;
+import com.aqh.board.domain.dto.BoardDTO.Category;
 import com.aqh.board.domain.dto.BoardDTO.Menu;
 
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,28 @@ public class QnADAOTest {
 
 	@Autowired
 	QnADAO qnaDao;
+	@Autowired
+	NoticeDAO noticeDAO;
+	@Autowired
+	CommunityDAO communityDAO;
+
+	@Test
+	public void createData() throws Exception {
+		String[] id = {"aaaa", "abc", "abcd", "aqaq", "bacd", "asdf"};
+		Menu[] menu = {Menu.QNA, Menu.COMMUNITY, Menu.EVENT, Menu.NOTICE};
+		Category[] qnaCategory = {Category.QNA_TECH, Category.QNA_CAREER, Category.QNA_ETC};
+		Category[] noticeCategory = {Category.NOTICE_NOTICE, Category.NOTICE_EVENT};
+		Category[] communityCategory = {Category.COMMUNITY_GROUP, Category.COMMUNITY_LIFE};
+		BoardDTO boardDTO = new BoardDTO();
+		for (int i = 0; i < 213; i++) {
+			boardDTO.setId(id[(int)(Math.random()*id.length)]);
+			boardDTO.setMenu(Menu.COMMUNITY);
+			boardDTO.setCategory(communityCategory[(int)(Math.random()*communityCategory.length)]);
+			boardDTO.setTitle("더미데이터~!" + i);
+			boardDTO.setContents("더이데이터 내용입니다.");
+			communityDAO.createPost(boardDTO);
+		}
+	}
 
 	@Test
 	public void selectAllTest() throws Exception {

@@ -20,20 +20,12 @@ public class QnAService {
 		return qnaDao.boardCount(map);
 	}
 	
-	public int getBoardCnt() {
-		return qnaDao.boardCount();
-	}
-	
 	public int readCntUp(long bNo) {
 		return qnaDao.readCountUp(bNo);
 	}
 	
 	public List<BoardDTO> selectAll(Map map) {
 		return qnaDao.selectAll(map);
-	}
-
-	public List<BoardDTO> selectAll() {
-		return qnaDao.selectAll();
 	}
 	
 	public BoardDTO selectDetail(long bNo) {
