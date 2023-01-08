@@ -17,32 +17,30 @@
 <!-- Header -->
 
 <section>
-
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="row align-items-center">
-					<div class="col-md-2">
-						<ul class="nav flex-column">
-							<li class="nav-item"><a class="nav-link" href="#">1</a></li>
-							<li class="nav-item"><a class="nav-link" href="#">2</a></li>
-							<li class="nav-item"><a class="nav-link" href="#">3</a></li>
-							<li class="nav-item"><a class="nav-link" href="#">4</a></li>
-
-						</ul>
-					</div>
-					<div class="col-md-10">
-						<div class="jumbotron">
-							<h2>Acquhire Team Project</h2>
-							<p>준비중...</p>
+  <div class="container-fluid">
+	<div class="row">
+	  <div class="col-md-12">
+	    <div class="row align-items-center">
+		  <div class="col-md-2">
+			<ul class="nav flex-column">
+			  <li class="nav-item"><a class="nav-link" href="#">1</a></li>
+			  <li class="nav-item"><a class="nav-link" href="#">2</a></li>
+			  <li class="nav-item"><a class="nav-link" href="#">3</a></li>
+			  <li class="nav-item"><a class="nav-link" href="#">4</a></li>
+			</ul>
+		  </div>
+		  <div class="col-md-10">
+			<div class="jumbotron">
+			  <h2>Acquhire Team Project</h2>
+				<p>준비중...</p>
 <!-- 							<p>
 								<a class="btn btn-primary btn-large" href="#">Learn more</a>
 							</p> -->
-						</div>
-					</div>
-				</div>
 			</div>
+		  </div>
 		</div>
+	  </div>
+	</div>
 
 <!-- 					<div class="row">
 						<div class="col-md-4">
@@ -60,7 +58,7 @@
 						<div class="col-md-4"></div>
 						<div class="col-md-4"></div>
 					</div> -->
-	</div>
+  </div>
 </section>
 <!-- Footer -->
 

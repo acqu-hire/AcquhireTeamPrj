@@ -22,20 +22,12 @@ public class QnADAO {
 		return sessionTemplate.selectOne(namespace + "boardCount", map);
 	}
 	
-	public int boardCount() {
-		return sessionTemplate.selectOne(namespace + "boardCount");
-	}
-	
 	public int readCountUp(long bNo) {
 		return sessionTemplate.update(namespace + "readCountUp", bNo);
 	}
 	
 	public List<BoardDTO> selectAll(Map map) {
 		return sessionTemplate.selectList(namespace + "selectAll", map);
-	}
-	
-	public List<BoardDTO> selectAll(){
-		return sessionTemplate.selectList(namespace + "selectAll");
 	}
 	
 	public BoardDTO selectDetail(long bNo) {
