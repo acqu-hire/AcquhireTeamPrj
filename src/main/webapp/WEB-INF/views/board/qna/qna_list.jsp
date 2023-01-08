@@ -27,7 +27,7 @@
 	  <div class="col-8">
 		<div class="card">
 		  <div class="card-header">
-			<h3 align="center">글목록</h3>
+			<h3 align="center">QnA</h3>
 			<div align="right">
 				전체 글 : <strong>${ph.boardListCount}</strong>
 			</div>
@@ -92,7 +92,7 @@
 			  </c:when>
 			  <c:otherwise>
 				<li class="page-item">
-				  <a class="page-link" href="./list?page${ph.getQueryString(ph.startPage-1, map.category)}" 
+				  <a class="page-link" href="./list${ph.getQueryString(ph.startPage-1, map.category)}" 
 				  	 aria-label="Previous-PageBlock"> 
 				    <span aria-hidden="true">&laquo;</span> 
 				    <span class="sr-only">페이지 이전블럭 이동</span>
@@ -111,7 +111,7 @@
 			  </c:when>
 			  <c:otherwise>
 				<li class="page-item">
-				  <a  class="page-link" href="./list?page${ph.getQueryString(ph.page-1, map.category)}"
+				  <a  class="page-link" href="./list${ph.getQueryString(ph.page-1, map.category)}"
 					aria-label="Previous-Page"> 
 				    <span aria-hidden="true">&lt;</span> 
 				    <span class="sr-only">이전 페이지 한칸 이동</span>
@@ -127,7 +127,7 @@
 
 			<c:forEach var="pageNumber" begin="${ph.startPage}" end="${ph.endPage}" step="1">
 			<c:choose>
-			  <c:when test="${pageNumber==ph.page}">
+			  <c:when test="${pageNumber eq ph.page}">
 				<li class="page-item active">
 				  <a class="page-link">${pageNumber}</a>
 				</li>
@@ -181,15 +181,15 @@
 			  </c:otherwise>
 			</c:choose>
 
-		<!-- Next Button -->
+	<!-- Next Button -->
 
 			</ul>
 		  </nav>
 
-<!-- Pagination -->
+	<!-- Pagination -->
 
 
-<!-- Search -->
+	<!-- Search -->
 
 	    	<section id="search" class="mb-3 bg-light">
 	    	  <div class="container">
@@ -220,17 +220,17 @@
 	    	  </div>
 	    	</section>
 
-<!-- Search -->
+	<!-- Search -->
 		</div>
 	  </div>
 	</div>
   </div>
 </section>
-<!-- Footer -->
+	<!-- Footer -->
 
 <%@ include file="../../include/footer.jsp"%>
 
-<!-- Footer -->
+	<!-- Footer -->
 
 <script type="text/javascript">
 	$(function(){
