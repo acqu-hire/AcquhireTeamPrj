@@ -14,7 +14,7 @@ public class PageHandler {
 	private int boardListCount;
 	private Category category;
 	
-	private final int NAV_SIZE = 10;
+	private final int NAV_SIZE = 5;
 	private final int ROW_LIMIT_SIZE = 10;
 	
 	public PageHandler() {}
@@ -30,7 +30,7 @@ public class PageHandler {
 		this.endRow = startRow+ROW_LIMIT_SIZE-1;
 		this.maxPage = (boardListCount%ROW_LIMIT_SIZE == 0)?(boardListCount/ROW_LIMIT_SIZE):(boardListCount/ROW_LIMIT_SIZE)+1;
 		this.endPage = (int)(Math.ceil(page/(float)NAV_SIZE)*NAV_SIZE);
-		this.startPage = endPage-9;
+		this.startPage = endPage-NAV_SIZE+1;
 		if(endPage > maxPage) {
 			this.endPage = maxPage;
 		}
