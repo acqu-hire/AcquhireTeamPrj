@@ -37,8 +37,11 @@ public class PageHandler {
 	}
 	
 	public String getQueryString() {
-        return getQueryString(this.getPage(), this.category);
+        return getQueryString(this.getPage(), this.getCategory());
     }
+	public String getQueryString(Category category) {
+		return getQueryString(this.page, category);
+	}
 
     public String getQueryString(Integer page, Category category) {
         return UriComponentsBuilder.newInstance()
