@@ -47,8 +47,9 @@
 			<table class="table table-hover table-striped text-center"  style="table-layout: fixed">
 			  <thead class="thead-dark">
 				<tr>
-				  <th width="5%">번호</th>
-				  <th width="25%">제목</th>
+				  <th width="4%">번호</th>
+				  <th width="7%">카테고리</th>
+				  <th width="20%">제목</th>
 				  <th width="5%">작성자</th>
 				  <th width="10%">작성일</th>
 				  <th width="4%">조회수</th>
@@ -58,7 +59,8 @@
 				<c:forEach varStatus="status" var="board" items="${boardList}">
 				<tr>
 				  <%-- <th>${board.bNo}</th> --%>
-				  <th>${(ph.boardListCount-status.index)-((ph.page-1)*10)}</th>
+				  <th>${(ph.boardListCount-status.index)-((ph.sc.page-1)*10)}</th>
+				  <td>${board.category}</td>
 				  <td class="text-truncate" style="max-width: 500px;"><a href="./listDetail?bNo=${board.bNo}">${board.title}</a></td>
 				  <td>${board.id}</td>
 				  <td>${board.writeDay}</td>
@@ -68,7 +70,7 @@
 			  </tbody>
 			</table>
 			<table class="table table-hover text-center">
-			  <c:if test="${searchBoardCount==0}">
+			  <c:if test="${ph.boardListCount==0}">
 			  <tr>
 				<td>등록된 게시글이 없습니다.</td>
 			  </tr>
@@ -92,7 +94,7 @@
 			  </c:when>
 			  <c:otherwise>
 				<li class="page-item">
-				  <a class="page-link" href="./list${ph.getQueryString(ph.startPage-1, map.category)}" 
+				  <a class="page-link" href="./list${ph.getQueryString(ph.startPage-1, ph.sc.category)}" 
 				  	 aria-label="Previous-PageBlock"> 
 				    <span aria-hidden="true">&laquo;</span> 
 				    <span class="sr-only">페이지 이전블럭 이동</span>
@@ -101,7 +103,7 @@
 			  </c:otherwise>
 			</c:choose>
 			<c:choose>
-			  <c:when test="${ph.page <= 1}">
+			  <c:when test="${ph.sc.page <= 1}">
 				<li class="page-item disabled">
 				  <a class="page-link" href="#" aria-label="Previous-Page"> 
 					<span aria-hidden="true">&lt;</span> 
@@ -111,7 +113,7 @@
 			  </c:when>
 			  <c:otherwise>
 				<li class="page-item">
-				  <a  class="page-link" href="./list${ph.getQueryString(ph.page-1, map.category)}"
+				  <a  class="page-link" href="./list${ph.getQueryString(ph.sc.page-1, ph.sc.category)}"
 					aria-label="Previous-Page"> 
 				    <span aria-hidden="true">&lt;</span> 
 				    <span class="sr-only">이전 페이지 한칸 이동</span>
@@ -127,13 +129,13 @@
 
 			<c:forEach var="pageNumber" begin="${ph.startPage}" end="${ph.endPage}" step="1">
 			<c:choose>
-			  <c:when test="${pageNumber eq ph.page}">
+			  <c:when test="${pageNumber eq ph.sc.page}">
 				<li class="page-item active">
 				  <a class="page-link">${pageNumber}</a>
 				</li>
 			  </c:when>
 			  <c:otherwise>
-				<li class="page-item"><a class="page-link" href="./list${ph.getQueryString(pageNumber, map.category)}">${pageNumber}</a></li>
+				<li class="page-item"><a class="page-link" href="./list${ph.getQueryString(pageNumber, ph.sc.category)}">${pageNumber}</a></li>
 			  </c:otherwise>
 			</c:choose>
 			</c:forEach>
@@ -143,7 +145,7 @@
 	<!-- Next Button -->
 
 			<c:choose>
-			  <c:when test="${ph.page >= ph.maxPage}">
+			  <c:when test="${ph.sc.page >= ph.maxPage}">
 				<li class="page-item disabled">
 				  <a class="page-link" href="#" aria-label="Next"> 
 				    <span aria-hidden="true">&gt;</span> 
@@ -153,7 +155,7 @@
 			  </c:when>
 			  <c:otherwise>
 				<li class="page-item">
-				  <a class="page-link" href="./list${ph.getQueryString(ph.page+1, map.category)}" 
+				  <a class="page-link" href="./list${ph.getQueryString(ph.sc.page+1, ph.sc.category)}" 
 					 aria-label="Next"> 
 				    <span aria-hidden="true">&gt;</span> 
 				    <span class="sr-only">다음 페이지 한칸 이동</span>
@@ -173,7 +175,7 @@
 			  </c:when>
 			  <c:otherwise>
 				<li class="page-item">
-				  <a class="page-link" href="./list${ph.getQueryString(ph.endPage+1, map.category)}" 
+				  <a class="page-link" href="./list${ph.getQueryString(ph.endPage+1, ph.sc.category)}" 
 					 aria-label="Next">
 					<span aria-hidden="true">&raquo;</span> <span class="sr-only">페이지 다음블럭 이동</span>
 				  </a>
@@ -194,21 +196,21 @@
 	    	<section id="search" class="mb-3 bg-light">
 	    	  <div class="container">
 	    		<div class="form-row justify-content-center">
-	    		  <form action="./BoardSearch.do" method="post" name="search" id="signupForm"
+	    		  <form action="./list" method="get" name="search" id="searchForm"
 	    				enctype="application/x-www-form-urlencoded">
 	    			<fieldset>
 	    			  <div class="input-group mx-auto">
 	    				<label for="keyword"></label>
 	    			    <div class="col-xs-2">
-	    				  <select name="keyfield" class="form-control">
-	    					<option value="all" selected="selected">전체 검색</option>
-	    				    <option value="title">제목</option>
-	    				    <option value="memberId">아이디</option>
-	    				    <option value="content">내용</option>
+	    				  <select id= "keyfield" name="keyfield" class="form-control">
+	    					<option value="searchTab" ${empty ph.sc.keyfield?'selected':''}>-- 검색 항목 --</option>
+	    				    <option value="title" ${ph.sc.keyfield eq 'title'?'selected':''}>제목</option>
+	    				    <option value="id" ${ph.sc.keyfield eq 'id'?'selected':''}>아이디</option>
+	    				    <option value="contents" ${ph.sc.keyfield eq 'contents'?'selected':''}>내용</option>
 	    				  </select>
 	    				</div>
 	    				<div class="col-xs-6">
-	    				  <input type="search" id="keyword" name="keyword" class="form-control" placeholder="검색어 입력">
+	    				  <input type="search" id="keyword" name="keyword" class="form-control" placeholder="검색어 입력" value="${ph.sc.keyword}">
 	    				</div>
 	    				<button class="btn btn-outline-danger input-group-append" type="submit">
 	    				  <i class="fas fa-search"></i>검색
@@ -247,6 +249,16 @@
 	      }
 	  });
 	});
+	
+	$(function() {
+		$("#searchForm").submit(function() {
+			var option = $("#keyfield option:selected").val();
+			if(option == "searchTab") {
+				alert("검색항목을 선택 후 검색해주세요");
+				return false;
+			}
+		})
+	})
 </script>
 
 </body>

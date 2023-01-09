@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.aqh.board.domain.dao.QnADAO;
 import com.aqh.board.domain.dto.BoardDTO;
-import com.aqh.board.domain.dto.BoardDTO.Category;
+import com.aqh.board.domain.pagehandler.SearchCondition;
 
 @Service
 public class QnAService {
@@ -16,8 +16,8 @@ public class QnAService {
 	@Autowired
 	QnADAO qnaDao;
 	
-	public int getBoardCnt(Map map) {
-		return qnaDao.boardCount(map);
+	public int getBoardCnt(SearchCondition sc) {
+		return qnaDao.boardCount(sc);
 	}
 	
 	public int getBoardCnt() {
@@ -28,8 +28,8 @@ public class QnAService {
 		return qnaDao.readCountUp(bNo);
 	}
 	
-	public List<BoardDTO> selectAll(Map map) {
-		return qnaDao.selectAll(map);
+	public List<BoardDTO> selectAll(SearchCondition sc) {
+		return qnaDao.selectAll(sc);
 	}
 	
 	public List<BoardDTO> selectAll() {
