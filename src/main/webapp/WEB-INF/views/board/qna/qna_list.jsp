@@ -33,11 +33,15 @@
 			</div>
 		  </div>
 		  <div class="card-body">
-			<div class="category" align="center">
-			  <a class="btn btn-primary float-end" id="all" href="./list?category=">전체</a>								
-			  <a class="btn btn-warning float-end" href="./list?category=QNA_TECH">기술</a>
-			  <a class="btn btn-warning float-end" href="./list?category=QNA_CAREER">커리어</a>
-			  <a class="btn btn-warning float-end" href="./list?category=QNA_ETC">기타</a>
+			<div id="BtnCategory" class="category" align="center">
+			  <a class="btn btn-primary float-end" 
+			  href="<c:url value='./list'/>?category=&keyfield=${ph.sc.keyfield}&keyword=${ph.sc.keyword}">전체</a>								
+			  <a class="btn btn-warning float-end" 
+			  href="<c:url value='./list'/>?&category=QNA_TECH&keyfield=${ph.sc.keyfield}&keyword=${ph.sc.keyword}">기술</a>
+			  <a class="btn btn-warning float-end" 
+			  href="<c:url value='./list'/>?&category=QNA_CAREER&keyfield=${ph.sc.keyfield}&keyword=${ph.sc.keyword}">커리어</a>
+			  <a class="btn btn-warning float-end" 
+			  href="<c:url value='./list'/>?&category=QNA_ETC&keyfield=${ph.sc.keyfield}&keyword=${ph.sc.keyword}">기타</a>
 			</div>
 			<div class="d-flex justify-content-end">
 			  <a class="btn btn-warning float-end" href="./write">
@@ -61,7 +65,9 @@
 				  <%-- <th>${board.bNo}</th> --%>
 				  <th>${(ph.boardListCount-status.index)-((ph.sc.page-1)*10)}</th>
 				  <td>${board.category}</td>
-				  <td class="text-truncate" style="max-width: 500px;"><a href="./listDetail?bNo=${board.bNo}">${board.title}</a></td>
+				  <td class="text-truncate" style="max-width: 500px;">
+				  	<a href="./listDetail${ph.getQueryString(ph.sc.page, ph.sc.category)}&bNo=${board.bNo}">${board.title}</a>
+				  </td>
 				  <td>${board.id}</td>
 				  <td>${board.writeDay}</td>
 				  <td>${board.readCount}</td>
@@ -145,7 +151,7 @@
 	<!-- Next Button -->
 
 			<c:choose>
-			  <c:when test="${ph.sc.page >= ph.maxPage}">
+			  <c:when test="${ph.sc.page >= ph.totalPage}">
 				<li class="page-item disabled">
 				  <a class="page-link" href="#" aria-label="Next"> 
 				    <span aria-hidden="true">&gt;</span> 
@@ -165,7 +171,7 @@
 			</c:choose>
 
 			<c:choose>
-			  <c:when test="${ph.endPage == ph.maxPage}">
+			  <c:when test="${ph.endPage == ph.totalPage}">
 				<li class="page-item disabled">
 				  <a class="page-link" href="#" aria-label="Next"> 
 				   <span aria-hidden="true">&raquo;</span> 
@@ -203,10 +209,12 @@
 	    				<label for="keyword"></label>
 	    			    <div class="col-xs-2">
 	    				  <select id= "keyfield" name="keyfield" class="form-control">
-	    					<option value="searchTab" ${empty ph.sc.keyfield?'selected':''}>-- 검색 항목 --</option>
-	    				    <option value="title" ${ph.sc.keyfield eq 'title'?'selected':''}>제목</option>
-	    				    <option value="id" ${ph.sc.keyfield eq 'id'?'selected':''}>아이디</option>
-	    				    <option value="contents" ${ph.sc.keyfield eq 'contents'?'selected':''}>내용</option>
+		    				  <optgroup label="검색항목">
+		    				    <option value="title" ${ph.sc.keyfield eq 'title'?'selected':''}>제목</option>
+		    				    <option value="contents" ${ph.sc.keyfield eq 'contents'?'selected':''}>내용</option>
+		    				    <option value="title-contents" ${ph.sc.keyfield eq 'title-contents'?'selected':''}>제목+내용</option>
+		    				    <option value="id" ${ph.sc.keyfield eq 'id'?'selected':''}>아이디</option>
+		    				  </optgroup>
 	    				  </select>
 	    				</div>
 	    				<div class="col-xs-6">
@@ -234,31 +242,26 @@
 
 	<!-- Footer -->
 
-<script type="text/javascript">
-	$(function(){
-	  var defaultUrl = location.href;
-	  var mappingUrl= defaultUrl.substring(defaultUrl.indexOf("category=")+1);
-	  if (defaultUrl == mappingUrl) {
-		  mappingUrl = 'ategory=';
-	  }
-	  	$(".category a").each(function(){
-	      var aUrl = $(this).attr("href");
-	      var aMappingUrl = aUrl.substring(aUrl.indexOf("category=")+1);
-	      if ( aMappingUrl == mappingUrl ) {
-	          $(this).addClass("active");
-	      }
-	  });
-	});
-	
+<script>
+
 	$(function() {
-		$("#searchForm").submit(function() {
-			var option = $("#keyfield option:selected").val();
-			if(option == "searchTab") {
-				alert("검색항목을 선택 후 검색해주세요");
-				return false;
-			}
-		})
+		const urlParams = new URL(location.href).searchParams;
+		const category = urlParams.get('category');
+		if(category == 'QNA_TECH') {
+			$(".category a[href*='QNA_TECH']").addClass("active");
+		}
+		if(category == 'QNA_CAREER') {
+			$(".category a[href*='QNA_CAREER']").addClass("active");
+		}
+		if(category == 'QNA_ETC') {
+			$(".category a[href*='QNA_ETC']").addClass("active");
+		}
+		if(category == '') {
+			$(".category a[href*='category=&']").addClass("active");
+		}
 	})
+
+
 </script>
 
 </body>

@@ -12,11 +12,11 @@
 <title>QnA 게시판</title>
 </head>
 <body>
-<!-- Header -->
+	<!-- Header -->
 
 <%@ include file="../../include/header.jsp" %>
 
-<!-- Header -->
+	<!-- Header -->
 
 	<!-- Board Insert Form -->
 
@@ -58,7 +58,7 @@
  						<div class="col-12 text-right">
 							<input type="button" value="글수정" class="btn btn-success" onclick="location.href='./update?bNo=${boardDTO.bNo}'"> 
 							<input type="button" value="글삭제" class="btn btn-warning" onclick="location.href='./delete?bNo=${boardDTO.bNo}'">
-							<button type="button" class="btn btn-primary" onclick="location.href='./list'">전체 게시글보기</button>
+							<button type="button" class="btn btn-primary" id="btnList">게시글 목록</button>
 						</div>
 					</div>
 				</div>
@@ -68,10 +68,17 @@
 </div>
 
 
-<!-- Footer -->
+	<!-- Footer -->
 
 <%@ include file="../../include/footer.jsp" %>
 
-<!-- Footer -->
+	<!-- Footer -->
+<script>
+	$(document).ready(function() {
+		$('#btnList').on('click', function() {
+			location.href="<c:url value='./list'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}"
+		})
+	})
+</script>
 </body>
 </html>
