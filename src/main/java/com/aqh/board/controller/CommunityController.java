@@ -23,17 +23,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CommunityController {
 
-	private static final String JSP_ROOT = "board/community";
-	private static final String REDIRECT_ROOT = "redirect:/community";
-
 	enum Path {
-
-		BOARD_COMMUNITY_INSERT(JSP_ROOT + "/insert"), BOARD_COMMUNITY_INSERT_VIEW(JSP_ROOT + "/insert_view"),
-		BOARD_COMMUNITY_SELECT_ALL_VIEW(JSP_ROOT + "/select_all_view"),
-		BOARD_COMMUNITY_SELECT_DETAIL_VIEW(JSP_ROOT + "/selectdetail_view"),
-		BOARD_COMMUNITY_UPDATE(JSP_ROOT + "/update"), BOARD_COMMUNITY_UPDATE_VIEW(JSP_ROOT + "/update_view"),
-		BOARD_COMMUNITY_DELETE(JSP_ROOT + "/delete"), BOARD_COMMUNITY_DELETE_VIEW(JSP_ROOT + "/delete_view"),
-		BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW(REDIRECT_ROOT + "/select_all_view");
+		JSP_PATH("board/community"), REDIRECT_PATH("redirect:/community"),
+		BOARD_COMMUNITY_INSERT(JSP_PATH.getPath() + "/insert"),
+		BOARD_COMMUNITY_INSERT_VIEW(JSP_PATH.getPath() + "/insert_view"),
+		BOARD_COMMUNITY_SELECT_ALL_VIEW(JSP_PATH.getPath() + "/select_all_view"),
+		BOARD_COMMUNITY_SELECT_DETAIL_VIEW(JSP_PATH.getPath() + "/selectdetail_view"),
+		BOARD_COMMUNITY_UPDATE(JSP_PATH.getPath() + "/update"),
+		BOARD_COMMUNITY_UPDATE_VIEW(JSP_PATH.getPath() + "/update_view"),
+		BOARD_COMMUNITY_DELETE(JSP_PATH.getPath() + "/delete"),
+		BOARD_COMMUNITY_DELETE_VIEW(JSP_PATH.getPath() + "/delete_view"),
+		BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW(REDIRECT_PATH.getPath() + "/select_all_view");
 
 		private String returnPath;
 
@@ -81,17 +81,15 @@ public class CommunityController {
 	@GetMapping(value = "/select_all_view")
 	public String readCommunityPostList(Model model, Criteria criteria) {
 		log.info("PATH" + Path.BOARD_COMMUNITY_SELECT_ALL_VIEW);
-		System.out.println(criteria.getCategory());
-		System.out.println(criteria.getPage());
-		System.out.println(criteria.getAmount());
-		List<BoardDTO> list = criteria.getCategory() == null ? communityService.getAllCommunityPostList(criteria) : communityService.getGroupPostList(criteria.getCategory());
-		Pagination pagination = new Pagination(list.size(), criteria.getPage());
-		System.out.println(criteria.getPage());
 
+		List<BoardDTO> list = communityService.getAllCommunityPostList(criteria);
+		System.out.println(communityService.getTotal());
+		Pagination pagination = new Pagination(55, criteria.getPage());
+		System.out.println(criteria);
 		model.addAttribute("boardList", list);
 		model.addAttribute("boardListCount", list.size());
 		model.addAttribute("pagination", pagination);
-		
+
 		return Path.BOARD_COMMUNITY_SELECT_ALL_VIEW.getPath();
 	}
 
