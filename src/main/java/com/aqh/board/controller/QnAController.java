@@ -1,8 +1,6 @@
 package com.aqh.board.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,17 +28,21 @@ public class QnAController {
 	@GetMapping("/list")
 	public String qnaList(Model model, SearchCondition sc) {
 		
+		PageHandler ph = new PageHandler(sc, service.getBoardCnt(sc));
+		log.info("ph = " + ph);
 		log.info("sc = " + sc);
-		model.addAttribute("ph", new PageHandler(sc, service.getBoardCnt(sc)));
-		model.addAttribute("boardList", service.selectAll(sc));
+		List<BoardDTO> list = service.selectAll(sc);
+		model.addAttribute("ph", ph);
+		model.addAttribute("boardList", list);
 		return "board/qna/qna_list";
 	}
 
 	@GetMapping("/listDetail")
-	public String qnaListDetail(long bNo, Model model) {
+	public String qnaListDetail(long bNo, Model model, SearchCondition sc) {
 		BoardDTO boardDTO = service.selectDetail(bNo);
 		service.readCntUp(bNo);
-		model.addAttribute("boardDTO", boardDTO);
+		model.addAttribute(boardDTO);
+		model.addAttribute("ph", new PageHandler(sc, service.getBoardCnt(sc)));
 		return "board/qna/qna_list_detail";
 	}
 
