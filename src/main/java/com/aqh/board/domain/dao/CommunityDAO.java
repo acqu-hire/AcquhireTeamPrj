@@ -27,13 +27,13 @@ public class CommunityDAO {
 	// READ
 
 	public List<BoardDTO> getAllCommunityPostList(Criteria criteria) {
-		return sessionTemplate.selectList("getAllCommunityPostList",criteria);
+		return sessionTemplate.selectList("getAllCommunityPostList", criteria);
 
 	};
 
-	public List<BoardDTO> getCategoryPostList(Category category) {
-		return sessionTemplate.selectList("getCategoryPostList",category);
-	};
+	public int getTotal() {
+		return sessionTemplate.selectOne("getTotal");
+	}
 
 	public BoardDTO getPost(long bNo) {
 		return sessionTemplate.selectOne("getPost", bNo);

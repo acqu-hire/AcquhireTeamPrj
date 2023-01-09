@@ -188,6 +188,49 @@
 		</div>
 
 	</section>
+ <!-- Search -->
+
+                  <section id="search" class="mb-3 bg-light">
+                     <div class="container">
+                        <div class="form-row justify-content-center">
+                           <form action="./select_all_view" method="get" name="search" id="signupForm"
+                              enctype="application/x-www-form-urlencoded">
+                              <fieldset>
+                                 <div class="input-group mx-auto">
+                                    <label for="keyword"></label>
+                                    <div class="col-xs-2">
+                                       <select name="type" class="form-control">
+                                          <%--해당 항목을 기본 선택으로 지정하여 검색한다.--%>
+                                          <option value="all" selected="selected">전체 검색</option>
+                                          <option value="title">제목</option>
+                                          <option value="memberId">아이디</option>
+                                          <option value="content">내용</option>
+                                       </select>
+                                    </div>
+                                    <div class="col-xs-6">
+                                       <input type="search" id="keyword" name="keyword" class="form-control" placeholder="검색어 입력">
+                                    </div>
+                                       <button class="btn btn-outline-danger input-group-append" type="submit">
+                                          <i class="fas fa-search"></i>검색
+                                       </button>
+                                 </div>
+                              </fieldset>
+                           </form>
+                        </div>
+                     </div>
+                  </section>
+
+                  <!-- Search -->
+               </div>
+            </div>
+         </div>
+      </div>
+
+   </section>
+   <!-- Footer -->
+
+
+   <!-- Footer -->
 
 </body>
 

@@ -32,14 +32,14 @@ public class CommunityService {
 		return communityBoardDAO.getAllCommunityPostList(criteria);
 	};
 
-
-	public List<BoardDTO> getGroupPostList(Category category) {
-		return communityBoardDAO.getCategoryPostList(category);
-	};
+	public int getTotal() {
+		return communityBoardDAO.getTotal();
+	}
 
 	public BoardDTO getPost(long bNo) {
 		return communityBoardDAO.getPost(bNo);
 	};
+
 	// UPDATE
 	public void updatePost(BoardDTO boardDTO) {
 		communityBoardDAO.updatePost(boardDTO);
