@@ -11,19 +11,17 @@
     <!-- READ -->
     
     <select id="getAllCommunityPostList" resultType="BoardDTO">
-        SELECT * FROM board ORDER BY bNo desc LIMIT #{page}, #{amount}
-    </select>
-    
-    <select id="getCategoryPostList" resultType="BoardDTO">
-    SELECT * FROM board where category = #{category}
+        SELECT * FROM (SELECT * FROM board ORDER BY bNo DESC) SUBQUERY LIMIT 0,10;
+        <!-- 쿼리 추가 해야함. -->
     </select>
     
     <select id="getPost" resultType="BoardDTO">
     SELECT * FROM board where BNO = #{bNo}
     </select>
     
-    <select id="getTotal" resultType="long">
-    SELECT count(*) FROM board where category = "COMMUNITY"
+    <select id="getTotal" resultType="int">
+    SELECT count(*) FROM board where menu = "COMMUNITY"
+    <!-- 쿼리 추가 해야함. -->
     </select>
     
     <!-- UPDATE -->
