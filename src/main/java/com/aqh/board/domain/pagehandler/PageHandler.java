@@ -6,12 +6,12 @@ import com.aqh.board.domain.dto.BoardDTO.Category;
 
 public class PageHandler {
 	private SearchCondition sc;
-	private int maxPage;		// 총 페이지 수 
+	private int totalPage;		// 총 페이지 수 
 	private int endPage;		// 페이지네이션에 보여줄 마지막 페이지
 	private int startPage;		// 페이지네이션에 보여줄 시작 페이지
 	private int boardListCount;	// 게시물 수 
 	
-	private final int NAV_SIZE = 10;			// 페이지네이션 사이즈
+	private final int NAV_SIZE = 10;	// 페이지네이션 사이즈
 	
 	public PageHandler() {}
 	
@@ -25,11 +25,11 @@ public class PageHandler {
 	public void doPaging(SearchCondition sc, int boardListCount) {
 		sc.setStartRow((sc.getPage()-1)*sc.getROW_LIMIT_SIZE()+1);
 		sc.setEndRow(sc.getStartRow()+sc.getROW_LIMIT_SIZE()-1);
-		this.maxPage = (boardListCount%sc.getROW_LIMIT_SIZE() == 0)?(boardListCount/sc.getROW_LIMIT_SIZE()):(boardListCount/sc.getROW_LIMIT_SIZE())+1;
+		this.totalPage = (boardListCount/sc.getROW_LIMIT_SIZE() + (boardListCount%sc.getROW_LIMIT_SIZE()!=0?1:0));
 		this.endPage = (int)(Math.ceil(sc.getPage()/(float)NAV_SIZE)*NAV_SIZE);
 		this.startPage = endPage-NAV_SIZE+1;
-		if(endPage > maxPage) {
-			this.endPage = maxPage;
+		if(endPage > totalPage) {
+			this.endPage = totalPage;
 		}
 	}
 	
@@ -49,12 +49,12 @@ public class PageHandler {
                 .build().toString();
     }
 
-	public int getMaxPage() {
-		return maxPage;
+	public int getTotalPage() {
+		return totalPage;
 	}
 
-	public void setMaxPage(int maxPage) {
-		this.maxPage = maxPage;
+	public void setTotalPage(int totalPage) {
+		this.totalPage = totalPage;
 	}
 
 	public int getEndPage() {
@@ -95,7 +95,7 @@ public class PageHandler {
 
 	@Override
 	public String toString() {
-		return "PageHandler [sc=" + sc + ", maxPage=" + maxPage + ", endPage=" + endPage + ", startPage=" + startPage
+		return "PageHandler [sc=" + sc + ", totalPage=" + totalPage + ", endPage=" + endPage + ", startPage=" + startPage
 				+ ", boardListCount=" + boardListCount + ", NAV_SIZE=" + NAV_SIZE + "]";
 	}
 
