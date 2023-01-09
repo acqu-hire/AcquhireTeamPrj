@@ -11,15 +11,11 @@
     <!-- READ -->
     
     <select id="getAllCommunityPostList" resultType="BoardDTO">
-    SELECT * FROM board where menu = "COMMUNITY"
+        SELECT * FROM board ORDER BY bNo desc LIMIT #{page}, #{amount}
     </select>
     
-    <select id="getLifePostList" resultType="BoardDTO">
-    SELECT * FROM board where category = "COMMUNITY_LIFE"
-    </select>
-    
-    <select id="getGroupPostList" resultType="BoardDTO">
-    SELECT * FROM board where category = "COMMUNITY_GROUP"
+    <select id="getCategoryPostList" resultType="BoardDTO">
+    SELECT * FROM board where category = #{category}
     </select>
     
     <select id="getPost" resultType="BoardDTO">

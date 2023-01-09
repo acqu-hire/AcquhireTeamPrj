@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.aqh.board.domain.dao.CommunityDAO;
 import com.aqh.board.domain.dto.BoardDTO;
+import com.aqh.board.domain.dto.BoardDTO.Category;
+import com.aqh.board.domain.dto.Criteria;
 
 /**
  * 커뮤니티 구현 추상화
@@ -26,26 +28,18 @@ public class CommunityService {
 	};
 
 	// READ
-	public List<BoardDTO> getAllCommunityPostList() {
-		return communityBoardDAO.getAllCommunityPostList();
+	public List<BoardDTO> getAllCommunityPostList(Criteria criteria) {
+		return communityBoardDAO.getAllCommunityPostList(criteria);
 	};
 
-	public List<BoardDTO> getLifePostList() {
-		return communityBoardDAO.getLifePostList();
-	};
 
-	public List<BoardDTO> getGroupPostList() {
-		return communityBoardDAO.getGroupPostList();
+	public List<BoardDTO> getGroupPostList(Category category) {
+		return communityBoardDAO.getCategoryPostList(category);
 	};
 
 	public BoardDTO getPost(long bNo) {
 		return communityBoardDAO.getPost(bNo);
 	};
-
-	public long getTotal() {
-		return communityBoardDAO.getTotal();
-	};
-
 	// UPDATE
 	public void updatePost(BoardDTO boardDTO) {
 		communityBoardDAO.updatePost(boardDTO);
