@@ -29,24 +29,23 @@
 			<when test="keyfield == 'contents'">
 				AND contents LIKE CONCAT('%', #{keyword}, '%')
 			</when>
-			<when test="keyfield == 'all'">
-				AND title LIKE CONCAT('%', #{keyword}, '%') 
-				OR id LIKE CONCAT('%', #{keyword}, '%')
-				OR contents LIKE CONCAT('%', #{keyword}, '%')
+			<when test="keyfield == 'title-contents'">
+				AND (title LIKE CONCAT('%', #{keyword}, '%')
+				OR contents LIKE CONCAT('%', #{keyword}, '%'))
 			</when>
 		</choose>
 	</sql>
 	
 	<select id="selectAll" resultType="BoardDTO">
  		SELECT * FROM 
-			(SELECT @rownum:=@rownum+1 AS rownum , bNo, title, id, DATE_FORMAT(writeDay,'%Y-%m-%d') writeDay, readCount
+			(SELECT @rownum:=@rownum+1 AS rownum , bNo, title, id, DATE_FORMAT(writeDay,'%Y-%m-%d') writeDay, readCount, category
 			FROM board A, (SELECT @rownum:=0) R
 			WHERE menu='QNA'
 			<if test="category != null and !category.equals('')">
 				AND category=#{category} 
 			</if>
 			<include refid="search" />
-			ORDER BY writeDay DESC) B
+			ORDER BY writeDay DESC, bNo DESC) B
 		WHERE rownum between #{startRow} and #{endRow};
 	</select>
 	
