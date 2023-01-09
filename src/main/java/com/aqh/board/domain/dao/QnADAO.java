@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.aqh.board.domain.dto.BoardDTO;
-import com.aqh.board.domain.dto.BoardDTO.Category;
+import com.aqh.board.domain.pagehandler.SearchCondition;
 
 @Repository
 public class QnADAO {
@@ -18,8 +18,8 @@ public class QnADAO {
 	
 	String namespace = "com.aqh.board.domain.dao.QnAMapper.";
 	
-	public int boardCount(Map map) {
-		return sessionTemplate.selectOne(namespace + "boardCount", map);
+	public int boardCount(SearchCondition sc) {
+		return sessionTemplate.selectOne(namespace + "boardCount", sc);
 	}
 
 	public int boardCount() {
@@ -30,8 +30,8 @@ public class QnADAO {
 		return sessionTemplate.update(namespace + "readCountUp", bNo);
 	}
 	
-	public List<BoardDTO> selectAll(Map map) {
-		return sessionTemplate.selectList(namespace + "selectAll", map);
+	public List<BoardDTO> selectAll(SearchCondition sc) {
+		return sessionTemplate.selectList(namespace + "selectAll", sc);
 	}
 
 	public List<BoardDTO> selectAll() {
