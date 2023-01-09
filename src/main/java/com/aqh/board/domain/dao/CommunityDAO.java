@@ -8,6 +8,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Repository;
 
 import com.aqh.board.domain.dto.BoardDTO;
+import com.aqh.board.domain.dto.BoardDTO.Category;
+import com.aqh.board.domain.dto.Criteria;
 
 @Repository
 @EnableAspectJAutoProxy(proxyTargetClass = true)
@@ -24,25 +26,17 @@ public class CommunityDAO {
 
 	// READ
 
-	public List<BoardDTO> getAllCommunityPostList() {
-		return sessionTemplate.selectList("getAllCommunityPostList");
+	public List<BoardDTO> getAllCommunityPostList(Criteria criteria) {
+		return sessionTemplate.selectList("getAllCommunityPostList",criteria);
 
 	};
 
-	public List<BoardDTO> getLifePostList() {
-		return sessionTemplate.selectList("getLifePostList");
-	};
-
-	public List<BoardDTO> getGroupPostList() {
-		return sessionTemplate.selectList("getGroupPostList");
+	public List<BoardDTO> getCategoryPostList(Category category) {
+		return sessionTemplate.selectList("getCategoryPostList",category);
 	};
 
 	public BoardDTO getPost(long bNo) {
 		return sessionTemplate.selectOne("getPost", bNo);
-	};
-
-	public long getTotal() {
-		return sessionTemplate.selectList("getAllCommunityPostList").size();
 	};
 
 	// UPDATE
