@@ -9,6 +9,7 @@
 		<if test="category != null and !category.equals('')">
 			AND category=#{category} 
 		</if>
+		<include refid="search" />
 	</select>
 	
 	<update id="readCountUp" parameterType="long">
@@ -16,6 +17,25 @@
 		SET readCount=readCount+1
 		WHERE bNo=#{bNo} AND menu='QNA'
 	</update>
+	
+	<sql id="search">
+		<choose>
+			<when test="keyfield == 'title'">
+				AND title LIKE CONCAT('%', #{keyword}, '%')
+			</when>
+			<when test="keyfield == 'id'">
+				AND id LIKE CONCAT('%', #{keyword}, '%')
+			</when>
+			<when test="keyfield == 'contents'">
+				AND contents LIKE CONCAT('%', #{keyword}, '%')
+			</when>
+			<when test="keyfield == 'all'">
+				AND title LIKE CONCAT('%', #{keyword}, '%') 
+				OR id LIKE CONCAT('%', #{keyword}, '%')
+				OR contents LIKE CONCAT('%', #{keyword}, '%')
+			</when>
+		</choose>
+	</sql>
 	
 	<select id="selectAll" resultType="BoardDTO">
  		SELECT * FROM 
@@ -25,6 +45,7 @@
 			<if test="category != null and !category.equals('')">
 				AND category=#{category} 
 			</if>
+			<include refid="search" />
 			ORDER BY writeDay DESC) B
 		WHERE rownum between #{startRow} and #{endRow};
 	</select>
@@ -36,8 +57,8 @@
 	</select>
 	
 	<insert id="insert" parameterType="BoardDTO">
-		INSERT INTO board(id, title, contents, writeDay, menu, category)
-		VALUES (#{id}, #{title}, #{contents}, now(), 'QNA', #{category})
+		INSERT INTO board(id, title, contents, menu, category)
+		VALUES (#{id}, #{title}, #{contents}, 'QNA', #{category})
 	</insert>
 	
 	<update id="update" parameterType="BoardDTO">
