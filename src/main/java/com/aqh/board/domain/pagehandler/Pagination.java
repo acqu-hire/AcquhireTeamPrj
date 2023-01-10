@@ -13,7 +13,7 @@ public class Pagination {
      private int rangeSize = 10;
      
      /** 현재 페이지 **/
-     private int page = 1;
+     private int Page = 1;
      
      /** 현재 블럭(range) **/
      private int curRange = 1;
@@ -42,7 +42,7 @@ public class Pagination {
      /** 다음 페이지 **/
      private int nextPage;
 
-     public Pagination(int listCnt, int curPage){
+     public Pagination(int listCnt, int Page){
         
         /**
          * 페이징 처리 순서
@@ -53,7 +53,7 @@ public class Pagination {
         
         // 총 게시물 수와 현재 페이지를 Controller로 부터 받아온다.
         /** 현재페이지 **/
-        setPage(page);
+        setPage(Page);
         /** 총 게시물 수 **/
         setListCnt(listCnt);
         
@@ -62,21 +62,23 @@ public class Pagination {
         /** 2. 총 블럭(range)수 **/
         setRangeCnt(pageCnt);
         /** 3. 블럭(range) setting **/
-        rangeSetting(curPage);
+        rangeSetting(Page);
         
         /** DB 질의를 위한 startIndex 설정 **/
-        setStartIndex(curPage);
+        setStartIndex(Page);
     }
  
     public void setPageCnt(int listCnt) {
         this.pageCnt = (int) Math.ceil(listCnt*1.0/pageSize);
+        // 페이지가 몇개인지?
     }
     public void setRangeCnt(int pageCnt) {
         this.rangeCnt = (int) Math.ceil(pageCnt*1.0/rangeSize);
+        // 10 ~ 기준 ~ 10을 할것인지?
     }
-    public void rangeSetting(int curPage){
+    public void rangeSetting(int Page){
         
-        setCurRange(curPage);        
+        setCurRange(Page);        
         this.startPage = (curRange - 1) * rangeSize + 1;
         this.endPage = startPage + rangeSize - 1;
         
@@ -84,14 +86,14 @@ public class Pagination {
             this.endPage = pageCnt;
         }
         
-        this.prevPage = curPage - 1;
-        this.nextPage = curPage + 1;
+        this.prevPage = Page - 1;
+        this.nextPage = Page + 1;
     }
-    public void setCurRange(int curPage) {
-        this.curRange = (int)((curPage-1)/rangeSize) + 1;
+    public void setCurRange(int Page) {
+        this.curRange = (int)((Page-1)/rangeSize) + 1;
     }
-    public void setStartIndex(int curPage) {
-        this.startIndex = (curPage-1) * pageSize;
+    public void setStartIndex(int Page) {
+        this.startIndex = (Page-1) * pageSize;
     }
 
 
