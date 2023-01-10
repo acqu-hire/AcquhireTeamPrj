@@ -43,7 +43,7 @@
 				<button type="submit" class="btn btn-info btn-md">로그인</button>
 			  </div>
 			  <div id="register-link" class="text-right">
-				<a href="./member/register" class="text-info">회원가입</a>
+				<a href="/member/register" class="text-info">회원가입</a>
 			  </div>
 			</form>
 			  
