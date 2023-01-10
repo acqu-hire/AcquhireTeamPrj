@@ -13,7 +13,6 @@ public class BoardDTO {
 		COMMUNITY_LIFE, COMMUNITY_GROUP,
 		EVENT_IT_EVENT, EVENT_MARKETING,
 		NOTICE_NOTICE, NOTICE_EVENT
-
 	}
 
 	private String id; // 회원 아이디

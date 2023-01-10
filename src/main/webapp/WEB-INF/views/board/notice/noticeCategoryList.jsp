@@ -35,7 +35,7 @@
 						</div>
 						<div class="card-body">
  							<div align="center">
-								<button type="button" class="btn btn-primary float-end" name="kind" value="NOTICE_ALL" onclick="location.href='./select_all_view' ">전체</button>								
+								<button type="button" class="btn btn-primary float-end" name="kind" value="NOTICE_ALL" onclick="location.href='./select_all_view?num=1' ">전체</button>								
 								<button type="button" class="btn btn-primary float-end" name="kind" value="NOTICE_NOTICE" onclick="location.href='./select_category_view?category=NOTICE_NOTICE' ">공지사항</button>
 								<button type="button" class="btn btn-primary float-end" name="kind" value="NOTICE_EVENT" onclick="location.href='./select_category_view?category=NOTICE_EVENT' ">이벤트</button>
 							</div>

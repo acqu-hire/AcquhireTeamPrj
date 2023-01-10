@@ -3,13 +3,18 @@
 <mapper namespace="com.aqh.board.domain.dao.NoticeDAO">
 	
 	<!-- 메뉴 전체조회(notice 메뉴 클릭 시) -->
-	<select id="menuSelectAll" parameterType="String" resultType="BoardDTO">
-		select bNo,id,menu,category,readCount,file,title,writeDay,contents from board where menu = #{menu};
+	<select id="menuSelectAll" parameterType="hashMap" resultType="BoardDTO">
+		
+		select RN.* from(select * from board where menu="NOTICE" order by writeDay desc) RN limit #{displayPost},#{postNum};
 	</select>
+	<!-- select bNo,id,menu,category,readCount,file,title,writeDay,contents from board where menu = #{menu} order by writeDay desc; -->
+	
+	
+	
 	
 	<!-- 카테고리 전체조회(category 메뉴 클릭 시) -->
-	<select id="categorySelectAll" parameterType="String" resultType="BoardDTO">
-		select bNo,id,readCount,title,writeDay from board where category = #{category};
+	<select id="categorySelectAll" parameterType="BoardDTO" resultType="BoardDTO">
+		select bNo,id,readCount,title,writeDay from board where category = #{category} order by writeDay desc;
 	</select>
 	
 	<!-- 선택조회(게시판 제목 클릭 시) -->
@@ -26,18 +31,19 @@
 	</select>
 	
 	<!-- 등록 -->
-	<select id="noticeInsert" parameterType="BoardDTO" resultType="BoardDTO">
-		insert into board (id,menu,category,title,contents) values(#{id},#{menu},#{category},#{title},#{contents});
-	</select>
+	<insert id="noticeInsert" parameterType="BoardDTO">
+		insert into board (id,menu,category,title,contents) values(#{id},"NOTICE",#{category},#{title},#{contents});
+	</insert>
 	
 	<!-- 수정 -->
-	<select id="noticeUpdate" parameterType="BoardDTO" resultType="BoardDTO">
-		update board set menu = #{menu}, category = #{category}, title = #{title}, contents = #{contents} WHERE `bNo` = #{bNo};
-	</select>
+	<update id="noticeUpdate" parameterType="BoardDTO">
+		update board set menu = "NOTICE", category = #{category}, title = #{title}, contents = #{contents} WHERE `bNo` = #{bNo};
+	</update>
 	
 	<!-- 삭제 -->
-	<select id="noticeDelete" parameterType="int" resultType="BoardDTO">
+	<delete id="noticeDelete" parameterType="int">
 		delete from board where bNo = #{bNo};
-	</select>
-
+	</delete>
+	
+	
 </mapper>
