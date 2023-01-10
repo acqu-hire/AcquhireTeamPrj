@@ -7,4 +7,12 @@
 		VALUES (#{id}, #{password}, #{name}, #{gender}, #{address}, #{phoneNumber}, #{email})
 	</insert>
 
+	<select id="memberList" resultType="MemberDTO">
+		SELECT * FROM member;
+	</select>
+	
+	<select id="memberDetail" resultType="MemberDTO">
+		SELECT * FROM member WHERE id = #{id}
+	</select>
+	
 </mapper>
