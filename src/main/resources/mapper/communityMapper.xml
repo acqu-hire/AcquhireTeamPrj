@@ -11,17 +11,64 @@
     <!-- READ -->
     
     <select id="getAllCommunityPostList" resultType="BoardDTO">
-        SELECT * FROM (SELECT * FROM board ORDER BY bNo DESC) SUBQUERY LIMIT 0,10;
-        <!-- 쿼리 추가 해야함. -->
+        SELECT * FROM (SELECT * FROM board ORDER BY bNo DESC) SUBQUERY
+        <trim prefix="WHERE (" prefixOverrides="AND" suffix=")">
+				
+            <if test="category != null ">
+                AND category = #{category}
+            </if>
+            
+			<if test="type != null &amp;&amp; !type.equals('')">
+				<if test="type == 'contents'">
+	            	AND contents LIKE concat('%',#{keyword},'%')
+	            </if>
+	            <if test="type == 'title'">
+	            	AND title LIKE concat('%',#{keyword},'%')
+	            </if>
+	            <if test="type == 'id'">
+	            	AND id LIKE concat('%',#{keyword},'%')
+	            </if>
+	            <if test="type == 'all'">
+	                AND contents LIKE concat('%',#{keyword},'%')
+	                OR title LIKE concat('%',#{keyword},'%')
+	                OR id LIKE concat('%',#{keyword},'%')
+	            </if>
+            </if>
+    </trim>
+            
+			limit #{page},#{limit}
+        <!--
+            (SELECT * FROM board ORDER BY bNo DESC) SUBQUERY LIMIT #{page},#{limit};
+            쿼리 추가 해야함. -->
     </select>
     
     <select id="getPost" resultType="BoardDTO">
     SELECT * FROM board where BNO = #{bNo}
     </select>
     
-    <select id="getTotal" resultType="int">
-    SELECT count(*) FROM board where menu = "COMMUNITY"
-    <!-- 쿼리 추가 해야함. -->
+    <select id="getTotal" resultType="long">
+        SELECT count(*) FROM board
+            <trim prefix="WHERE (" prefixOverrides="AND" suffix=")">
+            <if test="category != null "> AND category = #{category} </if>
+                
+                <if test="type != null &amp;&amp; !type.equals('')">
+                    <if test="type == 'contents'">
+                        AND contents LIKE concat('%',#{keyword},'%')
+                    </if>
+                    <if test="type == 'title'">
+                        AND title LIKE concat('%',#{keyword},'%')
+                    </if>
+                    <if test="type == 'id'">
+                        AND id LIKE concat('%',#{keyword},'%')
+                    </if>
+                    <if test="type == 'all'">
+                        AND contents LIKE concat('%',#{keyword},'%')
+                        OR title LIKE concat('%',#{keyword},'%')
+                        OR id LIKE concat('%',#{keyword},'%')
+                    </if>
+                    AND menu = "COMMUNITY"
+                </if>
+            </trim>
     </select>
     
     <!-- UPDATE -->
