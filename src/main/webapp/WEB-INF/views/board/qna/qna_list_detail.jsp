@@ -56,8 +56,8 @@
 					</div>
 					<div class="row">
  						<div class="col-12 text-right">
-							<input type="button" value="글수정" class="btn btn-success" onclick="location.href='./update?bNo=${boardDTO.bNo}'"> 
-							<input type="button" value="글삭제" class="btn btn-warning" onclick="location.href='./delete?bNo=${boardDTO.bNo}'">
+							<button type="button" class="btn btn-success" id="btnModify">글수정</button>
+							<button type="button" class="btn btn-warning" id="btnRemove">글삭제</button>
 							<button type="button" class="btn btn-primary" id="btnList">게시글 목록</button>
 						</div>
 					</div>
@@ -77,6 +77,13 @@
 	$(document).ready(function() {
 		$('#btnList').on('click', function() {
 			location.href="<c:url value='./list'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}"
+		})
+		$('#btnRemove').on('click', function() {
+			if(!confirm("게시글을 삭제하시겠습니까?")) return;
+			location.href="<c:url value='./delete'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}&bNo=${boardDTO.bNo}"
+		})
+		$('#btnModify').on('click', function() {
+			location.href="<c:url value='./update'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}&bNo=${boardDTO.bNo}"
 		})
 	})
 </script>
