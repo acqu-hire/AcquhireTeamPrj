@@ -25,4 +25,12 @@ public class MemberService {
 	public MemberDTO memberDetail(String id) {
 		return memberDAO.memberDetail(id);
 	}
+	
+	public int memberDelete(String id) {
+		return memberDAO.memberDelete(id);
+	}
+	
+	public int memberUpdate(MemberDTO memberDTO) {
+		return memberDAO.memberUpdate(memberDTO);
+	}
 }

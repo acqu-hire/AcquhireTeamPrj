@@ -39,9 +39,8 @@ public class LoginController {
 	public String login(String id, String password, boolean rememberId, HttpServletRequest request, HttpServletResponse response) {
 		
 		if(!loginCheck(id, password)) {
-			String msg;
 			try {
-				msg = URLEncoder.encode("ID 또는 비밀번호가 일치하지 않습니다.", "utf-8");
+				String msg = URLEncoder.encode("ID 또는 비밀번호가 일치하지 않습니다.", "utf-8");
 				return "redirect:/login/login?msg="+msg;
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();

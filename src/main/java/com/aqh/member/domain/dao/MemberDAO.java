@@ -27,4 +27,12 @@ public class MemberDAO {
 	public MemberDTO memberDetail(String id) {
 		return session.selectOne(namespace + "memberDetail", id);
 	}
+	
+	public int memberDelete(String id) {
+		return session.delete(namespace + "memberDelete", id);
+	}
+	
+	public int memberUpdate(MemberDTO memberDTO) {
+		return session.update(namespace + "memberUpdate", memberDTO);
+	}
 }

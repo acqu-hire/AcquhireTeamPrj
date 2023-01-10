@@ -62,10 +62,10 @@
 			  <tbody>
 				<c:forEach varStatus="status" var="board" items="${boardList}">
 				<tr>
-				  <%-- <th>${board.bNo}</th> --%>
 				  <th>${(ph.boardListCount-status.index)-((ph.sc.page-1)*10)}</th>
 				  <td>${board.category}</td>
-				  <td class="text-truncate" style="max-width: 500px;">
+				  <td class="text-truncate" id="title" style="max-width: 500px;">
+				    <input type="hidden" name="bNo" value="${board.bNo}">
 				  	<a href="./listDetail${ph.getQueryString(ph.sc.page, ph.sc.category)}&bNo=${board.bNo}">${board.title}</a>
 				  </td>
 				  <td>${board.id}</td>
@@ -260,7 +260,7 @@
 			$(".category a[href*='category=&']").addClass("active");
 		}
 	})
-
+	
 
 </script>
 

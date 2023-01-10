@@ -13,7 +13,7 @@ public class MemberDTO {
 	private String name; // 이름
 	private String gender; // 성별
 	private String address; // 주소
-	private String phoneNumber; // 전화번호
+	private String phone_number; // 전화번호
 	private String email; // 이메일
-	private String regDate; // 가입일
+	private String reg_date; // 가입일
 }

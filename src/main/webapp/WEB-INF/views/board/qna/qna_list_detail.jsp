@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:if test="${empty sessionScope.memberId}">
+<c:if test="${empty sessionScope.id}">
 	<script type="text/javascript">
 		location.href = "<c:url value='/login/login'/>"
 	</script>
@@ -28,13 +28,11 @@
 					<h2 class="text-center mt-4 mb-4">게시글</h2>
 				</div>
 				<div class="card-body">
+				  <form method="post" action="" id="boardForm">
 					<table class="table">
 						<tr>
-							<th>게시글 번호</th>
-							<td>${boardDTO.bNo}</td>
-						</tr>
-						<tr>
 							<th>조회수</th>
+							
 							<td>${boardDTO.readCount}</td>
 						</tr>
 						<tr>
@@ -51,6 +49,7 @@
 						</tr>
 					</table>
 				<hr/>
+					<input type="hidden" name="bNo" value="${boardDTO.bNo}">
 					<div class="col-12">
 					${boardDTO.contents}
 					</div>
@@ -61,6 +60,7 @@
 							<button type="button" class="btn btn-primary" id="btnList">게시글 목록</button>
 						</div>
 					</div>
+				  </form>
 				</div>
 			</div>
 		</div>
@@ -80,10 +80,18 @@
 		})
 		$('#btnRemove').on('click', function() {
 			if(!confirm("게시글을 삭제하시겠습니까?")) return;
-			location.href="<c:url value='./delete'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}&bNo=${boardDTO.bNo}"
+			
+			var form = $("#boardForm");
+			form.attr("action", "<c:url value='./delete'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}");
+			form.attr("method", "post");
+			form.submit();
 		})
 		$('#btnModify').on('click', function() {
-			location.href="<c:url value='./update'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}&bNo=${boardDTO.bNo}"
+			var form = $("#boardForm");
+			form.attr("action", "<c:url value='./update'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}");
+			form.attr("method", "get");
+			form.submit();
+			/* location.href="<c:url value='./update'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}"; */
 		})
 	})
 </script>
