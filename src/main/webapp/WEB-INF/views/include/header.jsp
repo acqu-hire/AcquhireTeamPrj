@@ -22,50 +22,60 @@
 	  <span class="navbar-toggler-icon"></span>
 	</button>
 	<a class="navbar-brand" href="<c:url value='/' />"><i class="far fa-smile-wink"></i> Aqh</a>
-		<div class="collapse navbar-collapse" id="navbarMenu">
-			<ul class="navbar-nav mx-auto">
-				<li class="nav-item">
-					<a class="nav-link ${fn:contains(path ,'index')?'active':''}" href="<c:url value='/' />">
-						<i class="fa-solid fa-house"></i>Home ${contextPath}
-					</a>
-				</li>
-<%-- 				<c:choose>
-					<c:when test="${!empty sessionScope.id}">
-						<li class="nav-item"><a class="nav-link" href="#">게시판</a></li>
-						<li class="nav-item dropdown">
-					        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-					          ${sessionScope.name}님
-					        </a>
-					    <div class="dropdown-menu">
-					        <a class="dropdown-item" href="./MemberListDetail.me?memberId=${sessionScope.id}">회원정보</a>
-					    <div class="dropdown-divider"></div>
-					        <a class="dropdown-item" href="./Logout.me">로그아웃</a>
-					     </div>
-					      </li>
-					</c:when>
-					<c:otherwise> --%>
-				<li class="nav-item">
-				  <a class="nav-link ${fn:contains(path ,'notice')?'active':''}" href="<c:url value='/notice/select_all_view?num=1'/>">공지사항</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link ${fn:contains(path ,'qna_list')?'active':''}" href="<c:url value='/QnA/list' />">QnA</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link ${fn:contains(path ,'eventList')?'active':''}" href="#">이벤트</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link ${fn:contains(path ,'select_all_view')?'active':''}" href="<c:url value='/community/select_all_view' />">커뮤니티</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link ${fn:contains(path ,'register_form')?'active':''}" href="/member/register">회원가입</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link ${fn:contains(path ,'login')?'active':''}" href="#">로그인</a>
-				</li>
-				<%-- 	</c:otherwise>
-				</c:choose> --%>
-			</ul>
-
+	<div class="collapse navbar-collapse" id="navbarMenu">
+	  <ul class="navbar-nav mx-auto">
+		<li class="nav-item">
+		  <a class="nav-link ${fn:contains(path ,'index')?'active':''}" href="<c:url value='/' />">
+			<i class="fa-solid fa-house"></i>Home ${contextPath}
+		  </a>
+		</li>
+ 		<c:choose>
+		  <c:when test="${!empty sessionScope.id}">
+			<li class="nav-item">
+			  <a class="nav-link ${fn:contains(path ,'noticeList')?'active':''}" href="<c:url value='/notice/select_all_view'/>">공지사항</a>
+			</li>
+			<li class="nav-item">
+			  <a class="nav-link ${fn:contains(path ,'qna_list')?'active':''}" href="<c:url value='/QnA/list' />">QnA</a>
+			</li>
+			<li class="nav-item">
+			  <a class="nav-link ${fn:contains(path ,'eventList')?'active':''}" href="#">이벤트</a>
+			</li>
+			<li class="nav-item">
+			  <a class="nav-link ${fn:contains(path ,'select_all_view')?'active':''}" href="<c:url value='/community/select_all_view' />">커뮤니티</a>
+			</li>
+			<li class="nav-item dropdown">
+			  <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+				${sessionScope.name}님
+			  </a>
+			  <div class="dropdown-menu">
+			    <a class="dropdown-item" href="<c:url value='/member/memberDetail?id=${sessionScope.id}'/>">회원정보</a>
+			    <div class="dropdown-divider"></div>
+			    <a class="dropdown-item" href="<c:url value='/login/logout'/>">로그아웃</a>
+			  </div>
+			</li>
+		  </c:when>
+		<c:otherwise>
+		  <li class="nav-item">
+		    <a class="nav-link ${fn:contains(path ,'noticeList')?'active':''}" href="<c:url value='/notice/select_all_view'/>">공지사항</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link ${fn:contains(path ,'qna_list')?'active':''}" href="<c:url value='/QnA/list' />">QnA</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link ${fn:contains(path ,'eventList')?'active':''}" href="#">이벤트</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link ${fn:contains(path ,'select_all_view')?'active':''}" href="<c:url value='/community/select_all_view' />">커뮤니티</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link ${fn:contains(path ,'register_form')?'active':''}" href="<c:url value='/member/register'/>">회원가입</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link ${fn:contains(path ,'login')?'active':''}" href="<c:url value='/login/login'/>">로그인</a>
+		  </li>
+		</c:otherwise>
+	  </c:choose>
+	</ul>
 
 <!-- 			<form class="form-inline">
 				<input class="form-control mr-sm-2" type="text" />
