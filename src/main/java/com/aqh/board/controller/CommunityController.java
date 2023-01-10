@@ -8,11 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.Criteria;
-import com.aqh.board.domain.dto.BoardDTO.Category;
 import com.aqh.board.domain.pagehandler.Pagination;
 import com.aqh.board.service.CommunityService;
 
@@ -79,17 +77,16 @@ public class CommunityController {
 	 * @return
 	 */
 	@GetMapping(value = "/select_all_view")
-	public String readCommunityPostList(Model model, Criteria criteria) {
+	public String readCommunityPostList(Model model, Criteria cri) {
 		log.info("PATH" + Path.BOARD_COMMUNITY_SELECT_ALL_VIEW);
 
-		List<BoardDTO> list = communityService.getAllCommunityPostList(criteria);
-		System.out.println(communityService.getTotal());
-		Pagination pagination = new Pagination(55, criteria.getPage());
-		System.out.println(criteria);
-		model.addAttribute("boardList", list);
-		model.addAttribute("boardListCount", list.size());
-		model.addAttribute("pagination", pagination);
+		System.out.println("cri.toString() >>>>> " + cri.toString());
 
+		List<BoardDTO> list = communityService.getAllCommunityPostList(cri);
+		Pagination pagination = new Pagination((int) communityService.getTotal(cri), cri.getPage());
+		model.addAttribute("boardList", list);
+		model.addAttribute("boardListCount", pagination.getListCnt());
+		model.addAttribute("pagination", pagination);
 		return Path.BOARD_COMMUNITY_SELECT_ALL_VIEW.getPath();
 	}
 
