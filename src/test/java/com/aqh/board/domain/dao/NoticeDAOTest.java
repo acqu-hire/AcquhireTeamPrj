@@ -19,17 +19,23 @@ public class NoticeDAOTest {
 
 	@Test
 	public void testMenuSelectAll() {
-		System.out.println(noticeDAO.menuSelectAll("NOTICE"));
+		System.out.println(noticeDAO.menuSelectAll(0, 4));
 	}
 
 	@Test
 	public void testCategorySelectAll() {
-		System.out.println(noticeDAO.categorySelectAll("NOTICE_NOTICE"));
+		BoardDTO boardDTO = BoardDTO.builder()
+				.category(Category.NOTICE_NOTICE)
+				.build();
+		System.out.println(noticeDAO.categorySelectAll(boardDTO));
 	}
 
 	@Test
 	public void testSelectDetail() {
-		
+		/*BoardDTO boardDTO = BoardDTO.builder()
+				.bNo(1)
+				.build();
+		System.out.println(noticeDAO.selectDetail(boardDTO));*/
 		System.out.println(noticeDAO.selectDetail(1));
 	}
 
@@ -40,7 +46,10 @@ public class NoticeDAOTest {
 	
 	@Test
 	public void testCategoryListCount() {
-			System.out.println(noticeDAO.CategoryListCount("NOTICE_EVENT"));
+			BoardDTO boardDTO = BoardDTO.builder()
+				.category(Category.NOTICE_EVENT)
+				.build();
+			System.out.println(noticeDAO.CategoryListCount(boardDTO));
 	}
 	
 	
@@ -48,7 +57,6 @@ public class NoticeDAOTest {
 	public void testInsert() {
 		BoardDTO boardDTO = BoardDTO.builder()
 				.id("아이디")
-				.menu(Menu.NOTICE)
 				.category(Category.NOTICE_EVENT)
 				.bNo(3)
 				.readCount(1113)
