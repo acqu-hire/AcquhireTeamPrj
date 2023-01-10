@@ -52,7 +52,7 @@
                 <td colspan="2"  class="text-right">
                   <input type="submit" value="글저장" class="btn btn-success">
                   <input type="reset" value="다시작성" class="btn btn-warning">
-                  <button type="button"  class="btn btn-primary" onclick="location.href='./list'">전체 게시글보기</button>
+                  <button type="button"  class="btn btn-primary"  id="btnList">게시글 목록</button>
 				</td>
 			  </tr>
 			</table>
@@ -69,5 +69,13 @@
 <%@ include file="../../include/footer.jsp" %>
 
 <!-- Footer -->
+<script>
+$(document).ready(function() {
+	$('#btnList').on('click', function() {
+		location.href="<c:url value='./list'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}"
+	})
+})
+
+</script>
 </body>
 </html>
