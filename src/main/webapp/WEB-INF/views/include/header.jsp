@@ -45,7 +45,7 @@
 					</c:when>
 					<c:otherwise> --%>
 				<li class="nav-item">
-				  <a class="nav-link ${fn:contains(path ,'noticeList')?'active':''}" href="<c:url value='/notice/select_all_view'/>">공지사항</a>
+				  <a class="nav-link ${fn:contains(path ,'notice')?'active':''}" href="<c:url value='/notice/select_all_view?num=1'/>">공지사항</a>
 				</li>
 				<li class="nav-item">
 				  <a class="nav-link ${fn:contains(path ,'qna_list')?'active':''}" href="<c:url value='/QnA/list' />">QnA</a>
