@@ -48,13 +48,12 @@ public class QnAController {
 
 	@GetMapping("/write")
 	public String qnaInsertForm() {
-		return "board/qna/qna_write";
+		return "board/qna/qna_write_form";
 	}
 
 	@PostMapping("/write")
 	public String qnaInsert(BoardDTO boardDTO, Category category, Model model) {
-		String id = "bacd"; // 임시
-		boardDTO.setId(id);
+		log.info("boardDTO = " + boardDTO);
 		service.insert(boardDTO);
 		model.addAttribute(category);
 		return "redirect:/QnA/list";
@@ -78,7 +77,7 @@ public class QnAController {
 		return "redirect:/QnA/list";
 	}
 
-	@GetMapping("/delete")
+	@PostMapping("/delete")
 	public String qnaDelete(long bNo, Model model, SearchCondition sc) {
 		model.addAttribute("page", sc.getPage());
 		model.addAttribute("category", sc.getCategory());

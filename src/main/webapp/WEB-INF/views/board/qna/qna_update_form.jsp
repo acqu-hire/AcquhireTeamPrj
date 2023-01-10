@@ -33,10 +33,6 @@
 		  <form method="post" name="boardForm">
 			<table class="table table-striped">
 			  <tr>
-				<th>게시글 번호</th>
-				<td><input type="text"  class="form-control" name="bNo" value="${boardDTO.bNo}" readonly></td>
-			  </tr>
-			  <tr>
 				<th>작성자</th>
 				<td><input type="text"  class="form-control" name="id" value="${boardDTO.id}" readonly></td>
 			  </tr>
@@ -56,6 +52,7 @@
 				</td>
 			  </tr>
 			</table>
+			<input type="hidden"  class="form-control" name="bNo" value="${boardDTO.bNo}">
 		  </form>
 		</div>
 	  </div>
