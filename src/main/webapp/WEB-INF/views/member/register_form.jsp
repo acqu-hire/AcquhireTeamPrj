@@ -258,7 +258,8 @@ $(function() {
 			return false;
 		}
 		
-		alert('${name}님 회원가입을 축하합니다.');
+		var name = $("input[name='name']").val()
+		alert(name+'님 회원가입을 축하합니다.');
 		
 	});
 });

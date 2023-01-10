@@ -26,7 +26,7 @@
 	  <ul class="navbar-nav mx-auto">
 		<li class="nav-item">
 		  <a class="nav-link ${fn:contains(path ,'index')?'active':''}" href="<c:url value='/' />">
-			<i class="fa-solid fa-house"></i>Home ${contextPath}
+			<i class="fa-solid fa-house"></i>Home
 		  </a>
 		</li>
  		<c:choose>
@@ -48,9 +48,9 @@
 				${sessionScope.name}님
 			  </a>
 			  <div class="dropdown-menu">
-			    <a class="dropdown-item" href="<c:url value='/member/memberDetail?id=${sessionScope.id}'/>">회원정보</a>
+			    <a class="dropdown-item" href="<c:url value='/member/detail?id=${sessionScope.id}'/>">회원정보</a>
 			    <div class="dropdown-divider"></div>
-			    <a class="dropdown-item" href="<c:url value='/login/logout'/>">로그아웃</a>
+			    <a class="dropdown-item" id="logout" href="#">로그아웃</a>
 			  </div>
 			</li>
 		  </c:when>
@@ -86,5 +86,11 @@
   </nav>
 	
 </header>
+<script>
+	$("#logout").on("click", function() {
+		if(!confirm('로그아웃 하시겠습니까?')) return
+		location.href="<c:url value='/login/logout'/>"
+	})
+</script>
 </body>
 </html>
