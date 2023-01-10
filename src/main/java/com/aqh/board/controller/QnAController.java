@@ -52,32 +52,38 @@ public class QnAController {
 	}
 
 	@PostMapping("/write")
-	public String qnaInsert(BoardDTO boardDTO) {
+	public String qnaInsert(BoardDTO boardDTO, Category category, Model model) {
 		String id = "bacd"; // 임시
 		boardDTO.setId(id);
 		service.insert(boardDTO);
-		System.out.println("boardDTO = " + boardDTO);
+		model.addAttribute(category);
 		return "redirect:/QnA/list";
 	}
 
 	@GetMapping("/update")
-	public String qnaUpdateForm(long bNo, Model model) {
+	public String qnaUpdateForm(long bNo, Model model, SearchCondition sc) {
 		BoardDTO boardDTO = service.selectDetail(bNo);
-		Category category = service.selectDetail(bNo).getCategory();
-		System.out.println("category = " + category);
-		model.addAttribute("boardDTO", boardDTO);
-		System.out.println("boardDTO = " + boardDTO);
+		model.addAttribute(boardDTO);
+		model.addAttribute("ph", new PageHandler(sc, service.getBoardCnt(sc)));
 		return "board/qna/qna_update_form";
 	}
 
 	@PostMapping("/update")
-	public String qnaUpdate(BoardDTO boardDTO) {
+	public String qnaUpdate(BoardDTO boardDTO, Model model, SearchCondition sc) {
 		service.update(boardDTO);
+		model.addAttribute("page", sc.getPage());
+		model.addAttribute("category", sc.getCategory());
+		model.addAttribute("keyfield", sc.getKeyfield());
+		model.addAttribute("keyword", sc.getKeyword());
 		return "redirect:/QnA/list";
 	}
 
 	@GetMapping("/delete")
-	public String qnaDelete(long bNo) {
+	public String qnaDelete(long bNo, Model model, SearchCondition sc) {
+		model.addAttribute("page", sc.getPage());
+		model.addAttribute("category", sc.getCategory());
+		model.addAttribute("keyfield", sc.getKeyfield());
+		model.addAttribute("keyword", sc.getKeyword());
 		service.delete(bNo);
 		return "redirect:/QnA/list";
 	}
