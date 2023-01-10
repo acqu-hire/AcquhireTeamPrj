@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>KSH-pack 회원가입</title>
+<title>회원가입</title>
 <script src="${contextPath}/resources/js/kakao-addressAPI.js" type="text/javascript"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <!-- <script type="text/javascript">
@@ -257,6 +257,8 @@ $(function() {
 			$("input[name='email']").focus();
 			return false;
 		}
+		
+		alert('${name}님 회원가입을 축하합니다.');
 		
 	});
 });
