@@ -32,8 +32,8 @@ public class CommunityService {
 		return communityBoardDAO.getAllCommunityPostList(criteria);
 	};
 
-	public int getTotal() {
-		return communityBoardDAO.getTotal();
+	public long getTotal(Criteria criteria) {
+		return communityBoardDAO.getTotal(criteria);
 	}
 
 	public BoardDTO getPost(long bNo) {
