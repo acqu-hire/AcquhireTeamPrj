@@ -31,8 +31,8 @@ public class CommunityDAO {
 
 	};
 
-	public int getTotal() {
-		return sessionTemplate.selectOne("getTotal");
+	public long getTotal(Criteria criteria) {
+		return sessionTemplate.selectOne("getTotal",criteria);
 	}
 
 	public BoardDTO getPost(long bNo) {

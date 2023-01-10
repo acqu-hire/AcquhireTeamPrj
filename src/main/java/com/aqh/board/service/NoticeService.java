@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.aqh.board.domain.dao.NoticeDAO;
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.BoardDTO.Category;
+import com.aqh.board.domain.pagehandler.PagenationNotice;
 
 @Service
 public class NoticeService {
@@ -15,20 +16,20 @@ public class NoticeService {
 	@Autowired
 	private NoticeDAO noticeDAO;
 	
-	public List<BoardDTO> menuSelectAll(String menu){
-		return noticeDAO.menuSelectAll(menu);
+	public List<BoardDTO> menuSelectAll(int displayPost, int postNum){
+		return noticeDAO.menuSelectAll(displayPost, postNum);
 	}
-	public List<BoardDTO> categorySelectAll(String category){
-		return noticeDAO.categorySelectAll(category);
+	public List<BoardDTO> categorySelectAll(BoardDTO boardDTO){
+		return noticeDAO.categorySelectAll(boardDTO);
 	}
-	public BoardDTO selectDetail(long bNo) {
+	public BoardDTO selectDetail(Integer bNo) {
 		return noticeDAO.selectDetail(bNo);
 	}
 	public int BoardListAllCount() {
 		return noticeDAO.BoardListAllCount();
 	}
-	public int CategoryListCount(String category) {
-		return noticeDAO.CategoryListCount(category);
+	public int CategoryListCount(BoardDTO boardDTO) {
+		return noticeDAO.CategoryListCount(boardDTO);
 	}
 	public void insert(BoardDTO boardDTO) {
 		noticeDAO.insert(boardDTO);
@@ -39,4 +40,5 @@ public class NoticeService {
 	public void delete(int bNo) {
 		noticeDAO.delete(bNo);
 	}
+
 }

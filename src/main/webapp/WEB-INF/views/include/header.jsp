@@ -77,7 +77,6 @@
 	  </c:choose>
 	</ul>
 
-
 <!-- 			<form class="form-inline">
 				<input class="form-control mr-sm-2" type="text" />
 				<button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>

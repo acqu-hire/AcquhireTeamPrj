@@ -48,9 +48,9 @@
 										</div>
 									</td>
 			            	</tr>
-			            	<tr style="display:none;">
+			            	<tr>
 				                <th>글번호</th>
-				                <td><input type="text" name="bNo" value="${boardDTO.bNo}" readonly="readonly" /> </td>
+				                <td>${boardDTO.bNo}</td>
 				            </tr>
 				            <tr>
 				                <th>작성자</th>
