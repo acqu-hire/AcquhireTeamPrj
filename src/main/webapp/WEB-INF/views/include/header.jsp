@@ -26,7 +26,7 @@
 			<ul class="navbar-nav mx-auto">
 				<li class="nav-item">
 					<a class="nav-link ${fn:contains(path ,'index')?'active':''}" href="<c:url value='/' />">
-						<i class="fa-solid fa-house"></i>Home
+						<i class="fa-solid fa-house"></i>Home ${contextPath}
 					</a>
 				</li>
 <%-- 				<c:choose>
@@ -57,7 +57,7 @@
 				  <a class="nav-link ${fn:contains(path ,'select_all_view')?'active':''}" href="<c:url value='/community/select_all_view' />">커뮤니티</a>
 				</li>
 				<li class="nav-item">
-				  <a class="nav-link ${fn:contains(path ,'member_register')?'active':''}" href="#">회원가입</a>
+				  <a class="nav-link ${fn:contains(path ,'register_form')?'active':''}" href="/member/register">회원가입</a>
 				</li>
 				<li class="nav-item">
 				  <a class="nav-link ${fn:contains(path ,'login')?'active':''}" href="#">로그인</a>
