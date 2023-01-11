@@ -1,7 +1,6 @@
 package com.aqh.board.domain.dto;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.aqh.board.domain.dto.BoardDTO.Category;
 
@@ -15,6 +14,7 @@ import lombok.Data;
 public class Criteria {
 	private Integer page; // 페이징
 	private Integer limit; // 페이징 범위
+	private Integer offset; // offest
 	private Category category; // 카테고리
 	private String type; // 검색할 카테고리
 	private String keyword; // 검색 내용
@@ -33,16 +33,7 @@ public class Criteria {
 	}
 
 	public int getOffset() {
-		return this.page = (page - 1) * limit;
+		return this.offset = (page - 1) * limit;
 	}
 
-	public String getListLink() {
-		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("").queryParam("page", this.page)
-				.queryParam("limit", this.getLimit())
-				// 페이징 범위 임시 파라미터값
-				.queryParam("category", this.getCategory()).queryParam("type", this.getType())
-				.queryParam("keyword", this.getKeyword());
-		return builder.toUriString();
-
-	}
 }

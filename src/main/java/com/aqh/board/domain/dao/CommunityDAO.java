@@ -38,10 +38,14 @@ public class CommunityDAO {
 	public BoardDTO getPost(long bNo) {
 		return sessionTemplate.selectOne("getPost", bNo);
 	};
-
+	
 	// UPDATE
 	public void updatePost(BoardDTO boardDTO) {
 		sessionTemplate.update("updatePost", boardDTO);
+	};
+	
+	public void setPostCountUp(long bNo) {
+		sessionTemplate.selectOne("setPostCountUp", bNo);
 	};
 
 	// DELETE
