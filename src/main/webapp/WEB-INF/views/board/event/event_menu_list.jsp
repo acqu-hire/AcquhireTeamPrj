@@ -37,10 +37,10 @@
 							</div>
 						</div>
 						<div class="card-body">
- 							<div class="category" align="center">
-								<a class="btn btn-primary float-end" href="./menu_select_all?category=">전체</a>	
-								<a class="btn btn-primary float-end" href="./it_event_list?category=EVENT_IT_EVENT">IT 이벤트</a>	
-								<a class="btn btn-primary float-end" href="./marketing_list?category=EVENT_MARKETING">마케팅</a>						
+ 							<div align="center">
+								<button type="button" class="btn btn-primary float-end" name="kind" value="EVENT">전체</button>								
+								<button type="button" class="btn btn-primary float-end" name="kind" value="EVENT_IT_EVENT">IT 이벤트</button>
+								<button type="button" class="btn btn-primary float-end" name="kind" value="EVENT_MARKETING">마케팅</button>
 							</div>
 							<div class="d-flex justify-content-end">
 								<a class="btn btn-warning float-end" href="./BoardInsertView.do"> <i class="fas fa-edit"></i> 글 작성
