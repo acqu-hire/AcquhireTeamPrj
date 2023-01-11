@@ -44,7 +44,7 @@
 			  href="<c:url value='./list'/>?&category=QNA_ETC&keyfield=${ph.sc.keyfield}&keyword=${ph.sc.keyword}">기타</a>
 			</div>
 			<div class="d-flex justify-content-end">
-			  <a class="btn btn-warning float-end" href="./write">
+			  <a class="btn btn-warning float-end" href="<c:url value='./write'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}">
 			 	 <i class="fas fa-edit"></i> 글 작성
 			  </a>
 			</div>
