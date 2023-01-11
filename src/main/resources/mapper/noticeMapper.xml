@@ -7,7 +7,7 @@
 		select RN.* from
 			(select RN1.* from
 				(select * from board 
-					<if test='searchType.equals("id")'>
+					<!-- <if test='searchType.equals("id")'>
 						where id like concat('%',#{keyword},'%')
 					</if>
 					<if test='searchType.equals("title")'>
@@ -19,10 +19,10 @@
 					<if test='searchType.equals("title_contents")'>
 						where title like concat('%',#{keyword},'%')
 							or contents like concat('%',#{keyword},'%')
-					</if>
+					</if> -->
 				)
 			RN1 where menu="NOTICE" order by writeDay desc) 
-		RN limit 0,5;
+		RN limit #{displayPost},#{postNum};
 	</select>
 	<!-- select RN.* from(select bNo,id,readCount,title,writeDay from board where menu="NOTICE" order by writeDay desc) RN limit #{displayPost},#{postNum}; -->
 

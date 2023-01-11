@@ -35,7 +35,7 @@
 						</div>
 						<div class="card-body">
  							<div align="center">
-								<button type="button" class="btn btn-primary float-end" name="kind" value="NOTICE_ALL" onclick="location.href='./select_all_view?num=1' ">전체</button>							
+								<button type="button" class="btn btn-primary float-end" name="kind" value="NOTICE_ALL" onclick="location.href='./select_all_view' ">전체</button>							
 								<button type="button" class="btn btn-primary float-end" name="kind" value="NOTICE_NOTICE" onclick="location.href='./select_category_view?category=NOTICE_NOTICE&num=1' ">공지사항</button>
 								<button type="button" class="btn btn-primary float-end" name="kind" value="NOTICE_EVENT" onclick="location.href='./select_category_view?category=NOTICE_EVENT&num=1' ">이벤트</button>
 							</div>
@@ -54,7 +54,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:set var="bNo" value="${pagenationNotice.count - ((pagenationNotice.num-1) * 5) }"/>
+									<c:set var="bNo" value="${pagenationNotice.count - ((criteriaNotice.num-1) * 5) }"/>
 									<c:forEach varStatus="status" var="board" items="${menuSelectAll}">
 										<tr>
 											<th>${bNo}</th>
@@ -115,13 +115,13 @@
 								</c:choose>
 
 								<!-- Page Number -->
-								<c:forEach begin="${pagenationNotice.startPageNum}" end="${pagenationNotice.endPageNum}" var="num">
+								<c:forEach begin="${pagenationNotice.startPageNum}" end="${pagenationNotice.endPageNum}" var="number">
 								   <c:choose>
-										<c:when test="${selectbt==num}">
-											<li class="page-item active"><a class="page-link">${num}</a></li>
+										<c:when test="${selectbt==number}">
+											<li class="page-item active"><a class="page-link">${number}</a></li>
 										</c:when>
 										<c:otherwise>
-											<li class="page-item"><a class="page-link" href="/notice/select_all_view?num=${num}">${num}</a></li>
+											<li class="page-item"><a class="page-link" href="/notice/select_all_view?num=${number}">${number}</a></li>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>

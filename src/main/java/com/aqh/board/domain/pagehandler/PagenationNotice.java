@@ -1,12 +1,18 @@
 package com.aqh.board.domain.pagehandler;
 
-import lombok.AllArgsConstructor;
+import com.aqh.board.domain.dto.CriteriaNotice;
 
-@AllArgsConstructor
+import lombok.Getter;
+import lombok.Setter;
+
+
+
+@Getter
+@Setter
 public class PagenationNotice {
 	
 	//현재 페이지 번호
-	private int num;
+	private int num =1;
 	
 	//게시물 총 갯수
 	private int count;
@@ -36,59 +42,16 @@ public class PagenationNotice {
 	private boolean prev;
 	private boolean next;
 	
+	private CriteriaNotice criteriaNotice;
 	
-	
-	public PagenationNotice() {
-		this(1);
-	}
-	
-	public PagenationNotice(int num) {
-		this.num = num;
-	}
-
-	public void setNum(int num) {
-		this.num = num;
-	}
-	public int getNum() {
-		return num;
-	}
-	public void setCount(int count) {
-		this.count = count;
+	public PagenationNotice(CriteriaNotice criteriaNotice, int count) {
+		setNum(criteriaNotice.getNum());
+		this.count=count;
 		dataCalc();
 		//게시물 총 갯수를 알고난 시점부터 계산을 할 수 있으므로, setCount에서 메서드를 호출
-	}
-	public int getCount() {
-		return count;
+		this.criteriaNotice = criteriaNotice;
 	}
 	
-	
-	public int getPostNum() {
-		return postNum;
-	}
-	public int getPageNum() {
-		return pageNum;
-	}
-	public int getDisplayPost() {
-		return displayPost;
-	}
-	public int getPageNumCnt() {
-		return pageNumCnt;
-	}
-	public int getEndPageNum() {
-		return endPageNum;
-	}
-	public int getStartPageNum() {
-		return startPageNum;
-	}
-	public int getEndPageNum_tmp() {
-		return endPageNum_tmp;
-	}
-	public boolean isPrev() {
-		return prev;
-	}
-	public boolean isNext() {
-		return next;
-	}
 	
 	//계산함수
 	public void dataCalc() {
@@ -96,7 +59,7 @@ public class PagenationNotice {
 		pageNum = (int)Math.ceil((double)count/postNum);
 	
 		//출력할 게시물 ex)[1,2,3,4,5],[6,7,8,9,10]...
-		displayPost = (num-1) * postNum;
+		//displayPost = (num-1) * postNum;
 		
 		//표시되는 페이지 번호 중 마지막 번호
 		endPageNum = (int)(Math.ceil((double)num / (double)pageNumCnt)*pageNumCnt);
