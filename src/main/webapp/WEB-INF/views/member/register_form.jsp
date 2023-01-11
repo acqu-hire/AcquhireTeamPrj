@@ -10,29 +10,28 @@
 <script src="${contextPath}/resources/js/kakao-addressAPI.js" type="text/javascript"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="${contextPath}/resources/js/validity.js"></script>
-<!-- <script type="text/javascript">
+<script type="text/javascript">
 	$(function() {
 		$("#dbIdCheck").click(function() {
-			var memberId = $("#memberId").val();
-			if (memberId.search(/\s/) != -1) {	// 정규표현식과 주어진 스트링간에 첫번째로 매치되는 것의 인덱스를 반환한다. 찾지 못하면 -1 를 반환한다.) // \s 공백 정규식
+			var id = $("#id").val();
+			if (id.search(/\s/) != -1) {	// 정규표현식과 주어진 스트링간에 첫번째로 매치되는 것의 인덱스를 반환한다. 찾지 못하면 -1 를 반환한다.) // \s 공백 정규식
 				alert("아이디에는 공백이 들어갈 수 없습니다.");
 			} else {
-				if (memberId.trim().length != 0) {
+				if (id.trim().length != 0) {
 					$.ajax({
-						url : './IdCheck.me',
-						type : 'get',
-						data : {
-							memberId : memberId
-						},
+						url : './idCheck',
+						type : 'post',
+						data : {id : id},
+						dataType : 'json',
 						success : function(result) {
 							console.log("아이디 값 - " + result);
 							if ($.trim(result) == 1) {
 								alert("이미 등록된 아이디 입니다.");
-								$("#memberId").focus();
+								$("#id").focus();
 							} else {
 								alert("등록할 수 있는 아이디입니다.");
 								$("#idCheck").val("1");
-								$("#memberPwd").focus();
+								$("#password").focus();
 							}
 						}
 					});
@@ -42,7 +41,7 @@
 			}
 		});
 	});
-</script> -->
+</script>
 </head>
 <body>
 	<!-- Header -->
@@ -107,10 +106,10 @@
 					    <span class="text-danger">*</span>성별
 					  </label>
 					  <label class="col-md-2 mt-2 radio-inline text-md-center"> 
-					    <input type="radio" id="gender" name="gender" value="M">남자
+					    <input type="radio" id="male" name="gender" value="M">남자
 					  </label> 
 					  <label class="col-md-2 mt-2 radio-inline text-md-center"> 
-					    <input type="radio" id="gender" name="gender" value="F">여자
+					    <input type="radio" id="female" name="gender" value="F">여자
 					  </label>
 					</div>
 					<div class="form-group row">

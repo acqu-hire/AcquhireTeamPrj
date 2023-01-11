@@ -33,4 +33,8 @@ public class MemberService {
 	public int memberUpdate(MemberDTO memberDTO) {
 		return memberDAO.memberUpdate(memberDTO);
 	}
+	
+	public int idCheck(String id) {
+		return memberDAO.idCheck(id);
+	}
 }
