@@ -36,7 +36,7 @@
             </if>
     </trim>
             
-			limit #{page},#{limit}
+			limit #{offset},#{limit}
         <!--
             (SELECT * FROM board ORDER BY bNo DESC) SUBQUERY LIMIT #{page},#{limit};
             쿼리 추가 해야함. -->
@@ -71,6 +71,9 @@
             </trim>
     </select>
     
+    <update id="setPostCountUp">
+        UPDATE board SET readcount = readcount+1 WHERE BNO = #{bNo};
+    </update>
     <!-- UPDATE -->
     <update id="updatePost">
     UPDATE board SET category = #{category},file = #{file},title = #{title},contents = #{contents}

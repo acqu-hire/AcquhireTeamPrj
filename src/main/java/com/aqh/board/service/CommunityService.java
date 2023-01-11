@@ -44,7 +44,10 @@ public class CommunityService {
 	public void updatePost(BoardDTO boardDTO) {
 		communityBoardDAO.updatePost(boardDTO);
 	};
-
+	public void setPostCountUp(long bNo) {
+		communityBoardDAO.setPostCountUp(bNo);
+	};
+	
 	// DELETE
 	public void deletePost(long bNo) {
 		communityBoardDAO.deletePost(bNo);
