@@ -30,14 +30,14 @@
 						<div class="card-header">
 							<h3 align="center">글목록</h3>
 							<div align="right">
-								전체 글 : <strong>${boardCategoryCount}</strong>
+								전체 글 : <strong>${pagenationNotice.count}</strong>
 							</div>
 						</div>
 						<div class="card-body">
  							<div align="center">
 								<button type="button" class="btn btn-primary float-end" name="kind" value="NOTICE_ALL" onclick="location.href='./select_all_view?num=1' ">전체</button>								
-								<button type="button" class="btn btn-primary float-end" name="kind" value="NOTICE_NOTICE" onclick="location.href='./select_category_view?category=NOTICE_NOTICE' ">공지사항</button>
-								<button type="button" class="btn btn-primary float-end" name="kind" value="NOTICE_EVENT" onclick="location.href='./select_category_view?category=NOTICE_EVENT' ">이벤트</button>
+								<button type="button" class="btn btn-primary float-end" name="kind" value="NOTICE_NOTICE" onclick="location.href='./select_category_view?category=NOTICE_NOTICE&num=1' ">공지사항</button>
+								<button type="button" class="btn btn-primary float-end" name="kind" value="NOTICE_EVENT" onclick="location.href='./select_category_view?category=NOTICE_EVENT&num=1' ">이벤트</button>
 							</div>
 							<div class="d-flex justify-content-end">
 								<a class="btn btn-warning float-end" href="./insert_view"> <i class="fas fa-edit"></i> 글 작성
@@ -54,15 +54,17 @@
 									</tr>
 								</thead>
 								<tbody>
+									<c:set var="bNo" value="${pagenationNotice.count - ((pagenationNotice.num-1) * 5) }"/>
 									<c:forEach varStatus="status" var="board" items="${categorySelectAll}">
 										<tr>
-											<th>${board.bNo}</th>
+											<th>${bNo}</th>
 											<%-- <th>${(boardListCount-status.index)-((page-1)*10)}</th> --%>
 											<td class="text-truncate" style="max-width: 500px;"><a href="./select_Detail_view?bNo=${board.bNo}">${board.title}</a></td>
 											<td>${board.id}</td>
 											<td>${board.writeDay}</td>
 											<td>${board.readCount}</td>
 										</tr>
+										<c:set var="bNo" value="${bNo-1}"></c:set>
 									</c:forEach>
 								</tbody>
 							</table>
@@ -85,13 +87,13 @@
 								<!-- Previous Button -->
 
 								<c:choose>
-									<c:when test="${startPage <= 1}">
+									<c:when test="${pagenationNotice.startPageNum <= 1}">
 										<li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous-PageBlock"> <span
 												aria-hidden="true">&laquo;</span> <span class="sr-only">페이지 이전블럭 이동</span>
 										</a></li>
 									</c:when>
 									<c:otherwise>
-										<li class="page-item"><a class="page-link" href="./BoardList.do?page=${startPage-1}"
+										<li class="page-item"><a class="page-link" href="/notice/select_category_view?category=${category}&num=${pagenationNotice.startPageNum-1}"
 											aria-label="Previous-PageBlock"> <span aria-hidden="true">&laquo;</span> <span class="sr-only">페이지
 													이전블럭 이동</span>
 										</a></li>
@@ -99,13 +101,13 @@
 								</c:choose>
 
 								<c:choose>
-									<c:when test="${page <= 1}">
+									<c:when test="${selectbt <= 1}">
 										<li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous-Page"> <span
 												aria-hidden="true">&lt;</span> <span class="sr-only">이전 페이지 한칸 이동</span>
 										</a></li>
 									</c:when>
 									<c:otherwise>
-										<li class="page-item"><a  class="page-link" href="./BoardList.do?page=${page-1}"
+										<li class="page-item"><a  class="page-link" href="/notice/select_category_view?category=${category}&num=${selectbt-1}"
 											aria-label="Previous-Page"> <span aria-hidden="true">&lt;</span> <span class="sr-only">이전 페이지 한칸
 													이동</span>
 										</a></li>
@@ -117,13 +119,13 @@
 
 								<!-- Page Number -->
 
-								<c:forEach var="pageNumber" begin="${startPage}" end="${endPage}" step="1">
+								<c:forEach begin="${pagenationNotice.startPageNum}" end="${pagenationNotice.endPageNum}" var="num">
 									<c:choose>
-										<c:when test="${pageNumber==page}">
-											<li class="page-item active"><a class="page-link">${pageNumber}</a></li>
+										<c:when test="${selectbt==num}">
+											<li class="page-item active"><a class="page-link">${num}</a></li>
 										</c:when>
 										<c:otherwise>
-											<li class="page-item"><a class="page-link" href="./BoardList.do?page=${pageNumber}">${pageNumber}</a></li>
+											<li class="page-item"><a class="page-link" href="/notice/select_category_view?category=${category}&num=${num}">${num}</a></li>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
@@ -133,26 +135,26 @@
 								<!-- Next Button -->
 
 								<c:choose>
-									<c:when test="${page >= maxPage}">
+									<c:when test="${selectbt >= pagenationNotice.endPageNum_tmp}">
 										<li class="page-item disabled"><a class="page-link" href="#" aria-label="Next"> <span
 												aria-hidden="true">&gt;</span> <span class="sr-only">다음 페이지 한칸 이동</span>
 										</a></li>
 									</c:when>
 									<c:otherwise>
-										<li class="page-item"><a class="page-link" href="./BoardList.do?page=${page+1}" aria-label="Next"> <span
+										<li class="page-item"><a class="page-link" href="/notice/select_category_view?category=${category}&num=${selectbt+1}" aria-label="Next"> <span
 												aria-hidden="true">&gt;</span> <span class="sr-only">다음 페이지 한칸 이동</span>
 										</a></li>
 									</c:otherwise>
 								</c:choose>
 
 								<c:choose>
-									<c:when test="${endPage == maxPage}">
+									<c:when test="${!pagenationNotice.next}">
 										<li class="page-item disabled"><a class="page-link" href="#" aria-label="Next"> <span
 												aria-hidden="true">&raquo;</span> <span class="sr-only">페이지 다음블럭 이동</span>
 										</a></li>
 									</c:when>
 									<c:otherwise>
-										<li class="page-item"><a class="page-link" href="./BoardList.do?page=${endPage+1}" aria-label="Next">
+										<li class="page-item"><a class="page-link" href="/notice/select_category_view?category=${category}&num=${pagenationNotice.endPageNum+1}" aria-label="Next">
 												<span aria-hidden="true">&raquo;</span> <span class="sr-only">페이지 다음블럭 이동</span>
 										</a></li>
 									</c:otherwise>

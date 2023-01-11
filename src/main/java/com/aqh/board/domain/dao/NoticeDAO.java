@@ -26,8 +26,14 @@ public class NoticeDAO {
 		
 		return sqlSessionTemplate.selectList("menuSelectAll",data);
 	}
-	public List<BoardDTO> categorySelectAll(BoardDTO boardDTO) {
-		return sqlSessionTemplate.selectList("categorySelectAll", boardDTO);
+	public List<BoardDTO> categorySelectAll(String category, int displayPost, int postNum ) {
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		data.put("displayPost", displayPost);
+		data.put("postNum", postNum);
+		data.put("category", category);
+		
+		
+		return sqlSessionTemplate.selectList("categorySelectAll", data);
 	}
 	public BoardDTO selectDetail(Integer bNo) {
 		return sqlSessionTemplate.selectOne("noticeSelectDetail", bNo);
@@ -35,8 +41,8 @@ public class NoticeDAO {
 	public int BoardListAllCount() {
 		return sqlSessionTemplate.selectOne("BoardListAllCount");
 	}
-	public int CategoryListCount(BoardDTO boardDTO) {
-		return sqlSessionTemplate.selectOne("CategoryListCount", boardDTO);
+	public int CategoryListCount(String category) {
+		return sqlSessionTemplate.selectOne("CategoryListCount", category);
 	}
 	public void insert(BoardDTO boardDTO) {
 		sqlSessionTemplate.insert("noticeInsert", boardDTO);

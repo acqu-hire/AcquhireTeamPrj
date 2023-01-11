@@ -1,6 +1,8 @@
 package com.aqh.board.domain.pagehandler;
 
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class PagenationNotice {
 	
 	//현재 페이지 번호
@@ -36,9 +38,16 @@ public class PagenationNotice {
 	
 	
 	
+	public PagenationNotice() {
+		this(1);
+	}
+	
+	public PagenationNotice(int num) {
+		this.num = num;
+	}
+
 	public void setNum(int num) {
 		this.num = num;
-		
 	}
 	public int getNum() {
 		return num;
