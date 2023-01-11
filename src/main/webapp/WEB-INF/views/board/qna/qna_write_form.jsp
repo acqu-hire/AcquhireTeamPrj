@@ -96,12 +96,12 @@
 				alert("내용을 입력하세요.")
 				return false;
 			}
-			
 		})
-	 	$("#btnList").on("click", function() {
+	 	
+		$("#btnList").on("click", function() {
 			location.href="<c:url value='./list'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}"
 		})
-		
+
 });
 	
 </script>
