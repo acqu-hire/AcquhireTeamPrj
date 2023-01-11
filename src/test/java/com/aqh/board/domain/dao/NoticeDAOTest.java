@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.BoardDTO.Category;
 import com.aqh.board.domain.dto.BoardDTO.Menu;
+import com.aqh.board.domain.dto.CriteriaNotice;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/root-context.xml")
@@ -19,12 +20,16 @@ public class NoticeDAOTest {
 
 	@Test
 	public void testMenuSelectAll() {
-		System.out.println(noticeDAO.menuSelectAll(0, 4));
+		CriteriaNotice criteriaNotice = new CriteriaNotice();
+		criteriaNotice.setNum(2);
+		criteriaNotice.getDisplayPost();
+		criteriaNotice.setPostNum(5);
+		System.out.println(noticeDAO.menuSelectAll(criteriaNotice));
 	}
 
 	@Test
 	public void testCategorySelectAll() {
-		System.out.println(noticeDAO.categorySelectAll("NOTICE_NOTICE",0,4));
+		System.out.println(noticeDAO.categorySelectAll("NOTICE_NOTICE",0,5));
 	}
 
 	@Test
