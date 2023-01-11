@@ -92,3 +92,4 @@ public class QnAController {
 		return "redirect:/QnA/list";
 	}
 }
+
