@@ -1,5 +1,9 @@
 package com.aqh.board.domain.pagehandler;
 
+import org.springframework.web.util.UriComponentsBuilder;
+
+import com.aqh.board.domain.dto.Criteria;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +17,7 @@ public class Pagination {
      private int rangeSize = 10;
      
      /** 현재 페이지 **/
-     private int Page = 1;
+     private int page = 1;
      
      /** 현재 블럭(range) **/
      private int curRange = 1;
@@ -42,7 +46,9 @@ public class Pagination {
      /** 다음 페이지 **/
      private int nextPage;
 
-     public Pagination(int listCnt, int Page){
+     private Criteria criteria;
+
+     public Pagination(int listCnt,Criteria criteria){
         
         /**
          * 페이징 처리 순서
@@ -53,7 +59,7 @@ public class Pagination {
         
         // 총 게시물 수와 현재 페이지를 Controller로 부터 받아온다.
         /** 현재페이지 **/
-        setPage(Page);
+        setPage(criteria.getPage());
         /** 총 게시물 수 **/
         setListCnt(listCnt);
         
@@ -62,10 +68,12 @@ public class Pagination {
         /** 2. 총 블럭(range)수 **/
         setRangeCnt(pageCnt);
         /** 3. 블럭(range) setting **/
-        rangeSetting(Page);
+        rangeSetting(page);
         
         /** DB 질의를 위한 startIndex 설정 **/
-        setStartIndex(Page);
+        setStartIndex(page);
+        
+        this.criteria = criteria;
     }
  
     public void setPageCnt(int listCnt) {
@@ -96,5 +104,13 @@ public class Pagination {
         this.startIndex = (Page-1) * pageSize;
     }
 
+	public String getListLink(int _page) {
+		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
+        .queryParam("page", _page)
+		.queryParam("category", this.criteria.getCategory())
+        .queryParam("type", this.criteria.getType())
+		.queryParam("keyword", this.criteria.getKeyword());
+		return builder.toUriString();
 
+	}
 }

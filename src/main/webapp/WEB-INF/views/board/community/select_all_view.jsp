@@ -39,7 +39,7 @@
 						<div class="card-header">
 							<h3 align="center">글목록</h3>
 							<div align="right">
-								전체 글 : <strong>${boardListCount}</strong>
+								전체 글 : <strong>${pagination.listCnt}</strong>
 							</div>
 						</div>
 						<div class="card-body">
@@ -107,7 +107,7 @@
                               </a></li>
                            </c:when>
                            <c:otherwise>
-                              <li class="page-item"><a class="page-link" href="./select_all_view?page=${pagination.Page-1}"
+                              <li class="page-item"><a class="page-link" href="./select_all_view?page=${pagination.page-10}"
                                  aria-label="Previous-PageBlock"> <span aria-hidden="true">&laquo;</span> <span class="sr-only">페이지
                                        이전블럭 이동</span>
                               </a></li>
@@ -133,13 +133,13 @@
 
                         <!-- Page Number -->
 
-                        <c:forEach var="pageNumber" begin="${pagination.startPage}" end="${pagination.endPage}" step="1">
+                        <c:forEach var="pageNumber" begin="${pagination.startPage}" end="${pagination.endPage}">
                            <c:choose>
                               <c:when test="${pageNumber==pagination.page}">
                                  <li class="page-item active"><a class="page-link">${pageNumber}</a></li>
                               </c:when>
                               <c:otherwise>
-                                 <li class="page-item"><a class="page-link" href="./select_all_view?page=${pageNumber}">${pageNumber}</a></li>
+                                 <li class="page-item"><a class="page-link" href="./select_all_view${pagination.getListLink(pageNumber)}">${pageNumber}</a></li>
                               </c:otherwise>
                            </c:choose>
                         </c:forEach>
@@ -149,7 +149,7 @@
                         <!-- Next Button -->
 
                         <c:choose>
-                           <c:when test="${pagination.page >= pagination.endPage}">
+                           <c:when test="${pagination.page >= pagination.pageCnt}">
                               <li class="page-item disabled"><a class="page-link" href="#" aria-label="Next"> <span
                                     aria-hidden="true">&gt;</span> <span class="sr-only">다음 페이지 한칸 이동</span>
                               </a></li>
@@ -162,13 +162,13 @@
                         </c:choose>
 
                         <c:choose>
-                           <c:when test="${pagination.pageCnt == pagination.endPage}">
+                           <c:when test="${(pagination.page+9) >= pagination.pageCnt}">
                               <li class="page-item disabled"><a class="page-link" href="#" aria-label="Next"> <span
                                     aria-hidden="true">&raquo;</span> <span class="sr-only">페이지 다음블럭 이동</span>
                               </a></li>
                            </c:when>
                            <c:otherwise>
-                              <li class="page-item"><a class="page-link" href="./select_all_view?page=${pagination.endPage}" aria-label="Next">
+                              <li class="page-item"><a class="page-link" href="./select_all_view?page=${pagination.page + 10}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span> <span class="sr-only">페이지 다음블럭 이동</span>
                               </a></li>
                            </c:otherwise>
@@ -193,7 +193,7 @@
                   <section id="search" class="mb-3 bg-light">
                      <div class="container">
                         <div class="form-row justify-content-center">
-                           <form action="./select_all_view" method="get" name="search" id="signupForm"
+                           <form action="./select_all_view${pagination.getListLink(pageNumber)}" method="get" name="search" id="signupForm"
                               enctype="application/x-www-form-urlencoded">
                               <fieldset>
                                  <div class="input-group mx-auto">
@@ -202,11 +202,11 @@
                                        <select name="type" class="form-control">
                                           <%--해당 항목을 기본 선택으로 지정하여 검색한다.--%>
                                           <option value="all" selected="selected">전체 검색</option>
-                                          <option value="title">제목</option>
                                           <option value="id">아이디</option>
                                           <option value="contents">내용</option>
                                        </select>
                                     </div>
+                                    <div> <input type="hidden" name="category" value="${pagination.criteria.getCategory()}"> </div>
                                     <div class="col-xs-6">
                                        <input type="search" id="keyword" name="keyword" class="form-control" placeholder="검색어 입력">
                                     </div>
