@@ -188,11 +188,11 @@
 				</li>
 			  </c:otherwise>
 			</c:choose>
+			</ul>
+		  </nav>
 
 	<!-- Next Button -->
 
-			</ul>
-		  </nav>
 
 	<!-- Pagination -->
 
@@ -246,7 +246,6 @@
 	<!-- Footer -->
 
 <script>
-
 	$(function() {
 		const urlParams = new URL(location.href).searchParams;
 		const category = urlParams.get('category');
@@ -263,8 +262,6 @@
 			$(".category a[href*='category=&']").addClass("active");
 		}
 	})
-	
-
 </script>
 
 </body>
