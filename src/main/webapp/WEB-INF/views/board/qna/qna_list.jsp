@@ -223,6 +223,9 @@
 	    				<button class="btn btn-outline-danger input-group-append" type="submit">
 	    				  <i class="fas fa-search"></i>검색
 	    				</button>
+	    				<div>
+	    				  <input type="hidden" id="category" name="category" value="${ph.sc.category}">
+	    				</div>
 	    			  </div>
 	    			</fieldset>
 	    		  </form>

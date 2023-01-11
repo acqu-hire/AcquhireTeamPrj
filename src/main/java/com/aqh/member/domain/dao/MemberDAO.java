@@ -35,4 +35,8 @@ public class MemberDAO {
 	public int memberUpdate(MemberDTO memberDTO) {
 		return session.update(namespace + "memberUpdate", memberDTO);
 	}
+	
+	public int idCheck(String id) {
+		return session.selectOne(namespace + "idCheck", id);
+	}
 }

@@ -30,7 +30,7 @@
 					<h2 class="text-center mt-4 mb-4">게시글</h2>
 				</div>
 				<div class="card-body">
-				  <form method="post" action="" id="boardForm">
+				  <form method="get" action="" id="boardForm">
 					<table class="table">
 						<tr>
 							<th>조회수</th>
@@ -97,12 +97,9 @@
 			var session = '<%=session.getAttribute("id")%>';
 			var writer = '${boardDTO.id}';
 			if(session != writer){
-				alert("삭제할 권한이 없습니다.");
+				alert("수정할 권한이 없습니다.");
 			} else {
-				var form = $("#boardForm");
-				form.attr("action", "<c:url value='./update'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}");
-				form.attr("method", "get");
-				form.submit();
+				location.href="<c:url value='./update'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}&bNo=${boardDTO.bNo}";
 			}
 		})
 
