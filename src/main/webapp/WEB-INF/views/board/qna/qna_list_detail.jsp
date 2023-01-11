@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <c:if test="${empty sessionScope.id}">
 	<script type="text/javascript">
 		location.href = "<c:url value='/login/login'/>"
@@ -8,6 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="${contextPath}/resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
 <meta charset="UTF-8">
 <title>QnA 게시판</title>
 </head>
@@ -74,26 +76,36 @@
 
 	<!-- Footer -->
 <script>
-	$(document).ready(function() {
 		$('#btnList').on('click', function() {
 			location.href="<c:url value='./list'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}"
 		})
 		$('#btnRemove').on('click', function() {
 			if(!confirm("게시글을 삭제하시겠습니까?")) return;
+			var session = '<%=session.getAttribute("id")%>';
+			var writer = '${boardDTO.id}';
+			if(session != writer){
+				alert("삭제할 권한이 없습니다.");
+			} else {
+				var form = $("#boardForm");
+				form.attr("action", "<c:url value='./delete'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}");
+				form.attr("method", "post");
+				form.submit();
+			}
 			
-			var form = $("#boardForm");
-			form.attr("action", "<c:url value='./delete'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}");
-			form.attr("method", "post");
-			form.submit();
 		})
 		$('#btnModify').on('click', function() {
-			var form = $("#boardForm");
-			form.attr("action", "<c:url value='./update'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}");
-			form.attr("method", "get");
-			form.submit();
-			/* location.href="<c:url value='./update'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}"; */
+			var session = '<%=session.getAttribute("id")%>';
+			var writer = '${boardDTO.id}';
+			if(session != writer){
+				alert("삭제할 권한이 없습니다.");
+			} else {
+				var form = $("#boardForm");
+				form.attr("action", "<c:url value='./update'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}");
+				form.attr("method", "get");
+				form.submit();
+			}
 		})
-	})
+
 </script>
 </body>
 </html>
