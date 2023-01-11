@@ -1,7 +1,5 @@
 package com.aqh.board.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -80,19 +78,17 @@ public class CommunityController {
 	public String readCommunityPostList(Model model, Criteria cri) {
 		log.info("PATH" + Path.BOARD_COMMUNITY_SELECT_ALL_VIEW);
 
-		System.out.println("cri.toString() >>>>> " + cri.toString());
+		// System.out.println("cri.getListLink() >>>>>" + cri.toString());
 
-		List<BoardDTO> list = communityService.getAllCommunityPostList(cri);
-		Pagination pagination = new Pagination((int) communityService.getTotal(cri), cri.getPage());
-		model.addAttribute("boardList", list);
-		model.addAttribute("boardListCount", pagination.getListCnt());
-		model.addAttribute("pagination", pagination);
+		model.addAttribute("boardList", communityService.getAllCommunityPostList(cri));
+		model.addAttribute("pagination", new Pagination((int) communityService.getTotal(cri), cri));
 		return Path.BOARD_COMMUNITY_SELECT_ALL_VIEW.getPath();
 	}
 
 	@GetMapping(value = "/selectdetail_view")
 	public String readCommunitPost(long bNo, Model model) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_SELECT_DETAIL_VIEW);
+		communityService.setPostCountUp(bNo);
 		model.addAttribute("boardDTO", communityService.getPost(bNo));
 		return Path.BOARD_COMMUNITY_SELECT_DETAIL_VIEW.getPath();
 	}
@@ -114,7 +110,6 @@ public class CommunityController {
 	@PostMapping(value = "/update")
 	public String updateCommunityPostView(BoardDTO boardDTO) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_UPDATE_VIEW);
-		log.info("input DTO : ", boardDTO.toString());
 		communityService.updatePost(boardDTO);
 		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath();
 	}
