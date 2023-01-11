@@ -19,8 +19,8 @@ public class NoticeService {
 	public List<BoardDTO> menuSelectAll(int displayPost, int postNum){
 		return noticeDAO.menuSelectAll(displayPost, postNum);
 	}
-	public List<BoardDTO> categorySelectAll(BoardDTO boardDTO){
-		return noticeDAO.categorySelectAll(boardDTO);
+	public List<BoardDTO> categorySelectAll(String category, int displayPost, int postNum){
+		return noticeDAO.categorySelectAll(category,displayPost, postNum);
 	}
 	public BoardDTO selectDetail(Integer bNo) {
 		return noticeDAO.selectDetail(bNo);
@@ -28,8 +28,8 @@ public class NoticeService {
 	public int BoardListAllCount() {
 		return noticeDAO.BoardListAllCount();
 	}
-	public int CategoryListCount(BoardDTO boardDTO) {
-		return noticeDAO.CategoryListCount(boardDTO);
+	public int CategoryListCount(String category) {
+		return noticeDAO.CategoryListCount(category);
 	}
 	public void insert(BoardDTO boardDTO) {
 		noticeDAO.insert(boardDTO);

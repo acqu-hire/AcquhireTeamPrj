@@ -4,17 +4,31 @@
 	
 	<!-- 메뉴 전체조회(notice 메뉴 클릭 시) -->
 	<select id="menuSelectAll" parameterType="hashMap" resultType="BoardDTO">
-		
-		select RN.* from(select * from board where menu="NOTICE" order by writeDay desc) RN limit #{displayPost},#{postNum};
+		select RN.* from
+			(select RN1.* from
+				(select * from board 
+					<if test='searchType.equals("id")'>
+						where id like concat('%',#{keyword},'%')
+					</if>
+					<if test='searchType.equals("title")'>
+						where title like concat('%',#{keyword},'%')
+					</if>
+					<if test='searchType.equals("contents")'>
+						where contents like concat('%',#{keyword},'%')
+					</if>
+					<if test='searchType.equals("title_contents")'>
+						where title like concat('%',#{keyword},'%')
+							or contents like concat('%',#{keyword},'%')
+					</if>
+				)
+			RN1 where menu="NOTICE" order by writeDay desc) 
+		RN limit 0,5;
 	</select>
-	<!-- select bNo,id,menu,category,readCount,file,title,writeDay,contents from board where menu = #{menu} order by writeDay desc; -->
-	
-	
-	
-	
+	<!-- select RN.* from(select bNo,id,readCount,title,writeDay from board where menu="NOTICE" order by writeDay desc) RN limit #{displayPost},#{postNum}; -->
+
 	<!-- 카테고리 전체조회(category 메뉴 클릭 시) -->
-	<select id="categorySelectAll" parameterType="BoardDTO" resultType="BoardDTO">
-		select bNo,id,readCount,title,writeDay from board where category = #{category} order by writeDay desc;
+	<select id="categorySelectAll" parameterType="hashMap" resultType="BoardDTO">
+		select RN.* from(select bNo,id,readCount,title,writeDay from board where category = #{category} order by writeDay desc) RN limit #{displayPost},#{postNum};
 	</select>
 	
 	<!-- 선택조회(게시판 제목 클릭 시) -->
