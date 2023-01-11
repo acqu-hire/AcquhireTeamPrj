@@ -27,7 +27,6 @@ public class QnAController {
 
 	@GetMapping("/list")
 	public String qnaList(Model model, SearchCondition sc) {
-		
 		PageHandler ph = new PageHandler(sc, service.getBoardCnt(sc));
 		log.info("ph = " + ph);
 		log.info("sc = " + sc);
@@ -39,8 +38,8 @@ public class QnAController {
 
 	@GetMapping("/listDetail")
 	public String qnaListDetail(long bNo, Model model, SearchCondition sc) {
-		BoardDTO boardDTO = service.selectDetail(bNo);
 		service.readCntUp(bNo);
+		BoardDTO boardDTO = service.selectDetail(bNo);
 		model.addAttribute(boardDTO);
 		model.addAttribute("ph", new PageHandler(sc, service.getBoardCnt(sc)));
 		return "board/qna/qna_list_detail";
@@ -62,8 +61,13 @@ public class QnAController {
 	@GetMapping("/update")
 	public String qnaUpdateForm(long bNo, Model model, SearchCondition sc) {
 		BoardDTO boardDTO = service.selectDetail(bNo);
+		PageHandler ph = new PageHandler(sc, service.getBoardCnt(sc));
 		model.addAttribute(boardDTO);
-		model.addAttribute("ph", new PageHandler(sc, service.getBoardCnt(sc)));
+		model.addAttribute("ph", ph);
+//		model.addAttribute("page", sc.getPage());
+//		model.addAttribute("category", sc.getCategory());
+//		model.addAttribute("keyfield", sc.getKeyfield());
+//		model.addAttribute("keyword", sc.getKeyword());
 		return "board/qna/qna_update_form";
 	}
 
@@ -79,6 +83,7 @@ public class QnAController {
 
 	@PostMapping("/delete")
 	public String qnaDelete(long bNo, Model model, SearchCondition sc) {
+		System.out.println("sc = " + sc);
 		model.addAttribute("page", sc.getPage());
 		model.addAttribute("category", sc.getCategory());
 		model.addAttribute("keyfield", sc.getKeyfield());

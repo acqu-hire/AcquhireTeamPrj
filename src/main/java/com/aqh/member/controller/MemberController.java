@@ -9,7 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.aqh.member.domain.dto.MemberDTO;
 import com.aqh.member.service.MemberService;
@@ -27,6 +30,13 @@ public class MemberController {
 	@GetMapping("/register")
 	public String registerForm() {
 		return "member/register_form";
+	}
+	
+	@PostMapping("/idCheck")
+	@ResponseBody
+	public int idCheck(String id) {
+		int result = service.idCheck(id);
+		return result;
 	}
 	
 	@PostMapping("/register")
