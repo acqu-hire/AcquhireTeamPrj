@@ -31,6 +31,12 @@ $(function() {
 			$("input[name='id']").focus();
 			return false;
 		}
+		/* 중복체크 확인 */
+		if($("#idCheck").val() != 1) {
+			alert("아이디 중복체크를 해주세요.");
+			$("input[name='id']").focus();
+			return false;
+		}
 		/* 비밀번호 유효성 검사 */
 		if (!$("input[name='password']").val()) {
 			alert("비밀번호를 입력하세요.");
