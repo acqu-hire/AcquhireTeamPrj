@@ -1,18 +1,10 @@
-package com.aqh.reply.service;
+package com.aqh.reply.mapper;
 
 import java.util.List;
 
 import com.aqh.reply.domain.dto.ReplyDTO;
 
-/**
- * 댓글Service
- * 
- * @author Devesg
- * @since 23.01.11
- */
-
-public interface ReplyService {
-
+public interface ReplyMapper {
     // CREATE (생성)
     public int register(ReplyDTO replyDTO);
 
