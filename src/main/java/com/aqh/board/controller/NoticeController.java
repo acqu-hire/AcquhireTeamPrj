@@ -30,29 +30,37 @@ public class NoticeController {
 	@GetMapping(value = "/select_all_view")
 	public String menuSelectAll(Model model, @RequestParam("num") int num) {
 		
-		PagenationNotice pagenationNotice = new PagenationNotice();
+		model.addAttribute("selectbt", num);
 		
+		PagenationNotice pagenationNotice = new PagenationNotice();
 		pagenationNotice.setNum(num);
 		pagenationNotice.setCount(noticeService.BoardListAllCount());
+		model.addAttribute("pagenationNotice", pagenationNotice);
 		
 		List<BoardDTO> list = null;
 		list = noticeService.menuSelectAll(pagenationNotice.getDisplayPost(), pagenationNotice.getPostNum());
 		model.addAttribute("menuSelectAll", list);
-		
-		model.addAttribute("pagenationNotice", pagenationNotice);
-		
-		model.addAttribute("selectbt", num);
-		
-		
+
 		return "board/notice/noticeList";
 	}
 
 	@GetMapping(value = "/select_category_view")
-	public String categorySelectAll(Model model, BoardDTO boardDTO) {
-		model.addAttribute("categorySelectAll", noticeService.categorySelectAll(boardDTO));
-		log.info("카테고리 확인"+ model);
-		model.addAttribute("boardCategoryCount", noticeService.CategoryListCount(boardDTO));
-		log.info("카테고리 게시판 전체 보기" + model);
+	public String categorySelectAll(Model model, String category, int num) {
+		log.info("cate 카테에" + category + "int 인트" + num);
+
+		model.addAttribute("selectbt", num);
+		model.addAttribute("category", category);
+		
+		PagenationNotice pagenationNotice = new PagenationNotice();
+		pagenationNotice.setNum(num);
+		pagenationNotice.setCount(noticeService.CategoryListCount(category));
+		model.addAttribute("pagenationNotice", pagenationNotice);
+		
+		List<BoardDTO> list = null;
+		list = noticeService.categorySelectAll(category,pagenationNotice.getDisplayPost(), pagenationNotice.getPostNum());
+		model.addAttribute("categorySelectAll", list);
+		log.info("모델 확인 : " + model);
+
 		return "board/notice/noticeCategoryList";
 	}
 
@@ -100,7 +108,7 @@ public class NoticeController {
 	@PostMapping(value = "/update")	
 	public String update(Model model, BoardDTO boardDTO) {
 		
-		log.info("글 수정 1차 확인");
+		log.info("글 수정 1차 확인" + boardDTO);
 		Category selectCategory;
 		if (boardDTO.getCategory().toString().equals("NOTICE_NOTICE"))
 			selectCategory = Category.NOTICE_NOTICE;
@@ -111,13 +119,13 @@ public class NoticeController {
 		log.info("글 수정 정보" + boardDTO);
 		noticeService.update(boardDTO);
 		
-		return "redirect:/notice/select_all_view";
+		return "redirect:/notice/select_all_view?num=1";
 	}
 	
 	@GetMapping(value = "/delete")
 	public String delete(Model model,Integer bNo) {
 		noticeService.delete(bNo);
-		
+
 		return "redirect:/notice/select_all_view?num=1";
 	}
 	

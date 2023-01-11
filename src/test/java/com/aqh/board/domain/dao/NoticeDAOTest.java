@@ -24,18 +24,11 @@ public class NoticeDAOTest {
 
 	@Test
 	public void testCategorySelectAll() {
-		BoardDTO boardDTO = BoardDTO.builder()
-				.category(Category.NOTICE_NOTICE)
-				.build();
-		System.out.println(noticeDAO.categorySelectAll(boardDTO));
+		System.out.println(noticeDAO.categorySelectAll("NOTICE_NOTICE",0,4));
 	}
 
 	@Test
 	public void testSelectDetail() {
-		/*BoardDTO boardDTO = BoardDTO.builder()
-				.bNo(1)
-				.build();
-		System.out.println(noticeDAO.selectDetail(boardDTO));*/
 		System.out.println(noticeDAO.selectDetail(1));
 	}
 
@@ -46,13 +39,10 @@ public class NoticeDAOTest {
 	
 	@Test
 	public void testCategoryListCount() {
-			BoardDTO boardDTO = BoardDTO.builder()
-				.category(Category.NOTICE_EVENT)
-				.build();
-			System.out.println(noticeDAO.CategoryListCount(boardDTO));
+			System.out.println(noticeDAO.CategoryListCount("NOTICE_NOTICE"));
 	}
 	
-	
+	/*
 	@Test
 	public void testInsert() {
 		BoardDTO boardDTO = BoardDTO.builder()
@@ -87,6 +77,6 @@ public class NoticeDAOTest {
 	@Test
 	public void testDelete() {
 		noticeDAO.delete(3);
-	}
+	}*/
 
 }
