@@ -37,16 +37,21 @@ public class QnAController {
 	}
 
 	@GetMapping("/listDetail")
-	public String qnaListDetail(long bNo, Model model, SearchCondition sc) {
+	public String qnaListDetail(long bNo, Model model, SearchCondition sc, BoardDTO boardDTO) {
 		service.readCntUp(bNo);
-		BoardDTO boardDTO = service.selectDetail(bNo);
+		boardDTO = service.selectDetail(bNo);
+		PageHandler ph = new PageHandler(sc, service.getBoardCnt(sc));
+		log.info("ph = " + ph);
+		log.info("boardDTO = " + boardDTO);
 		model.addAttribute(boardDTO);
-		model.addAttribute("ph", new PageHandler(sc, service.getBoardCnt(sc)));
+		model.addAttribute("ph", ph);
 		return "board/qna/qna_list_detail";
 	}
 
 	@GetMapping("/write")
-	public String qnaInsertForm() {
+	public String qnaInsertForm(Model model, SearchCondition sc) {
+		PageHandler ph = new PageHandler(sc, service.getBoardCnt(sc));
+		model.addAttribute("ph", ph);
 		return "board/qna/qna_write_form";
 	}
 
@@ -62,12 +67,10 @@ public class QnAController {
 	public String qnaUpdateForm(long bNo, Model model, SearchCondition sc) {
 		BoardDTO boardDTO = service.selectDetail(bNo);
 		PageHandler ph = new PageHandler(sc, service.getBoardCnt(sc));
+		log.info("boardDTO = " + boardDTO);
+		log.info("ph = " + ph);
 		model.addAttribute(boardDTO);
 		model.addAttribute("ph", ph);
-//		model.addAttribute("page", sc.getPage());
-//		model.addAttribute("category", sc.getCategory());
-//		model.addAttribute("keyfield", sc.getKeyfield());
-//		model.addAttribute("keyword", sc.getKeyword());
 		return "board/qna/qna_update_form";
 	}
 
@@ -83,7 +86,6 @@ public class QnAController {
 
 	@PostMapping("/delete")
 	public String qnaDelete(long bNo, Model model, SearchCondition sc) {
-		System.out.println("sc = " + sc);
 		model.addAttribute("page", sc.getPage());
 		model.addAttribute("category", sc.getCategory());
 		model.addAttribute("keyfield", sc.getKeyfield());
