@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.BoardDTO.Category;
+import com.aqh.board.domain.dto.CriteriaNotice;
 import com.aqh.board.domain.pagehandler.PagenationNotice;
 
 @Repository
@@ -18,13 +19,8 @@ public class NoticeDAO {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
-	public List<BoardDTO> menuSelectAll(int displayPost, int postNum){
-		HashMap<String, Integer> data = new HashMap<String, Integer>();
-		
-		data.put("displayPost", displayPost);
-		data.put("postNum", postNum);
-		
-		return sqlSessionTemplate.selectList("menuSelectAll",data);
+	public List<BoardDTO> menuSelectAll(CriteriaNotice criteriaNotice){
+		return sqlSessionTemplate.selectList("menuSelectAll",criteriaNotice);
 	}
 	public List<BoardDTO> categorySelectAll(String category, int displayPost, int postNum ) {
 		HashMap<String, Object> data = new HashMap<String, Object>();

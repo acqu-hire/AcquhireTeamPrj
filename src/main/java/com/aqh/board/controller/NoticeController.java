@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.BoardDTO.Category;
+import com.aqh.board.domain.dto.CriteriaNotice;
 import com.aqh.board.domain.pagehandler.PagenationNotice;
 import com.aqh.board.service.NoticeService;
 
@@ -28,18 +29,24 @@ public class NoticeController {
 
 
 	@GetMapping(value = "/select_all_view")
-	public String menuSelectAll(Model model, @RequestParam("num") int num) {
+	public String menuSelectAll(Model model, CriteriaNotice criteriaNotice) {
 		
-		model.addAttribute("selectbt", num);
 		
+		model.addAttribute("menuSelectAll", noticeService.menuSelectAll(criteriaNotice));
+		model.addAttribute("pagenationNotice", new PagenationNotice( criteriaNotice, (int) noticeService.BoardListAllCount()));
+		log.info("전체조회 카운트"+noticeService.BoardListAllCount());
+		log.info("전체조회"+model);
+		
+		
+		/*model.addAttribute("selectbt", num);
 		PagenationNotice pagenationNotice = new PagenationNotice();
 		pagenationNotice.setNum(num);
 		pagenationNotice.setCount(noticeService.BoardListAllCount());
 		model.addAttribute("pagenationNotice", pagenationNotice);
 		
 		List<BoardDTO> list = null;
-		list = noticeService.menuSelectAll(pagenationNotice.getDisplayPost(), pagenationNotice.getPostNum());
-		model.addAttribute("menuSelectAll", list);
+		
+		model.addAttribute("menuSelectAll", list);*/
 
 		return "board/notice/noticeList";
 	}
@@ -51,7 +58,7 @@ public class NoticeController {
 		model.addAttribute("selectbt", num);
 		model.addAttribute("category", category);
 		
-		PagenationNotice pagenationNotice = new PagenationNotice();
+		/*PagenationNotice pagenationNotice = new PagenationNotice();
 		pagenationNotice.setNum(num);
 		pagenationNotice.setCount(noticeService.CategoryListCount(category));
 		model.addAttribute("pagenationNotice", pagenationNotice);
@@ -59,7 +66,7 @@ public class NoticeController {
 		List<BoardDTO> list = null;
 		list = noticeService.categorySelectAll(category,pagenationNotice.getDisplayPost(), pagenationNotice.getPostNum());
 		model.addAttribute("categorySelectAll", list);
-		log.info("모델 확인 : " + model);
+		log.info("모델 확인 : " + model);*/
 
 		return "board/notice/noticeCategoryList";
 	}

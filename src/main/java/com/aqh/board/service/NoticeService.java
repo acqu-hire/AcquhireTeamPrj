@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.aqh.board.domain.dao.NoticeDAO;
 import com.aqh.board.domain.dto.BoardDTO;
+import com.aqh.board.domain.dto.CriteriaNotice;
 import com.aqh.board.domain.dto.BoardDTO.Category;
 import com.aqh.board.domain.pagehandler.PagenationNotice;
 
@@ -16,8 +17,8 @@ public class NoticeService {
 	@Autowired
 	private NoticeDAO noticeDAO;
 	
-	public List<BoardDTO> menuSelectAll(int displayPost, int postNum){
-		return noticeDAO.menuSelectAll(displayPost, postNum);
+	public List<BoardDTO> menuSelectAll(CriteriaNotice criteriaNotice){
+		return noticeDAO.menuSelectAll(criteriaNotice);
 	}
 	public List<BoardDTO> categorySelectAll(String category, int displayPost, int postNum){
 		return noticeDAO.categorySelectAll(category,displayPost, postNum);
