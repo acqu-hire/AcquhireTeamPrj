@@ -47,13 +47,13 @@
 						</tr>
 						<tr>
 							<th>제목</th>
-							<td>${boardDTO.title}</td>
+							<td><c:out value="${boardDTO.title}"/></td>
 						</tr>
 					</table>
 				<hr/>
 					<input type="hidden" name="bNo" value="${boardDTO.bNo}">
 					<div class="col-12">
-					${boardDTO.contents}
+					<c:out value="${boardDTO.contents}"/>
 					</div>
 					<div class="row">
  						<div class="col-12 text-right">
@@ -77,7 +77,7 @@
 	<!-- Footer -->
 <script>
 		$('#btnList').on('click', function() {
-			location.href="<c:url value='./list'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}"
+			location.href="<c:url value='./list'/>${sc.getQueryString(sc.page, sc.category)}"
 		})
 		$('#btnRemove').on('click', function() {
 			if(!confirm("게시글을 삭제하시겠습니까?")) return;
@@ -87,7 +87,7 @@
 				alert("삭제할 권한이 없습니다.");
 			} else {
 				var form = $("#boardForm");
-				form.attr("action", "<c:url value='./delete'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}");
+				form.attr("action", "<c:url value='./delete'/>${sc.getQueryString(sc.page, sc.category)}");
 				form.attr("method", "post");
 				form.submit();
 			}
@@ -99,7 +99,7 @@
 			if(session != writer){
 				alert("수정할 권한이 없습니다.");
 			} else {
-				location.href="<c:url value='./update'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}&bNo=${boardDTO.bNo}";
+				location.href="<c:url value='./update'/>${sc.getQueryString(sc.page, sc.category)}&bNo=${boardDTO.bNo}";
 			}
 		})
 

@@ -1,5 +1,7 @@
 package com.aqh.board.domain.pagehandler;
 
+import org.springframework.web.util.UriComponentsBuilder;
+
 import com.aqh.board.domain.dto.BoardDTO.Category;
 
 public class SearchCondition {
@@ -24,6 +26,26 @@ public class SearchCondition {
 		this.keyfield = keyfield;
 		this.keyword = keyword;
 	}
+	
+	public String getQueryString() {
+        return getQueryString(this.page, this.category);
+    }
+	public String getQueryString(Category category) {
+		return getQueryString(this.page, category);
+	}
+	
+	public String getQueryString(Integer page) {
+		return getQueryString(page, this.category);
+	}
+
+    public String getQueryString(Integer page, Category category) {
+        return UriComponentsBuilder.newInstance()
+                .queryParam("page",page)
+                .queryParam("category", category)
+                .queryParam("keyfield", this.keyfield)
+                .queryParam("keyword", this.keyword)
+                .build().toString();
+    }
 
 	public int getPage() {
 		return page;
@@ -77,12 +99,12 @@ public class SearchCondition {
 		return ROW_LIMIT_SIZE;
 	}
 
+	
 	@Override
 	public String toString() {
 		return "SearchCondition [page=" + page + ", startRow=" + startRow + ", endRow=" + endRow + ", keyfield="
 				+ keyfield + ", keyword=" + keyword + ", category=" + category + ", ROW_LIMIT_SIZE=" + ROW_LIMIT_SIZE
 				+ "]";
 	}
-
 	
 }

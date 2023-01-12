@@ -44,7 +44,7 @@
 			  href="<c:url value='./list'/>?&category=QNA_ETC&keyfield=${ph.sc.keyfield}&keyword=${ph.sc.keyword}">기타</a>
 			</div>
 			<div class="d-flex justify-content-end">
-			  <a class="btn btn-warning float-end" href="<c:url value='./write'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}">
+			  <a class="btn btn-warning float-end" href="<c:url value='./write'/>${ph.sc.getQueryString(ph.sc.page, ph.sc.category)}">
 			 	 <i class="fas fa-edit"></i> 글 작성
 			  </a>
 			</div>
@@ -66,7 +66,7 @@
 				  <td>${board.category}</td>
 				  <td class="text-truncate" id="title" style="max-width: 500px;">
 				    <input type="hidden" name="bNo" value="${board.bNo}">
-				  	<a href="./listDetail${ph.getQueryString(ph.sc.page, ph.sc.category)}&bNo=${board.bNo}">${board.title}</a>
+				  	<a href="./listDetail${ph.sc.getQueryString(ph.sc.page, ph.sc.category)}&bNo=${board.bNo}"><c:out value="${board.title}"/></a>
 				  </td>
 				  <td>${board.id}</td>
 				  <td>${board.writeDay}</td>
@@ -100,7 +100,7 @@
 			  </c:when>
 			  <c:otherwise>
 				<li class="page-item">
-				  <a class="page-link" href="./list${ph.getQueryString(ph.startPage-1, ph.sc.category)}" 
+				  <a class="page-link" href="./list${ph.sc.getQueryString(ph.startPage-1, ph.sc.category)}" 
 				  	 aria-label="Previous-PageBlock"> 
 				    <span aria-hidden="true">&laquo;</span> 
 				    <span class="sr-only">페이지 이전블럭 이동</span>
@@ -119,7 +119,7 @@
 			  </c:when>
 			  <c:otherwise>
 				<li class="page-item">
-				  <a  class="page-link" href="./list${ph.getQueryString(ph.sc.page-1, ph.sc.category)}"
+				  <a  class="page-link" href="./list${ph.sc.getQueryString(ph.sc.page-1, ph.sc.category)}"
 					aria-label="Previous-Page"> 
 				    <span aria-hidden="true">&lt;</span> 
 				    <span class="sr-only">이전 페이지 한칸 이동</span>
@@ -141,7 +141,7 @@
 				</li>
 			  </c:when>
 			  <c:otherwise>
-				<li class="page-item"><a class="page-link" href="./list${ph.getQueryString(pageNumber, ph.sc.category)}">${pageNumber}</a></li>
+				<li class="page-item"><a class="page-link" href="./list${ph.sc.getQueryString(pageNumber, ph.sc.category)}">${pageNumber}</a></li>
 			  </c:otherwise>
 			</c:choose>
 			</c:forEach>
@@ -161,7 +161,7 @@
 			  </c:when>
 			  <c:otherwise>
 				<li class="page-item">
-				  <a class="page-link" href="./list${ph.getQueryString(ph.sc.page+1, ph.sc.category)}" 
+				  <a class="page-link" href="./list${ph.sc.getQueryString(ph.sc.page+1, ph.sc.category)}" 
 					 aria-label="Next"> 
 				    <span aria-hidden="true">&gt;</span> 
 				    <span class="sr-only">다음 페이지 한칸 이동</span>
@@ -181,7 +181,7 @@
 			  </c:when>
 			  <c:otherwise>
 				<li class="page-item">
-				  <a class="page-link" href="./list${ph.getQueryString(ph.endPage+1, ph.sc.category)}" 
+				  <a class="page-link" href="./list${ph.sc.getQueryString(ph.endPage+1, ph.sc.category)}" 
 					 aria-label="Next">
 					<span aria-hidden="true">&raquo;</span> <span class="sr-only">페이지 다음블럭 이동</span>
 				  </a>
