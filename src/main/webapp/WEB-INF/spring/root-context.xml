@@ -18,8 +18,8 @@
 
 	<context:component-scan base-package="com.aqh.member" />
 	<context:component-scan base-package="com.aqh.board" />
+	<context:component-scan base-package="com.aqh.reply" />
 	
-
 	<context:property-placeholder location="classpath:config/database.properties"/>
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
 		<property name="driverClassName" value="${db.driverClassName}"></property>
