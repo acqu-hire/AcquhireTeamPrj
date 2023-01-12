@@ -1,9 +1,5 @@
 package com.aqh.board.domain.pagehandler;
 
-import org.springframework.web.util.UriComponentsBuilder;
-
-import com.aqh.board.domain.dto.BoardDTO.Category;
-
 public class PageHandler {
 	private SearchCondition sc;
 	private int totalPage;		// 총 페이지 수 
@@ -32,26 +28,6 @@ public class PageHandler {
 			this.endPage = totalPage;
 		}
 	}
-	
-	public String getQueryString() {
-        return getQueryString(this.sc.getPage(), this.sc.getCategory());
-    }
-	public String getQueryString(Category category) {
-		return getQueryString(this.sc.getPage(), category);
-	}
-	
-	public String getQuerString(Integer page) {
-		return getQueryString(page, this.sc.getCategory());
-	}
-
-    public String getQueryString(Integer page, Category category) {
-        return UriComponentsBuilder.newInstance()
-                .queryParam("page",page)
-                .queryParam("category", category)
-                .queryParam("keyfield", this.sc.getKeyfield())
-                .queryParam("keyword", this.sc.getKeyword())
-                .build().toString();
-    }
 
 	public int getTotalPage() {
 		return totalPage;

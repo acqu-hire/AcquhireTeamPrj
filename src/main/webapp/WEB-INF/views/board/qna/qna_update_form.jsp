@@ -30,7 +30,7 @@
 		  <h2 class="text-center mt-4 mb-4"><strong>게시글 수정</strong></h2>
 		</div>
 		<div class="card-body">
-		  <form method="post" action="<c:url value='./update'/>${ph.getQueryString(ph.sc.page,ph.sc.category)}" name="updateForm">
+		  <form method="post" action="" id="updateForm">
 			<table class="table table-striped">
 			  <tr>
 				<th>작성자</th>
@@ -46,8 +46,8 @@
               </tr>
               <tr>
                 <td colspan="2"  class="text-right">
-                  <button type="submit" class="btn btn-success" id="btnUpdate">글저장</button>
-                  <input type="reset" value="다시작성" class="btn btn-warning">
+                  <button type="button" class="btn btn-success" id="btnUpdate">글저장</button>
+                  <button type="reset"  class="btn btn-warning">다시작성</button>
                   <button type="button"  class="btn btn-primary" id="btnList">게시글 목록</button>
 				</td>
 			  </tr>
@@ -69,7 +69,14 @@
 <script>
 $(function() {
  	$("#btnList").on("click", function() {
-		location.href="<c:url value='/QnA/list'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}"
+		location.href="<c:url value='/QnA/list'/>${sc.getQueryString(sc.page, sc.category)}"
+	})
+	
+	$("#btnUpdate").on("click", function() {
+		var form = $("#updateForm");
+		form.attr("method", "post");
+		form.attr("action", "<c:url value='./update'/>${sc.getQueryString(sc.page,sc.category)}");
+		form.submit();
 	})
 })
 

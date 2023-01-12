@@ -6,7 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Acqu-Hire</title>
-
 </head>
 <body>
 
