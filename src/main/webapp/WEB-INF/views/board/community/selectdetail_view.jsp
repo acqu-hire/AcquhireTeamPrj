@@ -59,6 +59,23 @@
 					<div class="col-12">
 					${boardDTO.contents}
 					</div>
+					
+					<div>
+
+						<form method="post" action="/reply/write">
+						
+								<p>
+									<label>댓글 작성자</label> <input type="text" name="id">
+								</p>
+								<p>
+									<textarea rows="5" cols="50" name="contents"></textarea>
+								</p>
+								<p>
+								<input type="hidden" name="bNo" value="${boardDTO.bNo}">
+									<button type="submit">댓글 작성</button>
+								</p>
+							</form>
+						</div>
 					<div class="row">
 							<div class="col-12 text-right">
 							<input type="button" value="글수정" class="btn btn-success" onclick="location.href='./update?bNo=${boardDTO.bNo}&id=${boardDTO.id}'"> 
