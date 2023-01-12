@@ -99,7 +99,7 @@
 		})
 	 	
 		$("#btnList").on("click", function() {
-			location.href="<c:url value='./list'/>${ph.getQueryString(ph.sc.page, ph.sc.category)}"
+			location.href="<c:url value='./list'/>${sc.getQueryString()}"
 		})
 
 });
