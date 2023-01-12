@@ -1,14 +1,14 @@
 package com.aqh.reply.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.aqh.reply.service.ReplyService;
+import com.aqh.reply.domain.dao.ReplyDAO;
+import com.aqh.reply.domain.dto.ReplyDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 댓글Controller
@@ -23,13 +23,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ReplyController {
 
-    private final ReplyService replyService;
+	private final ReplyDAO replyDAO;
 
-    @GetMapping(value = "/asd")
-    public String getMethodName() {
-    	System.out.println("12");
-        System.out.println(replyService.getReply(null));
-        return null;
-    }
+	@PostMapping(value = "/write")
+	public String getMethodName(ReplyDTO replyDTO) {
+		System.out.println("12");
+		System.out.println(replyDTO.toString());
+		return "redirect:/community/selectdetail_view?bNo=" + replyDTO.getBNo();
+	}
 
 }
