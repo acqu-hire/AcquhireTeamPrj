@@ -1,6 +1,11 @@
 package com.aqh.board.domain.dto;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.context.annotation.Primary;
+
+import com.aqh.common.domain.dto.AttachFile;
 
 import lombok.Builder;
 
@@ -24,8 +29,8 @@ public class BoardDTO {
 	private Category category; // 카테고리
 	private long bNo; // 게시글 번호
 	private long readCount; // 게시글 조회수
-	private String file; // 게시글 파일
-	private MultipartFile uploadFile;
+	private MultipartFile files; // 게시글 첨부파일
+	private List<AttachFile> attachFile; // 파일 정보
 	private String title; // 게시글 제목
 	private String writeDay; // 게시글 작성일
 	private String contents; // 게시글 내용
@@ -41,15 +46,13 @@ public class BoardDTO {
 	}
 	
 	@Builder
-	public BoardDTO(String id, Menu menu, Category category, long bNo, long readCount, String file,
-				MultipartFile uploadFile, String title, String writeDay, String contents) {
+	public BoardDTO(String id, Menu menu, Category category, long bNo, long readCount, 
+			 String title, String writeDay, String contents) {
 		this.id = id;
 		this.menu = menu;
 		this.category = category;
 		this.bNo = bNo;
 		this.readCount = readCount;
-		this.file = file;
-		this.uploadFile = uploadFile;
 		this.title = title;
 		this.writeDay = writeDay;
 		this.contents = contents;
@@ -121,26 +124,26 @@ public class BoardDTO {
 		this.contents = contents;
 	}
 
-	public String getFile() {
-		return file;
+	public MultipartFile getFiles() {
+		return files;
 	}
 
-	public void setFile(String file) {
-		this.file = file;
+	public void setFiles(MultipartFile files) {
+		this.files = files;
 	}
 
-	public MultipartFile getUploadFile() {
-		return uploadFile;
+	public List<AttachFile> getAttachFile() {
+		return attachFile;
 	}
 
-	public void setUploadFile(MultipartFile uploadFile) {
-		this.uploadFile = uploadFile;
+	public void setAttachFile(List<AttachFile> attachFile) {
+		this.attachFile = attachFile;
 	}
 
 	@Override
 	public String toString() {
 		return "BoardDTO [id=" + id + ", menu=" + menu + ", category=" + category + ", bNo=" + bNo + ", readCount="
-				+ readCount + ", file=" + file + ", uploadFile=" + uploadFile + ", title=" + title + ", writeDay="
+				+ readCount + ", files=" + files + ", attachFile=" + attachFile + ", title=" + title + ", writeDay="
 				+ writeDay + ", contents=" + contents + "]";
 	}
 

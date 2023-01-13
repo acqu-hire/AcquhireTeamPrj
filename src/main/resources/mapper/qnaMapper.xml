@@ -50,14 +50,14 @@
 	</select>
 	
 	<select id="selectDetail" parameterType="long" resultType="BoardDTO">
-		SELECT bNo, title, contents, id, writeDay, readCount, category, file
+		SELECT bNo, title, contents, id, writeDay, readCount, category
 		FROM board
 		WHERE bNo=#{bNo} AND menu='QNA'
 	</select>
 	
-	<insert id="insert" parameterType="BoardDTO">
-		INSERT INTO board(id, title, contents, menu, category, file)
-		VALUES (#{id}, #{title}, #{contents}, 'QNA', #{category}, #{file})
+	<insert id="insert" parameterType="BoardDTO" useGeneratedKeys="true" keyProperty="bNo">
+		INSERT INTO board(id, title, contents, menu, category)
+		VALUES (#{id}, #{title}, #{contents}, 'QNA', #{category})
 	</insert>
 	
 	<update id="update" parameterType="BoardDTO">
@@ -75,4 +75,6 @@
 		DELETE FROM board
 		WHERE bNo=#{bNo} AND menu='QNA'
 	</delete>
+	
+	
 </mapper>
