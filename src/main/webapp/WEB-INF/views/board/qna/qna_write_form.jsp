@@ -12,7 +12,6 @@
 <title>QnA 작성</title>
 
 </head>
-
 <body>
 	<!-- Header -->
 
@@ -30,7 +29,7 @@
 		  <h2 class="text-center mt-4 mb-4"><strong>질문글 작성</strong></h2>
 		</div>
 		<div class="card-body">
-		  <form method="post" name="QnAWriteForm">
+		  <form method="post" name="QnAWriteForm" enctype="multipart/form-data">
 			<table class="table table-striped">
 			  <tr>
 			    <th>카테고리</th>
@@ -61,6 +60,10 @@
 				 <td><textarea rows="10" cols="50" name="contents" class="form-control"></textarea></td>
 			   </tr>
 			   <tr>
+				 <th>파일</th>
+				   <td><input type="file"  class="form-control" name="uploadFile"></td>
+			   </tr>
+			   <tr>
 				 <td colspan="2"  class="text-right">
 				   <input type="submit" value="글쓰기" class="btn btn-success">
 				   <input type="reset" value="다시작성" class="btn btn-warning">
@@ -82,6 +85,7 @@
 
 <!-- Footer -->
 <script type="text/javascript">
+	
 	$(function() {
 		$("form").submit(function() {
 			if($("select[name='category']").val() == ""){

@@ -49,6 +49,10 @@
 							<th>제목</th>
 							<td><c:out value="${boardDTO.title}"/></td>
 						</tr>
+						<tr>
+							<th>첨부파일</th>
+							<td><c:out value="${boardDTO.file}"/></td>
+						</tr>
 					</table>
 				<hr/>
 					<input type="hidden" name="bNo" value="${boardDTO.bNo}">
