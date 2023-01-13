@@ -50,7 +50,7 @@
 									href="./marketing_list?category=EVENT_MARKETING">마케팅</a>
 							</div>
 							<div class="d-flex justify-content-end">
-								<a class="btn btn-warning float-end" href="./BoardInsertView.do">
+								<a class="btn btn-warning float-end" href="./eventInsert_view">
 									<i class="fas fa-edit"></i> 글 작성
 								</a>
 							</div>
@@ -66,12 +66,12 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach varStatus="status" var="board" items="${boardList}">
+									<c:forEach varStatus="status" var="board" items="${eventMarketingList}">
 										<tr>
 											<th>${board.bNo}</th>
 											<%-- <th>${(boardListCount-status.index)-((page-1)*10)}</th> --%>
 											<td class="text-truncate" style="max-width: 500px;"><a
-												href="./listDetail?bNo=${board.bNo}">${board.title}</a></td>
+												href="./select_detail?bNo=${board.bNo}">${board.title}</a></td>
 											<td>${board.id}</td>
 											<td>${board.writeDay}</td>
 											<td>${board.readCount}</td>
