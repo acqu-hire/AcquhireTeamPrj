@@ -45,4 +45,9 @@ public class EventService {
 	public void eventDelete(long bNo) {
 		eventDAO.eventDelete(bNo);
 	}
+	
+	public int readCountUp(long bNo) {
+		return eventDAO.readCountUp(bNo);
+		
+	}
 }
