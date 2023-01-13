@@ -1,9 +1,10 @@
 package com.aqh.board.domain.dto;
 
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.context.annotation.Primary;
 
 import lombok.Builder;
 
+@Primary
 public class BoardDTO {
 
 	public enum Menu {
