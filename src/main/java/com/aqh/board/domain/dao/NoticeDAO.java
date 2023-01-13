@@ -1,6 +1,5 @@
 package com.aqh.board.domain.dao;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -8,37 +7,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.aqh.board.domain.dto.BoardDTO;
-import com.aqh.board.domain.dto.BoardDTO.Category;
 import com.aqh.board.domain.dto.CriteriaNotice;
-import com.aqh.board.domain.pagehandler.PagenationNotice;
 
 @Repository
 public class NoticeDAO {
 	
-	private static final int String = 0;
+
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
 	public List<BoardDTO> menuSelectAll(CriteriaNotice criteriaNotice){
 		return sqlSessionTemplate.selectList("menuSelectAll",criteriaNotice);
 	}
-	public List<BoardDTO> categorySelectAll(String category, int displayPost, int postNum ) {
-		HashMap<String, Object> data = new HashMap<String, Object>();
-		data.put("displayPost", displayPost);
-		data.put("postNum", postNum);
-		data.put("category", category);
-		
-		
-		return sqlSessionTemplate.selectList("categorySelectAll", data);
+	public List<BoardDTO> categorySelectAll(CriteriaNotice criteriaNotice) {
+		return sqlSessionTemplate.selectList("categorySelectAll", criteriaNotice);
 	}
 	public BoardDTO selectDetail(Integer bNo) {
 		return sqlSessionTemplate.selectOne("noticeSelectDetail", bNo);
 	}
-	public int BoardListAllCount() {
-		return sqlSessionTemplate.selectOne("BoardListAllCount");
+	public int BoardListAllCount(CriteriaNotice criteriaNotice) {
+		return sqlSessionTemplate.selectOne("BoardListAllCount",criteriaNotice);
 	}
-	public int CategoryListCount(String category) {
-		return sqlSessionTemplate.selectOne("CategoryListCount", category);
+	public int CategoryListCount(CriteriaNotice criteriaNotice) {
+		return sqlSessionTemplate.selectOne("CategoryListCount", criteriaNotice);
 	}
 	public void insert(BoardDTO boardDTO) {
 		sqlSessionTemplate.insert("noticeInsert", boardDTO);
@@ -49,7 +40,9 @@ public class NoticeDAO {
 	public void delete(int bNo) {
 		sqlSessionTemplate.delete("noticeDelete", bNo);
 	}
-	
+	public void noticeReadCount(int bNo) {
+		sqlSessionTemplate.delete("noticeReadCount", bNo);
+	}
 	
 
 
