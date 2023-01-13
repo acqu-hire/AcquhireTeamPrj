@@ -1,5 +1,7 @@
 package com.aqh.member.domain.dto;
 
+import org.springframework.context.annotation.Primary;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -7,6 +9,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
+@Primary
 public class MemberDTO {
 	private String id; // 아이디
 	private String password; // 비밀번호
