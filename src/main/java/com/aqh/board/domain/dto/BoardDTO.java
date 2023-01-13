@@ -1,5 +1,7 @@
 package com.aqh.board.domain.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Builder;
 
 public class BoardDTO {
@@ -22,6 +24,7 @@ public class BoardDTO {
 	private long bNo; // 게시글 번호
 	private long readCount; // 게시글 조회수
 	private String file; // 게시글 파일
+	private MultipartFile uploadFile;
 	private String title; // 게시글 제목
 	private String writeDay; // 게시글 작성일
 	private String contents; // 게시글 내용
@@ -35,20 +38,23 @@ public class BoardDTO {
 		this.contents = contents;
 		this.menu = menu;
 	}
-
+	
 	@Builder
-	public BoardDTO(String id, Menu menu, Category category, long bNo, long readCount, String file, String title,
-			String writeDay, String contents) {
+	public BoardDTO(String id, Menu menu, Category category, long bNo, long readCount, String file,
+				MultipartFile uploadFile, String title, String writeDay, String contents) {
 		this.id = id;
 		this.menu = menu;
 		this.category = category;
 		this.bNo = bNo;
 		this.readCount = readCount;
 		this.file = file;
+		this.uploadFile = uploadFile;
 		this.title = title;
 		this.writeDay = writeDay;
 		this.contents = contents;
 	}
+	
+	
 
 	public String getId() {
 		return id;
@@ -90,14 +96,6 @@ public class BoardDTO {
 		this.readCount = readCount;
 	}
 
-	public String getFile() {
-		return file;
-	}
-
-	public void setFile(String file) {
-		this.file = file;
-	}
-
 	public String getTitle() {
 		return title;
 	}
@@ -122,11 +120,27 @@ public class BoardDTO {
 		this.contents = contents;
 	}
 
+	public String getFile() {
+		return file;
+	}
+
+	public void setFile(String file) {
+		this.file = file;
+	}
+
+	public MultipartFile getUploadFile() {
+		return uploadFile;
+	}
+
+	public void setUploadFile(MultipartFile uploadFile) {
+		this.uploadFile = uploadFile;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardDTO [id=" + id + ", menu=" + menu + ", category=" + category + ", bNo=" + bNo + ", readCount="
-				+ readCount + ", file=" + file + ", title=" + title + ", writeDay=" + writeDay + ", contents="
-				+ contents + "]";
+				+ readCount + ", file=" + file + ", uploadFile=" + uploadFile + ", title=" + title + ", writeDay="
+				+ writeDay + ", contents=" + contents + "]";
 	}
 
 }
