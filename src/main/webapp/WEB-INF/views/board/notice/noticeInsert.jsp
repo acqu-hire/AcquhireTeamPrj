@@ -60,10 +60,10 @@
 				                <td>글내용</td>
 				                <td><textarea rows="10" cols="50" name="contents" class="form-control"></textarea></td>
 				            </tr>
-				            <!--<tr>
+				            <tr>
 				            	<td>첨부파일</td>
 				            	<td><input type="file" name="file" /></td>
-				            </tr>-->
+				            </tr>
 				            <tr>
 				                <td colspan="2"  class="text-right">
 				                    <input type="submit" value="글쓰기" class="btn btn-success" />

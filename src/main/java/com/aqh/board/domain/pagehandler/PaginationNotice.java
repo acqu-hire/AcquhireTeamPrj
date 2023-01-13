@@ -1,5 +1,7 @@
 package com.aqh.board.domain.pagehandler;
 
+import org.springframework.web.util.UriComponentsBuilder;
+
 import com.aqh.board.domain.dto.CriteriaNotice;
 
 import lombok.Getter;
@@ -9,7 +11,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PagenationNotice {
+public class PaginationNotice {
 	
 	//현재 페이지 번호
 	private int num =1;
@@ -39,17 +41,19 @@ public class PagenationNotice {
 	private int endPageNum_tmp;
 	
 	
+	
 	private boolean prev;
 	private boolean next;
 	
 	private CriteriaNotice criteriaNotice;
 	
-	public PagenationNotice(CriteriaNotice criteriaNotice, int count) {
+	public PaginationNotice(CriteriaNotice criteriaNotice, int count) {
 		setNum(criteriaNotice.getNum());
 		this.count=count;
 		dataCalc();
 		//게시물 총 갯수를 알고난 시점부터 계산을 할 수 있으므로, setCount에서 메서드를 호출
 		this.criteriaNotice = criteriaNotice;
+		System.out.println("확인" + criteriaNotice);
 	}
 	
 	
@@ -80,7 +84,14 @@ public class PagenationNotice {
 	
 	
 	
-	
+	public String getUrlLink(int num) {
+		UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromPath("")
+				.queryParam("num", num)
+				.queryParam("category", this.criteriaNotice.getCategory())
+				.queryParam("searchType", this.criteriaNotice.getSearchType())
+				.queryParam("keyword", this.criteriaNotice.getKeyword());
+		return uriComponentsBuilder.toUriString();
+	}
 	
 	
 	
