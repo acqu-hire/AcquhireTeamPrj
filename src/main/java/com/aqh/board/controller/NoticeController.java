@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.BoardDTO.Category;
 import com.aqh.board.domain.dto.CriteriaNotice;
-import com.aqh.board.domain.pagehandler.PagenationNotice;
+import com.aqh.board.domain.pagehandler.PaginationNotice;
 import com.aqh.board.service.NoticeService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,8 +33,8 @@ public class NoticeController {
 		
 		
 		model.addAttribute("menuSelectAll", noticeService.menuSelectAll(criteriaNotice));
-		model.addAttribute("pagenationNotice", new PagenationNotice( criteriaNotice, (int) noticeService.BoardListAllCount()));
-		log.info("전체조회 카운트"+noticeService.BoardListAllCount());
+		model.addAttribute("PaginationNotice", new PaginationNotice( criteriaNotice, (int) noticeService.BoardListAllCount(criteriaNotice)));
+		log.info("전체조회 카운트"+noticeService.BoardListAllCount(criteriaNotice));
 		log.info("전체조회"+model);
 		
 		
@@ -52,22 +52,11 @@ public class NoticeController {
 	}
 
 	@GetMapping(value = "/select_category_view")
-	public String categorySelectAll(Model model, String category, int num) {
-		log.info("cate 카테에" + category + "int 인트" + num);
-
-		model.addAttribute("selectbt", num);
-		model.addAttribute("category", category);
+	public String categorySelectAll(Model model, CriteriaNotice criteriaNotice) {
 		
-		/*PagenationNotice pagenationNotice = new PagenationNotice();
-		pagenationNotice.setNum(num);
-		pagenationNotice.setCount(noticeService.CategoryListCount(category));
-		model.addAttribute("pagenationNotice", pagenationNotice);
+		model.addAttribute("categorySelectAll", noticeService.categorySelectAll(criteriaNotice));
+		model.addAttribute("PaginationNotice", new PaginationNotice(criteriaNotice, (int) noticeService.CategoryListCount(criteriaNotice)));
 		
-		List<BoardDTO> list = null;
-		list = noticeService.categorySelectAll(category,pagenationNotice.getDisplayPost(), pagenationNotice.getPostNum());
-		model.addAttribute("categorySelectAll", list);
-		log.info("모델 확인 : " + model);*/
-
 		return "board/notice/noticeCategoryList";
 	}
 
@@ -75,6 +64,7 @@ public class NoticeController {
 	@GetMapping(value = "/select_Detail_view")
 	public String noticeSelectDetail(Model model, Integer bNo) {
 		log.info("게시판 내용 1차 확인");
+		noticeService.noticeReadCount(bNo);
 		model.addAttribute("selectDetail", noticeService.selectDetail(bNo));
 		log.info("게시판 내용 보기" + model);
 		return "board/notice/noticeListDetail";
@@ -102,7 +92,7 @@ public class NoticeController {
 			noticeService.insert(boardDTO);
 
 		
-		return "redirect:/notice/select_all_view?num=1";
+		return "redirect:/notice/select_all_view";
 	}
 	
 	
@@ -126,14 +116,14 @@ public class NoticeController {
 		log.info("글 수정 정보" + boardDTO);
 		noticeService.update(boardDTO);
 		
-		return "redirect:/notice/select_all_view?num=1";
+		return "redirect:/notice/select_all_view";
 	}
 	
 	@GetMapping(value = "/delete")
 	public String delete(Model model,Integer bNo) {
 		noticeService.delete(bNo);
 
-		return "redirect:/notice/select_all_view?num=1";
+		return "redirect:/notice/select_all_view";
 	}
 	
 

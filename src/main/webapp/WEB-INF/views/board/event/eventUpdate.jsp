@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>NOTICE 작성</title>
+<title>이벤트 게시물 수정</title>
 
 </head>
 
@@ -28,10 +28,10 @@
 		    <div class="col-md-8 mt-3 mb-3">
 		    	<div class="card">
 		    	<div class="card-header">
-		        <h2 class="text-center mt-4 mb-4"><strong>안내문 작성</strong></h2>
+		        <h2 class="text-center mt-4 mb-4"><strong>이벤트 게시판</strong></h2>
 		    	</div>
 			    	<div class="card-body">
-				        <form action="./insert" name="QnAWriteForm" method="post" enctype="multipart/form-data">
+				        <form action="./eventUpdate?&bNo=${boardList.bNo}" name="EventUpdateForm" method="post" enctype="multipart/form-data">
 				          <table class="table table-striped">
 				            <tr>
 			                	<th>카테고리</th>
@@ -41,8 +41,8 @@
 												<div class="col-xs-2">
 													<select name="category" class="form-control">
 														<option value="">==카테고리선택==</option>
-														<option value="NOTICE_NOTICE">공지사항</option>
-														<option value="NOTICE_EVENT">이벤트</option>
+														<option value="EVENT_IT_EVENT">IT 이벤트</option>
+														<option value="EVENT_MARKETING">이벤트 마케팅</option>
 													</select>
 												</div>
 										</div>
@@ -50,25 +50,24 @@
 			            	</tr>
 				            <tr>
 				                <th>작성자</th>
-				                <td><input type="text"  class="form-control" name="id" value="aaaa" readonly></td>
+				                <td><input type="text"  class="form-control" name="id" value="${boardList.id}" readonly></td>
 				            </tr>
 				            <tr>
 				                <th>제목</th>
-				                <td><input type="text"  class="form-control" name="title"></td>
+				                <td><input type="text"  class="form-control" name="title" value="${boardList.title}"></td>
 				            </tr>
  				             <tr>
-				                <td>글내용</td>
-				                <td><textarea rows="10" cols="50" name="contents" class="form-control"></textarea></td>
+				                <td>내용</td>
+				                <td><textarea rows="10" cols="50" name="contents" class="form-control">${boardList.contents}</textarea></td>
 				            </tr>
-				            <tr>
+				            <!--<tr>
 				            	<td>첨부파일</td>
 				            	<td><input type="file" name="file" /></td>
-				            </tr>
+				            </tr>-->
 				            <tr>
 				                <td colspan="2"  class="text-right">
-				                    <input type="submit" value="글쓰기" class="btn btn-success" />
-				                    <input type="reset" value="다시작성" class="btn btn-warning" />
-				                    <button type="button"  class="btn btn-primary" onclick="location.href='./select_all_view'">전체 게시글보기</button>
+				                    <input type="submit" value="수정" class="btn btn-success" />
+				                    <button type="button"  class="btn btn-primary" onclick="location.href='./menu_select_all'">전체 게시글보기</button>
 				                </td>
 				            </tr>
 				             

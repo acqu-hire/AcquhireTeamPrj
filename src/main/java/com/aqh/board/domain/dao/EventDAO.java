@@ -45,4 +45,9 @@ public class EventDAO {
 	public void eventDelete(long bNo) {
 		sqlSessionTemplate.delete(namespace + "eventDelete", bNo);
 	}
+	
+	public int readCountUp(long bNo) {
+		return sqlSessionTemplate.update(namespace + "readCountUp", bNo);
+		
+	}
 }
