@@ -29,7 +29,12 @@ public class NoticeDAOTest {
 
 	@Test
 	public void testCategorySelectAll() {
-		System.out.println(noticeDAO.categorySelectAll("NOTICE_NOTICE",0,5));
+		CriteriaNotice criteriaNotice = new CriteriaNotice();
+		criteriaNotice.setNum(2);
+		criteriaNotice.getDisplayPost();
+		criteriaNotice.setPostNum(5);
+		criteriaNotice.setCategory("NOTICE_NOTICE");
+		System.out.println(noticeDAO.categorySelectAll(criteriaNotice));
 	}
 
 	@Test
@@ -39,12 +44,17 @@ public class NoticeDAOTest {
 
 	@Test
 	public void testBoardListAllCount() {
-		System.out.println(noticeDAO.BoardListAllCount());
+		CriteriaNotice criteriaNotice = new CriteriaNotice();
+		criteriaNotice.setSearchType("all");
+		criteriaNotice.setKeyword("23");
+		System.out.println(noticeDAO.BoardListAllCount(criteriaNotice));
 	}
 	
 	@Test
 	public void testCategoryListCount() {
-			System.out.println(noticeDAO.CategoryListCount("NOTICE_NOTICE"));
+		CriteriaNotice criteriaNotice = new CriteriaNotice();
+		criteriaNotice.setCategory("NOTICE_NOTICE");
+		System.out.println(noticeDAO.CategoryListCount(criteriaNotice));
 	}
 	
 	/*

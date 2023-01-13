@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 import com.aqh.board.domain.dao.NoticeDAO;
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.CriteriaNotice;
-import com.aqh.board.domain.dto.BoardDTO.Category;
-import com.aqh.board.domain.pagehandler.PagenationNotice;
+
 
 @Service
 public class NoticeService {
@@ -20,17 +19,17 @@ public class NoticeService {
 	public List<BoardDTO> menuSelectAll(CriteriaNotice criteriaNotice){
 		return noticeDAO.menuSelectAll(criteriaNotice);
 	}
-	public List<BoardDTO> categorySelectAll(String category, int displayPost, int postNum){
-		return noticeDAO.categorySelectAll(category,displayPost, postNum);
+	public List<BoardDTO> categorySelectAll(CriteriaNotice criteriaNotice){
+		return noticeDAO.categorySelectAll(criteriaNotice);
 	}
 	public BoardDTO selectDetail(Integer bNo) {
 		return noticeDAO.selectDetail(bNo);
 	}
-	public int BoardListAllCount() {
-		return noticeDAO.BoardListAllCount();
+	public int BoardListAllCount(CriteriaNotice criteriaNotice) {
+		return noticeDAO.BoardListAllCount(criteriaNotice);
 	}
-	public int CategoryListCount(String category) {
-		return noticeDAO.CategoryListCount(category);
+	public int CategoryListCount(CriteriaNotice criteriaNotice) {
+		return noticeDAO.CategoryListCount(criteriaNotice);
 	}
 	public void insert(BoardDTO boardDTO) {
 		noticeDAO.insert(boardDTO);
@@ -40,6 +39,9 @@ public class NoticeService {
 	}
 	public void delete(int bNo) {
 		noticeDAO.delete(bNo);
+	}
+	public void noticeReadCount(int bNo) {
+		noticeDAO.noticeReadCount(bNo);
 	}
 
 }

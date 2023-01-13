@@ -3,11 +3,13 @@ package com.aqh.board.domain.dto;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.context.annotation.Primary;
 
 import com.aqh.common.domain.dto.AttachFile;
 
 import lombok.Builder;
 
+@Primary
 public class BoardDTO {
 
 	public enum Menu {
