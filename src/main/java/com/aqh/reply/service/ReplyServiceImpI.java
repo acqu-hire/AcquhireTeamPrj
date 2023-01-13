@@ -2,10 +2,11 @@ package com.aqh.reply.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.aqh.reply.domain.dao.ReplyDAO;
 import com.aqh.reply.domain.dto.ReplyDTO;
-
-import lombok.RequiredArgsConstructor;
 
 /**
  * 댓글Service
@@ -13,12 +14,11 @@ import lombok.RequiredArgsConstructor;
  * @author Devesg
  * @since 23.01.11
  */
-//@Service
-@RequiredArgsConstructor
+@Service
 public class ReplyServiceImpI implements ReplyService {
 
-	private final ReplyDAO replyDAO;
-
+	@Autowired
+	private ReplyDAO replyDAO;
 
 	@Override
 	public int register(ReplyDTO replyDTO) {
