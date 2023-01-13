@@ -51,7 +51,11 @@
 						</tr>
 						<tr>
 							<th>첨부파일</th>
-							<td><c:out value="${boardDTO.file}"/></td>
+							<td>
+							  <c:forEach var="files" items="${boardDTO.attachFile}">
+								<c:out value="${files.originName}"/> <br/>
+							  </c:forEach>
+							</td>
 						</tr>
 					</table>
 				<hr/>
