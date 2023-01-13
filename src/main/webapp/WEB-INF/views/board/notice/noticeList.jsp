@@ -30,14 +30,14 @@
 						<div class="card-header">
 							<h3 align="center">글목록</h3>
 							<div align="right">
-								전체 글 : <strong>${pagenationNotice.count}</strong>
+								전체 글 : <strong>${PaginationNotice.count}</strong>
 							</div>
 						</div>
 						<div class="card-body">
  							<div align="center">
-								<button type="button" class="btn btn-primary float-end" name="kind" value="NOTICE_ALL" onclick="location.href='./select_all_view' ">전체</button>							
-								<button type="button" class="btn btn-primary float-end" name="kind" value="NOTICE_NOTICE" onclick="location.href='./select_category_view?category=NOTICE_NOTICE&num=1' ">공지사항</button>
-								<button type="button" class="btn btn-primary float-end" name="kind" value="NOTICE_EVENT" onclick="location.href='./select_category_view?category=NOTICE_EVENT&num=1' ">이벤트</button>
+								<button type="button" class="btn btn-primary float-end" name="category" value="NOTICE_ALL" onclick="location.href='./select_all_view' ">전체</button>							
+								<button type="button" class="btn btn-primary float-end" name="category" value="NOTICE_NOTICE" onclick="location.href='./select_category_view?category=NOTICE_NOTICE' ">공지사항</button>
+								<button type="button" class="btn btn-primary float-end" name="category" value="NOTICE_EVENT" onclick="location.href='./select_category_view?category=NOTICE_EVENT' ">이벤트</button>
 							</div>
 							<div class="d-flex justify-content-end">
 								<a class="btn btn-warning float-end" href="./insert_view"> <i class="fas fa-edit"></i> 글 작성
@@ -54,7 +54,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:set var="bNo" value="${pagenationNotice.count - ((criteriaNotice.num-1) * 5) }"/>
+									<c:set var="bNo" value="${PaginationNotice.count - ((PaginationNotice.criteriaNotice.num-1) * 5) }"/>
 									<c:forEach varStatus="status" var="board" items="${menuSelectAll}">
 										<tr>
 											<th>${bNo}</th>
@@ -69,7 +69,7 @@
 								</tbody>
 							</table>
 							<table class="table table-hover text-center">
-								<c:if test="${pagenationNotice.count==0}">
+								<c:if test="${PaginationNotice.count==0}">
 									<tr>
 										<td>등록된 게시글이 없습니다.</td>
 									</tr>
@@ -87,13 +87,13 @@
 								<!-- Previous Button -->
 								
 								<c:choose>
-									<c:when test="${pagenationNotice.startPageNum <= 1}">
+									<c:when test="${PaginationNotice.startPageNum <= 1}">
 										<li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous-PageBlock"> <span
 												aria-hidden="true">&laquo;</span> <span class="sr-only">페이지 이전블럭 이동</span>
 										</a></li>
 									</c:when>
 									<c:otherwise>
-										<li class="page-item"><a class="page-link" href="/notice/select_all_view?num=${pagenationNotice.startPageNum-1}"
+										<li class="page-item"><a class="page-link" href="/notice/select_all_view${PaginationNotice.getUrlLink(PaginationNotice.startPageNum-1)}"
 											aria-label="Previous-PageBlock"> <span aria-hidden="true">&laquo;</span> <span class="sr-only">페이지
 													이전블럭 이동</span>
 										</a></li>
@@ -101,13 +101,13 @@
 								</c:choose>
 
 								<c:choose>
-									<c:when test="${selectbt <= 1}">
+									<c:when test="${PaginationNotice.num <= 1}">
 										<li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous-Page"> <span
 												aria-hidden="true">&lt;</span> <span class="sr-only">이전 페이지 한칸 이동</span>
 										</a></li>
 									</c:when>
 									<c:otherwise>
-										<li class="page-item"><a  class="page-link" href="/notice/select_all_view?num=${selectbt - 1}"
+										<li class="page-item"><a  class="page-link" href="/notice/select_all_view${PaginationNotice.getUrlLink(PaginationNotice.num-1)}"
 											aria-label="Previous-Page"> <span aria-hidden="true">&lt;</span> <span class="sr-only">이전 페이지 한칸
 													이동</span>
 										</a></li>
@@ -115,13 +115,13 @@
 								</c:choose>
 
 								<!-- Page Number -->
-								<c:forEach begin="${pagenationNotice.startPageNum}" end="${pagenationNotice.endPageNum}" var="number">
+								<c:forEach begin="${PaginationNotice.startPageNum}" end="${PaginationNotice.endPageNum}" var="number">
 								   <c:choose>
-										<c:when test="${selectbt==number}">
+										<c:when test="${PaginationNotice.num==number}">
 											<li class="page-item active"><a class="page-link">${number}</a></li>
 										</c:when>
 										<c:otherwise>
-											<li class="page-item"><a class="page-link" href="/notice/select_all_view?num=${number}">${number}</a></li>
+											<li class="page-item"><a class="page-link" href="/notice/select_all_view${PaginationNotice.getUrlLink(PaginationNotice.num)}">${number}</a></li>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
@@ -129,13 +129,13 @@
 								<!-- Next Button -->
 
 								<c:choose>
-									<c:when test="${selectbt >= pagenationNotice.endPageNum_tmp}">
+									<c:when test="${PaginationNotice.num >= PaginationNotice.endPageNum_tmp}">
 										<li class="page-item disabled"><a class="page-link" href="#" aria-label="Next"> <span
 												aria-hidden="true">&gt;</span> <span class="sr-only">다음 페이지 한칸 이동</span>
 										</a></li>
 									</c:when>
 									<c:otherwise>
-										<li class="page-item"><a class="page-link" href="/notice/select_all_view?num=${selectbt+1}" aria-label="Next"> <span
+										<li class="page-item"><a class="page-link" href="/notice/select_all_view${PaginationNotice.getUrlLink(PaginationNotice.num+1)}" aria-label="Next"> <span
 												aria-hidden="true">&gt;</span> <span class="sr-only">다음 페이지 한칸 이동</span>
 										</a></li>
 									</c:otherwise>
@@ -143,13 +143,13 @@
 
 								<c:choose>
 								
-									<c:when test="${!pagenationNotice.next}">
+									<c:when test="${!PaginationNotice.next}">
 										<li class="page-item disabled"><a class="page-link" href="#" aria-label="Next"> <span
 												aria-hidden="true">&raquo;</span> <span class="sr-only">페이지 다음블럭 이동</span>
 										</a></li>
 									</c:when>
 									<c:otherwise>
-										<li class="page-item"><a class="page-link" href="/notice/select_all_view?num=${pagenationNotice.endPageNum+1}" aria-label="Next">
+										<li class="page-item"><a class="page-link" href="/notice/select_all_view${PaginationNotice.getUrlLink(PaginationNotice.endPageNum+1)}" aria-label="Next">
 												<span aria-hidden="true">&raquo;</span> <span class="sr-only">페이지 다음블럭 이동</span>
 										</a></li>
 									</c:otherwise>
@@ -170,19 +170,19 @@
 						<section id="search" class="mb-3 bg-light">
 							<div class="container">
 								<div class="form-row justify-content-center">
-									<form action="./BoardSearch.do" method="post" name="search" id="signupForm"
+									<form action="/notice/select_all_view${PaginationNotice.getUrlLink(PaginationNotice.num)}" get="get" name="searchType" id="signupForm"
 										enctype="application/x-www-form-urlencoded">
 										<fieldset>
 											<div class="input-group mx-auto">
 												<label for="keyword"></label>
 												<div class="col-xs-2">
-													<select name="keyfield" class="form-control">
+													<select name="searchType" class="form-control">
 														해당 항목을 기본 선택으로 지정하여 검색한다.
 														<option value="all" selected="selected">전체 검색</option>
 														<option value="id">아이디</option>
 														<option value="title">제목</option>
 														<option value="contents">내용</option>
-														<option value="title_contents">제목+내용</option>
+														<option value="titleContents">제목+내용</option>
 													</select>
 												</div>
 												<div class="col-xs-6">

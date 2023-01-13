@@ -2,33 +2,74 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aqh.board.domain.dao.NoticeDAO">
 	
+	
+	
 	<!-- 메뉴 전체조회(notice 메뉴 클릭 시) -->
-	<select id="menuSelectAll" parameterType="hashMap" resultType="BoardDTO">
+	<select id="menuSelectAll" resultType="BoardDTO">
 		select RN.* from
 			(select RN1.* from
 				(select * from board 
-					<!-- <if test='searchType.equals("id")'>
-						where id like concat('%',#{keyword},'%')
+				<where>
+					<if test="searchType != null">
+						<choose>
+							<when test='searchType.equals("all")'>
+								id like concat('%',#{keyword},'%')
+								or title like concat('%',#{keyword},'%')
+								or contents like concat('%',#{keyword},'%')
+							</when>
+							<when test='searchType.equals("id")'>
+								id like concat('%',#{keyword},'%')
+							</when>
+							<when test='searchType.equals("title")'>
+								title like concat('%',#{keyword},'%')
+							</when>
+							<when test='searchType.equals("contents")'>
+								contents like concat('%',#{keyword},'%')
+							</when>
+							<when test='searchType.equals("titleContents")'>
+								title like concat('%',#{keyword},'%')
+								or contents like concat('%',#{keyword},'%')
+							</when>
+						</choose>
 					</if>
-					<if test='searchType.equals("title")'>
-						where title like concat('%',#{keyword},'%')
-					</if>
-					<if test='searchType.equals("contents")'>
-						where contents like concat('%',#{keyword},'%')
-					</if>
-					<if test='searchType.equals("title_contents")'>
-						where title like concat('%',#{keyword},'%')
-							or contents like concat('%',#{keyword},'%')
-					</if> -->
+				</where>
 				)
 			RN1 where menu="NOTICE" order by writeDay desc) 
 		RN limit #{displayPost},#{postNum};
 	</select>
-	<!-- select RN.* from(select bNo,id,readCount,title,writeDay from board where menu="NOTICE" order by writeDay desc) RN limit #{displayPost},#{postNum}; -->
 
 	<!-- 카테고리 전체조회(category 메뉴 클릭 시) -->
-	<select id="categorySelectAll" parameterType="hashMap" resultType="BoardDTO">
-		select RN.* from(select bNo,id,readCount,title,writeDay from board where category = #{category} order by writeDay desc) RN limit #{displayPost},#{postNum};
+	<select id="categorySelectAll" resultType="BoardDTO">
+		select RN1.* from
+			(select RN. bNo,id,readCount,title,writeDay from 
+				(select * from board
+				<where>
+					<if test="searchType != null">
+						<choose>
+							<when test='searchType.equals("all")'>
+								id like concat('%',#{keyword},'%')
+								or title like concat('%',#{keyword},'%')
+								or contents like concat('%',#{keyword},'%')
+							</when>
+							<when test='searchType.equals("id")'>
+								id like concat('%',#{keyword},'%')
+							</when>
+							<when test='searchType.equals("title")'>
+								title like concat('%',#{keyword},'%')
+							</when>
+							<when test='searchType.equals("contents")'>
+								contents like concat('%',#{keyword},'%')
+							</when>
+							<when test='searchType.equals("titleContents")'>
+								title like concat('%',#{keyword},'%')
+								or contents like concat('%',#{keyword},'%')
+							</when>
+						</choose>
+					</if>
+				</where>
+				)
+			RN where category = #{category} order by writeDay desc) 
+		RN1 limit #{displayPost},#{postNum};
 	</select>
 	
 	<!-- 선택조회(게시판 제목 클릭 시) -->
@@ -36,17 +77,73 @@
 		select bNo,id,menu,category,readCount,title,contents,file, writeDay from board where bNo = #{bNo};
 	</select>
 	
+	<!-- 조회수 -->
+	<update id="noticeReadCount" parameterType="int">
+		update board set readCount = readCount+1 where bNo = #{bNo};
+	</update> 
+	
 	<!-- 게시판 개수 -->
 	<select id="BoardListAllCount" resultType="integer">
-		select count(*) from board;
+		select count(*) from board 
+		<where>
+			<if test="searchType != null">
+				<choose>
+					<when test='searchType.equals("all")'>
+						id like concat('%',#{keyword},'%')
+						or title like concat('%',#{keyword},'%')
+						or contents like concat('%',#{keyword},'%')
+					</when>
+					<when test='searchType.equals("id")'>
+						id like concat('%',#{keyword},'%')
+					</when>
+					<when test='searchType.equals("title")'>
+						title like concat('%',#{keyword},'%')
+					</when>
+					<when test='searchType.equals("contents")'>
+						contents like concat('%',#{keyword},'%')
+					</when>
+					<when test='searchType.equals("titleContents")'>
+						title like concat('%',#{keyword},'%')
+						or contents like concat('%',#{keyword},'%')
+					</when>
+				</choose>
+			</if>
+		</where>
 	</select>
 	<select id="CategoryListCount" resultType="integer">
-		select count(*) from board where category = #{category};
+		select count(*) from
+			(select * from board 
+			<where>
+				<if test="searchType != null">
+					<choose>
+						<when test='searchType.equals("all")'>
+							id like concat('%',#{keyword},'%')
+							or title like concat('%',#{keyword},'%')
+							or contents like concat('%',#{keyword},'%')
+						</when>
+						<when test='searchType.equals("id")'>
+							id like concat('%',#{keyword},'%')
+						</when>
+						<when test='searchType.equals("title")'>
+							title like concat('%',#{keyword},'%')
+						</when>
+						<when test='searchType.equals("contents")'>
+							contents like concat('%',#{keyword},'%')
+						</when>
+						<when test='searchType.equals("titleContents")'>
+							title like concat('%',#{keyword},'%')
+							or contents like concat('%',#{keyword},'%')
+						</when>
+					</choose>
+				</if>
+			</where>
+			) 
+		board where category = #{category};
 	</select>
 	
 	<!-- 등록 -->
 	<insert id="noticeInsert" parameterType="BoardDTO">
-		insert into board (id,menu,category,title,contents) values(#{id},"NOTICE",#{category},#{title},#{contents});
+		insert into board (id,menu,category,title,contents,file) values(#{id},"NOTICE",#{category},#{title},#{contents},#{file});
 	</insert>
 	
 	<!-- 수정 -->
