@@ -12,6 +12,12 @@
 <meta charset="UTF-8">
 <title>커뮤니티 게시판</title>
 <link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.min.css">
+<script type="text/javascript" src="${contextPath}/resources/js/reply.js"> </script>
+<script type="text/javascript">
+	$(document).ready(function () {
+		console.log(replyService);
+	});
+</script>
 <script src="${contextPath}/resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
 <script src="${contextPath}/resources/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="https://kit.fontawesome.com/58abbffa46.js"></script>
@@ -62,16 +68,16 @@
 					
 					<div>
 
-						<form method="post" action="/reply/write">
+						<form method="post" action="/replies/write">
 						
 								<p>
-									<label>댓글 작성자</label> <input type="text" name="id">
+									<label>댓글 작성자</label> <input type="text" name="id" value="admin">
 								</p>
 								<p>
 									<textarea rows="5" cols="50" name="contents"></textarea>
 								</p>
 								<p>
-								<input type="hidden" name="bNo" value="${boardDTO.bNo}">
+								<input type="hidden" name="bno" value="${boardDTO.bNo}">
 									<button type="submit">댓글 작성</button>
 								</p>
 							</form>
