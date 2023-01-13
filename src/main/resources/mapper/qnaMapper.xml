@@ -46,18 +46,18 @@
 			</if>
 			<include refid="search" />
 			ORDER BY writeDay DESC, bNo DESC) B
-		WHERE rownum between #{startRow} and #{endRow};
+		WHERE rownum between #{startRow} and #{endRow}
 	</select>
 	
 	<select id="selectDetail" parameterType="long" resultType="BoardDTO">
-		SELECT bNo, title, contents, id, writeDay, readCount, category
+		SELECT bNo, title, contents, id, writeDay, readCount, category, file
 		FROM board
 		WHERE bNo=#{bNo} AND menu='QNA'
 	</select>
 	
 	<insert id="insert" parameterType="BoardDTO">
-		INSERT INTO board(id, title, contents, menu, category)
-		VALUES (#{id}, #{title}, #{contents}, 'QNA', #{category})
+		INSERT INTO board(id, title, contents, menu, category, file)
+		VALUES (#{id}, #{title}, #{contents}, 'QNA', #{category}, #{file})
 	</insert>
 	
 	<update id="update" parameterType="BoardDTO">
