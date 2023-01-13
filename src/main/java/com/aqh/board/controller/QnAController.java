@@ -2,6 +2,7 @@ package com.aqh.board.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,6 +21,8 @@ import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.pagehandler.PageHandler;
 import com.aqh.board.domain.pagehandler.SearchCondition;
 import com.aqh.board.service.QnAService;
+import com.aqh.common.domain.dto.AttachFile;
+import com.aqh.common.service.FileService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,6 +33,9 @@ public class QnAController {
 
 	@Autowired
 	QnAService service;
+	
+	@Autowired
+	FileService fileService;
 
 	@GetMapping("/list")
 	public String qnaList(Model model, SearchCondition sc) {
@@ -50,6 +56,7 @@ public class QnAController {
 		
 			service.readCntUp(bNo);
 			boardDTO = service.selectDetail(bNo);
+			boardDTO.setAttachFile(fileService.getFileName(boardDTO.getbNo()));
 			
 			model.addAttribute(boardDTO);
 			log.info("boardDTO = " + boardDTO);
@@ -68,43 +75,38 @@ public class QnAController {
 	}
 
 	@PostMapping("/write")
-	public String qnaInsert(BoardDTO boardDTO, Model model, HttpServletRequest request, MultipartFile uploadFile) {
-		log.info("boardDTO = " + boardDTO);
-		log.info("uploadFile = " + uploadFile);
-		String fileName = null;
-		String path = request.getServletContext().getRealPath("resources");
-		String uploadFolder = path + "\\upload";
-		System.out.println("uploadFolder = " + uploadFolder);
-		File fileDir = new File(uploadFolder);
-		if(!fileDir.exists()) fileDir.mkdirs();
-		if(!uploadFile.isEmpty()) {
-			
-				String fileRealName = uploadFile.getOriginalFilename();
-				long size = uploadFile.getSize();
-				
-				log.info("파일명 : ", fileRealName);
-				log.info("사이즈 : ", size);
-				
-				String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."), fileRealName.length());
-				log.info("확장자명 = ", fileExtension);
-				
-				UUID uuid = UUID.randomUUID();
-				fileName = uuid+fileExtension;
-				File saveFile = new File(uploadFolder + "\\" + fileName);
-				try {
-					uploadFile.transferTo(saveFile);
-				} catch (IllegalStateException e) {
-					e.printStackTrace();
-					return "board/qna/qna_write_form";
-				} catch (IOException e) {
-					e.printStackTrace();
-					return "board/qna/qna_write_form";
-				}
-			
-		}
-		boardDTO.setFile(fileName);
+	public String qnaInsert(BoardDTO boardDTO, Model model, 
+			MultipartFile[] files, HttpServletRequest request) {
 		model.addAttribute(boardDTO.getCategory());
 		service.insert(boardDTO);
+		log.info("boardDTO = " + boardDTO);
+		
+		String uploadPath = request.getServletContext().getRealPath("resources")+"\\upload\\";
+		File fileDir = new File(uploadPath);
+		if(!fileDir.exists()) fileDir.mkdirs();
+		List<AttachFile> list = new ArrayList<>();
+		
+		for(MultipartFile file : files) {
+			if(!file.isEmpty()) {
+				AttachFile attach = new AttachFile(boardDTO.getbNo(),
+												   UUID.randomUUID().toString(),
+												   file.getOriginalFilename(),
+												   uploadPath,
+												   file.getSize());
+				list.add(attach);
+				File saveFile = new File(uploadPath + attach.getUuid() + "-" + attach.getOriginName());
+				try {
+					file.transferTo(saveFile);
+					boardDTO.setAttachFile(list);
+					fileService.upload(attach);
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}
 		return "redirect:/QnA/list";
 	}
 

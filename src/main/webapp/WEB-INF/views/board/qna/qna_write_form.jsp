@@ -10,7 +10,9 @@
 <head>
 <meta charset="UTF-8">
 <title>QnA 작성</title>
-
+<style>
+tr th {text-align: center;}
+</style>
 </head>
 <body>
 	<!-- Header -->
@@ -30,7 +32,7 @@
 		</div>
 		<div class="card-body">
 		  <form method="post" name="QnAWriteForm" enctype="multipart/form-data">
-			<table class="table table-striped">
+			<table class="table">
 			  <tr>
 			    <th>카테고리</th>
 			  	  <td>
@@ -61,7 +63,7 @@
 			   </tr>
 			   <tr>
 				 <th>파일</th>
-				   <td><input type="file"  class="form-control" name="uploadFile"></td>
+				   <td><input type="file"  class="form-control" name="files" multiple="multiple"></td>
 			   </tr>
 			   <tr>
 				 <td colspan="2"  class="text-right">
