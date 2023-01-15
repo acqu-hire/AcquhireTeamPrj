@@ -49,14 +49,7 @@
 							<th>제목</th>
 							<td><c:out value="${boardDTO.title}"/></td>
 						</tr>
-						<tr>
-							<th>첨부파일</th>
-							<td>
-							  <c:forEach var="files" items="${boardDTO.attachFile}">
-								<c:out value="${files.originName}"/> <br/>
-							  </c:forEach>
-							</td>
-						</tr>
+						
 					</table>
 				<hr/>
 					<input type="hidden" name="bNo" value="${boardDTO.bNo}">
@@ -70,6 +63,24 @@
 							<button type="button" class="btn btn-primary" id="btnList">게시글 목록</button>
 						</div>
 					</div>
+				<hr/>
+				<c:if test="${!empty boardDTO.fileList}">
+					<div class="row col-12">
+					  <table id="fileArea">
+					    <tr>
+					 	 <th>첨부파일</th>
+					      <td>
+					    	<c:forEach var="files" items="${boardDTO.fileList}" varStatus="status">
+					    	  <div data-fno="${files.fNo}">
+					    	    파일${status.count}<a href="<c:out value=''/>"><i class="fa-sharp fa-solid fa-download"></i></a>
+								<c:out value="${files.originName}(${files.fmtFileSize})"/> <br/>
+					    	  </div>
+							</c:forEach>
+						  </td>
+						</tr>
+					  </table>
+					</div>
+				</c:if>
 				  </form>
 				</div>
 			</div>

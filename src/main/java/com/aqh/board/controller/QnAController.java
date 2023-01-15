@@ -21,7 +21,6 @@ import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.pagehandler.PageHandler;
 import com.aqh.board.domain.pagehandler.SearchCondition;
 import com.aqh.board.service.QnAService;
-import com.aqh.common.domain.dto.AttachFile;
 import com.aqh.common.service.FileService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -31,19 +30,21 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/QnA")
 public class QnAController {
 
-	@Autowired
-	QnAService service;
-	
-	@Autowired
+	QnAService qnaService;
 	FileService fileService;
-
+	
+	public QnAController(QnAService qnaService, FileService fileService){
+		this.qnaService = qnaService;
+		this.fileService = fileService;
+	}
+	
 	@GetMapping("/list")
 	public String qnaList(Model model, SearchCondition sc) {
-			PageHandler ph = new PageHandler(sc, service.getBoardCnt(sc));
+			PageHandler ph = new PageHandler(sc, qnaService.getBoardCnt(sc));
 			model.addAttribute("ph", ph);
 			log.info("ph = " + ph);
 			
-			List<BoardDTO> list = service.selectAll(sc);
+			List<BoardDTO> list = qnaService.selectAll(sc);
 			model.addAttribute("boardList", list);
 			log.info("sc = " + sc);
 			
@@ -54,9 +55,9 @@ public class QnAController {
 	@GetMapping("/listDetail")
 	public String qnaListDetail(long bNo, Model model, SearchCondition sc, BoardDTO boardDTO) {
 		
-			service.readCntUp(bNo);
-			boardDTO = service.selectDetail(bNo);
-			boardDTO.setAttachFile(fileService.getFileName(boardDTO.getbNo()));
+			qnaService.readCntUp(bNo);
+			boardDTO = qnaService.selectDetail(bNo);
+			boardDTO.setFileList(fileService.getFileList(boardDTO.getbNo()));
 			
 			model.addAttribute(boardDTO);
 			log.info("boardDTO = " + boardDTO);
@@ -76,37 +77,13 @@ public class QnAController {
 
 	@PostMapping("/write")
 	public String qnaInsert(BoardDTO boardDTO, Model model, 
-			MultipartFile[] files, HttpServletRequest request) {
+			 HttpServletRequest request) {
+		
 		model.addAttribute(boardDTO.getCategory());
-		service.insert(boardDTO);
+		qnaService.insert(boardDTO);
 		log.info("boardDTO = " + boardDTO);
-		
-		String uploadPath = request.getServletContext().getRealPath("resources")+"\\upload\\";
-		File fileDir = new File(uploadPath);
-		if(!fileDir.exists()) fileDir.mkdirs();
-		List<AttachFile> list = new ArrayList<>();
-		
-		for(MultipartFile file : files) {
-			if(!file.isEmpty()) {
-				AttachFile attach = new AttachFile(boardDTO.getbNo(),
-												   UUID.randomUUID().toString(),
-												   file.getOriginalFilename(),
-												   uploadPath,
-												   file.getSize());
-				list.add(attach);
-				File saveFile = new File(uploadPath + attach.getUuid() + "-" + attach.getOriginName());
-				try {
-					file.transferTo(saveFile);
-					boardDTO.setAttachFile(list);
-					fileService.upload(attach);
-				} catch (IllegalStateException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-			}
-		}
+		fileService.upload(request, boardDTO);
+
 		return "redirect:/QnA/list";
 	}
 
@@ -115,7 +92,8 @@ public class QnAController {
 		log.info("sc = " + sc);
 		model.addAttribute("sc", sc);
 		
-		BoardDTO boardDTO = service.selectDetail(bNo);
+		BoardDTO boardDTO = qnaService.selectDetail(bNo);
+		boardDTO.setFileList(fileService.getFileList(bNo));
 		model.addAttribute(boardDTO);
 		log.info("boardDTO = " + boardDTO);
 		
@@ -126,7 +104,7 @@ public class QnAController {
 	@PostMapping("/update")
 	public String qnaUpdate(BoardDTO boardDTO, SearchCondition sc) {
 		
-			service.update(boardDTO);
+			qnaService.update(boardDTO);
 
 			return "redirect:/QnA/list"+sc.getQueryString();
 	}
@@ -134,7 +112,7 @@ public class QnAController {
 	@PostMapping("/delete")
 	public String qnaDelete(Integer bNo, RedirectAttributes rattr, SearchCondition sc) {
 		log.info("sc = " + sc);
-		service.delete(bNo);
+		qnaService.delete(bNo);
 		
 		return "redirect:/QnA/list"+sc.getQueryString();
 	}

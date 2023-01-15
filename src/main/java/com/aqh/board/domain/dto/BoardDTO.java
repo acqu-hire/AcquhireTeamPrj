@@ -2,10 +2,10 @@ package com.aqh.board.domain.dto;
 
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.context.annotation.Primary;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.aqh.common.domain.dto.AttachFile;
+import com.aqh.common.domain.dto.FileDTO;
 
 import lombok.Builder;
 
@@ -29,8 +29,8 @@ public class BoardDTO {
 	private Category category; // 카테고리
 	private long bNo; // 게시글 번호
 	private long readCount; // 게시글 조회수
-	private MultipartFile files; // 게시글 첨부파일
-	private List<AttachFile> attachFile; // 파일 정보
+	private List<MultipartFile> files; // 게시글 첨부파일
+	private List<FileDTO> fileList; // 파일정보 리스트
 	private String title; // 게시글 제목
 	private String writeDay; // 게시글 작성일
 	private String contents; // 게시글 내용
@@ -124,27 +124,29 @@ public class BoardDTO {
 		this.contents = contents;
 	}
 
-	public MultipartFile getFiles() {
+	public List<MultipartFile> getFiles() {
 		return files;
 	}
 
-	public void setFiles(MultipartFile files) {
+	public void setFiles(List<MultipartFile> files) {
 		this.files = files;
 	}
 
-	public List<AttachFile> getAttachFile() {
-		return attachFile;
+	public List<FileDTO> getFileList() {
+		return fileList;
 	}
 
-	public void setAttachFile(List<AttachFile> attachFile) {
-		this.attachFile = attachFile;
+	public void setFileList(List<FileDTO> fileList) {
+		this.fileList = fileList;
 	}
 
 	@Override
 	public String toString() {
 		return "BoardDTO [id=" + id + ", menu=" + menu + ", category=" + category + ", bNo=" + bNo + ", readCount="
-				+ readCount + ", files=" + files + ", attachFile=" + attachFile + ", title=" + title + ", writeDay="
+				+ readCount + ", files=" + files + ", fileList=" + fileList + ", title=" + title + ", writeDay="
 				+ writeDay + ", contents=" + contents + "]";
 	}
 
+
+	
 }
