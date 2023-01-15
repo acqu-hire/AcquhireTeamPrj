@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+#fileArea td {
+	padding-left: 15px;
+}
+
+.card-body tr th {
+	text-align: center;
+}
+
+#addFileBtn {
+	background-color: white;
+	color: black;
+	border: 2px solid #e7e7e7;
+	
+}
