@@ -11,7 +11,6 @@ import com.aqh.board.domain.pagehandler.SearchCondition;
 
 @Service
 public class QnAService {
-
 	@Autowired
 	QnADAO qnaDao;
 	

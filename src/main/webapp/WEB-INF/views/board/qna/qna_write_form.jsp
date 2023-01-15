@@ -10,9 +10,6 @@
 <head>
 <meta charset="UTF-8">
 <title>QnA 작성</title>
-<style>
-tr th {text-align: center;}
-</style>
 </head>
 <body>
 	<!-- Header -->
@@ -62,8 +59,12 @@ tr th {text-align: center;}
 				 <td><textarea rows="10" cols="50" name="contents" class="form-control"></textarea></td>
 			   </tr>
 			   <tr>
-				 <th>파일</th>
-				   <td><input type="file"  class="form-control" name="files" multiple="multiple"></td>
+				 <th>파일 <button type="button" id="addFileBtn">추가</button></th>
+				   <td class="file-area">
+				     <div class="row file-inline">
+ 				       <input type="file" name="files">
+				     </div>
+				   </td>
 			   </tr>
 			   <tr>
 				 <td colspan="2"  class="text-right">
@@ -109,6 +110,25 @@ tr th {text-align: center;}
 		})
 
 });
+	$(function () {
+		var maxAppend = 1;
+		$("#addFileBtn").on("click", function() {
+			if(maxAppend >= 5) {
+				alert("파일첨부 최대개수는 5개 입니다.");
+				return;
+			}
+			$(".file-area").append('<div class="row file-inline">'
+			+ '<input type="file" name="files">'
+			+ '<button type="button" class="delBtn btn btn-sm float-right">삭제</button>'
+			+ '</div>');
+			maxAppend++;
+		});
+		
+		$(".file-area").on("click", ".delBtn", function() {
+			$(this).closest("div").remove();
+			maxAppend--;
+		});
+	})
 	
 </script>
 </body>
