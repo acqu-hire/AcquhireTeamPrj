@@ -30,7 +30,7 @@
 		  <h2 class="text-center mt-4 mb-4"><strong>게시글 수정</strong></h2>
 		</div>
 		<div class="card-body">
-		  <form method="post" action="" id="updateForm">
+		  <form method="post" action="" id="updateForm" enctype="multipart/form-data">
 			<table class="table table-striped">
 			  <tr>
 				<th>작성자</th>
@@ -41,7 +41,7 @@
                 <td><input type="text"  class="form-control" name="title" value="${boardDTO.title}"></td>
               </tr>
               <tr>
-                <td>글내용</td>
+                <th>글내용</th>
                 <td><textarea rows="10" cols="50" name="contents" class="form-control">${boardDTO.contents}</textarea></td>
               </tr>
               <tr>
@@ -53,6 +53,23 @@
 			  </tr>
 			</table>
 			<input type="hidden"  class="form-control" name="bNo" value="${boardDTO.bNo}">
+			<c:if test="${!empty boardDTO.fileList}">
+			<div class="row col-12">
+			  <table id="fileArea">
+			    <tr>
+			 	 <th>첨부파일 <button type="button" id="addFileBtn">추가</button></th>
+			      <td class="file-area">
+			    	<c:forEach var="files" items="${boardDTO.fileList}" varStatus="status">
+			    	  <div data-fno="${files.fNo}">
+			    	    파일${status.count}. 
+						<c:out value="${files.originName}(${files.fmtFileSize})"/> <a href="#"><i class="fas fa-trash"></i></a> <br/>
+			    	  </div>
+					</c:forEach>
+				  </td>
+				</tr>
+			  </table>
+			</div>
+			</c:if>
 		  </form>
 		</div>
 	  </div>
@@ -78,6 +95,25 @@ $(function() {
 		form.attr("action", "<c:url value='./update'/>${sc.getQueryString(sc.page,sc.category)}");
 		form.submit();
 	})
+	
+	var maxAppend = "${boardDTO.fileList.size()}";
+	$("#addFileBtn").on("click", function() {
+		if(maxAppend >= 5) {
+			alert("파일첨부 최대개수는 5개 입니다.");
+			return;
+		}
+		$(".file-area").append('<div class="row file-inline">'
+		+ '<input type="file" name="files">'
+		+ '<button type="button" class="delBtn btn btn-sm float-right">삭제</button>'
+		+ '</div>');
+		maxAppend++;
+		alert(maxAppend);
+	});
+	
+	$(".file-area").on("click", ".delBtn", function() {
+		$(this).closest("div").remove();
+		maxAppend--;
+	});
 })
 
 </script>
