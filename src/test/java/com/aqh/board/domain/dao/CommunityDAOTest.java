@@ -26,7 +26,7 @@ public class CommunityDAOTest {
 	@Test
 	public void 커뮤니티_포스트_수정() {
 		BoardDTO boardDTO = BoardDTO.builder().id("admin").bNo(12).menu(Menu.COMMUNITY)
-				.category(Category.COMMUNITY_LIFE).file("엄").title("준").contents("식").build();
+				.category(Category.COMMUNITY_LIFE).title("준").contents("식").build();
 		System.out.println(boardDTO);
 		sessionTemplate.update("updatePost", boardDTO);
 	}
@@ -36,7 +36,7 @@ public class CommunityDAOTest {
 		for (int i = 0; i < 70; i++) {
 
 			BoardDTO boardDTO = BoardDTO.builder().id("admin").menu(Menu.COMMUNITY).category(Category.COMMUNITY_GROUP)
-					.file("zz12321").title("z12123").contents("z15234").build();
+					.title("z12123").contents("z15234").build();
 			System.out.println(boardDTO);
 			sessionTemplate.insert("createPost", boardDTO);
 		}
