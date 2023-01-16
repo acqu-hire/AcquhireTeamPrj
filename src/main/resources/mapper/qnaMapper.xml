@@ -76,5 +76,9 @@
 		WHERE bNo=#{bNo} AND menu='QNA'
 	</delete>
 	
+	<select id="fileList" resultType="FileDTO">
+		SELECT * FROM attachfile
+		WHERE bNo=#{bNo}
+	</select>
 	
 </mapper>

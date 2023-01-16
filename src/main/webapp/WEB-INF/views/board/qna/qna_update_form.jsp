@@ -60,9 +60,9 @@
 			 	 <th>첨부파일 <button type="button" id="addFileBtn">추가</button></th>
 			      <td class="file-area">
 			    	<c:forEach var="files" items="${boardDTO.fileList}" varStatus="status">
-			    	  <div data-fno="${files.fNo}">
+			    	  <div class="file-inline" data-fno="${files.fNo}">
 			    	    파일${status.count}. 
-						<c:out value="${files.originName}(${files.fmtFileSize})"/> <a href="#"><i class="fas fa-trash"></i></a> <br/>
+						<c:out value="${files.originName}(${files.fmtFileSize})"/> <a href="#"><i class="fas fa-trash" data-fno="${files.fNo}"></i></a> <br/>
 			    	  </div>
 					</c:forEach>
 				  </td>
@@ -107,13 +107,21 @@ $(function() {
 		+ '<button type="button" class="delBtn btn btn-sm float-right">삭제</button>'
 		+ '</div>');
 		maxAppend++;
-		alert(maxAppend);
 	});
 	
 	$(".file-area").on("click", ".delBtn", function() {
 		$(this).closest("div").remove();
 		maxAppend--;
 	});
+	
+	$(".fa-trash").on("click", function() {
+		if(!confirm("첨부파일을 삭제하시겠습니까?")) return;
+		$btn = $(this);
+		$btn.closest("div").html(
+								'<input type="hidden" name="delAttach" value="' + $btn.data('fno') + '" />'
+								);
+		maxAppend--;
+	})
 })
 
 </script>

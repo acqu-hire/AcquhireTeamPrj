@@ -1,8 +1,11 @@
 package com.aqh.common.domain.dto;
 
+import java.util.Arrays;
+
 public class FileDTO {
 
 	private long fNo;
+	private long[] delAttach;
 	private long bNo;
 	private String uuid;
 	private String originName;
@@ -28,6 +31,13 @@ public class FileDTO {
 
 	public void setfNo(long fNo) {
 		this.fNo = fNo;
+	}
+	public long[] getDelAttach() {
+		return delAttach;
+	}
+
+	public void setDelAttach(long[] delAttach) {
+		this.delAttach = delAttach;
 	}
 
 	public long getbNo() {
@@ -80,8 +90,8 @@ public class FileDTO {
 
 	@Override
 	public String toString() {
-		return "FileDTO [fNo=" + fNo + ", bNo=" + bNo + ", uuid=" + uuid + ", originName=" + originName
-				+ ", uploadPath=" + uploadPath + ", fileSize=" + fileSize + ", fmtFileSize=" + fmtFileSize + "]";
+		return "FileDTO [fNo=" + fNo + ", delAttach=" + Arrays.toString(delAttach) + ", bNo=" + bNo + ", uuid=" + uuid
+				+ ", originName=" + originName + ", uploadPath=" + uploadPath + ", fileSize=" + fileSize
+				+ ", fmtFileSize=" + fmtFileSize + "]";
 	}
-
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.aqh.board.domain.dao.QnADAO;
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.pagehandler.SearchCondition;
+import com.aqh.common.domain.dto.FileDTO;
 
 @Service
 public class QnAService {
@@ -48,5 +49,9 @@ public class QnAService {
 	
 	public void delete(long bNo) {
 		qnaDao.delete(bNo);
+	}
+	
+	public List<FileDTO> getFileList(long bNo) {
+		return qnaDao.getFileList(bNo);
 	}
 }
