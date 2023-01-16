@@ -72,10 +72,11 @@
 					      <td>
 					    	<c:forEach var="files" items="${boardDTO.fileList}" varStatus="status">
 					    	  <div data-fno="${files.fNo}">
-					    	    파일${status.count}<a href="<c:out value=''/>"><i class="fa-sharp fa-solid fa-download"></i></a>
+					    	    파일${status.count}<a href="<c:out value='/file/download/${files.fNo}'/>"><i class="fa-sharp fa-solid fa-download"></i></a>
 								<c:out value="${files.originName}(${files.fmtFileSize})"/> <br/>
 					    	  </div>
 							</c:forEach>
+							<input type="hidden" value="${fileList}">
 						  </td>
 						</tr>
 					  </table>

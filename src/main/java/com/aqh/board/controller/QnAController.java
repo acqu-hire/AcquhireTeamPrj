@@ -1,26 +1,20 @@
 package com.aqh.board.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.pagehandler.PageHandler;
 import com.aqh.board.domain.pagehandler.SearchCondition;
 import com.aqh.board.service.QnAService;
+import com.aqh.common.domain.dto.FileDTO;
 import com.aqh.common.service.FileService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +51,7 @@ public class QnAController {
 		
 			qnaService.readCntUp(bNo);
 			boardDTO = qnaService.selectDetail(bNo);
-			boardDTO.setFileList(fileService.getFileList(boardDTO.getbNo()));
+			boardDTO.setFileList(qnaService.getFileList(boardDTO.getbNo()));
 			
 			model.addAttribute(boardDTO);
 			log.info("boardDTO = " + boardDTO);
@@ -65,6 +59,7 @@ public class QnAController {
 			model.addAttribute("sc", sc);
 			log.info("sc = " + sc);
 			
+			model.addAttribute("fileList", boardDTO.getFileList());
 			return "board/qna/qna_list_detail";
 	}
 
@@ -93,7 +88,7 @@ public class QnAController {
 		model.addAttribute("sc", sc);
 		
 		BoardDTO boardDTO = qnaService.selectDetail(bNo);
-		boardDTO.setFileList(fileService.getFileList(bNo));
+		boardDTO.setFileList(qnaService.getFileList(bNo));
 		model.addAttribute(boardDTO);
 		log.info("boardDTO = " + boardDTO);
 		
@@ -102,18 +97,24 @@ public class QnAController {
 	}
 
 	@PostMapping("/update")
-	public String qnaUpdate(BoardDTO boardDTO, SearchCondition sc) {
-		
+	public String qnaUpdate(BoardDTO boardDTO, SearchCondition sc, FileDTO fileDTO, HttpServletRequest request) {
+			log.info("fNo = " + fileDTO.getDelAttach());
+			log.info("fileDTO = " + fileDTO);
 			qnaService.update(boardDTO);
-
+			fileService.upload(request, boardDTO);
+			fileService.delete(fileDTO, boardDTO);
+			log.info("update boardDTO = " + boardDTO);
 			return "redirect:/QnA/list"+sc.getQueryString();
 	}
 
 	@PostMapping("/delete")
-	public String qnaDelete(Integer bNo, RedirectAttributes rattr, SearchCondition sc) {
+	public String qnaDelete(Integer bNo, SearchCondition sc, FileDTO fileDTO, 
+			BoardDTO boardDTO, HttpServletRequest request) {
 		log.info("sc = " + sc);
 		qnaService.delete(bNo);
-		
+		log.info("fileDTO = " + fileDTO);
+		log.info("boardDTO = " + boardDTO);
+		fileService.delete(fileDTO, boardDTO);
 		return "redirect:/QnA/list"+sc.getQueryString();
 	}
 	

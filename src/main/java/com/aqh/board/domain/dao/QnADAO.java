@@ -8,53 +8,57 @@ import org.springframework.stereotype.Repository;
 
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.pagehandler.SearchCondition;
+import com.aqh.common.domain.dto.FileDTO;
 
 @Repository
 public class QnADAO {
 
 	@Autowired
-	SqlSessionTemplate sessionTemplate;
+	SqlSessionTemplate session;
 	
 	String namespace = "com.aqh.board.domain.dao.QnAMapper.";
 	
 	public int boardCount(SearchCondition sc) {
-		return sessionTemplate.selectOne(namespace + "boardCount", sc);
+		return session.selectOne(namespace + "boardCount", sc);
 	}
 
 	public int boardCount() {
-		return sessionTemplate.selectOne(namespace + "boardCount");
+		return session.selectOne(namespace + "boardCount");
 	}
 	
 	public int readCountUp(long bNo) {
-		return sessionTemplate.update(namespace + "readCountUp", bNo);
+		return session.update(namespace + "readCountUp", bNo);
 	}
 	
 	public List<BoardDTO> selectAll(SearchCondition sc) {
-		return sessionTemplate.selectList(namespace + "selectAll", sc);
+		return session.selectList(namespace + "selectAll", sc);
 	}
 
 	public List<BoardDTO> selectAll() {
-		return sessionTemplate.selectList(namespace + "selectAll");
+		return session.selectList(namespace + "selectAll");
 	}
 	
 	public BoardDTO selectDetail(long bNo) {
-		return sessionTemplate.selectOne(namespace + "selectDetail", bNo);
+		return session.selectOne(namespace + "selectDetail", bNo);
 	}
 	
 	public int insert(BoardDTO boardDTO) {
-		return sessionTemplate.insert(namespace + "insert", boardDTO);
+		return session.insert(namespace + "insert", boardDTO);
 	}
 	
 	public int update(BoardDTO boardDTO) {
-		return sessionTemplate.update(namespace + "update", boardDTO);
+		return session.update(namespace + "update", boardDTO);
 	}
 
 	public void deleteAll() {
-		sessionTemplate.delete(namespace + "deleteAll");
+		session.delete(namespace + "deleteAll");
 	}
 	
 	public void delete(long bNo) {
-		sessionTemplate.delete(namespace + "delete", bNo);
+		session.delete(namespace + "delete", bNo);
 	}
 	
+	public List<FileDTO> getFileList(long bNo) {
+		return session.selectList(namespace + "fileList", bNo);
+	}
 }
