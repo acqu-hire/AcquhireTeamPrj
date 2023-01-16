@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.aqh.reply.domain.dao.ReplyDAO;
+import com.aqh.reply.domain.dto.ReplyCriteria;
 import com.aqh.reply.domain.dto.ReplyDTO;
 
 /**
@@ -26,8 +27,8 @@ public class ReplyServiceImpI implements ReplyService {
 	}
 
 	@Override
-	public List<ReplyDTO> getReplyList(long bNo) {
-		return replyDAO.getReplyList(bNo);
+	public List<ReplyDTO> getReplyList(ReplyCriteria cri) {
+		return replyDAO.getReplyList(cri);
 	}
 
 	@Override
