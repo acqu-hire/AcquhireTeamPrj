@@ -70,13 +70,13 @@
 					    <tr>
 					 	 <th>첨부파일</th>
 					      <td>
-					    	<c:forEach var="files" items="${boardDTO.fileList}" varStatus="status">
-					    	  <div data-fno="${files.fNo}">
+					    	<c:forEach var="files" items="${boardDTO.fileList}" varStatus="status" >
+					    	  <div data-fno="${files.fNo}" class="file-inline">
 					    	    파일${status.count}<a href="<c:out value='/file/download/${files.fNo}'/>"><i class="fa-sharp fa-solid fa-download"></i></a>
 								<c:out value="${files.originName}(${files.fmtFileSize})"/> <br/>
 					    	  </div>
+					    	   <input type="hidden" name="delAttach" value="${files.fNo}">
 							</c:forEach>
-							<input type="hidden" value="${fileList}">
 						  </td>
 						</tr>
 					  </table>

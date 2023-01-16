@@ -8,12 +8,15 @@ import org.springframework.stereotype.Service;
 import com.aqh.board.domain.dao.QnADAO;
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.pagehandler.SearchCondition;
+import com.aqh.common.domain.dao.FileDAO;
 import com.aqh.common.domain.dto.FileDTO;
 
 @Service
 public class QnAService {
 	@Autowired
 	QnADAO qnaDao;
+	@Autowired
+	FileDAO fileDao;
 	
 	public int getBoardCnt(SearchCondition sc) {
 		return qnaDao.boardCount(sc);
