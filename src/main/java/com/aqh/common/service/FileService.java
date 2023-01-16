@@ -1,6 +1,5 @@
 package com.aqh.common.service;
 
-import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,23 +43,22 @@ public class FileService {
 	@Transactional(rollbackFor = Exception.class)
 	public int delete(FileDTO fileDTO, BoardDTO boardDTO) {
 		int result = 0;
-		if(fileDTO.getDelAttach() != null) {	
+		if(fileDTO.getDelAttach() != null) {
 			boardDTO.setFileList(fileDao.getFileList(fileDTO.getDelAttach()));
-				for(FileDTO file : boardDTO.getFileList()) {
-					File delFile = new File(file.getUploadPath() 
-										  + file.getUuid() 
-										  + attach.getExtension(file.getOriginName()));
-					if(delFile.exists()) {
-						delFile.delete();
-					}
-				}
-			result = fileDao.delete(fileDTO.getDelAttach());
-			return result;
+			attach.removeFile(fileDTO, boardDTO);
 		}
+		result = fileDao.delete(fileDTO.getDelAttach());
 		return result;
 	}
 	
 	public FileDTO getFileDetail(long fNo) {
 		return fileDao.getFileDetail(fNo);
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	public void deleteAll(FileDTO fileDTO, BoardDTO boardDTO) {
+		delete(fileDTO, boardDTO);
+		fileDao.deleteAll(fileDTO.getbNo());
+		
 	}
 }

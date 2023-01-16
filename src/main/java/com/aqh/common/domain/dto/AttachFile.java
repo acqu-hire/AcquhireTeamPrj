@@ -39,6 +39,18 @@ public class AttachFile {
 		return list;
 	}
 	
+	public void removeFile(FileDTO fileDTO, BoardDTO boardDTO) {
+		for(FileDTO file : boardDTO.getFileList()) {
+			File delFile = new File(file.getUploadPath() 
+								  + file.getUuid() 
+								  + getExtension(file.getOriginName()));
+			if(delFile.exists()) {
+				delFile.delete();
+			}
+		}
+		
+	}
+	
 	private String getFmtFileSize(long fileSize) {
 		if(fileSize < 1024) { // 1KB 미만
 			return fileSize + "Bytes";

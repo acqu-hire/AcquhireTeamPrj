@@ -32,4 +32,9 @@ public class FileDAO {
 		return session.selectOne(namespace + "fileDetail", fNo);
 	}
 
+	public void deleteAll(long bNo) {
+		session.delete(namespace + "deleteAll", bNo);
+//		throw new Exception();
+	}
+
 }
