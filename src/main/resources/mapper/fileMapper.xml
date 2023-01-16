@@ -40,8 +40,13 @@
 		</foreach>
 	</select>
 	
-	<select id="fileDetail" parameterType="int" resultType="FileDTO">
+	<select id="fileDetail" resultType="FileDTO">
 		SELECT * FROM attachfile
-		WHERE fNo = ${fNo}
+		WHERE fNo = #{fNo}
+	</select>
+	
+	<select id="deleteAll" parameterType="long">
+		DELETE FROM attachfile
+		WHERE bNo=#{bNo}
 	</select>
 </mapper>

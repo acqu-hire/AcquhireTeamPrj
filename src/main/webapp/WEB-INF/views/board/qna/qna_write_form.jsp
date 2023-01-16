@@ -28,7 +28,7 @@
 		  <h2 class="text-center mt-4 mb-4"><strong>질문글 작성</strong></h2>
 		</div>
 		<div class="card-body">
-		  <form method="post" name="QnAWriteForm" enctype="multipart/form-data">
+		  <form method="post" name="QnAWriteForm" id="QnAWriteForm" enctype="multipart/form-data">
 			<table class="table">
 			  <tr>
 			    <th>카테고리</th>
@@ -68,7 +68,7 @@
 			   </tr>
 			   <tr>
 				 <td colspan="2"  class="text-right">
-				   <input type="submit" value="글쓰기" class="btn btn-success">
+				   <input type="submit" value="글쓰기" class="btn btn-success" id="submitWriteForm">
 				   <input type="reset" value="다시작성" class="btn btn-warning">
 				   <button type="button"  class="btn btn-primary" id="btnList">전체 게시글보기</button>
 				 </td>
@@ -88,19 +88,18 @@
 
 <!-- Footer -->
 <script type="text/javascript">
-	
 	$(function() {
 		$("form").submit(function() {
 			if($("select[name='category']").val() == ""){
-				alert("카테고리를 선택해주세요.")
+				alert("카테고리를 선택해주세요.");
 				return false;
 			};
 			if(!$("input[name='title']").val()) {
-				alert("제목을 입력하세요.")
+				alert("제목을 입력하세요.");
 				return false;
 			}
 			if(!$("textarea[name='contents']").val()) {
-				alert("내용을 입력하세요.")
+				alert("내용을 입력하세요.");
 				return false;
 			}
 		})
