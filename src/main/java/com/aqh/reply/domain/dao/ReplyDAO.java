@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.aqh.reply.domain.dto.ReplyCriteria;
 import com.aqh.reply.domain.dto.ReplyDTO;
 
 /**
@@ -26,8 +27,8 @@ public class ReplyDAO {
 		return sqlSessionTemplate.insert(namespace + "register", replyDTO);
 	}
 
-	public List<ReplyDTO> getReplyList(long bNo) {
-		return sqlSessionTemplate.selectList(namespace + "getReplyList", bNo);
+	public List<ReplyDTO> getReplyList(ReplyCriteria cri) {
+		return sqlSessionTemplate.selectList(namespace + "getReplyList", cri);
 	}
 
 	public ReplyDTO getReply(long rno) {

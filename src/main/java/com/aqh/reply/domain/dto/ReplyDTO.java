@@ -15,8 +15,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class ReplyDTO {
 
-	private long bNo; // 게시글 번호
-	private long rNo; // 댓글 번호 (AI)
+	private long bno; // 게시글 번호
+	private long rno; // 댓글 번호 (AI)
 	private String writeDay; // 게시글 작성일
 	private String id;
 	private String contents;

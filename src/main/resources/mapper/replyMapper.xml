@@ -7,13 +7,16 @@ PUBLIC "=//mybatis.org//DTD Mapper 3.0//EN"
 
     <insert id="register">
         INSERT INTO REPLY(bNo,id,contents)
-        VALUES( #{bNo} , #{id}, #{contents} )
+        VALUES( #{bno} , #{id}, #{contents} )
     </insert>
     
     <select id="getReplyList" resultType="ReplyDTO">
-        SELECT * FROM REPLY where bNo = #{bNo}
+        SELECT * FROM REPLY where bNo = #{bno} limit #{offset},#{limit}
     </select>
     <select id="getReply" resultType="ReplyDTO">
-        SELECT * FROM REPLY where rNo = #{rNo}
+        SELECT * FROM REPLY where rNo = #{rno}
     </select>
+    <delete id="removeReply">
+        delete from reply where rNo = #{rno}
+    </delete>
 </mapper>

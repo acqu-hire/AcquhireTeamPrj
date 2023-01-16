@@ -2,6 +2,7 @@ package com.aqh.reply.service;
 
 import java.util.List;
 
+import com.aqh.reply.domain.dto.ReplyCriteria;
 import com.aqh.reply.domain.dto.ReplyDTO;
 
 /**
@@ -17,7 +18,7 @@ public interface ReplyService {
     public int register(ReplyDTO replyDTO);
 
     // READ (읽기)
-    public List<ReplyDTO> getReplyList(long bNo);
+    public List<ReplyDTO> getReplyList(ReplyCriteria cri);
 
     public ReplyDTO getReply(Long rno);
 
