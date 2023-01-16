@@ -6,7 +6,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.aqh.common.domain.dto.AttachFile;
 import com.aqh.common.domain.dto.FileDTO;
 
 @Repository
@@ -21,8 +20,16 @@ public class FileDAO {
 		return session.insert(namespace + "upload", files);
 	}
 
-	public List<FileDTO> getFileList(long bNo) {
-		return session.selectList(namespace + "fileList", bNo);
+	public int delete(long[] fNo) {
+		return session.delete(namespace + "delete", fNo);
+	}
+
+	public List<FileDTO> getFileList(long[] fNo) {
+		return session.selectList(namespace + "fileList", fNo);
+	}
+	
+	public FileDTO getFileDetail(long fNo) {
+		return session.selectOne(namespace + "fileDetail", fNo);
 	}
 
 }

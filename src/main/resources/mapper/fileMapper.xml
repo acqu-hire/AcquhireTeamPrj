@@ -24,8 +24,24 @@
 		</foreach>
 	</insert>
 	
+	<delete id="delete">
+		DELETE FROM attachfile 
+		WHERE fNo IN
+		<foreach collection="array" item="fNo" open="(" close=")" separator=",">
+		${fNo}
+		</foreach>
+	</delete>
+	
 	<select id="fileList" resultType="FileDTO">
 		SELECT * FROM attachfile
-		WHERE bNo=#{bNo}
+		WHERE fNo IN
+		<foreach collection="array" item="fNo" open="(" close=")" separator=",">
+		${fNo}
+		</foreach>
+	</select>
+	
+	<select id="fileDetail" parameterType="int" resultType="FileDTO">
+		SELECT * FROM attachfile
+		WHERE fNo = ${fNo}
 	</select>
 </mapper>
