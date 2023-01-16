@@ -108,13 +108,12 @@ public class QnAController {
 	}
 
 	@PostMapping("/delete")
-	public String qnaDelete(Integer bNo, SearchCondition sc, FileDTO fileDTO, 
-			BoardDTO boardDTO, HttpServletRequest request) {
+	public String qnaDelete(SearchCondition sc, FileDTO fileDTO, HttpServletRequest request, BoardDTO boardDTO) {
 		log.info("sc = " + sc);
-		qnaService.delete(bNo);
 		log.info("fileDTO = " + fileDTO);
-		log.info("boardDTO = " + boardDTO);
-		fileService.delete(fileDTO, boardDTO);
+		fileService.deleteAll(fileDTO, boardDTO);
+		qnaService.delete(fileDTO.getbNo());
+		
 		return "redirect:/QnA/list"+sc.getQueryString();
 	}
 	
