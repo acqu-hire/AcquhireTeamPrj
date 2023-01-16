@@ -51,6 +51,10 @@ public class AttachFile {
 		}
 	}
 	
+	public String getExtension(String originName) {
+		return originName.substring(originName.lastIndexOf(".", originName.length()));
+	}
+	
 	private String getExtension(MultipartFile file) {
 		String fileName = file.getOriginalFilename();
 		return fileName.substring(fileName.lastIndexOf("."), fileName.length());
