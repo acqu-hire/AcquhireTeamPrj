@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.pagehandler.PageHandler;
@@ -43,7 +44,6 @@ public class QnAController {
 			log.info("sc = " + sc);
 			
 			return "board/qna/qna_list";
-		
 	}
 
 	@GetMapping("/listDetail")
@@ -71,12 +71,11 @@ public class QnAController {
 	}
 
 	@PostMapping("/write")
-	public String qnaInsert(BoardDTO boardDTO, Model model, 
-			 HttpServletRequest request) {
-		
+	public String qnaInsert(BoardDTO boardDTO, Model model, HttpServletRequest request) {
+		System.out.println("boardDTO = " + boardDTO.getFiles());
 		model.addAttribute(boardDTO.getCategory());
 		qnaService.insert(boardDTO);
-		log.info("boardDTO = " + boardDTO);
+		log.info("boardDTO!! = " + boardDTO.getbNo());
 		fileService.upload(request, boardDTO);
 
 		return "redirect:/QnA/list";

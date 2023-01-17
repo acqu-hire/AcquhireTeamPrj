@@ -18,22 +18,28 @@ public class AttachFile {
 		File fileDir = new File(uploadPath);
 		List<FileDTO> list = new ArrayList<>();
 		if(!fileDir.exists()) fileDir.mkdir();
-		for(MultipartFile file : boardDTO.getFiles()) {
-			String uuid = getUuid();
-			FileDTO fileDTO = new FileDTO(boardDTO.getbNo(),
-										  uuid,
-										  file.getOriginalFilename(),
-										  uploadPath,
-										  file.getSize(),
-										  getFmtFileSize(file.getSize()));
-			list.add(fileDTO);
-			File saveFile = new File(uploadPath + uuid + getExtension(file));
-			try {
-				file.transferTo(saveFile);
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
+		if(boardDTO.getFiles()!=null) {
+			for(MultipartFile file : boardDTO.getFiles()) {
+				if(file.getOriginalFilename() != "") {
+					String uuid = getUuid();
+					FileDTO fileDTO = new FileDTO(boardDTO.getbNo(),
+												  uuid,
+												  file.getOriginalFilename(),
+												  uploadPath,
+												  file.getSize(),
+												  getFmtFileSize(file.getSize()));
+					list.add(fileDTO);
+					File saveFile = new File(uploadPath + uuid + getExtension(file));
+					try {
+						file.transferTo(saveFile);
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else {
+					return null;
+				}
 			}
 		}
 		return list;
@@ -69,7 +75,10 @@ public class AttachFile {
 	
 	private String getExtension(MultipartFile file) {
 		String fileName = file.getOriginalFilename();
-		return fileName.substring(fileName.lastIndexOf("."), fileName.length());
+		if(!file.isEmpty()) {
+			return fileName.substring(fileName.lastIndexOf("."), fileName.length());
+		}
+		return null;
 	}
 	
 	private String getUuid() {
