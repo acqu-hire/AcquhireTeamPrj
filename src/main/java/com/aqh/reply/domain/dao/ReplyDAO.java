@@ -36,10 +36,10 @@ public class ReplyDAO {
 	}
 
 	public int modify(ReplyDTO replyDTO) {
-		return sqlSessionTemplate.update(null, replyDTO);
+		return sqlSessionTemplate.update("modifyReply", replyDTO);
 	}
 
 	public int removeReply(long rno) {
-		return sqlSessionTemplate.delete(null, rno);
+		return sqlSessionTemplate.delete("removeReply", rno);
 	}
 }

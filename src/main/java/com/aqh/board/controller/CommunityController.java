@@ -1,11 +1,17 @@
 package com.aqh.board.controller;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.Criteria;
@@ -20,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CommunityController {
 
 	enum Path {
-		JSP_PATH("board/community"), REDIRECT_PATH("redirect:/community"),
+		JSP_PATH("board/community"), REDIRECT_PATH("redirect:/community"), UPLOAD_PATH("C:\\upload"),
 		BOARD_COMMUNITY_INSERT(JSP_PATH.getPath() + "/insert"),
 		BOARD_COMMUNITY_INSERT_VIEW(JSP_PATH.getPath() + "/insert_view"),
 		BOARD_COMMUNITY_SELECT_ALL_VIEW(JSP_PATH.getPath() + "/select_all_view"),
@@ -63,7 +69,34 @@ public class CommunityController {
 	@PostMapping(value = "/insert_view")
 	public String createCommunityInsertPost(BoardDTO boardDTO) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_INSERT_VIEW);
-		communityService.createPost(boardDTO);
+		System.out.println(">>>>>>>>>>>>>>>>>>" + boardDTO.getFiles().size());
+
+		// make folder
+		File uploadPath = new File(Path.UPLOAD_PATH.getPath(), getFolder());
+		System.out.println(">>>>>>>>>" + uploadPath);
+		if (!uploadPath.exists()) {
+			uploadPath.mkdirs();
+		}
+
+		for (MultipartFile multipartFile : boardDTO.getFiles()) {
+
+			UUID uuid = UUID.randomUUID();
+			String uploadFileName = multipartFile.getOriginalFilename();
+			
+			// IE has file Path
+			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
+			uploadFileName = uuid.toString() + "_" + uploadFileName;
+			File saveFile = new File(uploadPath, uploadFileName);
+			//System.out.println(uploadFileName);
+			
+			try {
+				multipartFile.transferTo(saveFile);
+			} catch (Exception e) {
+				log.error(e.getMessage());
+			}
+		}
+
+		// communityService.createPost(boardDTO);
 		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath();
 	}
 
@@ -128,4 +161,12 @@ public class CommunityController {
 		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath();
 	}
 
+	private String getFolder() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-ddd");
+		Date date = new Date();
+
+		String str = sdf.format(date);
+
+		return str.replace("-", File.separator);
+	}
 }
