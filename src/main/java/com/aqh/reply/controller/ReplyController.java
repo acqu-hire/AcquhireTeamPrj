@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,9 +21,6 @@ import com.aqh.reply.service.ReplyServiceImpI;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-
-
 
 /**
  * 댓글Controller
@@ -40,56 +38,51 @@ public class ReplyController {
 	private final ReplyServiceImpI replyService;
 
 	// ! CRATE
-	@PostMapping(value = "/write",
-	consumes = "application/json;",
-	produces = {MediaType.TEXT_PLAIN_VALUE})
+	@PostMapping(value = "/write", consumes = "application/json;", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> register(@RequestBody ReplyDTO replyDTO) {
 		System.out.println(replyDTO.getBno());
 		System.out.println(replyDTO.toString());
 		int logic = replyService.register(replyDTO);
 		log.info("logic Check >>>>>", logic);
-		return logic == 1 ? new ResponseEntity<>("succes",HttpStatus.OK): new ResponseEntity<>(HttpStatus.OK);
+		return logic == 1 ? new ResponseEntity<>("succes", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	// ! READ
-	@GetMapping(value="/pages/{bno}/{page}",
-	produces = {MediaType.APPLICATION_JSON_UTF8_VALUE,
-			 MediaType.APPLICATION_XML_VALUE})
-	public ResponseEntity<List<ReplyDTO>> getReply(
-		@PathVariable("page") int page,
-		@PathVariable("bno") Long bno
-	) {
+	@GetMapping(value = "/pages/{bno}/{page}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
+	public ResponseEntity<List<ReplyDTO>> getReply(@PathVariable("page") int page, @PathVariable("bno") Long bno) {
 		System.out.println("page = " + page + " bno " + bno);
-		return new ResponseEntity<>(replyService.getReplyList(ReplyCriteria.builder().bno(bno).page(page).limit(10).build()),HttpStatus.OK);
+		return new ResponseEntity<>(
+				replyService.getReplyList(ReplyCriteria.builder().bno(bno).page(page).limit(10).build()),
+				HttpStatus.OK);
 	}
-	@GetMapping(value="/{rno}",
-	produces = {MediaType.TEXT_XML_VALUE,
-				MediaType.APPLICATION_JSON_UTF8_VALUE})
+
+	@GetMapping(value = "/{rno}", produces = { MediaType.TEXT_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<ReplyDTO> get(@PathVariable("rno") Long rno) {
-        log.info("get : " + rno);
-		return new ResponseEntity<>(replyService.getReply(rno),HttpStatus.OK);
+		log.info("get : " + rno);
+		return new ResponseEntity<>(replyService.getReply(rno), HttpStatus.OK);
 	}
-	
-	
+
 	// ! UPDATE
-	@RequestMapping(value="/{rno}",
-	method={RequestMethod.PUT,RequestMethod.PATCH},
-	consumes = "application/json",
-	produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> modify(@RequestBody ReplyDTO replyDTO,@PathVariable("rno") Long rno) {
+	@CrossOrigin
+	@RequestMapping(value = "/{rno}", method = { RequestMethod.PUT,
+			RequestMethod.PATCH }, consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
+	public ResponseEntity<String> modify(@RequestBody ReplyDTO replyDTO, @PathVariable("rno") Long rno) {
 		replyDTO.setRno(rno);
 		log.info("rno >>>>" + rno);
 		int logic = replyService.modify(replyDTO);
-		return logic == 1 ?new ResponseEntity<>("success",HttpStatus.OK): new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return logic == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
 
 	// ! DELETE
-	@DeleteMapping(value="/{rno} ",produces = {MediaType.TEXT_PLAIN_VALUE})
+	@CrossOrigin
+	@DeleteMapping(value = "/{rno}", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> remove(@PathVariable("rno") Long rno) {
-		System.out.println(""+rno);
+		System.out.println("" + rno);
 		int logic = replyService.removeReply(rno);
-		return logic == 1 ? new ResponseEntity<>("succes",HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		
+		return logic == 1 ? new ResponseEntity<>("succes", HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
 	}
 }

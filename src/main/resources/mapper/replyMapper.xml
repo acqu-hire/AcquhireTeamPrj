@@ -16,6 +16,9 @@ PUBLIC "=//mybatis.org//DTD Mapper 3.0//EN"
     <select id="getReply" resultType="ReplyDTO">
         SELECT * FROM REPLY where rNo = #{rno}
     </select>
+    <update id="modifyReply">
+        UPDATE reply SET contents = #{contents} WHERE rNo = #{rno}
+    </update>
     <delete id="removeReply">
         delete from reply where rNo = #{rno}
     </delete>
