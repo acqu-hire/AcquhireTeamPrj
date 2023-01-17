@@ -27,23 +27,20 @@ public class FileService {
 	public int upload(HttpServletRequest request, BoardDTO boardDTO) {
 		int result = 0;
 		String uploadPath = request.getServletContext().getRealPath("resources") + "\\upload\\";
-		if(boardDTO.getFiles()!=null) {
+		if(boardDTO.getFiles() != null) {
 			boardDTO.setFileList(attach.getFileAttach(uploadPath, boardDTO));
 			result = fileDao.upload(boardDTO.getFileList());
-			return result;
-		} else {
-			return result;
 		}
+			return result;
 	}
 	
 	public List<FileDTO> getFileList(long[] fNo) {
 		return fileDao.getFileList(fNo);
 	}
 
-	@Transactional(rollbackFor = Exception.class)
 	public int delete(FileDTO fileDTO, BoardDTO boardDTO) {
 		int result = 0;
-		if(fileDTO.getDelAttach() != null) {
+		if(fileDTO.getDelAttach()!=null) {
 			boardDTO.setFileList(fileDao.getFileList(fileDTO.getDelAttach()));
 			attach.removeFile(fileDTO, boardDTO);
 		}
