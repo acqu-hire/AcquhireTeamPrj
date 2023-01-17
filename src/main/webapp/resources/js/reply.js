@@ -1,6 +1,11 @@
 console.log("Reply Module.......");
 
-console.log("Reply Module");
+/**
+ * @author Devesg
+ * @param reply
+ * @example
+ * replyService.get(reply{bno : bnoValue, id : "admin", contents : "test" },function (result){ alert("result: " + result) })
+ */
 var replyService=(function(){
 	
 	function add(reply, callback, error){
@@ -28,6 +33,7 @@ var replyService=(function(){
     function getList(param, callback, error) {
         var bno = param.bno;
         var page = param.page || 1;
+
         $.getJSON("/replies/pages/" + bno + "/" + page + ".json",
             function (data) {
                 if (callback) {
@@ -66,7 +72,7 @@ var replyService=(function(){
             type: "put",
             url: "/replies/" + reply.rno,
             data: JSON.stringify(reply),
-            contentType: "application/json; charset=utf-8",
+            contentType: 'application/json; charset=utf-8',
             success: function (result, status, xhr) {
                 if (callback) {
                     callback(result)
@@ -103,9 +109,18 @@ var replyService=(function(){
 
 })();
 
+// replyService.update({
+//     rno:52,
+//     bno:bnoValue,
+//     contents:"modified Reply..."
+// },function(result)
+// {
+//     alert("수정 완료...");
+// })
 
-replyService.add({
-    bno : bnoValue, id : "admin", contents : "dsad test" },function (result){ alert("result: " + result);})
-replyService.remove(55,function(count) {
-    console.log(count);
-    if (count === "success") { alert("REMOVED")}},function(err) { alert("ERROR..");})
+// replyService.add({
+//     bno : bnoValue, id : "admin", contents : "dsad test" },function (result){ alert("result: " + result);})
+
+// replyService.remove(55,function(count) {
+//     console.log(count);
+//     if (count === "success") { alert("REMOVED")}},function(err) { alert("ERROR..");})
