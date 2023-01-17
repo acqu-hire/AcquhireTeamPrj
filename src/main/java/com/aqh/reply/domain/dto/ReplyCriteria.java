@@ -11,7 +11,7 @@ import lombok.Data;
 //@RequiredArgsConstructor //기본 생성자보다 우선순위가 낮다.
 @AllArgsConstructor
 public class ReplyCriteria {
-	private long bno;
+	private long bNo;
 	private long page; // 페이징
 	private long limit; // 페이징 범위
 	private long offset; // offest
@@ -21,8 +21,8 @@ public class ReplyCriteria {
 	}
 
     @Builder
-	public ReplyCriteria(long bno,long page, long limit) {
-        this.bno = bno;
+	public ReplyCriteria(long bNo,long page, long limit) {
+        this.bNo = bNo;
 		this.page = page;
 		this.limit = limit;
 	}
