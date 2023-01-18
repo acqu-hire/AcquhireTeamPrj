@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.aqh.board.domain.dao.NoticeDAO;
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.CriteriaNotice;
+import com.aqh.common.domain.dto.FileNoticeDTO;
 
 
 @Service
@@ -42,6 +43,16 @@ public class NoticeService {
 	}
 	public void noticeReadCount(int bNo) {
 		noticeDAO.noticeReadCount(bNo);
+	}
+	
+	public List<FileNoticeDTO> fileUpList(Integer bNo){
+		return noticeDAO.fileUpList(bNo);
+	}
+	public void FileInsert(List<FileNoticeDTO> fileNoList) {
+		noticeDAO.FileInsert(fileNoList);
+	}
+	public int getBoardSeq() {
+		return noticeDAO.getBoardSeq();
 	}
 
 }

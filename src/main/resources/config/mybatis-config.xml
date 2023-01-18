@@ -12,5 +12,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias alias="MemberDTO" type="com.aqh.member.domain.dto.MemberDTO"/>
 		<typeAlias alias="ReplyDTO" type="com.aqh.reply.domain.dto.ReplyDTO" />
 		<typeAlias alias="FileDTO" type="com.aqh.common.domain.dto.FileDTO" />
+		<typeAlias alias="FileNoticeDTO" type="com.aqh.common.domain.dto.FileNoticeDTO" />
 	</typeAliases>
 </configuration> 
