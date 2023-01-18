@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.aqh.common.domain.dto.FileDTO;
+import com.aqh.common.domain.dto.FileNoticeDTO;
 
 import lombok.Builder;
 
@@ -30,6 +31,10 @@ public class BoardDTO {
 	private long readCount; // 게시글 조회수
 	private List<MultipartFile> files; // 게시글 첨부파일
 	private List<FileDTO> fileList; // 파일정보 리스트
+	
+	private List<FileNoticeDTO> fileNoList;// 공지사항 파일정보 리스트
+	private MultipartFile uploadFile;//공지사항 게시글
+	
 	private String title; // 게시글 제목
 	private String writeDay; // 게시글 작성일
 	private String contents; // 게시글 내용
@@ -138,12 +143,25 @@ public class BoardDTO {
 	public void setFileList(List<FileDTO> fileList) {
 		this.fileList = fileList;
 	}
+	public List<FileNoticeDTO> getFileNoList() {
+		return fileNoList;
+	}
 
+	public void setFileNoList(List<FileNoticeDTO> fileNoList) {
+		this.fileNoList = fileNoList;
+	}
+	public MultipartFile getUploadFile() {
+		return uploadFile;
+	}
+
+	public void setUploadFile(MultipartFile uploadFile) {
+		this.uploadFile = uploadFile;
+	}
 	@Override
 	public String toString() {
 		return "BoardDTO [id=" + id + ", menu=" + menu + ", category=" + category + ", bNo=" + bNo + ", readCount="
 				+ readCount + ", files=" + files + ", fileList=" + fileList + ", title=" + title + ", writeDay="
-				+ writeDay + ", contents=" + contents + "]";
+				+ writeDay + ", contents=" + contents + ", fileNoList=" + fileNoList + ", uploadFile=" + uploadFile +"]";
 	}
 
 
