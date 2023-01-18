@@ -15,6 +15,8 @@ import lombok.Setter;
 
 @Data
 @AllArgsConstructor
+@Getter
+@Setter
 public class ReplyDTO {
 
 	private long bNo; // 게시글 번호
