@@ -98,50 +98,17 @@
 							<!-- <label for="replyPassword" class="ml-4"><i class="fa fa-unlock-alt fa-2x"></i></label>
 							<input type="password" class="form-control ml-2" placeholder="Enter password" id="replyPassword"> -->
 						  </div>
-						  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-						  <button type="button" class="btn btn-dark mt-3" onClick="javascript:addReply();">등록</button>
+						  <textarea class="form-control" id="replyContents" rows="3"></textarea>
+						  <button type="button" class="btn btn-dark mt-3" id="regReplyBtn">등록</button>
 		   				</li>
 					  </ul>
 					</div>
 				  </div>
 				  <hr/>
 				  <!-- reply contents -->
-				 <%--  <c:choose>
-				    <c:when test="${!empty replyDTO}"> --%>
-				    <button type="button" class="btn btn-primary" id="getReplyBtn">댓글보기</button>
+				    <div class="p-1 bg-warning"><span class="reply-tab">댓글목록</span></div>
 				      <div class="reply-inline">
-				     <%--  <c:forEach var="reply" items="replyDTO">
-				  	  <div class="card mt-2">
-						<div class="card-header p-2" data-rno="${reply.rno}">
-					  	  <table>
-							<tbody>
-							  <tr class="align-middle">
-						 	    <td rowspan="2" class="pr-2"><i class="fa fa-user-o fa-2x"></i></td>
-						  	    <td class="ml">${reply.id}</td>
-							  </tr>
-							  <tr>
-						  		<td>
-								  <font size="2">${reply.writeDay}</font> 
-						  	 	</td>
-							  </tr>
-							</tbody>
-					  	  </table>
-				    	</div>
-				 	    <div class="card-body">
-						  <p class="card-text">${reply.contents}</p>
-						  <span class="badge badge-dark" style="cursor:pointer"><a onclick="javascript:showReReplyArea(176,126);">답글</a></span>
-						</div>
 					  </div>
-					  </c:forEach> --%>
-					  </div>
-				<%-- 	</c:when>
-				  <c:otherwise>
-				    <div>
-				  		등록된 댓글이 없습니다.
-				    </div>
-				  </c:otherwise>
-				
-				</c:choose> --%>
 			  </div>
 			</div>
 		</div>
@@ -156,29 +123,61 @@
 	<!-- Footer -->
 <script>
 $(function() {
-	$("#getReplyBtn").on("click", function() {
-		$.ajax({
-			type : "GET",
-			url : "<c:out value='/listDetail/reply?bNo='/>"+"${boardDTO.bNo}",
-			success : function(result) {
-				$(".reply-inline").html(addList(result));
-			},
-			error : function () {
-				alert('error!!');
-			}
-		});
-	})
+	var bNo = "${boardDTO.bNo}";
+	var sessionId = "${sessionScope.id}";
+	replyList(bNo);
 	
-})
-
+	$(document).on("click","#replyRemove",function() {
+		var writer = $(this).data("writer");
+		var rno = $(this).data("rno");
+		if(sessionId == writer) {
+			$.ajax({
+				type : "DELETE",
+				url : "/listDetail/reply/"+rno+"?bNo="+bNo,
+				headers : {"content-type" : "application/json"},
+				data : JSON.stringify({
+					rno : rno
+				}),
+				success : function(result) {
+					alert(result);
+					replyList(bNo);
+				},
+				error : function() {
+					alert("error!!");
+				}
+			}) // ajax
+		} else {
+			alert("삭제할 권한이 없습니다.");
+		}
+	});
+		
+	 $('#regReplyBtn').on('click', function() {
+		var contents = $("#replyContents").val();
+		$.ajax({
+			type : "POST",
+			url : "<c:out value='/listDetail/reply?bNo='/>" + bNo,
+			headers : {"content-type" : "application/json"},
+			data : JSON.stringify({
+						contents : contents,
+						 id  : id
+						 }),
+			success : function(result) {
+				alert(result);
+				replyList(bNo);
+			},
+			error : function() {
+				alert("error");
+			}
+		}) // ajax
+	})	 
 	$('#btnList').on('click', function() {
 		location.href="<c:url value='./list'/>${sc.getQueryString(sc.page, sc.category)}"
 	})
 	$('#btnRemove').on('click', function() {
 		if(!confirm("게시글을 삭제하시겠습니까?")) return;
-		var session = '<%=session.getAttribute("id")%>';
+		
 		var writer = '${boardDTO.id}';
-		if(session != writer){
+		if(sessionId != writer){
 			alert("삭제할 권한이 없습니다.");
 		} else {
 			var form = $("#boardForm");
@@ -189,39 +188,55 @@ $(function() {
 		
 	})
 	$('#btnModify').on('click', function() {
-		var session = '<%=session.getAttribute("id")%>';
 		var writer = '${boardDTO.id}';
-		if(session != writer){
+		if(sessionId != writer){
 			alert("수정할 권한이 없습니다.");
 		} else {
 			location.href="<c:url value='./update'/>${sc.getQueryString(sc.page, sc.category)}&bNo=${boardDTO.bNo}";
 		}
 	})
-	
-	var addList = function(replyList) {
-		var list = '<div class="card mt-2">';
-		$(replyList).each(function(reply) {
-			list += ' <div class="card-header p-2" data-rno=' + reply.rno + '>';
-		  	list += ' <table>';
-			list +=	' <tbody>';
-			list += ' <tr class="align-middle">';
-			list += ' <td rowspan="2" class="pr-2"><i class="fa fa-user-o fa-2x"></i></td>';				 	    
-			list += ' <td class="ml">'+reply.id+'</td>';
-			list += ' </tr>';
-			list += ' <tr>';
-			list += ' <td>';
-			list += ' <font size="2">'+reply.writeDay+'</font>'; 
-			list += ' </td>';
-			list += ' </tr>';
-			list += ' </tbody>';
-		  	list += ' </table>';
-	    	list += ' </div>';
-	 	    list += ' <div class="card-body">';
-			list += ' <p class="card-text">'+reply.contents+'</p>';
-			list += ' <span class="badge badge-dark" style="cursor:pointer"><a onclick="javascript:showReReplyArea(176,126);">답글</a></span>';
-			list += ' </div>';
-		})
-			return list + ' </div>';
+
+})
+var replyList = function(bNo) {
+		$.ajax({
+			type : "GET",
+			url : "<c:out value='/listDetail/reply?bNo='/>"+ bNo,
+			success : function(data) {
+				if(data!=""){
+					var list = '<div class="card mt-2">';
+					$.each(data, function(index, data) {
+						list += ' <div class="card-header p-2" data-rno=' + data.rno + '>';
+					  	list += ' <table>';
+						list +=	' <tbody>';
+						list += ' <tr class="align-middle">';
+						list += ' <td rowspan="2" class="pr-2"><i class="fa fa-user-o fa-2x"></i></td>';				 	    
+						list += ' <td class="ml">' + data.id + '</td>';
+						list += ' </tr>';
+						list += ' <tr>';
+						list += ' <td>';
+						list += ' <font size="2">' + data.writeDay + '</font>'; 
+						list += ' <span style="cursor:pointer" id="replyRemove" data-rno=' + data.rno +' data-writer=' + data.id + '>';
+						list += ' <i class="fa fa-window-close fa" aria-hidden="true"></i></span> ';
+						list += ' </td>';
+						list += ' </tr>';
+						list += ' </tbody>';
+					  	list += ' </table>';
+				    	list += ' </div>';
+				 	    list += ' <div class="card-body" data-rno=>';
+						list += ' <p class="card-text">' + data.contents + '</p>';
+						list += ' <span class="badge badge-dark" style="cursor:pointer"><a onclick="javascript:showReReplyArea(176,126);">답글</a></span>';
+						list += ' </div>';
+						list += ' </div>';
+						
+					});
+					$(".reply-inline").html(list);
+				} else {
+					$(".reply-inline").html("등록된 댓글이 없습니다.");
+				}},
+			error : function () {
+				alert('error!!');
+			}
+		}) // ajax
 	}
 </script>
 </body>
