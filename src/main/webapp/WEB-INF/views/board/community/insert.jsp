@@ -16,21 +16,37 @@
 				<script src="${contextPath}/resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
 				<script src="${contextPath}/resources/js/bootstrap.min.js" type="text/javascript"></script>
 				<script src="https://kit.fontawesome.com/58abbffa46.js"></script>
+				<style>
+					.uploadResult {
+						width:100%;
+					}
+					.uploadResult ul
+					{
+						display: flex;
+						flex-flow: row;
+						justify-content: center;
+						align-items: center;
+					}
+					.uploadResult ul li
+					{
+						list-style: none;
+						padding : 10px;
+					}
+					.uploadResult ul li img
+					{
+						width: 20px;
+						height: 20px;
+					}
+				</style>
 				<script>
 					$(document).ready(function () {
-						
-						/*
-						var clonObj = $(".uploadDiv").clone();
-						$("#uploadBtn").on("click", function () {
-							var FormData = new formData();
-						});
-						*/
+
+
 						function checkExtension(fileName, fileSize) {
 							var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 							var maxSize = 5242880; // 5MB
 
-							if (fileSize >= maxSize)
-							{
+							if (fileSize >= maxSize) {
 								alert("파일 사이즈 초과");
 								return false;
 							}
@@ -41,35 +57,57 @@
 							return true;
 						}
 
+						var clonObj = $(".uploadDiv").clone();
+
 						$("#uploadBtn").on("click", function () {
-							
+
 							var formData = new FormData();
+
 							var inputFile = $("input[name='files']");
+							
 							var files = inputFile[0].files;
+							
 							console.log('files :>> ', files);
 
-							for(var i = 0; i < files.length; i++)
-							{
-								if(!checkExtension(files[i].name,files[i].size))
-								{
+							for (var i = 0; i < files.length; i++) {
+								if (!checkExtension(files[i].name, files[i].size)) {
 									return false;
 								}
-								formData.append("uploadFile",files[i]);
+								formData.append("files", files[i]);
 							}
+							$.ajax({
+								url: "/uploadAjaxAction",
+								processData: false,
+								contentType: false,
+								data: formData,
+								type: "post",
+								dataType: "json",
+								success: function (result) {
+									console.log('result :>> ', result);
+									ShowUploadedFile(result)
+									$(".uploadDiv").html(clonObj.html());
+								}
+							});
 						});
-						$.ajax({
-							url: "/community/insert_view",
-							processData : false,
-							contentType : false,
-							data: "formData",
-							type: "post",
-							dataType: "dataType",
-							success: function (result) {
-								alert(result)
-							}
-						});
-					}
-					);
+
+						var uploadResult = $(".uploadResult ul");
+						function ShowUploadedFile(uploadResultArr) {
+
+							var str = "";
+
+							$(uploadResultArr).each(function (i, obj) {
+								if (!obj.image) {
+									str += "<il><img src='${contextPath}/resources/img/attach.png'>" + obj.fileName + "</li>";
+								}
+								else { 
+									var fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName);
+									str += "<il>" + obj.fileName + "</il>";
+									str += "<il><img src='/display?fileName="+fileCallPath+"'></li>";
+								}
+							});
+							uploadResult.append(str);
+						}
+					});
 				</script>
 			</head>
 
@@ -81,7 +119,6 @@
 					<!-- Header -->
 
 					<!-- Board Insert Form -->
-
 					<div class="container-fluid">
 						<div class="row justify-content-center">
 							<div class="col-md-8 mt-3 mb-3">
@@ -92,7 +129,19 @@
 										</h2>
 									</div>
 									<div class="card-body">
-										<form method="post" action="/community/insert_view" enctype="multipart/form-data">
+										
+											<div class="uploadDiv">
+												<input type="file" name="files" multiple>
+											</div>
+
+											<div class="uploadResult">
+												<ul>
+
+												</ul>
+											</div>
+											<button id="uploadBtn">Upload</button>
+
+										<form method="post" enctype="multipart/form-data">
 											<table class="table table-striped">
 												<tr>
 													<th>카테고리</th>
@@ -120,19 +169,22 @@
 													<td><input type="text" class="form-control" name="title"></td>
 												</tr>
 												<tr>
-													<td>글내용</td>
-													<td><textarea rows="10" cols="50" name="contents"class="form-control"></textarea></td>
+													<th>첨부파일</th>
+													<td>
+													</td>
 												</tr>
 												<tr>
-													<tr>
-														<div class="uploadDiv">
-														<input type="file" name="files" multiple>
-													</div>
-													<button id="uploadBtn">Upload</button></tr>
-													<td colspan="2" class="text-right">	
+													<td>글내용</td>
+													<td><textarea rows="10" cols="50" name="contents"
+															class="form-control"></textarea></td>
+												</tr>
+												<tr>
+													<td colspan="2" class="text-right">
 														<input type="submit" value="글쓰기" class="btn btn-success">
 														<input type="reset" value="다시작성" class="btn btn-warning">
-														<button type="button" class="btn btn-primary" onclick="location.href='./select_all_view'">전체 게시글보기</button>
+														<button type="button" class="btn btn-primary"
+															onclick="location.href='./select_all_view'">전체
+															게시글보기</button>
 													</td>
 												</tr>
 
@@ -151,22 +203,22 @@
 
 						<!-- Footer -->
 						<script type="text/javascript">
-							$(function () {
-								$("form").submit(function () {
-									if ($("select[name='category']").val() == "") {
-										alert("카테고리를 선택해주세요.")
-										return false;
-									};
-									if (!$("input[name='title']").val()) {
-										alert("제목을 입력하세요.")
-										return false;
-									}
-									if (!$("textarea[name='contents']").val()) {
-										alert("내용을 입력하세요.")
-										return false;
-									}
-								})
-							});
+							// $(function () {
+							// 	$("form").submit(function () {
+							// 		if ($("select[name='category']").val() == "") {
+							// 			alert("카테고리를 선택해주세요.")
+							// 			return false;
+							// 		};
+							// 		if (!$("input[name='title']").val()) {
+							// 			alert("제목을 입력하세요.")
+							// 			return false;
+							// 		}
+							// 		if (!$("textarea[name='contents']").val()) {
+							// 			alert("내용을 입력하세요.")
+							// 			return false;
+							// 		}
+							// 	})
+							// });
 						</script>
 			</body>
 
