@@ -6,12 +6,14 @@ PUBLIC "=//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.aqh.reply.domain.dao.ReplyDAO">
 
     <insert id="register">
-        INSERT INTO REPLY(bNo,id,contents)
+        INSERT INTO REPLY( bNo, id, contents)
         VALUES( #{bNo} , #{id}, #{contents} )
     </insert>
     
     <select id="getReplyList" resultType="ReplyDTO">
-        SELECT * FROM REPLY where bNo = #{bNo} limit #{offset},#{limit}
+        SELECT * FROM REPLY where bNo = #{bNo} 
+        ORDER BY writeDay ASC
+        LIMIT #{offset},#{limit}
     </select>
     <select id="getReply" resultType="ReplyDTO">
         SELECT * FROM REPLY where rNo = #{rno}
