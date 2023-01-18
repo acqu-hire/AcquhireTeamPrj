@@ -69,32 +69,6 @@ public class CommunityController {
 	@PostMapping(value = "/insert_view")
 	public String createCommunityInsertPost(BoardDTO boardDTO) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_INSERT_VIEW);
-		System.out.println(">>>>>>>>>>>>>>>>>>" + boardDTO.getFiles().size());
-
-		// make folder
-		File uploadPath = new File(Path.UPLOAD_PATH.getPath(), getFolder());
-		System.out.println(">>>>>>>>>" + uploadPath);
-		if (!uploadPath.exists()) {
-			uploadPath.mkdirs();
-		}
-
-		for (MultipartFile multipartFile : boardDTO.getFiles()) {
-
-			UUID uuid = UUID.randomUUID();
-			String uploadFileName = multipartFile.getOriginalFilename();
-			
-			// IE has file Path
-			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
-			uploadFileName = uuid.toString() + "_" + uploadFileName;
-			File saveFile = new File(uploadPath, uploadFileName);
-			//System.out.println(uploadFileName);
-			
-			try {
-				multipartFile.transferTo(saveFile);
-			} catch (Exception e) {
-				log.error(e.getMessage());
-			}
-		}
 
 		// communityService.createPost(boardDTO);
 		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath();
@@ -161,12 +135,4 @@ public class CommunityController {
 		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath();
 	}
 
-	private String getFolder() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-ddd");
-		Date date = new Date();
-
-		String str = sdf.format(date);
-
-		return str.replace("-", File.separator);
-	}
 }
