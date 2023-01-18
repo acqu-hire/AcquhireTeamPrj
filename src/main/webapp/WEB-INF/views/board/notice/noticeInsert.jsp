@@ -62,7 +62,7 @@
 				            </tr>
 				            <tr>
 				            	<td>첨부파일</td>
-				            	<td><input type="file" name="file" /></td>
+				            	<td><input type="file" name="uploadFile" multiple="multiple"/></td>
 				            </tr>
 				            <tr>
 				                <td colspan="2"  class="text-right">

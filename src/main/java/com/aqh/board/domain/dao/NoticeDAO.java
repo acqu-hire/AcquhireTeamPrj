@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.CriteriaNotice;
+import com.aqh.common.controller.FileControllerNotice;
+import com.aqh.common.domain.dto.FileNoticeDTO;
 
 @Repository
 public class NoticeDAO {
@@ -43,7 +45,14 @@ public class NoticeDAO {
 	public void noticeReadCount(int bNo) {
 		sqlSessionTemplate.delete("noticeReadCount", bNo);
 	}
-	
-
+	public List<FileNoticeDTO> fileUpList(Integer bNo){
+		return sqlSessionTemplate.selectList("fileUploadList", bNo);
+	}
+	public void FileInsert(List<FileNoticeDTO> fileNoList) {
+		sqlSessionTemplate.insert("FileInsert",fileNoList);
+	}
+	public int getBoardSeq() {
+		return sqlSessionTemplate.selectOne("BoardDAO.getBoardSeq");
+	}
 
 }

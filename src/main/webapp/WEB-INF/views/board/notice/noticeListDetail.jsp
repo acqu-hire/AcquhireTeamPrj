@@ -29,16 +29,18 @@
 				<div class="card-header">
 					<h2 class="text-center mt-4 mb-4">게시글</h2>
 				</div>
+				
 				<div class="card-body">
+					<form action="./fileDown" method="get">
 					<table class="table">
 						<tr>
 							<th>작성자</th>
 							<td>${selectDetail.id}</td>
 						</tr>
-						<tr>
+						<!-- <tr>
 							<th>게시글 번호</th>
 							<td>${selectDetail.bNo}</td>
-						</tr>
+						</tr> -->
 						<tr>
 							<th>게시판메뉴</th>
 							<td>${selectDetail.menu} > ${selectDetail.category}</td>
@@ -61,9 +63,18 @@
 						</tr>
 						<tr>
 							<th>파일</th>
-							<td></td>
+							<td>
+								<c:forEach var="i" begin="0" end="${end}">
+									<p><a>${fileNoList.get(i).getOriginal_file_name()}</a></p>
+									<input type="hidden" name="fileAlls" value="${fileNoList}">
+									<input type="hidden" name="fileUuid" value="${fileNoList.get(i).getUuid()}">
+									<input type="hidden" name="fileName" value="${fileNoList.get(i).getOriginal_file_name()}">
+									<input type="submit" value="다운로드" >				
+								</c:forEach>
+							</td>
 						</tr>
 					</table>
+					</form>
 				<hr/>
 					<div class="col-12">
 					${boardDTO.contents}
