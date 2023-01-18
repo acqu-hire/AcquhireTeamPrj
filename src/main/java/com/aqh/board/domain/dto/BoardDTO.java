@@ -9,7 +9,6 @@ import com.aqh.common.domain.dto.FileDTO;
 
 import lombok.Builder;
 
-@Primary
 public class BoardDTO {
 
 	public enum Menu {
