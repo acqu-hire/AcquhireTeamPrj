@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,7 +31,6 @@ import com.aqh.common.domain.dto.AttachFileDTO;
 
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnailator;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 /**
@@ -91,24 +93,64 @@ public class UploadController {
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
+	@GetMapping(value = "/download", produces = { MediaType.APPLICATION_OCTET_STREAM_VALUE })
+	public ResponseEntity<Resource> downloadFile(@RequestHeader("User-Agent") String userAgent, String fileName) {
+		FileSystemResource resource = new FileSystemResource("C\\upload\\" + fileName);
+		if (!resource.exists()) {
+			new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		log.info("resource" + resource);
+		
+		// remove UUID
+		String resourceName = resource.getFilename();
+		String resourceOriginalName = resourceName.substring(resourceName.indexOf("_")+1);
 
-    @GetMapping(value="/download",
-    produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE})
-    public ResponseEntity<Resource> downloadFile(String fileName) {
-        FileSystemResource resource = new FileSystemResource("C\\upload\\"+fileName);
-        log.info("resource" + resource);
-        String resourceName = resource.getFilename();
-        HttpHeaders header = new HttpHeaders();
-            try {
-                header.add("Content-Disposition", "attachment; filename="+new String(resourceName.getBytes("UTF-8"),"ISO-8859-1"));
-            } catch (UnsupportedEncodingException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                // 여기 하고있었음!!!!!!!!! 532페이지
-            }
-        return new ResponseEntity<Resource>(resource,header,HttpStatus.OK);
-    }
-    
+		HttpHeaders header = new HttpHeaders();
+		try {
+			String downloadName = null;
+			// IE BROSWER
+			if (userAgent.contains("Trident")) {
+				log.info("IE BROSWER");
+				downloadName = URLEncoder.encode(resourceOriginalName, "UTF-8").replace("\\+", " ");
+			} 
+			// CHROME BROSWER
+			else {
+				log.info("Chrome BROSWER");
+				downloadName = new String(resourceOriginalName.getBytes("UTF-8"), "ISO-8859-1");
+			}
+			System.out.println(downloadName);
+			header.add("Content-Disposition","attachment; filename=" + downloadName);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
+	}
+
+	@ResponseBody
+	@PostMapping(value="/deleteFile")
+	public ResponseEntity<String> deleteFile(String fileName, String type) {
+		File file;
+		System.out.println(fileName);
+		System.out.println(type);
+		try {
+			file = new File("c:\\upload\\"+URLDecoder.decode(fileName, "UTF-8"));
+			System.out.println(file);
+			file.delete();
+			if (type.equals("image")) {
+				String largeFileName = file.getAbsolutePath().replace("s_", "");
+				log.info(" " + largeFileName);
+				file = new File(largeFileName);
+				file.delete();
+			}
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>("deleted",HttpStatus.OK);
+	}
+	
 
 	@ResponseBody
 	@GetMapping(value = "/display")
