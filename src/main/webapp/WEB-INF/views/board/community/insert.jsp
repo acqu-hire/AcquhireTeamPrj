@@ -18,29 +18,79 @@
 				<script src="https://kit.fontawesome.com/58abbffa46.js"></script>
 				<style>
 					.uploadResult {
-						width:100%;
+						width: 100%;
 					}
-					.uploadResult ul
-					{
+
+					.uploadResult ul {
 						display: flex;
 						flex-flow: row;
 						justify-content: center;
 						align-items: center;
 					}
-					.uploadResult ul li
-					{
+
+					.uploadResult ul li {
 						list-style: none;
-						padding : 10px;
+						padding: 10px;
+						align-content: center;
+						text-align: center;
 					}
-					.uploadResult ul li img
-					{
-						width: 20px;
-						height: 20px;
+
+					.uploadResult ul li img {
+						width: 100px;
+					}
+
+					.uploadResult ul li span {
+						color: rgb(0, 0, 0);
+					}
+
+					.bigPictureWrapper {
+						position: absolute;
+						display: none;
+						justify-content: center;
+						align-items: center;
+						top: 0%;
+						width: 100%;
+						height: 100%;
+						background-color: gray;
+						z-index: 100;
+						background-color: rgba(255, 255, 255, 0.5);
+					}
+
+					.bigPicture {
+						position: relative;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+					}
+
+					.bigPicture img {
+						width: 600px;
 					}
 				</style>
-				<script>
+				<script type="text/javascript">
+					function showImage(fileCallPath) {
+						$(".bigPictureWrapper").css("display", "flex").show();
+						$(".bigPicture").html("<img src='/display?fileName=" + encodeURI(fileCallPath) + "'>").animate({ width: '100%', height: '100%' }, 1000);
+					}
+
 					$(document).ready(function () {
 
+						
+						$("input[type='submit']").on("click", function (e) {
+							e.preventDefault();
+							var formObj = $("form[role='form']");
+							var str = "";
+
+								$(".uploadResult ul li").each(function (index, obj) {
+								var jobj = $(obj);
+								console.dir(jobj);
+								str += "<input type='hidden' name='attachList["+index+"].fileName' value='"+jobj.data("filename")+"'>";
+								str += "<input type='hidden' name='attachList["+index+"].uuid' value='"+jobj.data("uuid")+"'>";
+								str += "<input type='hidden' name='attachList["+index+"].uploadPath' value='"+jobj.data("path")+"'>";
+								str += "<input type='hidden' name='attachList["+index+"].fileType' value='"+jobj.data("type")+"'>";
+							});
+							formObj.append(str).sumbit();
+						});
 
 						function checkExtension(fileName, fileSize) {
 							var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
@@ -57,16 +107,34 @@
 							return true;
 						}
 
-						var clonObj = $(".uploadDiv").clone();
+						$(".uploadResult").on("click", "span", function () {
+							var targetFile = $(this).data("file");
+							var type = $(this).data("type");
+							var targetLi = $(this).closest("li");
+							$.ajax({
+								url: "/deleteFile",
+								data: {
+									fileName: targetFile,
+									type: type
+								},
+								dataType: "text",
+								type: "post",
+								success: function (result) {
+									alert(result)
+									targetLi.remove();
+								}
+							});
+						});
 
 						$("#uploadBtn").on("click", function () {
+							var clonObj = $(".uploadDiv").clone();
 
 							var formData = new FormData();
 
 							var inputFile = $("input[name='files']");
-							
+
 							var files = inputFile[0].files;
-							
+
 							console.log('files :>> ', files);
 
 							for (var i = 0; i < files.length; i++) {
@@ -90,28 +158,58 @@
 							});
 						});
 
-						var uploadResult = $(".uploadResult ul");
 						function ShowUploadedFile(uploadResultArr) {
+							var uploadResult = $(".uploadResult ul");
 
 							var str = "";
 
 							$(uploadResultArr).each(function (i, obj) {
-								if (!obj.image) {
-									str += "<il><img src='${contextPath}/resources/img/attach.png'>" + obj.fileName + "</li>";
+								if (obj.image) {
+									var fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName);
+									str += "<li data-path='" + obj.uploadPath + "'";
+									str += " data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName + "' data-type='" + obj.image + "'";
+									str += "><div>";
+									str += "<span> " + obj.fileName + "</span>";
+									str += "<button type = 'button' data-file=\'" + fileCallPath + "\'";
+									str += "data-type='image' class='btn btn-warning btn-circle'>";
+									str += "<i class='fa fa-times'></i></button><br>";
+									str += "<img src='/display?fileName=" + fileCallPath + "'></a>";
+									str += "</div></li>";
 								}
-								else { 
-									var fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName);
-									str += "<il>" + obj.fileName + "</il>";
-									str += "<il><img src='/display?fileName="+fileCallPath+"'></li>";
+								else {
+									var fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
+									var fileLink = fileCallPath.replace(new RegExp(/\\/g), "/");
+
+									str += "<li data-path='" + obj.uploadPath + "'";
+									str += " data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName + "' data-type='" + obj.image + "'";
+									str += "><div>";
+									str += "<span> " + obj.fileName + "</span>";
+									str += "<button type = 'button' data-file=\'" + fileCallPath + "\'";
+									str += "data-type='file' class='btn btn-warning btn-circle'>";
+									str += "<i class='fa fa-times'></i></button><br>";
+									str += "<img src='${contextPath}/resources/img/attach.png'>";
+									str += "</div></li>";
 								}
 							});
 							uploadResult.append(str);
 						}
+
+						$(".bigPictureWrapper").on("click", function () {
+							$(".bigPicture").animate({ width: '0%', height: '0%' }, 1000);
+							setTimeout(() => {
+								$(this).hide();
+							}, 1000);
+						});
 					});
 				</script>
 			</head>
 
 			<body>
+				<div class="bigPictureWrapper">
+					<div class="bigPicture">
+
+					</div>
+				</div>
 				<!-- Header -->
 
 				<%@ include file="../../include/header.jsp" %>
@@ -129,19 +227,19 @@
 										</h2>
 									</div>
 									<div class="card-body">
-										
-											<div class="uploadDiv">
-												<input type="file" name="files" multiple>
-											</div>
 
-											<div class="uploadResult">
-												<ul>
+										<div class="uploadDiv">
+											<input type="file" name="files" multiple>
+										</div>
 
-												</ul>
-											</div>
-											<button id="uploadBtn">Upload</button>
+										<div class="uploadResult">
+											<ul>
 
-										<form method="post" enctype="multipart/form-data">
+											</ul>
+										</div>
+										<button id="uploadBtn">Upload</button>
+
+										<form method="post" action="/community/insert_view" enctype="multipart/form-data">
 											<table class="table table-striped">
 												<tr>
 													<th>카테고리</th>
