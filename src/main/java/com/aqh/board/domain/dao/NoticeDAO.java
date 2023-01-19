@@ -45,14 +45,19 @@ public class NoticeDAO {
 	public void noticeReadCount(int bNo) {
 		sqlSessionTemplate.delete("noticeReadCount", bNo);
 	}
-	public List<FileNoticeDTO> fileUpList(Integer bNo){
+	
+	
+	public List<FileNoticeDTO> fileUpList(long bNo){
 		return sqlSessionTemplate.selectList("fileUploadList", bNo);
 	}
-	public void FileInsert(List<FileNoticeDTO> fileNoList) {
-		sqlSessionTemplate.insert("FileInsert",fileNoList);
+	public void fileInsert(List<FileNoticeDTO> fileNoList) {
+		sqlSessionTemplate.insert("fileInsert",fileNoList);
 	}
-	public int getBoardSeq() {
-		return sqlSessionTemplate.selectOne("BoardDAO.getBoardSeq");
+	public void fileDeleteAll(int bNo) {
+		sqlSessionTemplate.delete("fileDeleteAll",bNo);
+	}
+	public void fileSelectDelete(String uuid) {
+		sqlSessionTemplate.delete("fileSelectDelete",uuid);
 	}
 
 }

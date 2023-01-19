@@ -121,7 +121,7 @@
 											<li class="page-item active"><a class="page-link">${number}</a></li>
 										</c:when>
 										<c:otherwise>
-											<li class="page-item"><a class="page-link" href="/notice/select_all_view${PaginationNotice.getUrlLink(PaginationNotice.num)}">${number}</a></li>
+											<li class="page-item"><a class="page-link" href="/notice/select_all_view${PaginationNotice.getUrlLink(number)}">${number}</a></li>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>

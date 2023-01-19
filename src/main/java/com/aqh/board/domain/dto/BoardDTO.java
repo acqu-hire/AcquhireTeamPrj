@@ -2,9 +2,10 @@ package com.aqh.board.domain.dto;
 
 import java.util.List;
 
-import org.springframework.context.annotation.Primary;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.aqh.common.domain.dto.AttachFileDTO;
+import com.aqh.common.domain.dto.BoardAttachVO;
 import com.aqh.common.domain.dto.FileDTO;
 import com.aqh.common.domain.dto.FileNoticeDTO;
 
@@ -30,12 +31,24 @@ public class BoardDTO {
 	private long bNo; // 게시글 번호
 	private long readCount; // 게시글 조회수
 	private long replyCnt; // 게시글 댓글수
+
+	/**
+	 * @author makemegrowup
+	 */
 	private List<MultipartFile> files; // 게시글 첨부파일
 	private List<FileDTO> fileList; // 파일정보 리스트
-	
+
+	/**
+	 * @author kimdoyeon12
+	 */
 	private List<FileNoticeDTO> fileNoList;// 공지사항 파일정보 리스트
-	private MultipartFile uploadFile;//공지사항 게시글
-	
+	private MultipartFile uploadFile;// 공지사항 게시글
+
+	/**
+	 * @author Devesg
+	 */
+	private List<BoardAttachVO> attachList;
+
 	private String title; // 게시글 제목
 	private String writeDay; // 게시글 작성일
 	private String contents; // 게시글 내용
@@ -49,10 +62,11 @@ public class BoardDTO {
 		this.contents = contents;
 		this.menu = menu;
 	}
-	
+
 	@Builder
 	public BoardDTO(String id, Menu menu, Category category, long bNo, long readCount, 
 			 long replyCnt, String title, String writeDay, String contents) {
+
 		this.id = id;
 		this.menu = menu;
 		this.category = category;
@@ -63,8 +77,6 @@ public class BoardDTO {
 		this.writeDay = writeDay;
 		this.contents = contents;
 	}
-	
-	
 
 	public String getId() {
 		return id;
@@ -153,6 +165,7 @@ public class BoardDTO {
 	public void setFileList(List<FileDTO> fileList) {
 		this.fileList = fileList;
 	}
+
 	public List<FileNoticeDTO> getFileNoList() {
 		return fileNoList;
 	}
@@ -160,6 +173,7 @@ public class BoardDTO {
 	public void setFileNoList(List<FileNoticeDTO> fileNoList) {
 		this.fileNoList = fileNoList;
 	}
+
 	public MultipartFile getUploadFile() {
 		return uploadFile;
 	}
@@ -168,12 +182,20 @@ public class BoardDTO {
 		this.uploadFile = uploadFile;
 	}
 
+	public List<BoardAttachVO> getAttachList() {
+		return attachList;
+	}
+
+	public void setAttachList(List<BoardAttachVO> attachList) {
+		this.attachList = attachList;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardDTO [id=" + id + ", menu=" + menu + ", category=" + category + ", bNo=" + bNo + ", readCount="
-				+ readCount + ", replyCnt=" + replyCnt + ", files=" + files + ", fileList=" + fileList + ", fileNoList="
-				+ fileNoList + ", uploadFile=" + uploadFile + ", title=" + title + ", writeDay=" + writeDay
-				+ ", contents=" + contents + "]";
+				+ readCount + ", files=" + files + ", fileList=" + fileList + ", fileNoList=" + fileNoList
+				+ ", uploadFile=" + uploadFile + ", attachList=" + attachList + ", title=" + title + ", writeDay="
+				+ writeDay + ", contents=" + contents + "]";
 	}
-	
+
 }

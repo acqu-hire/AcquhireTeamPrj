@@ -45,14 +45,16 @@ public class NoticeService {
 		noticeDAO.noticeReadCount(bNo);
 	}
 	
-	public List<FileNoticeDTO> fileUpList(Integer bNo){
+	public List<FileNoticeDTO> fileUpList(long bNo){
 		return noticeDAO.fileUpList(bNo);
 	}
-	public void FileInsert(List<FileNoticeDTO> fileNoList) {
-		noticeDAO.FileInsert(fileNoList);
+	public void fileInsert(List<FileNoticeDTO> fileNoList) {
+		noticeDAO.fileInsert(fileNoList);
 	}
-	public int getBoardSeq() {
-		return noticeDAO.getBoardSeq();
+	public void fileDeleteAll(int bNo) {
+		noticeDAO.fileDeleteAll(bNo);
 	}
-
+	public void fileSelectDelete(String uuid) {
+		noticeDAO.fileSelectDelete(uuid);
+	}
 }
