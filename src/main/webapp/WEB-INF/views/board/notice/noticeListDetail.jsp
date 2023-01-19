@@ -31,16 +31,15 @@
 				</div>
 				
 				<div class="card-body">
-					<form action="./fileDown" method="get">
 					<table class="table">
 						<tr>
 							<th>작성자</th>
 							<td>${selectDetail.id}</td>
 						</tr>
-						<!-- <tr>
+						<tr style="display:none;">
 							<th>게시글 번호</th>
-							<td>${selectDetail.bNo}</td>
-						</tr> -->
+							<td><a id="filebNo" class="downlink" href="${selectDetail.bNo}">${selectDetail.bNo}</a></td>
+						</tr>
 						<tr>
 							<th>게시판메뉴</th>
 							<td>${selectDetail.menu} > ${selectDetail.category}</td>
@@ -64,17 +63,14 @@
 						<tr>
 							<th>파일</th>
 							<td>
-								<c:forEach var="i" begin="0" end="${end}">
-									<p><a>${fileNoList.get(i).getOriginal_file_name()}</a></p>
-									<input type="hidden" name="fileAlls" value="${fileNoList}">
-									<input type="hidden" name="fileUuid" value="${fileNoList.get(i).getUuid()}">
-									<input type="hidden" name="fileName" value="${fileNoList.get(i).getOriginal_file_name()}">
-									<input type="submit" value="다운로드" >				
+								<c:forEach items="${fileNoList}" var="fileNoList" varStatus="idx" step="1">
+									<p>
+										<a class="downlink" href="${fileNoList.original_file_name}">${fileNoList.original_file_name}</a> 
+									</p>		
 								</c:forEach>
 							</td>
 						</tr>
 					</table>
-					</form>
 				<hr/>
 					<div class="col-12">
 					${boardDTO.contents}
@@ -98,5 +94,16 @@
 <%@ include file="../../include/footer.jsp" %>
 
 <!-- Footer -->
+
 </body>
+<script type="text/javascript">
+$(document).ready(function() {
+	  $(".downlink").click(function(e){ 
+	    e.preventDefault();
+	    var fileName = $(this).attr("href");
+	    var bNo = $("#filebNo").attr("href");
+	    window.location = "fileDownLoad?fileName=" + fileName + "&bNo=" + bNo; 
+	  });
+	});
+</script>
 </html>
