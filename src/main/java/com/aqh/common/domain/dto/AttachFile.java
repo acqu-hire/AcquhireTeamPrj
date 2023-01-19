@@ -18,7 +18,6 @@ public class AttachFile {
 		File fileDir = new File(uploadPath);
 		List<FileDTO> list = new ArrayList<>();
 		if(!fileDir.exists()) fileDir.mkdir();
-		if(boardDTO.getFiles()!=null) {
 			for(MultipartFile file : boardDTO.getFiles()) {
 				if(file.getOriginalFilename() != "") {
 					String uuid = getUuid();
@@ -38,10 +37,10 @@ public class AttachFile {
 						e.printStackTrace();
 					}
 				} else {
-					return null;
+					boardDTO.getFiles().remove(file);
 				}
 			}
-		}
+		
 		return list;
 	}
 	

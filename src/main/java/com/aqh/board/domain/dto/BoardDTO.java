@@ -29,6 +29,7 @@ public class BoardDTO {
 	private Category category; // 카테고리
 	private long bNo; // 게시글 번호
 	private long readCount; // 게시글 조회수
+	private long replyCnt; // 게시글 댓글수
 	private List<MultipartFile> files; // 게시글 첨부파일
 	private List<FileDTO> fileList; // 파일정보 리스트
 	
@@ -51,12 +52,13 @@ public class BoardDTO {
 	
 	@Builder
 	public BoardDTO(String id, Menu menu, Category category, long bNo, long readCount, 
-			 String title, String writeDay, String contents) {
+			 long replyCnt, String title, String writeDay, String contents) {
 		this.id = id;
 		this.menu = menu;
 		this.category = category;
 		this.bNo = bNo;
 		this.readCount = readCount;
+		this.replyCnt = replyCnt;
 		this.title = title;
 		this.writeDay = writeDay;
 		this.contents = contents;
@@ -102,6 +104,14 @@ public class BoardDTO {
 
 	public void setReadCount(long readCount) {
 		this.readCount = readCount;
+	}
+	
+	public long getReplyCnt() {
+		return replyCnt;
+	}
+
+	public void setReplyCnt(long replyCnt) {
+		this.replyCnt = replyCnt;
 	}
 
 	public String getTitle() {
@@ -157,13 +167,13 @@ public class BoardDTO {
 	public void setUploadFile(MultipartFile uploadFile) {
 		this.uploadFile = uploadFile;
 	}
+
 	@Override
 	public String toString() {
 		return "BoardDTO [id=" + id + ", menu=" + menu + ", category=" + category + ", bNo=" + bNo + ", readCount="
-				+ readCount + ", files=" + files + ", fileList=" + fileList + ", title=" + title + ", writeDay="
-				+ writeDay + ", contents=" + contents + ", fileNoList=" + fileNoList + ", uploadFile=" + uploadFile +"]";
+				+ readCount + ", replyCnt=" + replyCnt + ", files=" + files + ", fileList=" + fileList + ", fileNoList="
+				+ fileNoList + ", uploadFile=" + uploadFile + ", title=" + title + ", writeDay=" + writeDay
+				+ ", contents=" + contents + "]";
 	}
-
-
 	
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:if test="${empty sessionScope.id}">
 	<script type="text/javascript">
 		location.href = "<c:url value='/login/login'/>"
@@ -48,7 +49,7 @@
 			 	 <i class="fas fa-edit"></i> 글 작성
 			  </a>
 			</div>
-			<table class="table table-hover table-striped text-center"  style="table-layout: fixed">
+			<table class="table table-hover table-striped text-center" id="QnaBoardList" style="table-layout: fixed">
 			  <thead class="thead-dark">
 				<tr>
 				  <th width="4%">번호</th>
@@ -64,13 +65,25 @@
 				<tr>
 				  <th>${(ph.boardListCount-status.index)-((ph.sc.page-1)*10)}</th>
 				  <td>${board.category}</td>
-				  <td class="text-truncate" id="title" style="max-width: 500px;">
-				    <input type="hidden" name="bNo" value="${board.bNo}">
-				  	<a href="./listDetail${ph.sc.getQueryString(ph.sc.page, ph.sc.category)}&bNo=${board.bNo}"><c:out value="${board.title}"/></a>
-				  </td>
+				  <c:choose>
+				    <c:when test="${fn:length(board.title)>15}">
+				      <td title="${board.title}">
+				        <a href="./listDetail${ph.sc.getQueryString(ph.sc.page, ph.sc.category)}&bNo=${board.bNo}">
+				          <c:out value="${fn:substring(board.title,0,14)}"/>...</a> 
+				          <span class="replyCnt" style="color: red;">${board.replyCnt > 0? [board.replyCnt] : ""}</span>
+				      </td>
+				    </c:when>
+				    <c:otherwise>
+				      <td title="${board.title}">
+				        <a href="./listDetail${ph.sc.getQueryString(ph.sc.page, ph.sc.category)}&bNo=${board.bNo}">
+				         <c:out value="${board.title}"/></a> 
+				         <span class="replyCnt" style="color: red;">${board.replyCnt > 0? [board.replyCnt] : ""}</span>
+				      </td>
+				    </c:otherwise>
+				  </c:choose>
 				  <td>${board.id}</td>
 				  <td>${board.writeDay}</td>
-				  <td>${board.readCount}</td>
+				  <td>${board.readCount}<input type="hidden" name="bNo" value="${board.bNo}"></td>
 				</tr>
 				</c:forEach>
 			  </tbody>
