@@ -2,26 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aqh.common.domain.dao.FileMapper">
 	<insert id="upload" parameterType="java.util.List">
-		INSERT INTO attachfile
-		(
-			bNo, 
-			uuid, 
-			originName, 
-			uploadPath, 
-			fileSize, 
-			fmtFileSize
-		)
-		VALUES
-		<foreach collection="list" item="files" separator=",">
-		(
-			#{files.bNo}, 
-			#{files.uuid}, 
-			#{files.originName}, 
-			#{files.uploadPath}, 
-			#{files.fileSize}, 
-			#{files.fmtFileSize}
-		)
-		</foreach>
+				INSERT INTO attachfile
+			(
+				bNo, 
+				uuid, 
+				originName, 
+				uploadPath, 
+				fileSize, 
+				fmtFileSize
+			)
+			VALUES
+			<foreach collection="list" item="files" separator=",">
+			(
+				#{files.bNo}, 
+				#{files.uuid}, 
+				#{files.originName}, 
+				#{files.uploadPath}, 
+				#{files.fileSize}, 
+				#{files.fmtFileSize}
+			)
+			</foreach>
 	</insert>
 	
 	<delete id="delete">
