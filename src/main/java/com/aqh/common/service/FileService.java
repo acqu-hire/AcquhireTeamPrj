@@ -1,5 +1,6 @@
 package com.aqh.common.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +28,8 @@ public class FileService {
 	public int upload(HttpServletRequest request, BoardDTO boardDTO) {
 		int result = 0;
 		String uploadPath = request.getServletContext().getRealPath("resources") + "\\upload\\";
-		if(boardDTO.getFiles() != null) {
+		while(boardDTO.getFiles().remove(null)) {}
+		if(!(boardDTO.getFiles().get(0).getOriginalFilename().equals("")) && boardDTO.getFiles() != null) {
 			boardDTO.setFileList(attach.getFileAttach(uploadPath, boardDTO));
 			result = fileDao.upload(boardDTO.getFileList());
 		}
@@ -43,8 +45,8 @@ public class FileService {
 		if(fileDTO.getDelAttach()!=null) {
 			boardDTO.setFileList(fileDao.getFileList(fileDTO.getDelAttach()));
 			attach.removeFile(fileDTO, boardDTO);
-		}
 		result = fileDao.delete(fileDTO.getDelAttach());
+		}
 		return result;
 	}
 	
