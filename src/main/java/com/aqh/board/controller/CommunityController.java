@@ -1,6 +1,11 @@
 package com.aqh.board.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +17,11 @@ import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.Criteria;
 import com.aqh.board.domain.pagehandler.Pagination;
 import com.aqh.board.service.CommunityService;
+import com.aqh.common.domain.dto.BoardAttachVO;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 @RequestMapping("/community")
@@ -64,12 +72,18 @@ public class CommunityController {
 	@PostMapping(value = "/insert_view")
 	public String createCommunityInsertPost(BoardDTO boardDTO, RedirectAttributes rttr) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_INSERT_VIEW);
-
+		System.out.println(!boardDTO.getAttachList().isEmpty());
+		System.out.println(boardDTO.getAttachList().size());
 		System.out.println(boardDTO);
-		if (boardDTO.getAttachList() != null) {
-			boardDTO.getAttachList().forEach(attach -> log.info(attach.toString()));
+		communityService.createPost(boardDTO);
+		if (!boardDTO.getAttachList().isEmpty()) {
+			boardDTO.getAttachList().forEach(attach -> 
+			{
+				attach.setBNo(boardDTO.getbNo());
+				attach.toString();
+				communityService.insert(attach);
+			});
 		}
-		// communityService.createPost(boardDTO);
 		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath();
 	}
 
@@ -98,6 +112,13 @@ public class CommunityController {
 		model.addAttribute("boardDTO", communityService.getPost(bNo));
 		return Path.BOARD_COMMUNITY_SELECT_DETAIL_VIEW.getPath();
 	}
+
+	@GetMapping(value="/getAttachList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<List<BoardAttachVO>> getAttachList(Long bNo) {
+		System.out.println(bNo);
+		return new ResponseEntity<>(communityService.getAttachList(bNo),HttpStatus.OK);
+	}
+	
 
 	/**
 	 * UPDATE PART

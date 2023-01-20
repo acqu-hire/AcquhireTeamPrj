@@ -18,12 +18,15 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -170,9 +173,10 @@ public class NoticeController {
 		return "board/notice/noticeUpdate";
 	}
 	
-	@PostMapping(value = "/update")	
-	public String update(Model model, BoardDTO boardDTO, HttpServletRequest request, MultipartHttpServletRequest mhsr, @RequestParam("uuid") String fileUuid ) throws Exception, IOException {
-		
+
+	@PostMapping(value = "/update")
+	public String update(Model model, BoardDTO boardDTO, HttpServletRequest request, MultipartHttpServletRequest mhsr, String uuid) throws Exception, IOException {
+
 		log.info("글 수정 1차 확인" + boardDTO);
 		Category selectCategory;
 		if (boardDTO.getCategory().toString().equals("NOTICE_NOTICE"))
@@ -202,9 +206,9 @@ public class NoticeController {
 			List<MultipartFile> list = mhsr.getFiles(iterator.next());
 			for (MultipartFile multipartFile : list) {
 				
-				UUID uuid = UUID.randomUUID();
-	            log.info("랜덤아이디"+uuid.toString());
-	            String[] uuids = uuid.toString().split("-");
+				UUID updateUuid = UUID.randomUUID();
+	            log.info("랜덤아이디"+updateUuid.toString());
+	            String[] uuids = updateUuid.toString().split("-");
 	            String uniqueName = uuids[0];
 	            
 				FileNoticeDTO fileNoticeDTO = new FileNoticeDTO();
@@ -219,10 +223,12 @@ public class NoticeController {
 				multipartFile.transferTo(file);
 			}
 		}
-
-		noticeService.fileInsert(fileNoList);
-		noticeService.fileSelectDelete(fileUuid);
 		
+
+		log.info("uuid확인"+uuid);
+		//uuid="6d86a747";
+		noticeService.fileInsert(fileNoList);
+		noticeService.fileSelectDelete(uuid);
 		return "redirect:/notice/select_all_view";
 	}
 	
