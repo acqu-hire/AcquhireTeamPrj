@@ -2,13 +2,15 @@ package com.aqh.board.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.aqh.board.domain.dao.CommunityDAO;
 import com.aqh.board.domain.dto.BoardDTO;
-import com.aqh.board.domain.dto.BoardDTO.Category;
 import com.aqh.board.domain.dto.Criteria;
+import com.aqh.common.domain.dao.UploadDAO;
+import com.aqh.common.domain.dto.BoardAttachVO;
+
+import lombok.RequiredArgsConstructor;
 
 /**
  * 커뮤니티 구현 추상화
@@ -16,18 +18,26 @@ import com.aqh.board.domain.dto.Criteria;
  * @author Desvesg
  * 
  */
-@Service
+
+ @RequiredArgsConstructor
+ @Service
 public class CommunityService {
 
-	@Autowired
-	private CommunityDAO communityBoardDAO;
+	private final CommunityDAO communityBoardDAO;
 
+	private final UploadDAO uploadDAO;
 	// CREATE
 	public void createPost(BoardDTO boardDTO) {
 		communityBoardDAO.createPost(boardDTO);
 	};
 
+	public int insert(BoardAttachVO boardAttachVO) {
+		return uploadDAO.insert(boardAttachVO);
+	}
 	// READ
+	public List<BoardAttachVO> getAttachList(long bNo){
+		return uploadDAO.getAttachList(bNo);
+	}	
 	public List<BoardDTO> getAllCommunityPostList(Criteria criteria) {
 		return communityBoardDAO.getAllCommunityPostList(criteria);
 	};

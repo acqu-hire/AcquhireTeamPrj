@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aqh.common.domain.dao.UploadDAO">
+
+    <insert id="register" parameterType="BoardAttachVO" >
+        INSERT INTO attachfile 
+        (bNo, fileName, uploadPath, uuid, fileType) 
+        VALUES
+        (#{bNo},#{fileName},#{uploadPath},#{uuid},#{fileType})
+    </insert>
+
+    <select id="getAttachList" resultType="BoardAttachVO">
+        SELECT * FROM attachfile WHERE bNo = #{bNo} 
+    </select>
+</mapper>

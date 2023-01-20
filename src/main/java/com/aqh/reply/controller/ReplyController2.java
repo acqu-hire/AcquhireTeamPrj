@@ -76,7 +76,5 @@ public class ReplyController2 {
 			return new ResponseEntity<Long>(result, HttpStatus.OK);			
 		return new ResponseEntity<Long>(HttpStatus.BAD_REQUEST);
 	}
-
-
 }
 
