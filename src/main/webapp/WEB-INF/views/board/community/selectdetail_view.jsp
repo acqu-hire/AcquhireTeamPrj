@@ -17,9 +17,120 @@
 				<script type="text/javascript" src="${contextPath}/resources/js/reply.js"> </script>
 				<script src="${contextPath}/resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
 				<script src="${contextPath}/resources/js/bootstrap.min.js" type="text/javascript"></script>
+				<div class="bigPictureWrapper">
+					<div class="bigPicture"></div>
+				</div>
+
+				<style>
+					.uploadResult {
+						width: 100%;
+						background-color: gray;
+					}
+
+					.uploadResult ul {
+						display: flex;
+						flex-flow: row;
+						justify-content: center;
+						align-items: center;
+					}
+
+					.uploadResult ul li {
+						list-style: none;
+						padding: 10px;
+						align-content: center;
+						text-align: center;
+					}
+
+					.uploadResult ul li img {
+						width: 100px;
+					}
+
+					.uploadResult ul li span {
+						color: white;
+					}
+
+					.bigPictureWrapper {
+						position: absolute;
+						display: none;
+						justify-content: center;
+						align-items: center;
+						top: 0%;
+						width: 100%;
+						height: 100%;
+						background-color: rgb(158, 158, 158);
+						z-index: 100;
+						background: rgba(255, 255, 255, 0.5)
+					}
+
+					.bigPicture {
+						position: relative;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+					}
+
+					.bigPicture img {
+						width: 600px;
+					}
+				</style>
 				<script type="text/javascript">
 					$(document).ready(function () {
+						
+
+						$(".uploadResult").on("click","li",function () {
+							var liobj = $(this);
+							var path = encodeURIComponent(liobj.data("path")+"/"+liobj.data("uuid")+"_"+liobj.data("filename"));
+							
+							if (liobj.data("type")) {
+								showImage(path.replace(new RegExp(/\\/g),"/"));
+							} else 
+							{
+								self.location = "/download?fileName="+path;
+							}
+						});
+						/** 
+						 * show Wrapper
+						*/
+						function showImage(fileCallPath) {
+							$(".bigPictureWrapper").css("display", "flex").show();
+							$(".bigPicture")
+							.html("<img src='/display?fileName="+ fileCallPath + "'>")
+							.animate({ width: '100%', height: '100%' }, 1000);
+						}
+						$(".bigPictureWrapper").on("click", function () {
+							$(".bigPicture").animate({ width: '0%', height: '0%' }, 1000);
+							setTimeout(() => {
+								$(this).hide();
+							}, 1000);
+						});
 						var bnoValue = '<c:out value="${boardDTO.bNo}"/>';
+						$.getJSON("/community/getAttachList", { bNo: bnoValue },
+
+							function (arr) {
+								console.log('arr :>> ', arr);
+								var str = "";
+
+								$(arr).each(function (i, attach) {
+									//image type
+									if (attach.fileType) {
+										var fileCallPath = encodeURIComponent(attach.uploadPath + "/s_" + attach.uuid + "_" + attach.fileName);
+										str += "<li data-path='" + attach.uploadPath + "' data-uuid='" + attach.uuid + "' data-filename='" + attach.fileName + "' data-type='" + attach.fileType + "'><div>";
+										str += "<img src='/display?fileName="+ fileCallPath + "'>";
+										str += "</div>";
+										str += "</li>";
+									}
+									else {
+										str += "<li data-path='" + attach.uploadPath + "' data-uuid='" + attach.uuid + "' data-filename='" + attach.fileName + "' data-type='" + attach.fileType + "'><div>";
+										str += "<span> " + attach.fileName + "</span><br/>";
+										str += "<img src='${contextPath}/resources/img/attach.png'>";
+										str += "</div>";
+										str += "</li>";
+									}
+									$(".uploadResult ul").html(str);
+								});
+							}
+						);
+
 						var replyUL = $(".chat");
 
 						showList(1);
@@ -49,10 +160,10 @@
 						var modalRemoveBtn = $("#modalRemoveBtn");
 						var modalRegisterBtn = $("#modalRegisterBtn");
 						var modalCloseBtn = $("#modalCloseBtn");
-						
-						modalCloseBtn.on("click",function () {
+
+						modalCloseBtn.on("click", function () {
 							modal.modal("hide")
-						  })
+						})
 
 						// if addREplyBtn click -> show modal
 						$("#addReplyBtn").on("click", function (e) {
@@ -67,19 +178,19 @@
 						$(".chat").on("click", "li", function (e) {
 							var rno = $(this).data("rno");
 							console.log('rno :>> ', rno);
-							replyService.get(rno,function (reply) {
+							replyService.get(rno, function (reply) {
 								console.log('reply :>> ', reply);
 								modalInputId.val(reply.id);
 								modalInputContents.val(reply.contents);
-								modalInputReplyData.val(reply.writeDay).attr("readonly","readonly");
-								modal.data("rno",reply.rno);
+								modalInputReplyData.val(reply.writeDay).attr("readonly", "readonly");
+								modal.data("rno", reply.rno);
 
 								modal.find("button[id !='modalCloseBtn']").hide();
 								modalModBtn.show();
 								modalRemoveBtn.show();
 
 								modal.modal("show");
-							  })
+							})
 						});
 
 						modalRegisterBtn.on("click", function (e) {
@@ -99,23 +210,23 @@
 
 						// if modalmodifyBtn Click -> hide model and showlist
 						modalModBtn.on("click", function (e) {
-							var reply = {rno:modal.data("rno"), contents: modalInputContents.val()}
-							replyService.update(reply,function (result) {
+							var reply = { rno: modal.data("rno"), contents: modalInputContents.val() }
+							replyService.update(reply, function (result) {
 								alert(result);
 								modal.modal("hide");
 								showList(1);
-							})							
+							})
 						});
 
 						modalRemoveBtn.on("click", function (e) {
 							var rno = modal.data("rno");
 
-							replyService.remove(rno,function (result) {
+							replyService.remove(rno, function (result) {
 								alert(result);
 								modal.modal("hide");
 								showList(1);
-							  })
-						  })
+							})
+						})
 					});
 
 				</script>
@@ -203,8 +314,21 @@
 											</div>
 										</div>
 										<div class="row">
+											<div class="row">
+												<div class="col-lg-12">
+													<div class="panel panel-default">Files</div>
+													<divp class="panel-body">
+														<div class="uploadResult">
+															<ul>
+
+															</ul>
+														</div>
+													</divp>
+												</div>
+											</div>
 											<div class="col-12 text-right">
-												<button id="addReplyBtn" class="btn btn-primary btn-xs pull-right">댓글 달기</button>
+												<button id="addReplyBtn" class="btn btn-primary btn-xs pull-right">댓글
+													달기</button>
 												<input type="button" value="글수정" class="btn btn-success"
 													onclick="location.href='./update?bNo=${boardDTO.bNo}&id=${boardDTO.id}'">
 												<input type="button" value="글삭제" class="btn btn-warning"

@@ -75,10 +75,9 @@
 
 					$(document).ready(function () {
 
-						
-						$("input[type='submit']").on("click", function (e) {
-							e.preventDefault();
-							var formObj = $("form[role='form']");
+						var formObj = $("#postform");
+						console.log('formObj :>> ', formObj);
+						$("input[type='submit']").on("click", function () {
 							var str = "";
 
 								$(".uploadResult ul li").each(function (index, obj) {
@@ -89,7 +88,8 @@
 								str += "<input type='hidden' name='attachList["+index+"].uploadPath' value='"+jobj.data("path")+"'>";
 								str += "<input type='hidden' name='attachList["+index+"].fileType' value='"+jobj.data("type")+"'>";
 							});
-							formObj.append(str).sumbit();
+							console.log('str :>> ',str);
+							formObj.append(str).submit();
 						});
 
 						function checkExtension(fileName, fileSize) {
@@ -213,8 +213,8 @@
 				<!-- Header -->
 
 				<%@ include file="../../include/header.jsp" %>
-
 					<!-- Header -->
+
 
 					<!-- Board Insert Form -->
 					<div class="container-fluid">
@@ -239,7 +239,7 @@
 										</div>
 										<button id="uploadBtn">Upload</button>
 
-										<form method="post" action="/community/insert_view" enctype="multipart/form-data">
+										<form method="post" id="postform" action="./insert_view" enctype="multipart/form-data">
 											<table class="table table-striped">
 												<tr>
 													<th>카테고리</th>
@@ -280,9 +280,7 @@
 													<td colspan="2" class="text-right">
 														<input type="submit" value="글쓰기" class="btn btn-success">
 														<input type="reset" value="다시작성" class="btn btn-warning">
-														<button type="button" class="btn btn-primary"
-															onclick="location.href='./select_all_view'">전체
-															게시글보기</button>
+														<input type="button" value="전체 게시글 보기"class="btn btn-primary" onclick="location.href='./select_all_view'">
 													</td>
 												</tr>
 
