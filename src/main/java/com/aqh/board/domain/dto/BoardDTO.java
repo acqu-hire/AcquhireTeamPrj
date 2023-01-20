@@ -30,6 +30,7 @@ public class BoardDTO {
 	private Category category; // 카테고리
 	private long bNo; // 게시글 번호
 	private long readCount; // 게시글 조회수
+	private long replyCnt; // 게시글 댓글수
 
 	/**
 	 * @author makemegrowup
@@ -63,13 +64,15 @@ public class BoardDTO {
 	}
 
 	@Builder
-	public BoardDTO(String id, Menu menu, Category category, long bNo, long readCount,
-			String title, String writeDay, String contents) {
+	public BoardDTO(String id, Menu menu, Category category, long bNo, long readCount, 
+			 long replyCnt, String title, String writeDay, String contents) {
+
 		this.id = id;
 		this.menu = menu;
 		this.category = category;
 		this.bNo = bNo;
 		this.readCount = readCount;
+		this.replyCnt = replyCnt;
 		this.title = title;
 		this.writeDay = writeDay;
 		this.contents = contents;
@@ -113,6 +116,14 @@ public class BoardDTO {
 
 	public void setReadCount(long readCount) {
 		this.readCount = readCount;
+	}
+	
+	public long getReplyCnt() {
+		return replyCnt;
+	}
+
+	public void setReplyCnt(long replyCnt) {
+		this.replyCnt = replyCnt;
 	}
 
 	public String getTitle() {

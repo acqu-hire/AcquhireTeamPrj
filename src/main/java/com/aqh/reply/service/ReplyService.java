@@ -27,4 +27,5 @@ public interface ReplyService {
 
     // DELETE (삭제)
     public int removeReply(long rno);
+    
 }

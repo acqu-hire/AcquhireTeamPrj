@@ -12,13 +12,23 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -27,7 +37,6 @@ import com.aqh.board.domain.dto.BoardDTO.Category;
 import com.aqh.board.domain.dto.CriteriaNotice;
 import com.aqh.board.domain.pagehandler.PaginationNotice;
 import com.aqh.board.service.NoticeService;
-import com.aqh.common.controller.FileControllerNotice;
 import com.aqh.common.domain.dto.FileNoticeDTO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -71,29 +80,28 @@ public class NoticeController {
 		model.addAttribute("selectDetail", noticeService.selectDetail(bNo));
 		
 		List<FileNoticeDTO> fileNoticeDTOs = noticeService.fileUpList(bNo);
-		int end = 0;
-		for (int i = 0; i < fileNoticeDTOs.size(); i++) {
-			end = i;
-		}
 		model.addAttribute("fileNoList", fileNoticeDTOs);
-		model.addAttribute("end", end);
 
 		log.info("게시판 내용 보기" + model);
 		
 		return "board/notice/noticeListDetail";
 	}
 	
-	@GetMapping(value = "/fileDown")
-	public String fileDown(@RequestParam(value = "fileUuid", required = true) String fileUuid, @RequestParam(value = "fileName", required = true) String fileName, HttpServletResponse response) throws Throwable {
-		fileName = URLEncoder.encode(fileName,"UTF-8").replaceAll("\\+", "%20");
-		response.setContentType("application/octet-stream");
-		String savePlace = "C:\\test\\upload\\final/";
-		File file = new File(savePlace);
-		if(file.exists()==false) {
-			file.mkdir(); //디렉토리 생성 메소드
-		}
+	@GetMapping(value = "/fileDownLoad")
+	@ResponseBody
+	public ResponseEntity<Resource> fileDownLoad(@RequestParam("fileName") String fileName, @RequestParam("bNo") Integer bNo ,HttpServletRequest request){
 		
-		return "C:\\test\\upload\\final\\"+fileName;
+		String path = request.getSession().getServletContext().getRealPath("/") + "/resources/upload/";
+		Resource resource = new FileSystemResource(path + fileName);
+		String resourceName = resource.getFilename();
+		HttpHeaders headers = new HttpHeaders();
+		try {
+			headers.add("Content-Disposition", "attachment; filename=" + new String(resourceName.getBytes("UTF-8"),	"ISO-8859-1"));
+		} catch(UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
+
 	}
 	
 	@GetMapping(value = "/insert_view")
@@ -103,7 +111,7 @@ public class NoticeController {
 	
 	
 	@PostMapping(value = "/insert")	
-	public String insert(Model model, BoardDTO boardDTO, HttpServletRequest request, MultipartHttpServletRequest mhsr) throws Exception {	
+	public String insert(Model model, BoardDTO boardDTO, HttpServletRequest request, MultipartHttpServletRequest mhsr) throws Exception, IOException  {	
 			
 			Category selectCategory;
 			if (boardDTO.getCategory().toString().equals("NOTICE_NOTICE"))
@@ -114,7 +122,7 @@ public class NoticeController {
 			boardDTO.setCategory(selectCategory);
 			noticeService.insert(boardDTO);
 
-
+			//파일업로드
 			List<FileNoticeDTO> fileNoList = new ArrayList<FileNoticeDTO>();
 			
 			String root_path = request.getSession().getServletContext().getRealPath("./resources/upload");
@@ -126,15 +134,16 @@ public class NoticeController {
 				file.mkdir(); //디렉토리 생성 메소드
 			}
 			
-			UUID uuid = UUID.randomUUID();
-            log.info("랜덤아이디"+uuid.toString());
-            String[] uuids = uuid.toString().split("-");
-            String uniqueName = uuids[0];
-			
 			Iterator<String> iterator = mhsr.getFileNames();
 			while(iterator.hasNext()) {
 				List<MultipartFile> list = mhsr.getFiles(iterator.next());
 				for (MultipartFile multipartFile : list) {
+					
+					UUID uuid = UUID.randomUUID();
+		            log.info("랜덤아이디"+uuid.toString());
+		            String[] uuids = uuid.toString().split("-");
+		            String uniqueName = uuids[0];
+		            
 					FileNoticeDTO fileNoticeDTO = new FileNoticeDTO();
 					fileNoticeDTO.setBNo(boardDTO.getbNo());
 					fileNoticeDTO.setUuid(uniqueName);
@@ -143,12 +152,12 @@ public class NoticeController {
 					fileNoticeDTO.setOriginal_file_name(multipartFile.getOriginalFilename());
 					fileNoList.add(fileNoticeDTO);
 					
-					file = new File(root_path+attach_path+multipartFile.getOriginalFilename());
-					multipartFile.transferTo(file);//???해석하기
+					file = new File(root_path+attach_path+uniqueName+"_"+multipartFile.getOriginalFilename()); // [./resources/upload//파일명_uuid]
+					multipartFile.transferTo(file);
 				}
 			}
 			
-			noticeService.FileInsert(fileNoList);
+			noticeService.fileInsert(fileNoList);
 			log.info("파일내용확인"+fileNoList);
 			
 
@@ -159,12 +168,15 @@ public class NoticeController {
 	@GetMapping(value = "/update_view")
 	public String updateView(Model model,Integer bNo) {
 		model.addAttribute("boardDTO", noticeService.selectDetail(bNo));
+		List<FileNoticeDTO> fileNoticeDTOs = noticeService.fileUpList(bNo);
+		model.addAttribute("fileNoList", fileNoticeDTOs);
 		return "board/notice/noticeUpdate";
 	}
 	
-	@PostMapping(value = "/update")	
-	public String update(Model model, BoardDTO boardDTO) {
-		
+
+	@PostMapping(value = "/update")
+	public String update(Model model, BoardDTO boardDTO, HttpServletRequest request, MultipartHttpServletRequest mhsr, String uuid) throws Exception, IOException {
+
 		log.info("글 수정 1차 확인" + boardDTO);
 		Category selectCategory;
 		if (boardDTO.getCategory().toString().equals("NOTICE_NOTICE"))
@@ -176,12 +188,54 @@ public class NoticeController {
 		log.info("글 수정 정보" + boardDTO);
 		noticeService.update(boardDTO);
 		
+		
+		//파일업로드
+		List<FileNoticeDTO> fileNoList = new ArrayList<FileNoticeDTO>();
+		
+		String root_path = request.getSession().getServletContext().getRealPath("./resources/upload");
+		String attach_path = "\\";
+
+		
+		File file = new File(root_path+attach_path);
+		if(file.exists()==false) {
+			file.mkdir(); //디렉토리 생성 메소드
+		}
+		
+		Iterator<String> iterator = mhsr.getFileNames();
+		while(iterator.hasNext()) {
+			List<MultipartFile> list = mhsr.getFiles(iterator.next());
+			for (MultipartFile multipartFile : list) {
+				
+				UUID updateUuid = UUID.randomUUID();
+	            log.info("랜덤아이디"+updateUuid.toString());
+	            String[] uuids = updateUuid.toString().split("-");
+	            String uniqueName = uuids[0];
+	            
+				FileNoticeDTO fileNoticeDTO = new FileNoticeDTO();
+				fileNoticeDTO.setBNo(boardDTO.getbNo());
+				fileNoticeDTO.setUuid(uniqueName);
+				fileNoticeDTO.setFile_size(multipartFile.getSize());
+				fileNoticeDTO.setFile_path(root_path+attach_path);
+				fileNoticeDTO.setOriginal_file_name(multipartFile.getOriginalFilename());
+				fileNoList.add(fileNoticeDTO);
+				
+				file = new File(root_path+attach_path+uniqueName+"_"+multipartFile.getOriginalFilename()); // [./resources/upload//파일명_uuid]
+				multipartFile.transferTo(file);
+			}
+		}
+		
+
+		log.info("uuid확인"+uuid);
+		//uuid="6d86a747";
+		noticeService.fileInsert(fileNoList);
+		noticeService.fileSelectDelete(uuid);
 		return "redirect:/notice/select_all_view";
 	}
 	
 	@GetMapping(value = "/delete")
 	public String delete(Model model,Integer bNo) {
 		noticeService.delete(bNo);
+		noticeService.fileDeleteAll(bNo);
 
 		return "redirect:/notice/select_all_view";
 	}
