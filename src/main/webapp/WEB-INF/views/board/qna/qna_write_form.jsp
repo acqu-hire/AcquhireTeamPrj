@@ -112,7 +112,7 @@
 				alert("내용을 입력하세요.");
 				return false;
 			}
-		})
+		});
 	});
 	 	
 		$("#btnList").on("click", function() {
@@ -139,7 +139,19 @@
 			maxAppend--;
 			inputCnt--;
 		});
-	})
+	});
+	
+	$(document).on("change","input:file",function() {
+		var resetFile = $("input[name='files']");
+		  if(resetFile.length < 1){
+		    console.log("cancel was pressed");
+		    $(resetFile).wrap("<form></form>").closest("form").get(0).reset();
+		    $(resetFile).unwrap();
+		  }
+		  else {
+		    console.log(resetFile[0].name);
+		  }
+	});
 	
 </script>
 </body>

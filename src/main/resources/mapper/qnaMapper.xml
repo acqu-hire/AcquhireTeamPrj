@@ -38,7 +38,7 @@
 	
 	<select id="selectAll" resultType="BoardDTO">
  		SELECT * FROM 
-			(SELECT @rownum:=@rownum+1 AS rownum , bNo, title, id, DATE_FORMAT(writeDay,'%Y-%m-%d') writeDay, readCount, category
+			(SELECT @rownum:=@rownum+1 AS rownum , bNo, title, id, DATE_FORMAT(writeDay,'%Y-%m-%d') writeDay, readCount, category, replyCnt
 			FROM board A, (SELECT @rownum:=0) R
 			WHERE menu='QNA'
 			<if test="category != null and !category.equals('')">
@@ -50,7 +50,7 @@
 	</select>
 	
 	<select id="selectDetail" parameterType="long" resultType="BoardDTO">
-		SELECT bNo, title, contents, id, writeDay, readCount, category
+		SELECT bNo, title, contents, id, writeDay, readCount, category, replyCnt
 		FROM board
 		WHERE bNo=#{bNo} AND menu='QNA'
 	</select>
@@ -81,4 +81,8 @@
 		WHERE bNo=#{bNo}
 	</select>
 	
+	<select id="getReplyCnt" resultType="long">
+		SELECT replyCnt FROM board
+		WHERE bNo=#{bNo}
+	</select>
 </mapper>

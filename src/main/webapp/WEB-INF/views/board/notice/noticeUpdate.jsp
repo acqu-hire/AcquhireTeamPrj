@@ -53,7 +53,7 @@
 				                <th>작성자</th>
 				                <td>
 				                	${boardDTO.id}
-				                	<input type="hidden" name="bNo" value="${boardDTO.bNo}" readonly="readonly" /></td>
+				                	<input type="hidden" name="bNo" id="filebNo" value="${boardDTO.bNo}" readonly="readonly" />
 				                </td>
 				            </tr>
 				            <tr>
@@ -64,15 +64,28 @@
 				                <td>글내용</td>
 				                <td><textarea rows="10" cols="50" name="contents" class="form-control"></textarea></td>
 				            </tr>
-				            <!--<tr>
+				            <tr>
 				            	<td>첨부파일</td>
-				            	<td><input type="file" name="file" /></td>
-				            </tr>-->
+				            	<td>
+				            		<c:forEach items="${fileNoList}" var="fileNoList" varStatus="idx" step="1">
+				            			<p class="index">
+											<a class="downlink" href="${fileNoList.original_file_name}">${fileNoList.original_file_name}</a> 
+											<!-- <span id="fileUuid" style="display:none;">${fileNoList.uuid}</span>-->
+											<input id="fileUuid" name ="fileUuid" value="${fileNoList.uuid}" type="hidden"/>
+											<button type="button" id="destroy_btn" onclick="deletFile()">삭제</button>
+										</p>
+									</c:forEach>
+				            	</td>
+				            </tr>
+				            <tr>
+				            	<td>첨부파일 추가</td>
+				            	<td><input type="file" name="file" multiple="multiple" /></td>
+				            </tr>
 				            <tr>
 				                <td colspan="2"  class="text-right">
 				                    <input type="submit" value="글쓰기" class="btn btn-success" />
 				                    <input type="reset" value="다시작성" class="btn btn-warning" />
-				                    <button type="button"  class="btn btn-primary" onclick="location.href='./select_all_view?num=1'">전체 게시글보기</button>
+				                    <button type="button" onclick="location.href='./select_all_view?num=1'">전체 게시글보기</button>
 				                </td>
 				            </tr>
 				             
@@ -91,4 +104,33 @@
 
 
 </body>
+<script type="text/javascript">
+$(document).ready(function() {
+	  $(".downlink").click(function(e){ 
+	    e.preventDefault();
+	    var fileName = $(this).attr("href");
+	    var bNo = $("#filebNo").attr("value");
+	    window.location = "fileDownLoad?fileName=" + fileName + "&bNo=" + bNo; 
+	  });
+	
+
+		  
+		  const destroyBtn = document.querySelectorAll("#destroy_btn");
+		  console.log("확인"+destroyBtn[0]);
+		  destroyBtn.forEach((el, index) => {
+			  el.onclick = () => {
+				  console.log("확인인덱스"+index)
+				  $($(".index")[index]).css("display" ,"none");
+				  var item = $($("#fileUuid")[index]);
+				  item.name = "uuid";
+				  console.log("확인 아이템"+item.name);
+			  }
+		  });
+		 
+	 
+	  
+	  
+	 
+});
+</script>
 </html>

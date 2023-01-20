@@ -61,4 +61,8 @@ public class QnADAO {
 	public List<FileDTO> getFileList(long bNo) {
 		return session.selectList(namespace + "fileList", bNo);
 	}
+	
+	public long getReplyCnt(long bNo) {
+		return session.selectOne(namespace + "getReplyCnt", bNo);
+	}
 }

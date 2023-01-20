@@ -3,19 +3,18 @@
 PUBLIC "=//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.aqh.reply.domain.dao.ReplyDAO">
+<mapper namespace="com.aqh.reply.domain.dao.ReplyMapper">
 
     <insert id="register">
-        INSERT INTO REPLY( bNo, id, contents)
+        INSERT INTO reply( bNo, id, contents)
         VALUES( #{bNo} , #{id}, #{contents} )
     </insert>
-    <select id="getReplyList" resultType="ReplyDTO">
-        SELECT * FROM REPLY where bNo = #{bNo} 
+    <select id="getReplyList" resultType="replyDTO">
+        SELECT * FROM reply where bNo = #{bNo} 
         ORDER BY writeDay ASC
-        LIMIT #{offset},#{limit}
     </select>
-    <select id="getReply" resultType="ReplyDTO">
-        SELECT * FROM REPLY where rNo = #{rno}
+    <select id="getReply" resultType="replyDTO">
+        SELECT * FROM reply where rNo = #{rno}
     </select>
     <update id="modifyReply">
         UPDATE reply SET contents = #{contents} WHERE rNo = #{rno}
@@ -23,5 +22,12 @@ PUBLIC "=//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="removeReply">
         delete from reply where rNo = #{rno}
     </delete>
-
+    
+    <update id="replyCntUpdate">
+    	UPDATE board B
+    	SET replyCnt = 
+    	(SELECT count(*) FROM reply R WHERE bNo = #{bNo})
+    	WHERE bNo = #{bNo}
+    </update>
+    
 </mapper>
