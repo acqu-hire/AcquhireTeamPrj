@@ -1,5 +1,7 @@
 package com.aqh.common.domain.dto;
 
+import org.springframework.stereotype.Component;
+
 import lombok.Data;
 
 
@@ -10,11 +12,12 @@ import lombok.Data;
  * 파일을 Board DTO에 전달 시켜줄 VO
  */
 @Data
+@Component
 public class BoardAttachVO {
-   private String uuid;
-   private String uploadpath;
    private String fileName;
+   private String uuid;
+   private String uploadPath;
    private boolean fileType;
 
-   private Long bno;
+   private Long bNo;
 }
