@@ -3,10 +3,10 @@
 <mapper namespace="com.aqh.board.domain.dao.CommunityDAO">
 
     <!-- CREATE -->
-    <insert id="createPost" parameterType="BoardDTO">
+    <insert id="createPost" parameterType="BoardDTO" useGeneratedKeys="true" keyProperty="bNo">
     INSERT INTO BOARD
-        (id,menu,category,file,writeDay,title,contents) VALUES
-        (#{id},"COMMUNITY",#{category},#{file},sysdate(),#{title},#{contents});
+        (id,menu,category,writeDay,title,contents) VALUES
+        (#{id},"COMMUNITY",#{category},sysdate(),#{title},#{contents});
     </insert>
     <!-- READ -->
     
