@@ -30,6 +30,16 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
+	<!-- 주소API 팝업 -->
+	<servlet>
+		<servlet-name>jusoPopup</servlet-name>
+		<jsp-file>/WEB-INF/views/member/jusoPopup.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>jusoPopup</servlet-name>
+		<url-pattern>/jusoPopup</url-pattern>
+	</servlet-mapping>
+	
 	<!-- 인코딩 필터 -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
