@@ -21,7 +21,7 @@ public class LoggingAdvice {
 	public static final String FONT_GREEN = "\u001B[32m";
 	public static final String RESET = "\u001B[0m";
 	
-	@Around("execution(* com.aqh.board.*.*.*(..)) || execution(* com.aqh.reply.*.*.*(..))") // PointCut 명시
+	@Around("execution(* com.aqh.*.service.*.*(..))") // PointCut 명시
 	public Object logging(ProceedingJoinPoint jp) throws Throwable {
 		long start = System.currentTimeMillis();
 		log.info(START_END_FONT + "<<□■□■□■□■□■□■□■□■ [start] □■□■□■□■□■□■□■□■" + RESET);

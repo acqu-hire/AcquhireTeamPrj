@@ -40,6 +40,7 @@ public class FileService {
 		return fileDao.getFileList(fNo);
 	}
 
+	@Transactional(rollbackFor = Exception.class)
 	public int delete(FileDTO fileDTO, BoardDTO boardDTO) {
 		int result = 0;
 		if(fileDTO.getDelAttach()!=null) {
