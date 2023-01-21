@@ -19,7 +19,6 @@ import com.aqh.reply.service.ReplyService2;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RestController
 public class ReplyController2 {
 
@@ -31,45 +30,36 @@ public class ReplyController2 {
 		this.QnaService = QnaService;
 	}
 	
-	@GetMapping(value = "/listDetail/reply")
+	@GetMapping(value = "/reply")
 	public ResponseEntity<List<ReplyDTO>> selectAll(ReplyCriteria cri) {
 		System.out.println("cri =====>" + cri);
 		List<ReplyDTO> list = service.getReplyList(cri);
-		log.info("list ======>" + list);
 		if(list!=null)
 			return new ResponseEntity<List<ReplyDTO>>(list, HttpStatus.OK);
 		return new ResponseEntity<List<ReplyDTO>>(HttpStatus.NO_CONTENT);
 	}
 	
-	@PostMapping(value =  "/listDetail/reply")
+	@PostMapping(value =  "/reply")
 	public ResponseEntity<Long> register(@RequestBody ReplyDTO replyDTO, long bNo) {
-		System.out.println("replyDTO =====>" + replyDTO);
 		replyDTO.setBNo(bNo);
 		int result = service.register(replyDTO);
 		long replyCnt = QnaService.getReplyCnt(bNo);
-		log.info("result = " + result);
-		log.info("replyCnt =====>" + replyCnt);
 		if(result != 0)
 			return new ResponseEntity<Long>(replyCnt, HttpStatus.OK);
 		return new ResponseEntity<Long>(HttpStatus.BAD_REQUEST);
 	}
 	
-	@DeleteMapping(value = "/listDetail/reply/{rno}")
+	@DeleteMapping(value = "/reply/{rno}")
 	public ResponseEntity<Long> remove(@PathVariable long rno, long bNo){
-		log.info("rno =====>" + rno);
-		log.info("bNo =====>" + bNo);
 		int result = service.removeReply(rno, bNo);
-		log.info("result =====>" + result);
 		long replyCnt = QnaService.getReplyCnt(bNo);
-		log.info("replyCnt =====>" + replyCnt);
 		if(result != 0)
 			return new ResponseEntity<Long>(replyCnt, HttpStatus.OK);
 		return new ResponseEntity<Long>(HttpStatus.BAD_REQUEST);
 	}
 	
-	@PatchMapping(value = "/listDetail/reply/{rno}")
+	@PatchMapping(value = "/reply/{rno}")
 	public ResponseEntity<Long> update(@PathVariable long rno, @RequestBody ReplyDTO replyDTO){
-		log.info("replyDTO =====>" + replyDTO);
 		replyDTO.setRno(rno);
 		long result = service.modify(replyDTO);
 		if(result != 0 )
