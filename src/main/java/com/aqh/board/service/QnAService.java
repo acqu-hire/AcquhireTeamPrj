@@ -39,8 +39,6 @@ public class QnAService {
 	}
 	
 	public List<BoardDTO> selectAll() {
-//		List<BoardDTO> list = qnaDao.selectAll();
-//		replyDao.getReplyCnt(getBoardCnt());
 		return qnaDao.selectAll();
 	}
 	
