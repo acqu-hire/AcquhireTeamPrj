@@ -10,7 +10,7 @@
 <html>
 <head>
 <script src="${contextPath}/resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
-<script src="${contextPath}/resources/js/reply-test.js" type="text/javascript"></script>
+<script src="${contextPath}/resources/js/reply-test.js?ver=1" type="text/javascript"></script>
 <meta charset="UTF-8">
 <title>QnA 게시판</title>
 

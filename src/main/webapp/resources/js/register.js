@@ -64,7 +64,7 @@ $(function() {
 		}
 
 		/* 주소 유효성검사 */
-		if(!$("#postalcode").val()) {
+		if(!$("#zipNo").val()) {
 			alert("주소를 입력해주세요.");
 			return false;
 		}
@@ -97,10 +97,20 @@ $(function() {
 			$("input[name='email']").focus();
 			return false;
 		}
-		
+		/* 주소 합치기 */
+		var address = "(" + $("#zipNo").val() + ")";
+		var roadAddrPart1 = $("#roadAddrPart1").val();
+		var roadAddrPart2 = $("#roadAddrPart2").val();
+		var addrDetail = $("#addrDetail").val();
+		address += roadAddrPart1;
+		address += roadAddrPart2;
+		if(addrDetail != null && addrDetail != ''){
+			address += ' ' + addrDetail;
+		}
+		$("#address").val(address);
+
 		var name = $("input[name='name']").val()
 		alert(name+'님 회원가입을 축하합니다.');
-		
 	});
 });
 
@@ -109,4 +119,46 @@ function resetCheck() {
 	if(confirm("회원가입을 취소하시겠습니까?")){
 		location.href="/"
 	}
+}
+
+/* 아이디 중복체크 */
+$(function(){
+	$("#dbIdCheck").on("click",function() {
+		var id = $("#id").val();
+		if (id.search(/\s/) != -1) {	// 정규표현식과 주어진 스트링간에 첫번째로 매치되는 것의 인덱스를 반환한다. 찾지 못하면 -1 를 반환한다.) // \s 공백 정규식
+			alert("아이디에는 공백이 들어갈 수 없습니다.");
+		} else {
+			if (id.trim().length != 0) {
+				$.ajax({
+					url : './idCheck',
+					type : 'post',
+					data : {id : id},
+					dataType : 'json',
+					success : function(result) {
+						console.log("아이디 값 - " + result);
+						if ($.trim(result) == 1) {
+							alert("이미 등록된 아이디 입니다.");
+							$("#id").focus();
+						} else {
+							alert("등록할 수 있는 아이디입니다.");
+							$("#idCheck").val("1");
+							$("#password").focus();
+						}
+					}
+				});
+			} else {
+				alert("아이디를 입력해주세요.");
+			}
+		}
+	});
+})
+
+function goPopup(){
+	var pop = window.open("/jusoPopup","pop", "width=570,height=420,scrollbars=yes,resizable=yes");	
+}
+function jusoCallBack(zipNo, roadAddrPart1, roadAddrPart2, addrDetail) {
+	$("#zipNo").val(zipNo);
+	$("#roadAddrPart1").val(roadAddrPart1);
+	$("#roadAddrPart2").val(roadAddrPart2);
+	$("#addrDetail").val(addrDetail);
 }

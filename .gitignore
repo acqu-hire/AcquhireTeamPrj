@@ -6,6 +6,7 @@ target
 pom.properties
 .classpath
 MANIFEST.MF
+address-key.properties
 
 ### Eclipse ###
 .metadata

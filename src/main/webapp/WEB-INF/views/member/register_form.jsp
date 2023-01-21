@@ -7,40 +7,8 @@
 <meta charset="UTF-8">
 <title>회원가입</title>
 <script src="${contextPath}/resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
-<script src="${contextPath}/resources/js/kakao-addressAPI.js" type="text/javascript"></script>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="${contextPath}/resources/js/validity.js"></script>
+<script src="${contextPath}/resources/js/register.js"></script>
 <script type="text/javascript">
-	$(function() {
-		$("#dbIdCheck").click(function() {
-			var id = $("#id").val();
-			if (id.search(/\s/) != -1) {	// 정규표현식과 주어진 스트링간에 첫번째로 매치되는 것의 인덱스를 반환한다. 찾지 못하면 -1 를 반환한다.) // \s 공백 정규식
-				alert("아이디에는 공백이 들어갈 수 없습니다.");
-			} else {
-				if (id.trim().length != 0) {
-					$.ajax({
-						url : './idCheck',
-						type : 'post',
-						data : {id : id},
-						dataType : 'json',
-						success : function(result) {
-							console.log("아이디 값 - " + result);
-							if ($.trim(result) == 1) {
-								alert("이미 등록된 아이디 입니다.");
-								$("#id").focus();
-							} else {
-								alert("등록할 수 있는 아이디입니다.");
-								$("#idCheck").val("1");
-								$("#password").focus();
-							}
-						}
-					});
-				} else {
-					alert("아이디를 입력해주세요.");
-				}
-			}
-		});
-	});
 </script>
 </head>
 <body>
@@ -113,20 +81,21 @@
 					  </label>
 					</div>
 					<div class="form-group row">
-					  <label for="address" class="col-md-4 col-form-label text-md-right"><span class="text-danger">*</span>주소</label>
+					  <label for="address" class="col-md-4 col-form-label text-md-right"><span class="text-danger adr-line">*</span>주소</label>
 					  <div class="col-md-2">
-						<input type="text" id="postalcode" name="postalcode" placeholder="우편번호" class="form-control input-md" readonly>
+						<input type="text" id="zipNo" name="zipNo" placeholder="우편번호" class="form-control input-md" readonly>
 					  </div>
 					  <div>
-						<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" id="findPostalcode">
+						<input type="button" onclick="goPopup();" value="우편번호 찾기" id="findPostalcode">
 					  </div>
 					</div>
 					<div class="form-group row">
 					  <label for="address" class="col-md-4 col-form-label text-md-right"></label>
 					  <div class="col-sm-5">
-						<input type="text" id="address" name="address" placeholder="주소" class="form-control input-md" readonly>
-						<input type="text" id="addressDetail" name="addressDetail" placeholder="상세주소" class="form-control input-md">
-						<input type="text" id="addressExtra" name="addressExtra" placeholder="참고항목" class="form-control input-md" readonly>
+						<input type="text" id="roadAddrPart1" name="roadAddrPart1" placeholder="주소" class="form-control input-md" readonly>
+						<input type="text" id="addrDetail" name="addrDetail" placeholder="상세주소" class="form-control input-md">
+						<input type="text" id="roadAddrPart2" name="roadAddrPart2" placeholder="참고항목" class="form-control input-md" readonly>
+						<input type="hidden" id="address" name="address">
 					  </div>
 					</div>
 					<div class="form-group row">
