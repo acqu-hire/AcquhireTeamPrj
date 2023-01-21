@@ -16,7 +16,7 @@ String addrDetail = request.getParameter("addrDetail");
 <script type="text/javascript">
 function init() {
 	var url = location.href;
-	var confmKey = "U01TX0FVVEgyMDIzMDExMTEyNTExNjExMzQxODc="
+	var confmKey = "인증키"
 	var resultType = "3";
 	var inputYn= "<%=inputYn%>";
 	if(inputYn != "Y"){
