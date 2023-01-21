@@ -86,10 +86,6 @@
 	})
 	$("#updateBtn").on("click", function() {
 		location.href="<c:url value='/member/update'/>?id=${memberDTO.id}";
-		/* var form = $('#memberInfoForm');
-		form.attr("action", "<c:url value='/member/update'/>?id=${memberDTO.id}");
-		form.attr("method", "get");
-		form.submit(); */
 	})
 </script>
 </body>

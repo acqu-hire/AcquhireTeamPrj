@@ -11,8 +11,8 @@
 <head>
 <meta charset="UTF-8">
 <title>${memberDTO.id}님의회원정보 수정페이지</title>
-<script src="${contextPath}/resources/js/kakao-addressAPI.js" type="text/javascript"></script>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="${contextPath}/resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
+<script src="${contextPath}/resources/js/member.js"></script>
 </head>
 <body>
 	<!-- Header -->
@@ -27,7 +27,7 @@
 						<h2 class="text-center mt-4 mb-4">회원정보</h2>
 					</div>
 					<div class="card-body">
-						<form action="./update" method="post" name="memberUpdateForm">
+						<form action="./update" method="post" id="memberUpdateForm">
 							<div class="form-group row">
 								<label for="id" class="col-md-4 col-form-label text-md-right">회원ID</label>
 								<div class="col-sm-5">
@@ -41,20 +41,27 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="address" class="col-md-4 col-form-label text-md-right">주소</label>
+								<label for="address" class="col-md-4 col-form-label text-md-right">주소(변경)</label>
 								<div class="col-md-2">
-									<input type="text" id="postalcode" name="postalcode" placeholder="우편번호" class="form-control input-md" value="" readonly>
+									<input type="text" id="zipNo" name="zipNo" placeholder="우편번호" class="form-control input-md" readonly>
 								</div>
 								<div>
-									<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" id="findPostalcode">
+									<input type="button" onclick="goPopup();" value="우편번호 찾기" id="findPostalcode">
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="address" class="col-md-4 col-form-label text-md-right"></label>
 								<div class="col-sm-5">
-									<input type="text" id="address" name="address" placeholder="주소" class="form-control input-md" value="" readonly>
-									<input type="text" id="addressDetail" name="addressDetail" placeholder="상세주소" class="form-control input-md" value="">
-									<input type="text" id="addressExtra" name="addressExtra" placeholder="참고항목" class="form-control input-md" value="" readonly>
+									<input type="text" id="roadAddrPart1" name="roadAddrPart1" placeholder="주소" class="form-control input-md" readonly>
+									<input type="text" id="addrDetail" name="addrDetail" placeholder="상세주소" class="form-control input-md" >
+									<input type="text" id="roadAddrPart2" name="roadAddrPart2" placeholder="참고항목" class="form-control input-md" readonly>
+									<input type="hidden" id="address" name="address">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="old-address" class="col-md-4 col-form-label text-md-right">기존 주소</label>
+								<div class="col-sm-5">
+									<input type="text" name="old-address" value="${memberDTO.address}" class="form-control" readonly>
 								</div>
 							</div>
 							<div class="form-group row">
