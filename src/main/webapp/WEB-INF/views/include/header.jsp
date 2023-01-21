@@ -54,6 +54,11 @@
 			    <a class="dropdown-item" id="logout" href="#">로그아웃</a>
 			  </div>
 			</li>
+			<c:if test="${sessionScope.id == 'admin'}">
+			  <li class="nav-item">
+			    <a class="nav-link" href="<c:url value='#)'/>"><i class="fa-solid fa-user-tie"></i> 관리자 페이지</a>
+			  </li>
+			</c:if>
 		  </c:when>
 		<c:otherwise>
 		  <li class="nav-item">

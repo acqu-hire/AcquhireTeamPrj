@@ -11,7 +11,7 @@ $(function () {
 		var replyCnt = $("span.reply-tab").text();
 		$.ajax({
 			type: "POST",
-			url: "/listDetail/reply?bNo=" + bNo,
+			url: "/reply?bNo=" + bNo,
 			headers: { "content-type": "application/json" },
 			data: JSON.stringify({
 				contents: contents,
@@ -35,7 +35,7 @@ $(function () {
 			if (!confirm("댓글을 삭제하시겠습니까?")) return;
 			$.ajax({
 				type: "DELETE",
-				url: "/listDetail/reply/" + rno + "?bNo=" + bNo,
+				url: "/reply/" + rno + "?bNo=" + bNo,
 				headers: { "content-type": "application/json" },
 				data: JSON.stringify({
 					rno: rno
@@ -53,8 +53,8 @@ $(function () {
 		}
 	})
 	// 댓글 수정버튼 클릭 이벤트
-	$(document).on("click", "span.modReply", function () {
-		var contents = $(this).closest("div.reply-body").text();
+	$(document).on("click", "button.modReply", function () {
+		var contents = $(this).prev("span.card-text").text();
 		var modReplyBox = '<textarea class="form-control" name="changeContents" rows="3">';
 		if (sessionId == writer) {
 			if (!confirm("댓글을 수정하시겠습니까?")) return;
@@ -71,7 +71,7 @@ $(function () {
 		if (!confirm("수정사항을 반영하시겠습니까?")) return;
 		$.ajax({
 			type: "PATCH",
-			url: "/listDetail/reply/" + rno,
+			url: "/reply/" + rno,
 			headers: { "content-type": "application/json" },
 			data: JSON.stringify({
 				contents: contents
@@ -93,7 +93,7 @@ $(function () {
 var replyList = function (bNo) {
 	$.ajax({
 		type: "GET",
-		url: "/listDetail/reply?bNo=" + bNo,
+		url: "/reply?bNo=" + bNo,
 		success: function (data) {
 			if (data != "") {
 				var list = '<div class="card mt-2">';
@@ -116,9 +116,9 @@ var replyList = function (bNo) {
 					list += ' </table>';
 					list += ' </div>';
 					list += ' <div class="card-body reply-body" data-rno=' + data.rno + '>';
-					list += ' <p class="card-text">' + data.contents + '</p>';
-					list += ' <span class="badge badge-dark modReply" style="cursor:pointer"><a>수정</a>';
-					list += ' <span class="badge badge-dark nestedReply" style="cursor:pointer"><a>답글</a>';
+					list += ' <span class="card-text">' + data.contents + '</span>';
+					list += ' <button class="badge badge-dark modReply">수정</button>';
+					list += ' <button class="badge badge-dark nestedReply">답글</button>';
 					list += ' </div>';
 					list += ' </div>';
 				});
