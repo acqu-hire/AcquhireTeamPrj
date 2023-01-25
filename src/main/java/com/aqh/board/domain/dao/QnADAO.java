@@ -65,4 +65,8 @@ public class QnADAO {
 	public long getReplyCnt(long bNo) {
 		return session.selectOne(namespace + "getReplyCnt", bNo);
 	}
+
+	public int getReadCnt(long bNo) {
+		return session.selectOne(namespace + "getReadCnt", bNo);
+	}
 }

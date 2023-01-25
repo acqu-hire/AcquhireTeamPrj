@@ -85,4 +85,9 @@
 		SELECT replyCnt FROM board
 		WHERE bNo=#{bNo}
 	</select>
+	
+	<select id="getReadCnt" resultType="int">
+		SELECT readCount FROM board
+		WHERE bNo=#{bNo}
+	</select>
 </mapper>
