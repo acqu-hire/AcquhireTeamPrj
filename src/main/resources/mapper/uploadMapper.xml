@@ -12,4 +12,7 @@
     <select id="getAttachList" resultType="BoardAttachVO">
         SELECT * FROM attachfile WHERE bNo = #{bNo} 
     </select>
+    <delete id="deleteAll">
+        DELETE FROM attachfile where bNo = #{bNo}
+    </delete>
 </mapper>
