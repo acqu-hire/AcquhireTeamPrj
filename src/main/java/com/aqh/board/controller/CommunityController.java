@@ -1,5 +1,7 @@
 package com.aqh.board.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,6 @@ import com.aqh.board.service.CommunityService;
 import com.aqh.common.domain.dto.BoardAttachVO;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Controller
@@ -152,11 +153,39 @@ public class CommunityController {
 	 * @return
 	 */
 	@GetMapping(value = "/delete")
-	public String deleteCommunityPost(long bNo, String id) {
+	public String deleteCommunityPost(long bNo, String id,Criteria cri,RedirectAttributes rttr) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_DELETE);
 		// TODO 아이디 확인 추가
+		List<BoardAttachVO> attachList = communityService.getAttachList(bNo);
+		if (communityService.deletePost(bNo)) {
+			deleteFiles(attachList);
+			rttr.addFlashAttribute("result","success");
+		}
 		communityService.deletePost(bNo);
 		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath();
+	}
+
+	private void deleteFiles(List<BoardAttachVO> attachList)
+	{
+		if (attachList == null || attachList.size() == 0) {
+			return;
+		}
+		log.info("delete attach files.............");
+		log.info(attachList.toString());
+
+		attachList.forEach(attach -> {
+			try {
+				java.nio.file.Path file = Paths.get(Path.UPLOAD_PATH.getPath()+"\\"+attach.getUploadPath()+"\\"+attach.getUuid()+"_"+attach.getFileName());
+				Files.deleteIfExists(file);
+				if (Files.probeContentType(file).startsWith("image")) {
+					java.nio.file.Path thumNail = Paths.get(Path.UPLOAD_PATH.getPath()+"\\"+attach.getUploadPath()+"\\s_"+attach.getUuid()+"_"+attach.getFileName());
+
+					Files.delete(thumNail);
+				}
+			} catch (Exception e) {
+				log.info("delete file error " + e.getMessage());
+			}
+		});
 	}
 
 }

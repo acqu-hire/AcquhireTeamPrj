@@ -24,4 +24,8 @@ public class UploadDAO {
         return sqlSessionTemplate.selectList(namespace+"getAttachList",bNo);
     }
 
+	public int deleteAttach(long bNo)
+	{
+		return sqlSessionTemplate.delete(namespace+"deleteAll",bNo);
+	}
 }

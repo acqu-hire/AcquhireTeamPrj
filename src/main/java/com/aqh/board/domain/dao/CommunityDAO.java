@@ -8,7 +8,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Repository;
 
 import com.aqh.board.domain.dto.BoardDTO;
-import com.aqh.board.domain.dto.BoardDTO.Category;
 import com.aqh.board.domain.dto.Criteria;
 
 @Repository
@@ -49,8 +48,8 @@ public class CommunityDAO {
 	};
 
 	// DELETE
-	public void deletePost(long bNo) {
-		sessionTemplate.delete("deletePost", bNo);
+	public int deletePost(long bNo) {
+		return sessionTemplate.delete("deletePost", bNo);
 	};
 
 }
