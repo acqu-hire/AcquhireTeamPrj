@@ -33,6 +33,10 @@ public class QnAService {
 		return qnaDao.readCountUp(bNo);
 	}
 	
+	public int getReadCnt(long bNo) {
+		return qnaDao.getReadCnt(bNo);
+	}
+	
 	public List<BoardDTO> selectAll(SearchCondition sc) {
 		
 		return qnaDao.selectAll(sc);
@@ -45,7 +49,9 @@ public class QnAService {
 	}
 	
 	public BoardDTO selectDetail(long bNo) {
-		return qnaDao.selectDetail(bNo);
+		BoardDTO boardDTO = qnaDao.selectDetail(bNo);
+		qnaDao.readCountUp(bNo);
+		return boardDTO;
 	}
 	
 	public int insert(BoardDTO boardDTO) {

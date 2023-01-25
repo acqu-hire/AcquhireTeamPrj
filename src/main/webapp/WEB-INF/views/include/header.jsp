@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.min.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/style.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/style.css?ver=1">
 <script src="${contextPath}/resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
 <script src="${contextPath}/resources/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="https://kit.fontawesome.com/58abbffa46.js" ></script>

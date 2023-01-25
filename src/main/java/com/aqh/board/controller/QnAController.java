@@ -46,7 +46,7 @@ public class QnAController {
 	@GetMapping("/listDetail")
 	public String qnaListDetail(long bNo, Model model, SearchCondition sc, BoardDTO boardDTO) {
 		
-			qnaService.readCntUp(bNo);
+//			qnaService.readCntUp(bNo);
 			boardDTO = qnaService.selectDetail(bNo);
 			boardDTO.setFileList(qnaService.getFileList(boardDTO.getbNo()));
 			

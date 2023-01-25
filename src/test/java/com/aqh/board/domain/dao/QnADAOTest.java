@@ -22,13 +22,19 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class QnADAOTest {
 
-	@Autowired
+//	@Autowired
 	QnADAO qnaDao;
-	@Autowired
+//	@Autowired
 	NoticeDAO noticeDAO;
-	@Autowired
+//	@Autowired
 	CommunityDAO communityDAO;
 
+	public QnADAOTest(QnADAO qnaDao, NoticeDAO noticeDAO, CommunityDAO communityDAO) {
+		this.qnaDao = qnaDao;
+		this.noticeDAO = noticeDAO;
+		this.communityDAO = communityDAO;
+	}
+	
 	@Test
 	public void createData() throws Exception {
 		String[] id = {"aaaa", "abc", "abcd", "aqaq", "bacd", "asdf"};
@@ -190,4 +196,6 @@ public class QnADAOTest {
 		assertTrue(qnaDao.boardCount() == 0);
 
 	}
+	
+	
 }

@@ -21,6 +21,7 @@ public class ReplyDTO {
 
 	private long bNo; // 게시글 번호
 	private long rno; // 댓글 번호 (AI)
+	private long prno; // 부모 댓글 번호
 	private String writeDay; // 게시글 작성일
 	private String id;
 	private String contents;

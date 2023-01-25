@@ -21,7 +21,9 @@ public class ReplyService2 {
 	public int register(ReplyDTO replyDTO) {
 		int result = 0;
 		result = replyDAO2.register(replyDTO);
-		replyDAO2.replyCntUpdate(replyDTO.getBNo());
+		if(result == 1) {
+			replyDAO2.replyCntUpdate(replyDTO.getBNo());			
+		}
 		return result;
 	}
 
@@ -42,7 +44,9 @@ public class ReplyService2 {
 	public int removeReply(long rno, long bNo) {
 		int result = 0;
 		result = replyDAO2.removeReply(rno);
-		replyDAO2.replyCntUpdate(bNo);
+		if(result == 1) {
+			replyDAO2.replyCntUpdate(bNo);			
+		}
 		return result;
 	}
 	

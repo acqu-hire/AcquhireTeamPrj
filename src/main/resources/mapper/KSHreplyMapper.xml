@@ -6,12 +6,13 @@ PUBLIC "=//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.aqh.reply.domain.dao.ReplyMapper">
 
     <insert id="register">
-        INSERT INTO reply( bNo, id, contents)
-        VALUES( #{bNo} , #{id}, #{contents} )
+        INSERT INTO reply( bNo, prno, id, contents)
+        VALUES( #{bNo} , ${prno}, #{id}, #{contents} )
     </insert>
     <select id="getReplyList" resultType="replyDTO">
-        SELECT * FROM reply where bNo = #{bNo} 
-        ORDER BY writeDay ASC
+        SELECT rNo, bNo, ifnull(prno, rNo) prno, writeDay, id, contents FROM reply 
+        WHERE bNo = #{bNo}
+        ORDER BY prno ASC, rNo ASC;
     </select>
     <select id="getReply" resultType="replyDTO">
         SELECT * FROM reply where rNo = #{rno}

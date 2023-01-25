@@ -107,17 +107,40 @@
 					  </ul>
 					</div>
 				  </div>
+				 
 				  <hr/>
 				  <!-- reply contents -->
 				    <div class="p-1 bg-warning"><span class="reply-tab">댓글목록(${boardDTO.replyCnt})</span></div>
 				      <div class="reply-inline">
 					  </div>
+					  
 			  </div>
 			</div>
 		</div>
 	</div>
 </div>
-
+  <div class="d-flex" id="reReplyForm">
+  	<div class="p-2 icon" style="display: none;"><i class="mt-3 fa fa-reply fa fa-rotate-180" aria-hidden="true"></i></div>
+  	<div class="flex-fill content"  style="display: none;">
+  <div class="card mb-2" >
+	<div class="card-header bg-light">
+     		  <i class="fa fa-comment fa"></i> 댓글
+	</div>
+	<div class="card-body">
+	  <ul class="list-group list-group-flush">
+ 				<li class="list-group-item">
+		  <div class="form-inline mb-2">
+			<label for="replyId"><i class="fa fa-user-circle-o fa-2x"></i></label>
+			<input type="text" class="form-control ml-2" id="reReplyId" value="${sessionScope.id}" readOnly>
+		  </div>
+		  <textarea class="form-control" id="reReplyContents" rows="3"></textarea>
+		  <button type="button" class="btn btn-dark mt-3" id="regReReplyBtn">등록</button>
+ 				</li>
+	  </ul>
+	</div>
+  </div>
+  </div>
+  </div>
 
 	<!-- Footer -->
 
