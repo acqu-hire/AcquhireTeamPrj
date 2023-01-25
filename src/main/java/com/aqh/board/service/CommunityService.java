@@ -59,8 +59,9 @@ public class CommunityService {
 	};
 	
 	// DELETE
-	public void deletePost(long bNo) {
-		communityBoardDAO.deletePost(bNo);
+	public boolean deletePost(long bNo) {
+		uploadDAO.deleteAttach(bNo);
+		return communityBoardDAO.deletePost(bNo) == 1;
 	};
 
 }
