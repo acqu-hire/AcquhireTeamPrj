@@ -12,20 +12,39 @@ import lombok.Data;
 @AllArgsConstructor
 public class ReplyCriteria {
 	private long bNo;
-	private long page; // 페이징
-	private long limit; // 페이징 범위
-	private long offset; // offest
+	private Integer page; 		// 페이징
+	private long limit; 		// 페이징 범위
+	private long offset; 		// offest
+	private long totalPage; 	// 전체 페이지 수
+	private long endPage;		// 마지막 페이지
+	private long startPage;		// 시작 페이지
+	private long replyCnt;		// 댓글 수
+	private int navSize = 5;	// 네비 사이즈
 
-	public ReplyCriteria() {
-		this(0,1, 10);
+	public ReplyCriteria() {}
+	
+	public ReplyCriteria(long bNo, Integer page, long replyCnt) {
+		this(bNo ,page, replyCnt, 30);
 	}
 
     @Builder
-	public ReplyCriteria(long bNo,long page, long limit) {
+	public ReplyCriteria(long bNo, Integer page,long replyCnt, long limit) {
         this.bNo = bNo;
 		this.page = page;
+		this.replyCnt = replyCnt;
 		this.limit = limit;
+		
+		paging();
 	}
+    
+    public void paging() {
+    	this.totalPage = (replyCnt/limit) + (replyCnt%limit != 0?1:0);
+    	this.endPage = (int)(Math.ceil(page/(float)navSize) * navSize);
+    	this.startPage = endPage-navSize+1;
+    	if(endPage > totalPage) {
+    		this.endPage = totalPage;
+    	}
+    }
 
 	public long getOffset() {
 		return (this.offset = (page - 1) * limit);

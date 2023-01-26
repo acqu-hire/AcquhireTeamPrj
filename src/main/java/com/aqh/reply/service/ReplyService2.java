@@ -1,8 +1,5 @@
 package com.aqh.reply.service;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,26 +7,42 @@ import com.aqh.board.domain.dao.QnADAO;
 import com.aqh.reply.domain.dao.ReplyDAO2;
 import com.aqh.reply.domain.dto.ReplyCriteria;
 import com.aqh.reply.domain.dto.ReplyDTO;
+import com.aqh.reply.domain.dto.ReplyPageDTO;
 
 @Service
 public class ReplyService2 {
 
-	@Autowired
 	private ReplyDAO2 replyDAO2;
+	private QnADAO qnaDao;
+	
+	public ReplyService2(ReplyDAO2 replyDAO2, QnADAO qnaDao) {
+		this.replyDAO2 = replyDAO2;
+		this.qnaDao = qnaDao;
+	}
 
 	@Transactional(rollbackFor = Exception.class)
 	public int register(ReplyDTO replyDTO) {
 		int result = 0;
-		result = replyDAO2.register(replyDTO);
-		if(result == 1) {
-			replyDAO2.replyCntUpdate(replyDTO.getBNo());			
+		for (int i = 0; i < 300; i++) {
+			
+			result = replyDAO2.register(replyDTO);
 		}
+//		if(result == 1) {
+			replyDAO2.replyCntUpdate(replyDTO.getBNo());			
+//		}
 		return result;
 	}
 
-	public List<ReplyDTO> getReplyList(ReplyCriteria cri) {
+	@Transactional(rollbackFor = Exception.class)
+	public ReplyPageDTO getReplyList(Integer page, ReplyCriteria cri) {
+		if(page == null) {
+			page = 1;
+		}
+		ReplyPageDTO replyPageDTO = new ReplyPageDTO();
+		replyPageDTO.setCri(new ReplyCriteria(cri.getBNo(), page ,qnaDao.getReplyCnt(cri.getBNo())));
 		replyDAO2.replyCntUpdate(cri.getBNo());
-		return replyDAO2.getReplyList(cri);
+		replyPageDTO.setList(replyDAO2.getReplyList(replyPageDTO.getCri()));
+		return replyPageDTO;
 	}
 
 	public ReplyDTO getReply(Long rno) {

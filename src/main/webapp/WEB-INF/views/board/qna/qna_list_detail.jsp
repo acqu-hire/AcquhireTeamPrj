@@ -113,7 +113,10 @@
 				    <div class="p-1 bg-warning"><span class="reply-tab">댓글목록(${boardDTO.replyCnt})</span></div>
 				      <div class="reply-inline">
 					  </div>
-					  
+					  <div class="reply-pagenation">
+					   <nav aria-label="Page navigation example">
+					   </nav>
+					</div>
 			  </div>
 			</div>
 		</div>
@@ -128,14 +131,15 @@
 	</div>
 	<div class="card-body">
 	  <ul class="list-group list-group-flush">
- 				<li class="list-group-item">
+ 		<li class="list-group-item">
 		  <div class="form-inline mb-2">
 			<label for="replyId"><i class="fa fa-user-circle-o fa-2x"></i></label>
 			<input type="text" class="form-control ml-2" id="reReplyId" value="${sessionScope.id}" readOnly>
 		  </div>
 		  <textarea class="form-control" id="reReplyContents" rows="3"></textarea>
 		  <button type="button" class="btn btn-dark mt-3" id="regReReplyBtn">등록</button>
- 				</li>
+		  <button type="button" class="btn btn-dark mt-3 reply-cancel">취소</button>
+ 		</li>
 	  </ul>
 	</div>
   </div>
