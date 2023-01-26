@@ -1,4 +1,4 @@
-package com.aqh.board.domain.dao;
+package com.aqh.board.dao;
 
 import java.util.List;
 
@@ -29,8 +29,8 @@ public class EventDAO {
 		return sqlSessionTemplate.selectList(namespace + "eventMarketingList");
 	}
 
-	public BoardDTO eventSelectDetail(long bNo) {
-		return sqlSessionTemplate.selectOne(namespace + "eventSelectDetail", bNo);
+	public BoardDTO eventSelectDetail(long bno) {
+		return sqlSessionTemplate.selectOne(namespace + "eventSelectDetail", bno);
 
 	}
 
@@ -42,12 +42,12 @@ public class EventDAO {
 		sqlSessionTemplate.update(namespace + "eventUpdate", boardDTO);
 	}
 
-	public void eventDelete(long bNo) {
-		sqlSessionTemplate.delete(namespace + "eventDelete", bNo);
+	public void eventDelete(long bno) {
+		sqlSessionTemplate.delete(namespace + "eventDelete", bno);
 	}
 	
-	public int readCountUp(long bNo) {
-		return sqlSessionTemplate.update(namespace + "readCountUp", bNo);
+	public int readCountUp(long bno) {
+		return sqlSessionTemplate.update(namespace + "readCountUp", bno);
 		
 	}
 }

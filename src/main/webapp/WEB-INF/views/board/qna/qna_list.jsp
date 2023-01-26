@@ -68,14 +68,14 @@
 				  <c:choose>
 				    <c:when test="${fn:length(board.title)>15}">
 				      <td title="${board.title}">
-				        <a href="./listDetail${ph.sc.getQueryString(ph.sc.page, ph.sc.category)}&bNo=${board.bNo}">
+				        <a href="./listDetail${ph.sc.getQueryString(ph.sc.page, ph.sc.category)}&bno=${board.bno}">
 				          <c:out value="${fn:substring(board.title,0,14)}"/>...</a> 
 				          <span class="replyCnt" style="color: red;">${board.replyCnt > 0? [board.replyCnt] : ""}</span>
 				      </td>
 				    </c:when>
 				    <c:otherwise>
 				      <td title="${board.title}">
-				        <a href="./listDetail${ph.sc.getQueryString(ph.sc.page, ph.sc.category)}&bNo=${board.bNo}">
+				        <a href="./listDetail${ph.sc.getQueryString(ph.sc.page, ph.sc.category)}&bno=${board.bno}">
 				         <c:out value="${board.title}"/></a> 
 				         <span class="replyCnt" style="color: red;">${board.replyCnt > 0? [board.replyCnt] : ""}</span>
 				      </td>
@@ -83,7 +83,7 @@
 				  </c:choose>
 				  <td>${board.id}</td>
 				  <td>${board.writeDay}</td>
-				  <td>${board.readCount}<input type="hidden" name="bNo" value="${board.bNo}"></td>
+				  <td>${board.readCount}<input type="hidden" name="bno" value="${board.bno}"></td>
 				</tr>
 				</c:forEach>
 			  </tbody>

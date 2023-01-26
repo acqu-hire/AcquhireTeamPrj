@@ -19,5 +19,5 @@ public class BoardAttachVO {
    private String uploadPath;
    private boolean fileType;
 
-   private Long bNo;
+   private Long bno;
 }

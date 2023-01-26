@@ -3,8 +3,8 @@ package com.aqh.reply.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.aqh.board.domain.dao.QnADAO;
-import com.aqh.reply.domain.dao.ReplyDAO2;
+import com.aqh.board.dao.QnADAO;
+import com.aqh.reply.dao.ReplyDAO2;
 import com.aqh.reply.domain.dto.ReplyCriteria;
 import com.aqh.reply.domain.dto.ReplyDTO;
 import com.aqh.reply.domain.dto.ReplyPageDTO;
@@ -28,7 +28,7 @@ public class ReplyService2 {
 			result = replyDAO2.register(replyDTO);
 		}
 //		if(result == 1) {
-			replyDAO2.replyCntUpdate(replyDTO.getBNo());			
+			replyDAO2.replyCntUpdate(replyDTO.getBno());			
 //		}
 		return result;
 	}
@@ -39,13 +39,13 @@ public class ReplyService2 {
 			page = 1;
 		}
 		ReplyPageDTO replyPageDTO = new ReplyPageDTO();
-		replyPageDTO.setCri(new ReplyCriteria(cri.getBNo(), page ,qnaDao.getReplyCnt(cri.getBNo())));
-		replyDAO2.replyCntUpdate(cri.getBNo());
+		replyPageDTO.setCri(new ReplyCriteria(cri.getBno(), page ,qnaDao.getReplyCnt(cri.getBno())));
+		replyDAO2.replyCntUpdate(cri.getBno());
 		replyPageDTO.setList(replyDAO2.getReplyList(replyPageDTO.getCri()));
 		return replyPageDTO;
 	}
 
-	public ReplyDTO getReply(Long rno) {
+	public ReplyDTO getReply(long rno) {
 		return replyDAO2.getReply(rno);
 	}
 
@@ -54,17 +54,17 @@ public class ReplyService2 {
 	}
 
 	@Transactional(noRollbackFor = Exception.class)
-	public int removeReply(long rno, long bNo) {
+	public int removeReply(long rno, long bno) {
 		int result = 0;
 		result = replyDAO2.removeReply(rno);
 		if(result == 1) {
-			replyDAO2.replyCntUpdate(bNo);			
+			replyDAO2.replyCntUpdate(bno);			
 		}
 		return result;
 	}
 	
-	public int replyCntUpdate(long bNo) {
-		return replyDAO2.replyCntUpdate(bNo);
+	public int replyCntUpdate(long bno) {
+		return replyDAO2.replyCntUpdate(bno);
 	}
 
 }

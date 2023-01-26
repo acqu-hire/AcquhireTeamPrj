@@ -31,7 +31,7 @@
 		</div>
 		<div class="card-body">
 		  <form method="post" action="" id="updateForm" enctype="multipart/form-data">
-		  <input type="hidden"  class="form-control" name="bNo" value="${boardDTO.bNo}">
+		  <input type="hidden"  class="form-control" name="bno" value="${boardDTO.bno}">
 			<table class="table table-striped">
 			  <tr>
 				<th>작성자</th>
@@ -51,9 +51,9 @@
 		 		 <th>첨부파일 <button type="button" id="addFileBtn">추가</button></th>
 		     	   <td class="file-area">
 		    		<c:forEach var="files" items="${boardDTO.fileList}" varStatus="status">
-		    		  <div class="file-inline" data-fno="${files.fNo}">
+		    		  <div class="file-inline" data-fno="${files.fno}">
 		    	   		 파일${status.count}. 
-					    <c:out value="${files.originName}(${files.fmtFileSize})"/> <a href="#"><i class="fas fa-trash" data-fno="${files.fNo}"></i></a> <br/>
+					    <c:out value="${files.originName}(${files.fmtFileSize})"/> <a href="#"><i class="fas fa-trash" data-fno="${files.fno}"></i></a> <br/>
 		    	  	  </div>
 					</c:forEach>
 			 	  </td>

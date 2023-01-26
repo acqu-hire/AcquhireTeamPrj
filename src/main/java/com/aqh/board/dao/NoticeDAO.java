@@ -1,4 +1,4 @@
-package com.aqh.board.domain.dao;
+package com.aqh.board.dao;
 
 import java.util.List;
 

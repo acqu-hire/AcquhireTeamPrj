@@ -41,7 +41,7 @@
 	<!-- 카테고리 전체조회(category 메뉴 클릭 시) -->
 	<select id="categorySelectAll" resultType="BoardDTO">
 		select RN1.* from
-			(select RN. bNo,id,readCount,title,writeDay from 
+			(select RN. bno,id,readCount,title,writeDay from 
 				(select * from board
 				<where>
 					<if test="searchType != null">
@@ -74,12 +74,12 @@
 	
 	<!-- 선택조회(게시판 제목 클릭 시) -->
 	<select id="noticeSelectDetail" resultType="BoardDTO">
-		select bNo,id,menu,category,readCount,title,contents,file, writeDay from board where bNo = #{bNo};
+		select bno,id,menu,category,readCount,title,contents,file, writeDay from board where bno = #{bno};
 	</select>
 	
 	<!-- 조회수 -->
 	<update id="noticeReadCount" parameterType="int">
-		update board set readCount = readCount+1 where bNo = #{bNo};
+		update board set readCount = readCount+1 where bno = #{bno};
 	</update> 
 	
 	<!-- 게시판 개수 -->
@@ -142,35 +142,35 @@
 	</select>
 	
 	<!-- 등록 -->
-	<insert id="noticeInsert" parameterType="BoardDTO" useGeneratedKeys="true" keyProperty="bNo">
+	<insert id="noticeInsert" parameterType="BoardDTO" useGeneratedKeys="true" keyProperty="bno">
 		insert into board (id,menu,category,title,contents) values(#{id},"NOTICE",#{category},#{title},#{contents});
 	</insert>
 	
 	<!-- 수정 -->
 	<update id="noticeUpdate" parameterType="BoardDTO">
-		update board set menu = "NOTICE", category = #{category}, title = #{title}, contents = #{contents} WHERE `bNo` = #{bNo};
+		update board set menu = "NOTICE", category = #{category}, title = #{title}, contents = #{contents} WHERE `bno` = #{bno};
 	</update>
 	
 	<!-- 삭제 -->
 	<delete id="noticeDelete" parameterType="int">
-		delete from board where bNo = #{bNo};
+		delete from board where bno = #{bno};
 	</delete>
 	
 	
 	<!-- 첨부파일 보여주기 -->
 	<select id="fileUploadList" resultType="FileNoticeDTO">
-		select bNo, uuid, f_seq, original_file_name, file_path, file_size from board_file where bNo = #{bNo};
+		select bno, uuid, f_seq, original_file_name, file_path, file_size from board_file where bno = #{bno};
 	</select>
 	<!-- 첨부파일 등록 -->
 	<insert id="fileInsert" parameterType="java.util.List">
-		insert into board_file(bNo, uuid, f_seq, original_file_name, file_path, file_size) 
+		insert into board_file(bno, uuid, f_seq, original_file_name, file_path, file_size) 
 		values
 		<foreach item="item" index="index" collection="list" separator=",">
-			(#{item.bNo}, #{item.uuid}, #{item.f_seq}, #{item.original_file_name}, #{item.file_path}, #{item.file_size})
+			(#{item.bno}, #{item.uuid}, #{item.f_seq}, #{item.original_file_name}, #{item.file_path}, #{item.file_size})
 		</foreach>
 	</insert>
 	<delete id="fileDeleteAll"  parameterType="int">
-		delete from board_file where bNo = #{bNo};
+		delete from board_file where bno = #{bno};
 	</delete>
 	<delete id="fileSelectDelete"  parameterType="String">
 		delete from board_file where uuid = #{uuid};

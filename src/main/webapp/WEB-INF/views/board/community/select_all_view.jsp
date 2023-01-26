@@ -74,9 +74,9 @@
 								<tbody>
 									<c:forEach varStatus="status" var="board" items="${boardList}">
 										<tr>
-											<th>${board.bNo}</th>
+											<th>${board.bno}</th>
 											<td class="text-truncate" style="max-width: 500px;"><a
-												href="./selectdetail_view?bNo=${board.bNo}">${board.title}</a>
+												href="./selectdetail_view?bno=${board.bno}">${board.title}</a>
 											</td>
 											<td>${board.id}</td>
 											<td>${board.writeDay}</td>

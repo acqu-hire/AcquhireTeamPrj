@@ -31,7 +31,7 @@
 		        <h2 class="text-center mt-4 mb-4"><strong>이벤트 게시판</strong></h2>
 		    	</div>
 			    	<div class="card-body">
-				        <form action="./eventUpdate?&bNo=${boardList.bNo}" name="EventUpdateForm" method="post" enctype="multipart/form-data">
+				        <form action="./eventUpdate?&bno=${boardList.bno}" name="EventUpdateForm" method="post" enctype="multipart/form-data">
 				          <table class="table table-striped">
 				            <tr>
 			                	<th>카테고리</th>

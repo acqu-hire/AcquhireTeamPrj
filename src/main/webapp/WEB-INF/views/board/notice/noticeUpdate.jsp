@@ -53,7 +53,7 @@
 				                <th>작성자</th>
 				                <td>
 				                	${boardDTO.id}
-				                	<input type="hidden" name="bNo" id="filebNo" value="${boardDTO.bNo}" readonly="readonly" />
+				                	<input type="hidden" name="bno" id="fileBno" value="${boardDTO.bno}" readonly="readonly" />
 				                </td>
 				            </tr>
 				            <tr>
@@ -109,8 +109,8 @@ $(document).ready(function() {
 	  $(".downlink").click(function(e){ 
 	    e.preventDefault();
 	    var fileName = $(this).attr("href");
-	    var bNo = $("#filebNo").attr("value");
-	    window.location = "fileDownLoad?fileName=" + fileName + "&bNo=" + bNo; 
+	    var bno = $("#fileBno").attr("value");
+	    window.location = "fileDownLoad?fileName=" + fileName + "&bno=" + bno; 
 	  });
 	
 

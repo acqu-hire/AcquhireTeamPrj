@@ -4,7 +4,7 @@
 	<insert id="upload" parameterType="java.util.List">
 				INSERT INTO attachfile
 			(
-				bNo, 
+				bno, 
 				uuid, 
 				originName, 
 				uploadPath, 
@@ -14,7 +14,7 @@
 			VALUES
 			<foreach collection="list" item="files" separator=",">
 			(
-				#{files.bNo}, 
+				#{files.bno}, 
 				#{files.uuid}, 
 				#{files.originName}, 
 				#{files.uploadPath}, 
@@ -26,27 +26,27 @@
 	
 	<delete id="delete">
 		DELETE FROM attachfile 
-		WHERE fNo IN
-		<foreach collection="array" item="fNo" open="(" close=")" separator=",">
-		${fNo}
+		WHERE fno IN
+		<foreach collection="array" item="fno" open="(" close=")" separator=",">
+		${fno}
 		</foreach>
 	</delete>
 	
 	<select id="fileList" resultType="FileDTO">
 		SELECT * FROM attachfile
-		WHERE fNo IN
-		<foreach collection="array" item="fNo" open="(" close=")" separator=",">
-		${fNo}
+		WHERE fno IN
+		<foreach collection="array" item="fno" open="(" close=")" separator=",">
+		${fno}
 		</foreach>
 	</select>
 	
 	<select id="fileDetail" resultType="FileDTO">
 		SELECT * FROM attachfile
-		WHERE fNo = #{fNo}
+		WHERE fno = #{fno}
 	</select>
 	
 	<select id="deleteAll" parameterType="long">
 		DELETE FROM attachfile
-		WHERE bNo=#{bNo}
+		WHERE bno=#{bno}
 	</select>
 </mapper>

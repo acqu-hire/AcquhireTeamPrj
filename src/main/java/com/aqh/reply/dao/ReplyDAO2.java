@@ -1,4 +1,4 @@
-package com.aqh.reply.domain.dao;
+package com.aqh.reply.dao;
 
 import java.util.List;
 
@@ -9,19 +9,13 @@ import org.springframework.stereotype.Repository;
 import com.aqh.reply.domain.dto.ReplyCriteria;
 import com.aqh.reply.domain.dto.ReplyDTO;
 
-/**
- * 댓글DAO
- * 
- * @author Devesg
- * @since 23.01.11
- */
 @Repository
-public class ReplyDAO {
+public class ReplyDAO2 {
 
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 
-	private String namespace = "com.aqh.reply.domain.dao.ReplyDAO.";
+	private String namespace = "com.aqh.reply.domain.dao.ReplyMapper.";
 
 	public int register(ReplyDTO replyDTO) {
 		return sqlSessionTemplate.insert(namespace + "register", replyDTO);
@@ -32,7 +26,7 @@ public class ReplyDAO {
 	}
 
 	public ReplyDTO getReply(long rno) {
-		return sqlSessionTemplate.selectOne(namespace + "getReply", rno);
+		return sqlSessionTemplate.selectOne(namespace+"getReply", rno);
 	}
 
 	public int modify(ReplyDTO replyDTO) {
@@ -41,5 +35,9 @@ public class ReplyDAO {
 
 	public int removeReply(long rno) {
 		return sqlSessionTemplate.delete(namespace + "removeReply", rno);
+	}
+	
+	public int replyCntUpdate(long bNo) {
+		return sqlSessionTemplate.update(namespace + "replyCntUpdate", bNo);
 	}
 }

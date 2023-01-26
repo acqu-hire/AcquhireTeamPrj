@@ -19,7 +19,7 @@ import lombok.Setter;
 @Setter
 public class ReplyDTO {
 
-	private long bNo; // 게시글 번호
+	private long bno; // 게시글 번호
 	private long rno; // 댓글 번호 (AI)
 	private Integer prno; // 부모 댓글 번호
 	private String writeDay; // 게시글 작성일

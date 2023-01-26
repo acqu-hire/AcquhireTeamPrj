@@ -6,22 +6,22 @@ PUBLIC "=//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.aqh.reply.domain.dao.ReplyDAO">
 
     <insert id="register">
-        INSERT INTO REPLY( bNo, id, contents)
-        VALUES( #{bNo} , #{id}, #{contents} )
+        INSERT INTO REPLY( bno, id, contents)
+        VALUES( #{bno} , #{id}, #{contents} )
     </insert>
     <select id="getReplyList" resultType="ReplyDTO">
-        SELECT * FROM REPLY where bNo = #{bNo} 
+        SELECT * FROM REPLY where bno = #{bno} 
         ORDER BY writeDay ASC
         LIMIT #{offset},#{limit}
     </select>
     <select id="getReply" resultType="ReplyDTO">
-        SELECT * FROM REPLY where rNo = #{rno}
+        SELECT * FROM REPLY where rno = #{rno}
     </select>
     <update id="modifyReply">
-        UPDATE reply SET contents = #{contents} WHERE rNo = #{rno}
+        UPDATE reply SET contents = #{contents} WHERE rno = #{rno}
     </update>
     <delete id="removeReply">
-        delete from reply where rNo = #{rno}
+        delete from reply where rno = #{rno}
     </delete>
 
 </mapper>

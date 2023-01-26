@@ -21,7 +21,7 @@ public class AttachFile {
 			for(MultipartFile file : boardDTO.getFiles()) {
 				if(file.getOriginalFilename() != "") {
 					String uuid = getUuid();
-					FileDTO fileDTO = new FileDTO(boardDTO.getbNo(),
+					FileDTO fileDTO = new FileDTO(boardDTO.getBno(),
 												  uuid,
 												  file.getOriginalFilename(),
 												  uploadPath,

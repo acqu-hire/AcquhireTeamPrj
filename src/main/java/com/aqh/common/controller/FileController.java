@@ -29,9 +29,9 @@ public class FileController {
 		this.attach = attach;
 	}
 	
-	@GetMapping("/download/{fNo}")
-	public void download(@PathVariable(name="fNo") long fNo, HttpServletResponse response) {
-		FileDTO fileDTO = fileService.getFileDetail(fNo);
+	@GetMapping("/download/{fno}")
+	public void download(@PathVariable(name="fno") long fno, HttpServletResponse response) {
+		FileDTO fileDTO = fileService.getFileDetail(fno);
 		try {
 			String originName = new String(fileDTO.getOriginName().getBytes("utf-8"), "iso-8859-1");
 			String extension = attach.getExtension(originName);		

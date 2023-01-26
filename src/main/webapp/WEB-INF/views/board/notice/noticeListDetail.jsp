@@ -38,7 +38,7 @@
 						</tr>
 						<tr style="display:none;">
 							<th>게시글 번호</th>
-							<td><a id="filebNo" class="downlink" href="${selectDetail.bNo}">${selectDetail.bNo}</a></td>
+							<td><a id="fileBno" class="downlink" href="${selectDetail.bno}">${selectDetail.bno}</a></td>
 						</tr>
 						<tr>
 							<th>게시판메뉴</th>
@@ -77,8 +77,8 @@
 					</div>
 					<div class="row">
  						<div class="col-12 text-right">
-							<input type="button" value="글수정" class="btn btn-success" onclick="location.href='./update_view?bNo=${selectDetail.bNo}'"> 
-							<input type="button" value="글삭제" class="btn btn-warning" onclick="location.href='./delete?bNo=${selectDetail.bNo}'">
+							<input type="button" value="글수정" class="btn btn-success" onclick="location.href='./update_view?bno=${selectDetail.bno}'"> 
+							<input type="button" value="글삭제" class="btn btn-warning" onclick="location.href='./delete?bno=${selectDetail.bno}'">
 							<button type="button" class="btn btn-primary" onclick="location.href='./select_all_view?num=1'">전체 게시글보기</button>
 						</div> 
 					</div>
@@ -101,8 +101,8 @@ $(document).ready(function() {
 	  $(".downlink").click(function(e){ 
 	    e.preventDefault();
 	    var fileName = $(this).attr("href");
-	    var bNo = $("#filebNo").attr("href");
-	    window.location = "fileDownLoad?fileName=" + fileName + "&bNo=" + bNo; 
+	    var bno = $("#fileBno").attr("href");
+	    window.location = "fileDownLoad?fileName=" + fileName + "&bno=" + bno; 
 	  });
 	});
 </script>

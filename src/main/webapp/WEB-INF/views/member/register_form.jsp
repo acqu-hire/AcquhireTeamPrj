@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>회원가입</title>
 <script src="${contextPath}/resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
-<script src="${contextPath}/resources/js/register.js"></script>
+<script src="${contextPath}/resources/js/register.js?ver=1"></script>
 <script type="text/javascript">
 </script>
 </head>
@@ -103,7 +103,7 @@
 					    <span class="text-danger">*</span>휴대폰
 					  </label>
 					  <div class="col-md-6">
-						<input type="text" name="phone_number" id="phone_number" class="form-control" placeholder="'-'을 제외한 숫자 10~11자리">
+						<input type="text" maxlength=11 name="phone_number" id="phone_number" class="form-control" placeholder="'-'을 제외한 숫자 10~11자리">
 					  </div>
 					</div>
 					<div class="form-group row">

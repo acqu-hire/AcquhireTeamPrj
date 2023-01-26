@@ -4,15 +4,15 @@
 
     <insert id="register" parameterType="BoardAttachVO" >
         INSERT INTO attachfile 
-        (bNo, fileName, uploadPath, uuid, fileType) 
+        (bno, fileName, uploadPath, uuid, fileType) 
         VALUES
-        (#{bNo},#{fileName},#{uploadPath},#{uuid},#{fileType})
+        (#{bno},#{fileName},#{uploadPath},#{uuid},#{fileType})
     </insert>
 
     <select id="getAttachList" resultType="BoardAttachVO">
-        SELECT * FROM attachfile WHERE bNo = #{bNo} 
+        SELECT * FROM attachfile WHERE bno = #{bno} 
     </select>
     <delete id="deleteAll">
-        DELETE FROM attachfile where bNo = #{bNo}
+        DELETE FROM attachfile where bno = #{bno}
     </delete>
 </mapper>

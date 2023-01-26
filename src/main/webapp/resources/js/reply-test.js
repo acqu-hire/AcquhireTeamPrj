@@ -1,7 +1,7 @@
 $(function () {
 	var page = 1;
 
-	replyList(bNo, page); // 댓글 전체조회 함수실행
+	replyList(bno, page); // 댓글 전체조회 함수실행
 
 	$("#regReplyBtn").on("click", function () {
 		var contents = $("#replyContents").val();
@@ -12,7 +12,7 @@ $(function () {
 		var replyCnt = $("span.reply-tab").text();
 		$.ajax({
 			type: "POST",
-			url: "/reply?bNo=" + bNo,
+			url: "/reply?bno=" + bno,
 			headers: { "content-type": "application/json" },
 			data: JSON.stringify({
 				contents: contents,
@@ -21,7 +21,7 @@ $(function () {
 			success: function (result) {
 				$("span.reply-tab").text(replyCnt.replace(replyCnt, "댓글목록(" + result + ")"));
 				$("#replyContents").val("");
-				replyList(bNo, page);
+				replyList(bno, page);
 			},
 			error: function () {
 				alert("error");
@@ -37,14 +37,14 @@ $(function () {
 			if (!confirm("댓글을 삭제하시겠습니까?")) return;
 			$.ajax({
 				type: "DELETE",
-				url: "/reply/" + rno + "?bNo=" + bNo,
+				url: "/reply/" + rno + "?bno=" + bno,
 				headers: { "content-type": "application/json" },
 				data: JSON.stringify({
 					rno: rno
 				}),
 				success: function (result) {
 					$("span.reply-tab").text(replyCnt.replace(replyCnt, "댓글목록(" + result + ")"));
-					replyList(bNo, page);
+					replyList(bno, page);
 				},
 				error: function () {
 					alert("error!!");
@@ -82,7 +82,7 @@ $(function () {
 				contents: contents
 			}),
 			success: function (result) {
-				replyList(bNo, page);
+				replyList(bno, page);
 			},
 			error: function () {
 				alert("error!!");
@@ -91,7 +91,7 @@ $(function () {
 	})
 	$(document).on("click", "button.reply-cancel", function () {
 		if (!confirm("수정을 취소하시겠습니까?")) return;
-		replyList(bNo, page);
+		replyList(bno, page);
 	})
 
 	$(document).on("click" ,"button.btn-reReply", function(){
@@ -115,7 +115,7 @@ $(function () {
 		var replyCnt = $("span.reply-tab").text();
 		$.ajax({
 			type: "POST",
-			url: "/reply?bNo=" + bNo,
+			url: "/reply?bno=" + bno,
 			headers: { "content-type": "application/json" },
 			data: JSON.stringify({
 				prno : prno,
@@ -125,7 +125,7 @@ $(function () {
 			success: function (result) {
 				$("span.reply-tab").text(replyCnt.replace(replyCnt, "댓글목록(" + result + ")"));
 				
-				replyList(bNo, page);
+				replyList(bno, page);
 			},
 			error: function () {
 				alert("error");
@@ -138,10 +138,10 @@ $(function () {
 	})
 })
 // 댓글 전체 리스트 조회
-var replyList = function (bNo, page) {
+var replyList = function (bno, page) {
 	$.ajax({
 		type: "GET",
-		url: "/reply/" + page + "?bNo=" + bNo,
+		url: "/reply/" + page + "?bno=" + bno,
 		dataType : "json",
 		success: function (data) {
 			var pageInfo = data.cri;
@@ -152,7 +152,7 @@ var replyList = function (bNo, page) {
 					list += ' <div class="d-flex">';
 					if(data.prno != data.rno)
 						list += ' <div class="p-2 reReply-icon"><i class="mt-3 fa fa-reply fa fa-rotate-180" aria-hidden="true"></i></div>';
-					list += ' <div class="card mt-2 reply-card flex-fill" data-rno=' + data.rno + ' data-prno =' + data.prno + ' data-bNo = '+ bNo +'>';
+					list += ' <div class="card mt-2 reply-card flex-fill" data-rno=' + data.rno + ' data-prno =' + data.prno + ' data-bno = '+ bno +'>';
 					list += ' <div class="card-header p-2 bg-secondary text-light reply-header" data-writer = ' + data.id + '>';
 					list += ' <table>';
 					list += ' <tbody>';
@@ -197,7 +197,7 @@ var pagenation = function(pageInfo) {
 	var pagenation = ' <ul class="pagination pg-blue justify-content-center">';
 
 		if(pageInfo.startPage != 1){
-			pagenation += ' <li class="page-item"><a class="page-link" onclick="replyList(' + bNo + ',' + (pageInfo.startPage-1) + ');">';
+			pagenation += ' <li class="page-item"><a class="page-link" onclick="replyList(' + bno + ',' + (pageInfo.startPage-1) + ');">';
 			pagenation += ' <span aria-hidden="true">&laquo;</span></a></li>';
 		} else {
 			pagenation += ' <li class="page-item disabled"><a class="page-link">';
@@ -207,10 +207,10 @@ var pagenation = function(pageInfo) {
 			pagenation += '<li class="page-item';
 			if(pageInfo.page == i)
 				pagenation += ' active';
-			pagenation += ' "><a class="page-link" onclick="replyList(' + bNo + ',' + i + ');">' + i + '</a></li>';
+			pagenation += ' "><a class="page-link" onclick="replyList(' + bno + ',' + i + ');">' + i + '</a></li>';
 		}
 		if(pageInfo.endPage != pageInfo.totalPage){
-			pagenation += '<li class="page-item"><a class="page-link" onclick="replyList(' + bNo + ',' + (pageInfo.endPage+1) + ');">';
+			pagenation += '<li class="page-item"><a class="page-link" onclick="replyList(' + bno + ',' + (pageInfo.endPage+1) + ');">';
 			pagenation += ' <span aria-hidden="true">&raquo;</span></a></li>';
 		} else {
 			pagenation += '<li class="page-item disabled"><a class="page-link">';

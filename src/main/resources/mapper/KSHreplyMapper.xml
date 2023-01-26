@@ -6,30 +6,30 @@ PUBLIC "=//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.aqh.reply.domain.dao.ReplyMapper">
 
     <insert id="register">
-        INSERT INTO reply( bNo, prno, id, contents)
-        VALUES( #{bNo}, #{prno}, #{id}, #{contents} )
+        INSERT INTO reply( bno, prno, id, contents)
+        VALUES( #{bno}, #{prno}, #{id}, #{contents} )
     </insert>
     <select id="getReplyList" resultType="replyDTO">
-        SELECT rNo, bNo, IFNULL(prno, rNo) prno, writeDay, id, contents FROM reply 
-        WHERE bNo = #{bNo}
-        ORDER BY prno ASC, rNo ASC
+        SELECT rno, bno, IFNULL(prno, rno) prno, writeDay, id, contents FROM reply 
+        WHERE bno = #{bno}
+        ORDER BY prno ASC, rno ASC
         LIMIT #{offset}, #{limit};
     </select>
     <select id="getReply" resultType="replyDTO">
-        SELECT * FROM reply where rNo = #{rno}
+        SELECT * FROM reply where rno = #{rno}
     </select>
     <update id="modifyReply">
-        UPDATE reply SET contents = #{contents} WHERE rNo = #{rno}
+        UPDATE reply SET contents = #{contents} WHERE rno = #{rno}
     </update>
     <delete id="removeReply">
-        delete from reply where rNo = #{rno}
+        delete from reply where rno = #{rno}
     </delete>
     
     <update id="replyCntUpdate">
     	UPDATE board B
     	SET replyCnt = 
-    	(SELECT count(*) FROM reply R WHERE bNo = #{bNo})
-    	WHERE bNo = #{bNo}
+    	(SELECT count(*) FROM reply R WHERE bno = #{bno})
+    	WHERE bno = #{bno}
     </update>
     
 </mapper>

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.aqh.board.dao.NoticeDAO;
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.BoardDTO.Category;
 import com.aqh.board.domain.dto.BoardDTO.Menu;
@@ -63,7 +64,7 @@ public class NoticeDAOTest {
 		BoardDTO boardDTO = BoardDTO.builder()
 				.id("아이디")
 				.category(Category.NOTICE_EVENT)
-				.bNo(3)
+				.bno(3)
 				.readCount(1113)
 				.file("파일3")
 				.title("제목3")
@@ -79,7 +80,7 @@ public class NoticeDAOTest {
 				.id("아이디1")
 				.menu(Menu.NOTICE)
 				.category(Category.NOTICE_EVENT)
-				.bNo(2)
+				.bno(2)
 				.readCount(1113)
 				.file("파일2_up")
 				.title("제목2_up")

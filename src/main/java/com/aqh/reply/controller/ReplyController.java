@@ -40,7 +40,7 @@ public class ReplyController {
 	// ! CRATE
 	@PostMapping(value = "/write", consumes = "application/json;", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> register(@RequestBody ReplyDTO replyDTO) {
-		System.out.println(replyDTO.getBNo());
+		System.out.println(replyDTO.getBno());
 		System.out.println(replyDTO.toString());
 		int logic = replyService.register(replyDTO);
 		log.info("logic Check >>>>>", logic);
@@ -53,7 +53,7 @@ public class ReplyController {
 	public ResponseEntity<List<ReplyDTO>> getReply(@PathVariable("page") int page, @PathVariable("bno") Long bno) {
 		System.out.println("page = " + page + " bno " + bno);
 		return new ResponseEntity<>(
-				replyService.getReplyList(ReplyCriteria.builder().bNo(bno).page(page).limit(10).build()),
+				replyService.getReplyList(ReplyCriteria.builder().bno(bno).page(page).limit(10).build()),
 				HttpStatus.OK);
 	}
 

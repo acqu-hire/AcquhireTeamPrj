@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.aqh.member.domain.dao.MemberDAO;
+import com.aqh.member.dao.MemberDAO;
 import com.aqh.member.domain.dto.MemberDTO;
 
 @Service
