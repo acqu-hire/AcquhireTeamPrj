@@ -7,12 +7,13 @@ PUBLIC "=//mybatis.org//DTD Mapper 3.0//EN"
 
     <insert id="register">
         INSERT INTO reply( bNo, prno, id, contents)
-        VALUES( #{bNo} , ${prno}, #{id}, #{contents} )
+        VALUES( #{bNo}, #{prno}, #{id}, #{contents} )
     </insert>
     <select id="getReplyList" resultType="replyDTO">
-        SELECT rNo, bNo, ifnull(prno, rNo) prno, writeDay, id, contents FROM reply 
+        SELECT rNo, bNo, IFNULL(prno, rNo) prno, writeDay, id, contents FROM reply 
         WHERE bNo = #{bNo}
-        ORDER BY prno ASC, rNo ASC;
+        ORDER BY prno ASC, rNo ASC
+        LIMIT #{offset}, #{limit};
     </select>
     <select id="getReply" resultType="replyDTO">
         SELECT * FROM reply where rNo = #{rno}

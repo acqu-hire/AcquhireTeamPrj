@@ -1,6 +1,7 @@
 $(function () {
+	var page = 1;
 
-	replyList(bNo); // 댓글 전체조회 함수실행
+	replyList(bNo, page); // 댓글 전체조회 함수실행
 
 	$("#regReplyBtn").on("click", function () {
 		var contents = $("#replyContents").val();
@@ -20,7 +21,7 @@ $(function () {
 			success: function (result) {
 				$("span.reply-tab").text(replyCnt.replace(replyCnt, "댓글목록(" + result + ")"));
 				$("#replyContents").val("");
-				replyList(bNo);
+				replyList(bNo, page);
 			},
 			error: function () {
 				alert("error");
@@ -29,8 +30,8 @@ $(function () {
 	})
 
 	$(document).on("click", "#replyRemove", function () {
-		var rno = $(this).data("rno");
-		var rWriter = $(this).data("writer");
+		var rno = $(this).parents("div.reply-card").data("rno");
+		var rWriter = $(this).parents("div.reply-header").data("writer");
 		var replyCnt = $("span.reply-tab").text();
 		if (sessionId == rWriter || sessionId == 'admin') {
 			if (!confirm("댓글을 삭제하시겠습니까?")) return;
@@ -43,7 +44,7 @@ $(function () {
 				}),
 				success: function (result) {
 					$("span.reply-tab").text(replyCnt.replace(replyCnt, "댓글목록(" + result + ")"));
-					replyList(bNo);
+					replyList(bNo, page);
 				},
 				error: function () {
 					alert("error!!");
@@ -56,7 +57,7 @@ $(function () {
 	// 댓글 수정버튼 클릭 이벤트
 	$(document).on("click", "button.modReply", function () {
 		var contents = $(this).prev("span.card-text").text();
-		var rWriter = $(this).closest("div.reply-body").data("writer");
+		var rWriter = $(this).parent("div").siblings().data("writer");
 		var modReplyBox = '<textarea class="form-control" name="changeContents" rows="3">';
 		if (sessionId == rWriter || sessionId == 'admin') {
 			if (!confirm("댓글을 수정하시겠습니까?")) return;
@@ -70,7 +71,7 @@ $(function () {
 		}
 	})
 	$(document).on("click", "button.reply-submit", function () {
-		var rno = $(this).closest("div.reply-body").data("rno");
+		var rno = $(this).parents("div.reply-card").data("rno");
 		var contents = $("textarea[name='changeContents']").val();
 		if (!confirm("수정사항을 반영하시겠습니까?")) return;
 		$.ajax({
@@ -81,7 +82,7 @@ $(function () {
 				contents: contents
 			}),
 			success: function (result) {
-				replyList(bNo);
+				replyList(bNo, page);
 			},
 			error: function () {
 				alert("error!!");
@@ -90,13 +91,12 @@ $(function () {
 	})
 	$(document).on("click", "button.reply-cancel", function () {
 		if (!confirm("수정을 취소하시겠습니까?")) return;
-		replyList(bNo);
+		replyList(bNo, page);
 	})
 
 	$(document).on("click" ,"button.btn-reReply", function(){
-		var displyStatus = $("#reReplyForm").children("div.icon").css("display");
-		var displyStatus2 = $("#reReplyForm").children("div.content").css("display");
-		if(displyStatus == "none" && displyStatus2 == "none"){
+		var displyStatus = $("#reReplyForm").children().css("display");
+		if(displyStatus == "none"){
 			$("#reReplyForm").appendTo($(this).closest("div.card"));
 			// 버튼 클릭시 대댓글 폼 보여주기
 			$("#reReplyForm").children().css("display", "block");
@@ -107,7 +107,7 @@ $(function () {
 
 	$(document).on("click", "#regReReplyBtn", function () {
 		var contents = $("#reReplyContents").val();
-		var prno = $("#reReplyForm").parent("div.reReply-card").attr("data-prno");
+		var prno = $("#reReplyForm").parent("div.reply-card").data("prno");
 		if (contents.trim() == "") {
 			alert("댓글의 내용을 입력해주세요.")
 			return;
@@ -125,7 +125,7 @@ $(function () {
 			success: function (result) {
 				$("span.reply-tab").text(replyCnt.replace(replyCnt, "댓글목록(" + result + ")"));
 				
-				replyList(bNo);
+				replyList(bNo, page);
 			},
 			error: function () {
 				alert("error");
@@ -138,19 +138,22 @@ $(function () {
 	})
 })
 // 댓글 전체 리스트 조회
-var replyList = function (bNo) {
+var replyList = function (bNo, page) {
 	$.ajax({
 		type: "GET",
-		url: "/reply?bNo=" + bNo,
+		url: "/reply/" + page + "?bNo=" + bNo,
+		dataType : "json",
 		success: function (data) {
-			if (data != "") {
+			var pageInfo = data.cri;
+			var replyList = data.list;
+			if (replyList.length !== 0) {
 				var list = '';
-				$.each(data, function (index, data) {
+				$.each(replyList, function (index, data) {
 					list += ' <div class="d-flex">';
-					if(data.rno != data.prno)
+					if(data.prno != data.rno)
 						list += ' <div class="p-2 reReply-icon"><i class="mt-3 fa fa-reply fa fa-rotate-180" aria-hidden="true"></i></div>';
-					list += ' <div class="card mt-2 reReply-card flex-fill" data-rno=' + data.rno + ' data-prno =' + data.prno + ' data-bNo = '+ bNo +'>';
-					list += ' <div class="card-header p-2 bg-secondary text-light reply-header" data-rno=' + data.rno + '>';
+					list += ' <div class="card mt-2 reply-card flex-fill" data-rno=' + data.rno + ' data-prno =' + data.prno + ' data-bNo = '+ bNo +'>';
+					list += ' <div class="card-header p-2 bg-secondary text-light reply-header" data-writer = ' + data.id + '>';
 					list += ' <table>';
 					list += ' <tbody>';
 					list += ' <tr class="align-middle">';
@@ -159,17 +162,18 @@ var replyList = function (bNo) {
 					list += ' </tr>';
 					list += ' <tr>';
 					list += ' <td>';
-					list += ' <font size="2">' + data.writeDay + '</font>';
-					list += ' <span style="cursor:pointer" id="replyRemove" data-rno=' + data.rno + ' data-writer=' + data.id + '>';
-					list += ' <i class="fa fa-window-close fa" aria-hidden="true"></i></span> ';
+					list += ' <font size="2">' + data.writeDay + '</font>'
+					if(data.id == sessionId || sessionId == "admin")
+						list += ' <span style="cursor:pointer" id="replyRemove"><i class="fa fa-window-close fa" aria-hidden="true"></i></span>';
 					list += ' </td>';
 					list += ' </tr>';
 					list += ' </tbody>';
 					list += ' </table>';
 					list += ' </div>';
-					list += ' <div class="card-body reply-body" data-rno=' + data.rno + ' data-writer=' + data.id + '>';
+					list += ' <div class="card-body reply-body">';
 					list += ' <span class="card-text">' + data.contents + '</span>';
-					list += ' <button class="badge badge-dark modReply">수정</button>';
+					if(data.id == sessionId || sessionId == "admin")
+						list += ' <button class="badge badge-dark modReply">수정</button>';
 					if(data.rno == data.prno)
 						list += ' <button class="badge badge-dark btn-reReply">답글</button>';
 					list += ' </div>';
@@ -178,6 +182,7 @@ var replyList = function (bNo) {
 					list += ' </div>';
 				});
 				$(".reply-inline").html(list);
+				pagenation(pageInfo);
 			} else {
 				$(".reply-inline").html("등록된 댓글이 없습니다.");
 			}
@@ -186,4 +191,30 @@ var replyList = function (bNo) {
 			alert('error!!');
 		}
 	}) // ajax
+}
+
+var pagenation = function(pageInfo) {
+	var pagenation = ' <ul class="pagination pg-blue justify-content-center">';
+
+		if(pageInfo.startPage != 1){
+			pagenation += ' <li class="page-item"><a class="page-link" onclick="replyList(' + bNo + ',' + (pageInfo.startPage-1) + ');">';
+			pagenation += ' <span aria-hidden="true">&laquo;</span></a></li>';
+		} else {
+			pagenation += ' <li class="page-item disabled"><a class="page-link">';
+			pagenation += ' <span aria-hidden="true">&laquo;</span></a></li>';
+		}	
+		for(var i = pageInfo.startPage; i <= pageInfo.endPage; i++) {
+			pagenation += '<li class="page-item';
+			if(pageInfo.page == i)
+				pagenation += ' active';
+			pagenation += ' "><a class="page-link" onclick="replyList(' + bNo + ',' + i + ');">' + i + '</a></li>';
+		}
+		if(pageInfo.endPage != pageInfo.totalPage){
+			pagenation += '<li class="page-item"><a class="page-link" onclick="replyList(' + bNo + ',' + (pageInfo.endPage+1) + ');">';
+			pagenation += ' <span aria-hidden="true">&raquo;</span></a></li>';
+		} else {
+			pagenation += '<li class="page-item disabled"><a class="page-link">';
+			pagenation += ' <span aria-hidden="true">&raquo;</span></a></li>';
+		}	
+		$(".reply-pagenation nav").html(pagenation);
 }

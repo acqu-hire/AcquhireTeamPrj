@@ -1,7 +1,5 @@
 package com.aqh.reply.controller;
 
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,9 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.aqh.board.service.QnAService;
 import com.aqh.reply.domain.dto.ReplyCriteria;
 import com.aqh.reply.domain.dto.ReplyDTO;
+import com.aqh.reply.domain.dto.ReplyPageDTO;
 import com.aqh.reply.service.ReplyService2;
-
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 public class ReplyController2 {
@@ -30,13 +27,9 @@ public class ReplyController2 {
 		this.QnaService = QnaService;
 	}
 	
-	@GetMapping(value = "/reply")
-	public ResponseEntity<List<ReplyDTO>> selectAll(ReplyCriteria cri) {
-		System.out.println("cri =====>" + cri);
-		List<ReplyDTO> list = service.getReplyList(cri);
-		if(list!=null)
-			return new ResponseEntity<List<ReplyDTO>>(list, HttpStatus.OK);
-		return new ResponseEntity<List<ReplyDTO>>(HttpStatus.NO_CONTENT);
+	@GetMapping(value = "/reply/{page}")
+	public ResponseEntity<ReplyPageDTO> selectAll(@PathVariable Integer page, ReplyCriteria cri) {
+		return new ResponseEntity<ReplyPageDTO>(service.getReplyList(page,cri), HttpStatus.OK);
 	}
 	
 	@PostMapping(value =  "/reply")
