@@ -23,7 +23,6 @@ import com.aqh.common.domain.dto.BoardAttachVO;
 
 import lombok.extern.slf4j.Slf4j;
 
-
 @Controller
 @RequestMapping("/community")
 @Slf4j
@@ -78,8 +77,7 @@ public class CommunityController {
 		System.out.println(boardDTO);
 		communityService.insertBoard(boardDTO);
 		if (!boardDTO.getAttachList().isEmpty()) {
-			boardDTO.getAttachList().forEach(attach -> 
-			{
+			boardDTO.getAttachList().forEach(attach -> {
 				attach.setBno(boardDTO.getBno());
 				attach.toString();
 				communityService.insert(attach);
@@ -100,7 +98,7 @@ public class CommunityController {
 		log.info("PATH" + Path.BOARD_COMMUNITY_SELECT_ALL_VIEW);
 
 		model.addAttribute("boardList", communityService.getList(cri));
-		model.addAttribute("pagination", new Pagination(communityService.getTotal(cri), cri));
+		model.addAttribute("pagination", new Pagination(communityService.getBoardTotal(cri), cri));
 		return Path.BOARD_COMMUNITY_SELECT_ALL_VIEW.getPath();
 	}
 
@@ -108,16 +106,15 @@ public class CommunityController {
 	public String readCommunitPost(long bno, Model model) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_SELECT_DETAIL_VIEW);
 		int count = communityService.viewCntUp(bno);
-		log.info(">>>>>>>>>>>>>"+count);
+		log.info(">>>>>>>>>>>>>" + count);
 		model.addAttribute("boardDTO", communityService.findByBoardNumber(bno));
 		return Path.BOARD_COMMUNITY_SELECT_DETAIL_VIEW.getPath();
 	}
 
-	@GetMapping(value="/getAttachList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<List<BoardAttachVO>> getAttachList(Long bNo) {
-		return new ResponseEntity<>(communityService.getAttachList(bNo),HttpStatus.OK);
+	@GetMapping(value = "/getAttachList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<List<BoardAttachVO>> getAttachList(Long bno) {
+		return new ResponseEntity<>(communityService.getAttachList(bno), HttpStatus.OK);
 	}
-	
 
 	/**
 	 * UPDATE PART
@@ -151,20 +148,20 @@ public class CommunityController {
 	 * @return
 	 */
 	@GetMapping(value = "/delete")
-	public String deleteCommunityPost(long bno, String id,Criteria cri,RedirectAttributes rttr) {
+	public String deleteCommunityPost(long bno, String id, Criteria cri, RedirectAttributes rttr) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_DELETE);
 		// TODO 아이디 확인 추가
 		List<BoardAttachVO> attachList = communityService.getAttachList(bno);
+		System.out.println(">>>>>> " + getAttachList(bno));
 		if (communityService.deleteBoard(bno) == 1) {
 			deleteFiles(attachList);
-			rttr.addFlashAttribute("result","success");
+			rttr.addFlashAttribute("result", "success");
 		}
 		communityService.deleteBoard(bno);
 		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath();
 	}
 
-	private void deleteFiles(List<BoardAttachVO> attachList)
-	{
+	private void deleteFiles(List<BoardAttachVO> attachList) {
 		if (attachList == null || attachList.size() == 0) {
 			return;
 		}
@@ -173,10 +170,12 @@ public class CommunityController {
 
 		attachList.forEach(attach -> {
 			try {
-				java.nio.file.Path file = Paths.get(Path.UPLOAD_PATH.getPath()+"\\"+attach.getUploadPath()+"\\"+attach.getUuid()+"_"+attach.getFileName());
+				java.nio.file.Path file = Paths.get(Path.UPLOAD_PATH.getPath() + "\\" + attach.getUploadPath() + "\\"
+						+ attach.getUuid() + "_" + attach.getFileName());
 				Files.deleteIfExists(file);
 				if (Files.probeContentType(file).startsWith("image")) {
-					java.nio.file.Path thumNail = Paths.get(Path.UPLOAD_PATH.getPath()+"\\"+attach.getUploadPath()+"\\s_"+attach.getUuid()+"_"+attach.getFileName());
+					java.nio.file.Path thumNail = Paths.get(Path.UPLOAD_PATH.getPath() + "\\" + attach.getUploadPath()
+							+ "\\s_" + attach.getUuid() + "_" + attach.getFileName());
 
 					Files.delete(thumNail);
 				}

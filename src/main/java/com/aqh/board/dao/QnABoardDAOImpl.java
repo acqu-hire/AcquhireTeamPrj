@@ -26,8 +26,14 @@ public class QnABoardDAOImpl implements BoardDAO{
 	}
 	
 	@Override
-	public int getTotal(Criteria criteria) {
+	public int getBoardTotal(Criteria criteria) {
 		return session.selectOne(namespace + "boardCount", criteria);
+	}
+	
+	@Override
+	public int getReplyTotal(Criteria criteria) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	@Override

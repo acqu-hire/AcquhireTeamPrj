@@ -10,51 +10,59 @@ import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.Criteria;
 
 @Repository
-public class CommunityDAOImpl implements BoardDAO{
+public class CommunityDAOImpl implements BoardDAO {
 
 	@Autowired
 	SqlSessionTemplate sessionTemplate;
 
+	String namespace = "com.aqh.board.domain.dao.CommunityDAOImpl.";
 	// ! CREATE
 
 	@Override
 	public int insertBoard(BoardDTO boardDTO) {
-		return sessionTemplate.insert("insertBoard", boardDTO);
+		return sessionTemplate.insert(namespace + "insertBoard", boardDTO);
 	}
 
 	// ! READ
-	
+
 	@Override
 	public List<BoardDTO> getList(Criteria criteria) {
-		return sessionTemplate.selectList("getList", criteria);
+		return sessionTemplate.selectList(namespace + "getList", criteria);
 	}
 
-	public int getTotal(Criteria criteria) {
-		return sessionTemplate.selectOne("getTotal",criteria);
+	@Override
+	public int getBoardTotal(Criteria criteria) {
+		return sessionTemplate.selectOne(namespace + "getTotal", criteria);
 	}
+
+	@Override
+	public int getReplyTotal(Criteria criteria) {
+		// 구현 필요
+		return sessionTemplate.selectOne(namespace + "getTotal", criteria);
+	};
 
 	@Override
 	public BoardDTO findByBoardNumber(long bno) {
-		return sessionTemplate.selectOne("findByBoardNumber", bno);
+		return sessionTemplate.selectOne(namespace + "findByBoardNumber", bno);
 	}
 
 	// ! UPDATE
 
 	@Override
 	public int viewCntUp(long bno) {
-		return sessionTemplate.update("viewCntUp", bno);
+		return sessionTemplate.update(namespace + "viewCntUp", bno);
 	}
-	
+
 	@Override
 	public int updateBoard(BoardDTO boardDTO) {
-		return sessionTemplate.update("updateBoard", boardDTO);
+		return sessionTemplate.update(namespace + "updateBoard", boardDTO);
 	}
 
 	// ! DELETE
-	
+
 	@Override
 	public int deleteBoard(long bno) {
-		return sessionTemplate.delete("deleteBoard", bno);
-	};
+		return sessionTemplate.delete(namespace + "deleteBoard", bno);
+	}
 
 }

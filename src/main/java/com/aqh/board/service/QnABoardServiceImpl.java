@@ -28,11 +28,6 @@ public class QnABoardServiceImpl implements BoardService{
 		return null;
 	}
 	
-	@Override
-	public int getTotal(Criteria criteria) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 	
 	@Override
 	public BoardDTO findByBoardNumber(long bno) {
@@ -54,6 +49,18 @@ public class QnABoardServiceImpl implements BoardService{
 	
 	@Override
 	public int deleteBoard(long bno) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getBoardTotal(Criteria criteria) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getReplyTotal(Criteria criteria) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

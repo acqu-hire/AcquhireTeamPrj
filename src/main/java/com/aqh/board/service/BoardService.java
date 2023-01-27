@@ -2,15 +2,12 @@ package com.aqh.board.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.Criteria;
 
-@Service
 public interface BoardService {
 
-    // ! CREATE
+	// ! CREATE
 
 	public int insertBoard(BoardDTO boardDTO);
 
@@ -18,7 +15,9 @@ public interface BoardService {
 
 	public List<BoardDTO> getList(Criteria criteria);
 
-	public int getTotal(Criteria criteria);
+	public int getBoardTotal(Criteria criteria);
+
+	public int getReplyTotal(Criteria criteria);
 
 	public BoardDTO findByBoardNumber(long bno);
 

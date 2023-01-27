@@ -2,12 +2,9 @@ package com.aqh.board.dao;
 
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
-
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.Criteria;
 
-@Repository
 public interface BoardDAO {
 
 	// ! CREATE
@@ -18,7 +15,9 @@ public interface BoardDAO {
 
 	public List<BoardDTO> getList(Criteria criteria);
 
-	public int getTotal(Criteria criteria);
+	public int getBoardTotal(Criteria criteria);
+
+	public int getReplyTotal(Criteria criteria);
 
 	public BoardDTO findByBoardNumber(long bno);
 

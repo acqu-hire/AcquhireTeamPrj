@@ -16,7 +16,7 @@ import com.aqh.reply.domain.dto.ReplyDTO;
  * @since 23.01.11
  */
 @Service
-public class ReplyServiceImpI implements ReplyService {
+public class ReplyServiceImpl implements ReplyService {
 
 	@Autowired
 	private ReplyDAO replyDAO;

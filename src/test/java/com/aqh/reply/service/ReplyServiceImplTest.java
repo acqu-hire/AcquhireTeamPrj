@@ -10,7 +10,7 @@ import com.aqh.reply.dao.ReplyDAO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/root-context.xml")
-public class ReplyServiceImpITest {
+public class ReplyServiceImplTest {
 
 	@Autowired
 	private ReplyDAO replyDAO;
