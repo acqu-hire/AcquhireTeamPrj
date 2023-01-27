@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.BoardDTO.Category;
+import com.aqh.board.domain.dto.CriteriaEvent;
+import com.aqh.board.domain.pagehandler.PaginationEvent;
 import com.aqh.board.service.EventService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,29 +23,37 @@ public class EventController {
 	@Autowired
 	EventService eventService;
 
-	@GetMapping("/menu_select_all") // 이벤트 게시판 전체 조회
-	public String SelectAll(Model model) {
-		model.addAttribute("selectAll", eventService.eventMenuSelectAll());
+	// 이벤트 게시판 전체 조회
+	@GetMapping("/menu_select_all")
+	public String SelectAll(Model model, CriteriaEvent criteriaEvent) {
+		model.addAttribute("eventMenuSelectAll", eventService.eventMenuSelectAll(criteriaEvent));
+		model.addAttribute("PaginationEvent",
+				new PaginationEvent(criteriaEvent, (int) eventService.BoardListAllCount(criteriaEvent)));
 		log.info("이벤트 게시판 전체 조회 : " + model);
 		return "board/event/eventList";
 	}
 
-	@GetMapping("/it_event_list") // it 이벤트 게시판 전체 조회
-	public String itEventList(Model model) {
-		model.addAttribute("eventList", eventService.eventItEventList());
+	// it 이벤트 게시판 전체 조회
+	@GetMapping("/it_event_list")
+	public String itEventList(Model model, CriteriaEvent criteriaEvent) {
+		model.addAttribute("eventList", eventService.eventItEventList(criteriaEvent));
+		model.addAttribute("PaginationEvent",
+				new PaginationEvent(criteriaEvent, (int) eventService.BoardListAllCount(criteriaEvent)));
 		log.info("it 이벤트 게시판 전체 조회 : " + model);
 		return "board/event/event_it_event_list";
 
 	}
 
-	@GetMapping("/marketing_list") // 마케팅 게시판 전체 조회
-	public String marketingList(Model model) {
-		model.addAttribute("eventMarketingList", eventService.eventMarketingList());
+	// 마케팅 게시판 전체 조회
+	@GetMapping("/marketing_list")
+	public String marketingList(Model model, CriteriaEvent criteriaEvent) {
+		model.addAttribute("eventMarketingList", eventService.eventMarketingList(criteriaEvent));
 		return "board/event/event_marketing_list";
 
 	}
 
-	@GetMapping("/select_detail") // 게시판 상세 조회
+	// 게시판 상세 조회
+	@GetMapping("/select_detail")
 	public String selectDetail(Model model, long bno) {
 		BoardDTO boardDTO = eventService.eventSelectDetail(bno);
 		model.addAttribute(boardDTO);
@@ -54,12 +64,14 @@ public class EventController {
 
 	}
 
+	// 게시판 글 등록
 	@GetMapping("/eventInsert_view")
 	public String InsertForm() {
 		return "board/event/eventInsert";
 
 	}
 
+	// 게시판 글 등록 뷰 페이지
 	@PostMapping("/eventInsert")
 	public String eventInsert(Model model, BoardDTO boardDTO, Category category) {
 		log.info("insert boardDTO 확인 : " + boardDTO);
@@ -69,6 +81,7 @@ public class EventController {
 
 	}
 
+	// 게시판 글 수정
 	@GetMapping("/eventUpdate_view")
 	public String updateForm(Model model, BoardDTO boardDTO) {
 		model.addAttribute("boardList", eventService.eventSelectDetail(boardDTO.getBno()));
@@ -76,6 +89,7 @@ public class EventController {
 
 	}
 
+	// 게시판 글 수정 뷰 페이지
 	@PostMapping("/eventUpdate")
 	public String eventUpdate(Model model, BoardDTO boardDTO) {
 		eventService.eventUpdate(boardDTO);
@@ -84,7 +98,8 @@ public class EventController {
 		return "redirect:/event/menu_select_all";
 
 	}
-	
+
+	// 게시판 글 삭제
 	@GetMapping("/eventDelete")
 	public String eventDelete(Model model, long bno) {
 		eventService.eventDelete(bno);

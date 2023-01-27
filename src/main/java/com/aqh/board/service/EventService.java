@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.aqh.board.dao.EventDAO;
 import com.aqh.board.domain.dto.BoardDTO;
+import com.aqh.board.domain.dto.CriteriaEvent;
 
 @Service
 public class EventService {
@@ -14,23 +15,23 @@ public class EventService {
 	@Autowired
 	private EventDAO eventDAO;
 
-	public List<BoardDTO> eventMenuSelectAll() {
-		return eventDAO.eventMenuSelectAll();
+	public List<BoardDTO> eventMenuSelectAll(CriteriaEvent criteriaEvent) {
+		return eventDAO.eventMenuSelectAll(criteriaEvent);
 
 	}
 
-	public List<BoardDTO> eventItEventList() {
-		return eventDAO.eventItEventList();
+	public List<BoardDTO> eventItEventList(CriteriaEvent criteriaEvent) {
+		return eventDAO.eventItEventList(criteriaEvent);
 
 	}
 
-	public List<BoardDTO> eventMarketingList() {
-		return eventDAO.eventMarketingList();
+	public List<BoardDTO> eventMarketingList(CriteriaEvent criteriaEvent) {
+		return eventDAO.eventMarketingList(criteriaEvent);
 
 	}
 
-	public BoardDTO eventSelectDetail(long bno) {
-		return eventDAO.eventSelectDetail(bno);
+	public BoardDTO eventSelectDetail(long bNo) {
+		return eventDAO.eventSelectDetail(bNo);
 
 	}
 
@@ -42,12 +43,20 @@ public class EventService {
 		eventDAO.eventUpdate(boardDTO);
 	}
 
-	public void eventDelete(long bno) {
-		eventDAO.eventDelete(bno);
+	public void eventDelete(long bNo) {
+		eventDAO.eventDelete(bNo);
 	}
 	
-	public int readCountUp(long bno) {
-		return eventDAO.readCountUp(bno);
+	public int readCountUp(long bNo) {
+		return eventDAO.readCountUp(bNo);
 		
+	}
+
+	public int BoardListAllCount(CriteriaEvent criteriaEvent) {
+		return eventDAO.BoardCount(criteriaEvent);
+	}
+	
+	public int CategoryListCount(CriteriaEvent criteriaEvent) {
+		return eventDAO.CategoryCount(criteriaEvent);
 	}
 }
