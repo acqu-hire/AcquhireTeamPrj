@@ -48,12 +48,12 @@ public class EventController {
 	}
 
 	@GetMapping("/select_detail") // 게시판 상세 조회
-	public String selectDetail(Model model, long bNo) {
-		BoardDTO boardDTO = eventService.eventSelectDetail(bNo);
+	public String selectDetail(Model model, long bno) {
+		BoardDTO boardDTO = eventService.eventSelectDetail(bno);
 		model.addAttribute(boardDTO);
 		log.info("게시판 상세 조회 : " + model);
-		eventService.readCountUp(bNo);
-		log.info("게시판 조회수 : " + bNo);
+		eventService.readCountUp(bno);
+		log.info("게시판 조회수 : " + bno);
 		return "board/event/eventListDetail";
 
 	}
@@ -75,7 +75,7 @@ public class EventController {
 
 	@GetMapping("/eventUpdate_view")
 	public String updateForm(Model model, BoardDTO boardDTO) {
-		model.addAttribute("boardList", eventService.eventSelectDetail(boardDTO.getbNo()));
+		model.addAttribute("boardList", eventService.eventSelectDetail(boardDTO.getbno()));
 		return "board/event/eventUpdate";
 
 	}
@@ -90,8 +90,8 @@ public class EventController {
 	}
 	
 	@GetMapping("/eventDelete")
-	public String eventDelete(Model model, long bNo) {
-		eventService.eventDelete(bNo);
+	public String eventDelete(Model model, long bno) {
+		eventService.eventDelete(bno);
 		return "redirect:/event/menu_select_all";
 
 	}
