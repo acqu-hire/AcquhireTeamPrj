@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.aqh.board.domain.dao.EventDAO;
 import com.aqh.board.domain.dto.BoardDTO;
+import com.aqh.board.domain.dto.CriteriaEvent;
 
 @Service
 public class EventService {
@@ -14,18 +15,18 @@ public class EventService {
 	@Autowired
 	private EventDAO eventDAO;
 
-	public List<BoardDTO> eventMenuSelectAll() {
-		return eventDAO.eventMenuSelectAll();
+	public List<BoardDTO> eventMenuSelectAll(CriteriaEvent criteriaEvent) {
+		return eventDAO.eventMenuSelectAll(criteriaEvent);
 
 	}
 
-	public List<BoardDTO> eventItEventList() {
-		return eventDAO.eventItEventList();
+	public List<BoardDTO> eventItEventList(CriteriaEvent criteriaEvent) {
+		return eventDAO.eventItEventList(criteriaEvent);
 
 	}
 
-	public List<BoardDTO> eventMarketingList() {
-		return eventDAO.eventMarketingList();
+	public List<BoardDTO> eventMarketingList(CriteriaEvent criteriaEvent) {
+		return eventDAO.eventMarketingList(criteriaEvent);
 
 	}
 
@@ -49,5 +50,13 @@ public class EventService {
 	public int readCountUp(long bNo) {
 		return eventDAO.readCountUp(bNo);
 		
+	}
+
+	public int BoardListAllCount(CriteriaEvent criteriaEvent) {
+		return eventDAO.BoardCount(criteriaEvent);
+	}
+	
+	public int CategoryListCount(CriteriaEvent criteriaEvent) {
+		return eventDAO.CategoryCount(criteriaEvent);
 	}
 }

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.BoardDTO.Category;
+import com.aqh.board.domain.dto.CriteriaEvent;
+import com.aqh.board.domain.pagehandler.PaginationEvent;
 import com.aqh.board.service.EventService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -22,23 +24,25 @@ public class EventController {
 	EventService eventService;
 
 	@GetMapping("/menu_select_all") // 이벤트 게시판 전체 조회
-	public String SelectAll(Model model) {
-		model.addAttribute("selectAll", eventService.eventMenuSelectAll());
+	public String SelectAll(Model model, CriteriaEvent criteriaEvent) {
+		model.addAttribute("eventMenuSelectAll", eventService.eventMenuSelectAll(criteriaEvent));
+		model.addAttribute("PaginationEvent", new PaginationEvent(criteriaEvent, (int) eventService.BoardListAllCount(criteriaEvent)));
 		log.info("이벤트 게시판 전체 조회 : " + model);
 		return "board/event/eventList";
 	}
 
 	@GetMapping("/it_event_list") // it 이벤트 게시판 전체 조회
-	public String itEventList(Model model) {
-		model.addAttribute("eventList", eventService.eventItEventList());
+	public String itEventList(Model model, CriteriaEvent criteriaEvent) {
+		model.addAttribute("eventList", eventService.eventItEventList(criteriaEvent));
+		model.addAttribute("PaginationEvent", new PaginationEvent(criteriaEvent, (int) eventService.BoardListAllCount(criteriaEvent)));
 		log.info("it 이벤트 게시판 전체 조회 : " + model);
 		return "board/event/event_it_event_list";
 
 	}
 
 	@GetMapping("/marketing_list") // 마케팅 게시판 전체 조회
-	public String marketingList(Model model) {
-		model.addAttribute("eventMarketingList", eventService.eventMarketingList());
+	public String marketingList(Model model, CriteriaEvent criteriaEvent) {
+		model.addAttribute("eventMarketingList", eventService.eventMarketingList(criteriaEvent));
 		return "board/event/event_marketing_list";
 
 	}

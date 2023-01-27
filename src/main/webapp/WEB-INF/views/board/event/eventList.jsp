@@ -33,7 +33,7 @@
 						<div class="card-header">
 							<h3 align="center">글목록</h3>
 							<div align="right">
-								전체 글 : <strong>${boardListCount}</strong>
+								전체 글 : <strong>${PaginationEvent.total}</strong>
 							</div>
 						</div>
 						<div class="card-body">
@@ -49,18 +49,17 @@
 							<table class="table table-hover table-striped text-center"  style="table-layout: fixed">
 								<thead class="thead-dark">
 									<tr>
-										<th width="5%">번호</th>
-										<th width="25%">제목</th>
-										<th width="5%">작성자</th>
-										<th width="10%">작성일</th>
-										<th width="4%">조회수</th>
+										<th>번호</th>
+										<th>제목</th>
+										<th>작성자</th>
+										<th>작성일</th>
+										<th>조회수</th>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach varStatus="status" var="board" items="${selectAll}">
+									<c:forEach varStatus="status" var="board" items="${eventMenuSelectAll}">
 										<tr>
-											<th>${board.bNo}</th>
-											<%-- <th>${(boardListCount-status.index)-((page-1)*10)}</th> --%>
+											<th>${(PaginationEvent.total-status.index)-((PaginationEvent.nowPage-1)*10)}</th>
 											<td class="text-truncate" style="max-width: 500px;"><a href="./select_detail?bNo=${board.bNo}">${board.title}</a></td>
 											<td>${board.id}</td>
 											<td>${board.writeDay}</td>
@@ -70,7 +69,7 @@
 								</tbody>
 							</table>
 							<table class="table table-hover text-center">
-								<c:if test="${searchBoardCount==0}">
+								<c:if test="${PaginationEvent.total==0}">
 									<tr>
 										<td>등록된 게시글이 없습니다.</td>
 									</tr>
@@ -78,23 +77,22 @@
 							</table>
 						</div>
 
-						<!-- Pagination -->
-						<c:if test="">
 
-						</c:if>
+						<!-- Pagination -->
 						<nav>
 							<ul class="pagination justify-content-center">
 
 								<!-- Previous Button -->
-
 								<c:choose>
-									<c:when test="${startPage <= 1}">
-										<li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous-PageBlock"> <span
-												aria-hidden="true">&laquo;</span> <span class="sr-only">페이지 이전블럭 이동</span>
+									<c:when test="${PaginationEvent.startPage <= 1}">
+										<li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous-PageBlock"> 
+										<span aria-hidden="true">&laquo;</span> 
+										<span class="sr-only">페이지 이전블럭 이동</span>
 										</a></li>
 									</c:when>
+									
 									<c:otherwise>
-										<li class="page-item"><a class="page-link" href="./BoardList.do?page=${startPage-1}"
+										<li class="page-item"><a class="page-link" href="./menu_select_all${PaginationEvent.getUrlLink(PaginationEvent.startPage -1)}"
 											aria-label="Previous-PageBlock"> <span aria-hidden="true">&laquo;</span> <span class="sr-only">페이지
 													이전블럭 이동</span>
 										</a></li>
@@ -102,66 +100,70 @@
 								</c:choose>
 
 								<c:choose>
-									<c:when test="${page <= 1}">
+									<c:when test="${PaginationEvent.nowPage <= 1}">
 										<li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous-Page"> <span
 												aria-hidden="true">&lt;</span> <span class="sr-only">이전 페이지 한칸 이동</span>
 										</a></li>
 									</c:when>
 									<c:otherwise>
-										<li class="page-item"><a  class="page-link" href="./BoardList.do?page=${page-1}"
+										<li class="page-item"><a  class="page-link" href="./menu_select_all${PaginationEvent.getUrlLink(PaginationEvent.nowPage-1)}"
 											aria-label="Previous-Page"> <span aria-hidden="true">&lt;</span> <span class="sr-only">이전 페이지 한칸
 													이동</span>
 										</a></li>
 									</c:otherwise>
 								</c:choose>
 
-								<!-- Previous Button -->
-
-
 								<!-- Page Number -->
-
-								<c:forEach var="pageNumber" begin="${startPage}" end="${endPage}" step="1">
-									<c:choose>
-										<c:when test="${pageNumber==page}">
-											<li class="page-item active"><a class="page-link">${pageNumber}</a></li>
+								<c:forEach begin="${PaginationEvent.startPage}" end="${PaginationEvent.endPage}" var="number">
+								   <c:choose>
+										<c:when test="${PaginationEvent.nowPage==number}">
+											<li class="page-item active"><a class="page-link">${number}</a></li>
 										</c:when>
+										
 										<c:otherwise>
-											<li class="page-item"><a class="page-link" href="./BoardList.do?page=${pageNumber}">${pageNumber}</a></li>
+											<li class="page-item"><a class="page-link" href="./menu_select_all${PaginationEvent.getUrlLink(number)}">${number}</a></li>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
-
-								<!-- Page Number -->
-
+								
 								<!-- Next Button -->
-
 								<c:choose>
-									<c:when test="${page >= maxPage}">
-										<li class="page-item disabled"><a class="page-link" href="#" aria-label="Next"> <span
-												aria-hidden="true">&gt;</span> <span class="sr-only">다음 페이지 한칸 이동</span>
+									<c:when test="${PaginationEvent.nowPage >= PaginationEvent.endPage_tmp}">
+										<li class="page-item disabled">
+										<a class="page-link" href="#" aria-label="Next"> 
+										<span aria-hidden="true">&gt;</span> 
+										<span class="sr-only">다음 페이지 한칸 이동</span>
 										</a></li>
 									</c:when>
 									<c:otherwise>
-										<li class="page-item"><a class="page-link" href="./BoardList.do?page=${page+1}" aria-label="Next"> <span
-												aria-hidden="true">&gt;</span> <span class="sr-only">다음 페이지 한칸 이동</span>
+										<li class="page-item">
+										<a class="page-link" href="./menu_select_all${PaginationEvent.getUrlLink(PaginationEvent.nowPage+1)}" aria-label="Next"> 
+										<span aria-hidden="true">&gt;</span> 
+										<span class="sr-only">다음 페이지 한칸 이동</span>
 										</a></li>
 									</c:otherwise>
 								</c:choose>
 
-								<c:choose>
-									<c:when test="${endPage == maxPage}">
-										<li class="page-item disabled"><a class="page-link" href="#" aria-label="Next"> <span
-												aria-hidden="true">&raquo;</span> <span class="sr-only">페이지 다음블럭 이동</span>
+								<c:choose>					
+									<c:when test="${PaginationEvent.endPage >= PaginationEvent.total}">
+										<li class="page-item disabled">
+										<a class="page-link" href="#" aria-label="Next"> 
+										<span aria-hidden="true">&raquo;</span> 
+										<span class="sr-only">페이지 다음블럭 이동</span>
 										</a></li>
 									</c:when>
+									
 									<c:otherwise>
-										<li class="page-item"><a class="page-link" href="./BoardList.do?page=${endPage+1}" aria-label="Next">
-												<span aria-hidden="true">&raquo;</span> <span class="sr-only">페이지 다음블럭 이동</span>
+										<li class="page-item">
+										<a class="page-link" href="./menu_select_all${PaginationEvent.getUrlLink(PaginationEvent.endPage+1)}" aria-label="Next">
+										<span aria-hidden="true">&raquo;</span>
+										<span class="sr-only">페이지 다음블럭 이동</span>
 										</a></li>
 									</c:otherwise>
 								</c:choose>
+	
 
-								<!-- Next Button -->
+								
 
 							</ul>
 						</nav>
