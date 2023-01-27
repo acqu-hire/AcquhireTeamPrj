@@ -185,7 +185,8 @@ $(document).ready(function(){
 	$("input[type='file']").change(function(e){
 		var formData = new FormData();
 		var inputFile = $("input[name='uploadFile']");
-		console.log(inputFile);//S.fn.init [input, prevObject: S.fn.init(1)]
+		console.log(inputFile);
+		//S.fn.init [input, prevObject: S.fn.init(1)]
 		
 		var files = inputFile[0].files;
 		

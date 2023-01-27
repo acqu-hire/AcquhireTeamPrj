@@ -19,16 +19,17 @@ import lombok.RequiredArgsConstructor;
  * 
  */
 
- @RequiredArgsConstructor
- @Service
+@RequiredArgsConstructor
+@Service
 public class CommunityService {
 
-	private final CommunityDAOImpl communityBoardDAOImpl;
+	private final CommunityDAOImpl communityDAOImpl;
 
 	private final UploadDAO uploadDAO;
+
 	// CREATE
-	public void insertBoard(BoardDTO boardDTO) {
-		communityBoardDAOImpl.insertBoard(boardDTO);
+	public int insertBoard(BoardDTO boardDTO) {
+		return communityDAOImpl.insertBoard(boardDTO);
 	}
 
 	public int insert(BoardAttachVO boardAttachVO) {
@@ -36,37 +37,42 @@ public class CommunityService {
 	}
 
 	// READ
-	
-	public List<BoardAttachVO> getAttachList(long bNo){
-		return uploadDAO.getAttachList(bNo);
-	}	
+
+	public List<BoardAttachVO> getAttachList(long bno) {
+		return uploadDAO.getAttachList(bno);
+	}
 
 	public List<BoardDTO> getList(Criteria criteria) {
-		return communityBoardDAOImpl.getList(criteria);
+		return communityDAOImpl.getList(criteria);
 	}
 
-	public BoardDTO findByBoardNumber(long bNo) {
-		return communityBoardDAOImpl.findByBoardNumber(bNo);
-	}
-	
-	public int getTotal(Criteria criteria) {
-		return communityBoardDAOImpl.getTotal(criteria);
+	public BoardDTO findByBoardNumber(long bno) {
+		return communityDAOImpl.findByBoardNumber(bno);
 	}
 
+	public int getBoardTotal(Criteria criteria) {
+		return communityDAOImpl.getBoardTotal(criteria);
+	}
+
+	public int getReplyTotal(Criteria criteria) {
+		// 구현 필요
+		return communityDAOImpl.getReplyTotal(criteria);
+	}
 
 	// UPDATE
 	public int updateBoard(BoardDTO boardDTO) {
-		return communityBoardDAOImpl.updateBoard(boardDTO);
+		return communityDAOImpl.updateBoard(boardDTO);
 
 	}
+
 	public int viewCntUp(long bno) {
-		return communityBoardDAOImpl.viewCntUp(bno);
+		return communityDAOImpl.viewCntUp(bno);
 	}
-	
+
 	// DELETE
-	public int deleteBoard(long bNo) {
-		uploadDAO.deleteAttach(bNo);
-		return communityBoardDAOImpl.deleteBoard(bNo);
+	public int deleteBoard(long bno) {
+		uploadDAO.deleteAttach(bno);
+		return communityDAOImpl.deleteBoard(bno);
 	}
 
 }
