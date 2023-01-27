@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.aqh.board.domain.dao.NoticeDAO;
+import com.aqh.board.dao.NoticeDAO;
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.CriteriaNotice;
 import com.aqh.common.domain.dto.FileNoticeDTO;
@@ -23,8 +23,8 @@ public class NoticeService {
 	public List<BoardDTO> categorySelectAll(CriteriaNotice criteriaNotice){
 		return noticeDAO.categorySelectAll(criteriaNotice);
 	}
-	public BoardDTO selectDetail(Integer bNo) {
-		return noticeDAO.selectDetail(bNo);
+	public BoardDTO selectDetail(Integer bno) {
+		return noticeDAO.selectDetail(bno);
 	}
 	public int BoardListAllCount(CriteriaNotice criteriaNotice) {
 		return noticeDAO.BoardListAllCount(criteriaNotice);
@@ -38,21 +38,21 @@ public class NoticeService {
 	public void update(BoardDTO boardDTO) {
 		noticeDAO.update(boardDTO);
 	}
-	public void delete(int bNo) {
-		noticeDAO.delete(bNo);
+	public void delete(int bno) {
+		noticeDAO.delete(bno);
 	}
-	public void noticeReadCount(int bNo) {
-		noticeDAO.noticeReadCount(bNo);
+	public void noticeReadCount(int bno) {
+		noticeDAO.noticeReadCount(bno);
 	}
 	
-	public List<FileNoticeDTO> fileUpList(long bNo){
-		return noticeDAO.fileUpList(bNo);
+	public List<FileNoticeDTO> fileUpList(long bno){
+		return noticeDAO.fileUpList(bno);
 	}
 	public void fileInsert(List<FileNoticeDTO> fileNoList) {
 		noticeDAO.fileInsert(fileNoList);
 	}
-	public void fileDeleteAll(int bNo) {
-		noticeDAO.fileDeleteAll(bNo);
+	public void fileDeleteAll(int bno) {
+		noticeDAO.fileDeleteAll(bno);
 	}
 	public void fileSelectDelete(String uuid) {
 		noticeDAO.fileSelectDelete(uuid);

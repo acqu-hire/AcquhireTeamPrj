@@ -56,11 +56,11 @@
 					<div class="col-12">
 					<c:out value="${boardDTO.contents}"/>
 					</div>
-					<input type="hidden" name="bNo" value="${boardDTO.bNo}">
+					<input type="hidden" name="bno" value="${boardDTO.bno}">
 					<div class="row">
  						<div class="col-12 text-right">
-							<input type="button" value="수정" class="btn btn-success" onclick="location.href='./eventUpdate_view?bNo=${boardDTO.bNo}'"> 
-							<input type="button" value="삭제" class="btn btn-warning" onclick="location.href='./eventDelete?bNo=${boardDTO.bNo}'">
+							<input type="button" value="수정" class="btn btn-success" onclick="location.href='./eventUpdate_view?bno=${boardDTO.bno}'"> 
+							<input type="button" value="삭제" class="btn btn-warning" onclick="location.href='./eventDelete?bno=${boardDTO.bno}'">
 							<button type="button" class="btn btn-primary" onclick="location.href='./menu_select_all'">전체 게시글보기</button>
 						</div> 
 					</div>

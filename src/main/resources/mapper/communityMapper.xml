@@ -3,15 +3,15 @@
 <mapper namespace="com.aqh.board.domain.dao.CommunityDAO">
 
     <!-- CREATE -->
-    <insert id="createPost" parameterType="BoardDTO" useGeneratedKeys="true" keyProperty="bNo">
+    <insert id="insertBoard" parameterType="BoardDTO" useGeneratedKeys="true" keyProperty="bno">
     INSERT INTO BOARD
         (id,menu,category,writeDay,title,contents) VALUES
         (#{id},"COMMUNITY",#{category},sysdate(),#{title},#{contents});
     </insert>
     <!-- READ -->
     
-    <select id="getAllCommunityPostList" resultType="BoardDTO">
-        SELECT * FROM (SELECT * FROM board ORDER BY bNo DESC) SUBQUERY
+    <select id="getList" resultType="BoardDTO">
+        SELECT * FROM (SELECT * FROM board ORDER BY bno DESC) SUBQUERY
         <trim prefix="WHERE (" prefixOverrides="AND" suffix=")">
 				
             <if test="category != null ">
@@ -38,15 +38,15 @@
             
 			limit #{offset},#{limit}
         <!--
-            (SELECT * FROM board ORDER BY bNo DESC) SUBQUERY LIMIT #{page},#{limit};
+            (SELECT * FROM board ORDER BY bno DESC) SUBQUERY LIMIT #{page},#{limit};
             쿼리 추가 해야함. -->
     </select>
     
-    <select id="getPost" resultType="BoardDTO">
-    SELECT * FROM board where BNO = #{bNo}
+    <select id="findByBoardNumber" resultType="BoardDTO">
+    SELECT * FROM board where bno = #{bno}
     </select>
     
-    <select id="getTotal" resultType="long">
+    <select id="getTotal" resultType="int">
         SELECT count(*) FROM board
             <trim prefix="WHERE (" prefixOverrides="AND" suffix=")">
             <if test="category != null "> AND category = #{category} </if>
@@ -71,20 +71,20 @@
             </trim>
     </select>
     
-    <update id="setPostCountUp">
-        UPDATE board SET readcount = readcount+1 WHERE BNO = #{bNo};
+    <update id="viewCntUp">
+        UPDATE board SET readcount = readcount+1 WHERE BNO = #{bno};
     </update>
     <!-- UPDATE -->
-    <update id="updatePost">
-    UPDATE board SET category = #{category},file = #{file},title = #{title},contents = #{contents}
+    <update id="updateBoard">
+    UPDATE board SET category = #{category},title = #{title},contents = #{contents}
     	<trim prefix="WHERE">
-    		<if test=" bNo != null">bNo = #{bNo}</if>
+    		<if test=" bno != null">bno = #{bno}</if>
         </trim>
     </update>
     
     <!-- DELETE -->
-    <delete id="deletePost" parameterType="long">
-    DELETE FROM board WHERE bNo = #{bNo}
+    <delete id="deleteBoard" parameterType="long">
+    DELETE FROM board WHERE bno = #{bno}
     </delete>
     
 </mapper>

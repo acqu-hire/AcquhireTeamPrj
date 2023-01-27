@@ -1,4 +1,4 @@
-package com.aqh.board.domain.dao;
+package com.aqh.board.dao;
 
 import java.util.List;
 
@@ -34,8 +34,8 @@ public class CommunityDAO {
 		return sessionTemplate.selectOne("getTotal",criteria);
 	}
 
-	public BoardDTO getPost(long bNo) {
-		return sessionTemplate.selectOne("getPost", bNo);
+	public BoardDTO getPost(long bno) {
+		return sessionTemplate.selectOne("getPost", bno);
 	};
 	
 	// UPDATE
@@ -43,13 +43,13 @@ public class CommunityDAO {
 		sessionTemplate.update("updatePost", boardDTO);
 	};
 	
-	public void setPostCountUp(long bNo) {
-		sessionTemplate.selectOne("setPostCountUp", bNo);
+	public void setPostCountUp(long bno) {
+		sessionTemplate.selectOne("setPostCountUp", bno);
 	};
 
 	// DELETE
-	public int deletePost(long bNo) {
-		return sessionTemplate.delete("deletePost", bNo);
+	public int deletePost(long bno) {
+		return sessionTemplate.delete("deletePost", bno);
 	};
 
 }

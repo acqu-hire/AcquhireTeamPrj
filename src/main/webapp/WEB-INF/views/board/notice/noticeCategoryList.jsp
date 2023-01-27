@@ -54,17 +54,17 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:set var="bNo" value="${PaginationNotice.count - ((PaginationNotice.criteriaNotice.num-1) * 5) }"/>
+									<c:set var="bno" value="${PaginationNotice.count - ((PaginationNotice.criteriaNotice.num-1) * 5) }"/>
 									<c:forEach varStatus="status" var="board" items="${categorySelectAll}">
 										<tr>
-											<th>${bNo}</th>
+											<th>${bno}</th>
 											<%-- <th>${(boardListCount-status.index)-((page-1)*10)}</th> --%>
-											<td class="text-truncate" style="max-width: 500px;"><a href="./select_Detail_view?bNo=${board.bNo}">${board.title}</a></td>
+											<td class="text-truncate" style="max-width: 500px;"><a href="./select_Detail_view?bno=${board.bno}">${board.title}</a></td>
 											<td>${board.id}</td>
 											<td>${board.writeDay}</td>
 											<td>${board.readCount}</td>
 										</tr>
-										<c:set var="bNo" value="${bNo-1}"></c:set>
+										<c:set var="bno" value="${bno-1}"></c:set>
 									</c:forEach>
 								</tbody>
 							</table>

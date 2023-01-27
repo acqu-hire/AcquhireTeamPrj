@@ -5,10 +5,6 @@ $(function(){
 		var roadAddrPart1 = $("#roadAddrPart1").val();
 		var roadAddrPart2 = $("#roadAddrPart2").val();
 		var addrDetail = $("#addrDetail").val();
-		alert(address)
-		alert(roadAddrPart1)
-		alert(roadAddrPart2)
-		alert(addrDetail)
 		address += roadAddrPart1;
 		address += roadAddrPart2;
 		if(addrDetail != null && addrDetail != ''){

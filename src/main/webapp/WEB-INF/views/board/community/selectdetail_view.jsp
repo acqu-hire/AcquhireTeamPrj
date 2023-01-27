@@ -103,8 +103,8 @@
 								$(this).hide();
 							}, 1000);
 						});
-						var bnoValue = '<c:out value="${boardDTO.bNo}"/>';
-						$.getJSON("/community/getAttachList", { bNo: bnoValue },
+						var bnoValue = '<c:out value="${boardDTO.bno}"/>';
+						$.getJSON("/community/getAttachList", { bno: bnoValue },
 
 							function (arr) {
 								console.log('arr :>> ', arr);
@@ -253,7 +253,7 @@
 											<tr>
 												<th>게시글 번호</th>
 												<td>
-													<c:out value="${boardDTO.bNo}" />
+													<c:out value="${boardDTO.bno}" />
 												</td>
 											</tr>
 											<tr>
@@ -330,9 +330,9 @@
 												<button id="addReplyBtn" class="btn btn-primary btn-xs pull-right">댓글
 													달기</button>
 												<input type="button" value="글수정" class="btn btn-success"
-													onclick="location.href='./update?bNo=${boardDTO.bNo}&id=${boardDTO.id}'">
+													onclick="location.href='./update?bno=${boardDTO.bno}&id=${boardDTO.id}'">
 												<input type="button" value="글삭제" class="btn btn-warning"
-													onclick="location.href='./delete?bNo=${boardDTO.bNo}&id=${boardDTO.id}'">
+													onclick="location.href='./delete?bno=${boardDTO.bno}&id=${boardDTO.id}'">
 												<button type="button" class="btn btn-primary"
 													onclick="location.href='./select_all_view'">전체 게시글보기</button>
 											</div>

@@ -1,4 +1,4 @@
-package com.aqh.common.domain.dao;
+package com.aqh.common.dao;
 
 import java.util.List;
 
@@ -20,20 +20,20 @@ public class FileDAO {
 		return session.insert(namespace + "upload", files);
 	}
 
-	public int delete(long[] fNo) {
-		return session.delete(namespace + "delete", fNo);
+	public int delete(long[] fno) {
+		return session.delete(namespace + "delete", fno);
 	}
 
-	public List<FileDTO> getFileList(long[] fNo) {
-		return session.selectList(namespace + "fileList", fNo);
+	public List<FileDTO> getFileList(long[] fno) {
+		return session.selectList(namespace + "fileList", fno);
 	}
 	
-	public FileDTO getFileDetail(long fNo) {
-		return session.selectOne(namespace + "fileDetail", fNo);
+	public FileDTO getFileDetail(long fno) {
+		return session.selectOne(namespace + "fileDetail", fno);
 	}
 
-	public void deleteAll(long bNo) {
-		session.delete(namespace + "deleteAll", bNo);
+	public void deleteAll(long bno) {
+		session.delete(namespace + "deleteAll", bno);
 //		throw new Exception();
 	}
 

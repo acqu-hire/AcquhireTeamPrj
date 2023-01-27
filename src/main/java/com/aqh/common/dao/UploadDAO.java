@@ -1,4 +1,4 @@
-package com.aqh.common.domain.dao;
+package com.aqh.common.dao;
 
 import java.util.List;
 
@@ -20,12 +20,12 @@ public class UploadDAO {
 	public int insert(BoardAttachVO boardAttachVO) {
 		return sqlSessionTemplate.insert(namespace + "register", boardAttachVO);
 	}
-    public List<BoardAttachVO> getAttachList(Long bNo){
-        return sqlSessionTemplate.selectList(namespace+"getAttachList",bNo);
+    public List<BoardAttachVO> getAttachList(Long bno){
+        return sqlSessionTemplate.selectList(namespace+"getAttachList",bno);
     }
 
-	public int deleteAttach(long bNo)
+	public int deleteAttach(long bno)
 	{
-		return sqlSessionTemplate.delete(namespace+"deleteAll",bNo);
+		return sqlSessionTemplate.delete(namespace+"deleteAll",bno);
 	}
 }

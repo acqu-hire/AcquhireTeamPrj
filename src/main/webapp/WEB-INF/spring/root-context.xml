@@ -22,6 +22,7 @@
 	<context:component-scan base-package="com.aqh.board" />
 	<context:component-scan base-package="com.aqh.reply" />
 	<context:component-scan base-package="com.aqh.common" />
+	<context:component-scan base-package="com.aqh.aop" />
 	
 	<context:property-placeholder location="classpath:config/database.properties"/>
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >

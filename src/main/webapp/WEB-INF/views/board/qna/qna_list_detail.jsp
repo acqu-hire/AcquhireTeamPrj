@@ -54,7 +54,7 @@
 						
 					</table>
 				<hr/>
-					<input type="hidden" name="bNo" value="${boardDTO.bNo}">
+					<input type="hidden" name="bno" value="${boardDTO.bno}">
 					<div class="card-header bg-light">
 	        		  <i class="fas fa-laugh-beam"></i> Contents
 					</div>
@@ -76,11 +76,11 @@
 					 	 <th>첨부파일</th>
 					      <td>
 					    	<c:forEach var="files" items="${boardDTO.fileList}" varStatus="status" >
-					    	  <div data-fno="${files.fNo}" class="file-inline">
-					    	    파일${status.count}<a href="<c:out value='/file/download/${files.fNo}'/>"><i class="fa-sharp fa-solid fa-download"></i></a>
+					    	  <div data-fno="${files.fno}" class="file-inline">
+					    	    파일${status.count}<a href="<c:out value='/file/download/${files.fno}'/>"><i class="fa-sharp fa-solid fa-download"></i></a>
 								<c:out value="${files.originName}(${files.fmtFileSize})"/> <br/>
 					    	  </div>
-					    	   <input type="hidden" name="delAttach" value="${files.fNo}">
+					    	   <input type="hidden" name="delAttach" value="${files.fno}">
 							</c:forEach>
 						  </td>
 						</tr>
@@ -152,7 +152,7 @@
 
 	<!-- Footer -->
 <script>
-var bNo = "${boardDTO.bNo}";
+var bno = "${boardDTO.bno}";
 var sessionId = "${sessionScope.id}";
 var writer = "${boardDTO.id}";
 $(function() {
@@ -177,7 +177,7 @@ $(function() {
 		if(sessionId != writer){
 			alert("수정할 권한이 없습니다.");
 		} else {
-			location.href="<c:url value='./update'/>${sc.getQueryString(sc.page, sc.category)}&bNo=${boardDTO.bNo}";
+			location.href="<c:url value='./update'/>${sc.getQueryString(sc.page, sc.category)}&bno=${boardDTO.bno}";
 		}
 	})
 })

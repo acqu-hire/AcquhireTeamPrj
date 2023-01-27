@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.aqh.board.domain.dto.BoardDTO;
-import com.aqh.common.domain.dao.FileDAO;
+import com.aqh.common.dao.FileDAO;
 import com.aqh.common.domain.dto.AttachFile;
 import com.aqh.common.domain.dto.FileDTO;
 
@@ -36,8 +36,8 @@ public class FileService {
 			return result;
 	}
 	
-	public List<FileDTO> getFileList(long[] fNo) {
-		return fileDao.getFileList(fNo);
+	public List<FileDTO> getFileList(long[] fno) {
+		return fileDao.getFileList(fno);
 	}
 
 	public int delete(FileDTO fileDTO, BoardDTO boardDTO) {
@@ -50,14 +50,14 @@ public class FileService {
 		return result;
 	}
 	
-	public FileDTO getFileDetail(long fNo) {
-		return fileDao.getFileDetail(fNo);
+	public FileDTO getFileDetail(long fno) {
+		return fileDao.getFileDetail(fno);
 	}
 
 	@Transactional(rollbackFor = Exception.class)
 	public void deleteAll(FileDTO fileDTO, BoardDTO boardDTO) {
 		delete(fileDTO, boardDTO);
-		fileDao.deleteAll(fileDTO.getbNo());
+		fileDao.deleteAll(fileDTO.getBno());
 		
 	}
 }

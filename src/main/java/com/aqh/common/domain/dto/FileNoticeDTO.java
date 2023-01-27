@@ -8,7 +8,7 @@ import lombok.Data;
 @Component
 public class FileNoticeDTO {
 	
-	private long bNo;
+	private long bno;
 	private String uuid;
 	private int f_seq;
 	private String original_file_name;

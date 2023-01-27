@@ -24,7 +24,7 @@
    <!-- 이벤트 게시판 상세 조회 -->
    <select id="eventSelectDetail" parameterType="long" resultType="BoardDTO">
       select * from board
-      where bNo = #{bNo} and menu = 'EVENT'
+      where bno = #{bno} and menu = 'EVENT'
    </select>
 
    <!-- 이벤트 게시판 글 등록 -->
@@ -38,18 +38,18 @@
    <update id="eventUpdate" parameterType="BoardDTO">
       update board
       set category = #{category}, title = #{title}, contents = #{contents}
-      where bNo = #{bNo} and menu = 'EVENT'
+      where bno = #{bno} and menu = 'EVENT'
    </update>
 
    <!-- 이벤트 게시판 글 삭제 -->
    <delete id="eventDelete" parameterType="long">
-      delete from board where bNo = #{bNo} and menu ='EVENT'
+      delete from board where bno = #{bno} and menu ='EVENT'
    </delete>
 
 	<!-- 조회수 기능 -->
 	<update id="readCountUp">
 	update board 
 	set readcount = readcount + 1 
-	where bNo= #{bNo} and menu = 'EVENT'
+	where bno= #{bno} and menu = 'EVENT'
 	</update>
 </mapper>

@@ -23,24 +23,24 @@ public class CommunityDAOTest {
 	@Autowired
 	SqlSessionTemplate sessionTemplate;
 
-	@Test
-	public void 커뮤니티_포스트_수정() {
-		BoardDTO boardDTO = BoardDTO.builder().id("admin").bNo(12).menu(Menu.COMMUNITY)
-				.category(Category.COMMUNITY_LIFE).title("준").contents("식").build();
-		System.out.println(boardDTO);
-		sessionTemplate.update("updatePost", boardDTO);
-	}
-
-	@Test
-	public void 커뮤니티_포스트_생성() {
-		for (int i = 0; i < 70; i++) {
-
-			BoardDTO boardDTO = BoardDTO.builder().id("admin").menu(Menu.COMMUNITY).category(Category.COMMUNITY_GROUP)
-					.title("z12123").contents("z15234").build();
-			System.out.println(boardDTO);
-			sessionTemplate.insert("createPost", boardDTO);
-		}
-	}
+//	@Test
+//	public void 커뮤니티_포스트_수정() {
+//		BoardDTO boardDTO = BoardDTO.builder().id("admin").bno(12).menu(Menu.COMMUNITY)
+//				.category(Category.COMMUNITY_LIFE).title("준").contents("식").build();
+//		System.out.println(boardDTO);
+//		sessionTemplate.update("updatePost", boardDTO);
+//	}
+//
+//	@Test
+//	public void 커뮤니티_포스트_생성() {
+//		for (int i = 0; i < 70; i++) {
+//
+//			BoardDTO boardDTO = BoardDTO.builder().id("admin").menu(Menu.COMMUNITY).category(Category.COMMUNITY_GROUP)
+//					.title("z12123").contents("z15234").build();
+//			System.out.println(boardDTO);
+//			sessionTemplate.insert("createPost", boardDTO);
+//		}
+//	}
 
 	@Test
 	public void 커뮤니티_포스트_조회() {
@@ -62,8 +62,8 @@ public class CommunityDAOTest {
 
 	@Test
 	public void 커뮤니티_포스트_삭제() {
-		int bNo = 12;
-		sessionTemplate.delete("deletePost", bNo);
+		int bno = 12;
+		sessionTemplate.delete("deletePost", bno);
 
 	}
 

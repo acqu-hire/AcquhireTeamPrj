@@ -33,19 +33,19 @@ public class ReplyController2 {
 	}
 	
 	@PostMapping(value =  "/reply")
-	public ResponseEntity<Long> register(@RequestBody ReplyDTO replyDTO, long bNo) {
-		replyDTO.setBNo(bNo);
+	public ResponseEntity<Long> register(@RequestBody ReplyDTO replyDTO, long bno) {
+		replyDTO.setBno(bno);
 		int result = service.register(replyDTO);
-		long replyCnt = QnaService.getReplyCnt(bNo);
+		long replyCnt = QnaService.getReplyCnt(bno);
 		if(result != 0)
 			return new ResponseEntity<Long>(replyCnt, HttpStatus.OK);
 		return new ResponseEntity<Long>(HttpStatus.BAD_REQUEST);
 	}
 	
 	@DeleteMapping(value = "/reply/{rno}")
-	public ResponseEntity<Long> remove(@PathVariable long rno, long bNo){
-		int result = service.removeReply(rno, bNo);
-		long replyCnt = QnaService.getReplyCnt(bNo);
+	public ResponseEntity<Long> remove(@PathVariable long rno, long bno){
+		int result = service.removeReply(rno, bno);
+		long replyCnt = QnaService.getReplyCnt(bno);
 		if(result != 0)
 			return new ResponseEntity<Long>(replyCnt, HttpStatus.OK);
 		return new ResponseEntity<Long>(HttpStatus.BAD_REQUEST);

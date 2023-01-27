@@ -3,30 +3,24 @@ package com.aqh.board.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -75,11 +69,11 @@ public class NoticeController {
 
 
 	@GetMapping(value = "/select_Detail_view")
-	public String noticeSelectDetail(Model model, Integer bNo) {
-		noticeService.noticeReadCount(bNo);
-		model.addAttribute("selectDetail", noticeService.selectDetail(bNo));
+	public String noticeSelectDetail(Model model, Integer bno) {
+		noticeService.noticeReadCount(bno);
+		model.addAttribute("selectDetail", noticeService.selectDetail(bno));
 		
-		List<FileNoticeDTO> fileNoticeDTOs = noticeService.fileUpList(bNo);
+		List<FileNoticeDTO> fileNoticeDTOs = noticeService.fileUpList(bno);
 		model.addAttribute("fileNoList", fileNoticeDTOs);
 
 		log.info("게시판 내용 보기" + model);
@@ -89,7 +83,7 @@ public class NoticeController {
 	
 	@GetMapping(value = "/fileDownLoad")
 	@ResponseBody
-	public ResponseEntity<Resource> fileDownLoad(@RequestParam("fileName") String fileName, @RequestParam("bNo") Integer bNo ,HttpServletRequest request){
+	public ResponseEntity<Resource> fileDownLoad(@RequestParam("fileName") String fileName, @RequestParam("bno") Integer bno ,HttpServletRequest request){
 		
 		String path = request.getSession().getServletContext().getRealPath("/") + "/resources/upload/";
 		Resource resource = new FileSystemResource(path + fileName);
@@ -145,7 +139,7 @@ public class NoticeController {
 		            String uniqueName = uuids[0];
 		            
 					FileNoticeDTO fileNoticeDTO = new FileNoticeDTO();
-					fileNoticeDTO.setBNo(boardDTO.getbNo());
+					fileNoticeDTO.setBno(boardDTO.getBno());
 					fileNoticeDTO.setUuid(uniqueName);
 					fileNoticeDTO.setFile_size(multipartFile.getSize());
 					fileNoticeDTO.setFile_path(root_path+attach_path);
@@ -166,9 +160,9 @@ public class NoticeController {
 	
 	
 	@GetMapping(value = "/update_view")
-	public String updateView(Model model,Integer bNo) {
-		model.addAttribute("boardDTO", noticeService.selectDetail(bNo));
-		List<FileNoticeDTO> fileNoticeDTOs = noticeService.fileUpList(bNo);
+	public String updateView(Model model,Integer bno) {
+		model.addAttribute("boardDTO", noticeService.selectDetail(bno));
+		List<FileNoticeDTO> fileNoticeDTOs = noticeService.fileUpList(bno);
 		model.addAttribute("fileNoList", fileNoticeDTOs);
 		return "board/notice/noticeUpdate";
 	}
@@ -212,7 +206,7 @@ public class NoticeController {
 	            String uniqueName = uuids[0];
 	            
 				FileNoticeDTO fileNoticeDTO = new FileNoticeDTO();
-				fileNoticeDTO.setBNo(boardDTO.getbNo());
+				fileNoticeDTO.setBno(boardDTO.getBno());
 				fileNoticeDTO.setUuid(uniqueName);
 				fileNoticeDTO.setFile_size(multipartFile.getSize());
 				fileNoticeDTO.setFile_path(root_path+attach_path);
@@ -233,9 +227,9 @@ public class NoticeController {
 	}
 	
 	@GetMapping(value = "/delete")
-	public String delete(Model model,Integer bNo) {
-		noticeService.delete(bNo);
-		noticeService.fileDeleteAll(bNo);
+	public String delete(Model model,Integer bno) {
+		noticeService.delete(bno);
+		noticeService.fileDeleteAll(bno);
 
 		return "redirect:/notice/select_all_view";
 	}

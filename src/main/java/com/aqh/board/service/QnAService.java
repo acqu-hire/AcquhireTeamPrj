@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.aqh.board.domain.dao.QnADAO;
+import com.aqh.board.dao.QnADAO;
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.pagehandler.SearchCondition;
 import com.aqh.common.domain.dto.FileDTO;
-import com.aqh.reply.domain.dao.ReplyDAO;
+import com.aqh.reply.dao.ReplyDAO;
 
 @Service
 public class QnAService {
@@ -25,16 +25,12 @@ public class QnAService {
 		return qnaDao.boardCount(sc);
 	}
 	
-	public int getBoardCnt() {
-		return qnaDao.boardCount();
+	public int readCntUp(long bno) {
+		return qnaDao.readCountUp(bno);
 	}
 	
-	public int readCntUp(long bNo) {
-		return qnaDao.readCountUp(bNo);
-	}
-	
-	public int getReadCnt(long bNo) {
-		return qnaDao.getReadCnt(bNo);
+	public int getReadCnt(long bno) {
+		return qnaDao.getReadCnt(bno);
 	}
 	
 	public List<BoardDTO> selectAll(SearchCondition sc) {
@@ -42,15 +38,9 @@ public class QnAService {
 		return qnaDao.selectAll(sc);
 	}
 	
-	public List<BoardDTO> selectAll() {
-//		List<BoardDTO> list = qnaDao.selectAll();
-//		replyDao.getReplyCnt(getBoardCnt());
-		return qnaDao.selectAll();
-	}
-	
-	public BoardDTO selectDetail(long bNo) {
-		BoardDTO boardDTO = qnaDao.selectDetail(bNo);
-		qnaDao.readCountUp(bNo);
+	public BoardDTO selectDetail(long bno) {
+		BoardDTO boardDTO = qnaDao.selectDetail(bno);
+		qnaDao.readCountUp(bno);
 		return boardDTO;
 	}
 	
@@ -62,15 +52,15 @@ public class QnAService {
 		return qnaDao.update(boardDTO);
 	}
 	
-	public void delete(long bNo) {
-		qnaDao.delete(bNo);
+	public void delete(long bno) {
+		qnaDao.delete(bno);
 	}
 	
-	public List<FileDTO> getFileList(long bNo) {
-		return qnaDao.getFileList(bNo);
+	public List<FileDTO> getFileList(long bno) {
+		return qnaDao.getFileList(bno);
 	}
 	
-	public long getReplyCnt(long bNo) {
-		return qnaDao.getReplyCnt(bNo);
+	public long getReplyCnt(long bno) {
+		return qnaDao.getReplyCnt(bno);
 	}
 }

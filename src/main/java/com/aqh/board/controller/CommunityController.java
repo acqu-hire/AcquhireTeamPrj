@@ -76,11 +76,11 @@ public class CommunityController {
 		System.out.println(!boardDTO.getAttachList().isEmpty());
 		System.out.println(boardDTO.getAttachList().size());
 		System.out.println(boardDTO);
-		communityService.createPost(boardDTO);
+		communityService.insertBoard(boardDTO);
 		if (!boardDTO.getAttachList().isEmpty()) {
 			boardDTO.getAttachList().forEach(attach -> 
 			{
-				attach.setBNo(boardDTO.getbNo());
+				attach.setBno(boardDTO.getBno());
 				attach.toString();
 				communityService.insert(attach);
 			});
@@ -99,24 +99,22 @@ public class CommunityController {
 	public String readCommunityPostList(Model model, Criteria cri) {
 		log.info("PATH" + Path.BOARD_COMMUNITY_SELECT_ALL_VIEW);
 
-		// System.out.println("cri.getListLink() >>>>>" + cri.toString());
-
-		model.addAttribute("boardList", communityService.getAllCommunityPostList(cri));
-		model.addAttribute("pagination", new Pagination((int) communityService.getTotal(cri), cri));
+		model.addAttribute("boardList", communityService.getList(cri));
+		model.addAttribute("pagination", new Pagination(communityService.getTotal(cri), cri));
 		return Path.BOARD_COMMUNITY_SELECT_ALL_VIEW.getPath();
 	}
 
 	@GetMapping(value = "/selectdetail_view")
-	public String readCommunitPost(long bNo, Model model) {
+	public String readCommunitPost(long bno, Model model) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_SELECT_DETAIL_VIEW);
-		communityService.setPostCountUp(bNo);
-		model.addAttribute("boardDTO", communityService.getPost(bNo));
+		int count = communityService.viewCntUp(bno);
+		log.info(">>>>>>>>>>>>>"+count);
+		model.addAttribute("boardDTO", communityService.findByBoardNumber(bno));
 		return Path.BOARD_COMMUNITY_SELECT_DETAIL_VIEW.getPath();
 	}
 
 	@GetMapping(value="/getAttachList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<List<BoardAttachVO>> getAttachList(Long bNo) {
-		System.out.println(bNo);
 		return new ResponseEntity<>(communityService.getAttachList(bNo),HttpStatus.OK);
 	}
 	
@@ -128,10 +126,10 @@ public class CommunityController {
 	 * @return
 	 */
 	@GetMapping(value = "/update")
-	public String updateCommunityPost(Model model, long bNo) {
+	public String updateCommunityPost(Model model, long bno) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_UPDATE);
 		// TODO 아이디 확인 추가
-		model.addAttribute("boardDTO", communityService.getPost(bNo));
+		model.addAttribute("boardDTO", communityService.findByBoardNumber(bno));
 		return Path.BOARD_COMMUNITY_UPDATE.getPath();
 	}
 
@@ -142,7 +140,7 @@ public class CommunityController {
 		if (boardDTO.getAttachList() != null) {
 			boardDTO.getAttachList().forEach(attach -> log.info(attach.toString()));
 		}
-		//communityService.updatePost(boardDTO);
+		communityService.updateBoard(boardDTO);
 		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath();
 	}
 
@@ -153,15 +151,15 @@ public class CommunityController {
 	 * @return
 	 */
 	@GetMapping(value = "/delete")
-	public String deleteCommunityPost(long bNo, String id,Criteria cri,RedirectAttributes rttr) {
+	public String deleteCommunityPost(long bno, String id,Criteria cri,RedirectAttributes rttr) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_DELETE);
 		// TODO 아이디 확인 추가
-		List<BoardAttachVO> attachList = communityService.getAttachList(bNo);
-		if (communityService.deletePost(bNo)) {
+		List<BoardAttachVO> attachList = communityService.getAttachList(bno);
+		if (communityService.deleteBoard(bno) == 1) {
 			deleteFiles(attachList);
 			rttr.addFlashAttribute("result","success");
 		}
-		communityService.deletePost(bNo);
+		communityService.deleteBoard(bno);
 		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath();
 	}
 

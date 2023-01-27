@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.aqh.board.domain.dao.EventDAO;
+import com.aqh.board.dao.EventDAO;
 import com.aqh.board.domain.dto.BoardDTO;
 
 @Service
@@ -29,8 +29,8 @@ public class EventService {
 
 	}
 
-	public BoardDTO eventSelectDetail(long bNo) {
-		return eventDAO.eventSelectDetail(bNo);
+	public BoardDTO eventSelectDetail(long bno) {
+		return eventDAO.eventSelectDetail(bno);
 
 	}
 
@@ -42,12 +42,12 @@ public class EventService {
 		eventDAO.eventUpdate(boardDTO);
 	}
 
-	public void eventDelete(long bNo) {
-		eventDAO.eventDelete(bNo);
+	public void eventDelete(long bno) {
+		eventDAO.eventDelete(bno);
 	}
 	
-	public int readCountUp(long bNo) {
-		return eventDAO.readCountUp(bNo);
+	public int readCountUp(long bno) {
+		return eventDAO.readCountUp(bno);
 		
 	}
 }

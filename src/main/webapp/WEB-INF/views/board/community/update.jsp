@@ -119,8 +119,8 @@ $(document).ready( function(){
 <script>
 $(document).ready(function(){
 	(function(){
-		var bNo = '<c:out value="${boardDTO.bNo}"/>';
-		$.getJSON("/community/getAttachList", {bNo:bNo}, function(arr){
+		var bno = '<c:out value="${boardDTO.bno}"/>';
+		$.getJSON("/community/getAttachList", {bno:bno}, function(arr){
 			console.log(arr);
 			var str = "";
 			$(arr).each(function(i, attach){
@@ -296,7 +296,7 @@ $(document).ready(function(){
 				          <table class="table table-striped">
 				            <tr>
 				                <th>게시글 번호</th>
-				                <td><input type="text"  class="form-control" name="bNo" value="${boardDTO.bNo}" readonly></td>
+				                <td><input type="text"  class="form-control" name="bno" value="${boardDTO.bno}" readonly></td>
 				            </tr>
 				            <tr>
 				                <th>작성자</th>

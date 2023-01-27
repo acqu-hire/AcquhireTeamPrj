@@ -1,4 +1,4 @@
-package com.aqh.board.domain.dao;
+package com.aqh.board.dao;
 
 import java.util.List;
 
@@ -21,25 +21,17 @@ public class QnADAO {
 	public int boardCount(SearchCondition sc) {
 		return session.selectOne(namespace + "boardCount", sc);
 	}
-
-	public int boardCount() {
-		return session.selectOne(namespace + "boardCount");
-	}
 	
-	public int readCountUp(long bNo) {
-		return session.update(namespace + "readCountUp", bNo);
+	public int readCountUp(long bno) {
+		return session.update(namespace + "readCountUp", bno);
 	}
 	
 	public List<BoardDTO> selectAll(SearchCondition sc) {
 		return session.selectList(namespace + "selectAll", sc);
 	}
-
-	public List<BoardDTO> selectAll() {
-		return session.selectList(namespace + "selectAll");
-	}
 	
-	public BoardDTO selectDetail(long bNo) {
-		return session.selectOne(namespace + "selectDetail", bNo);
+	public BoardDTO selectDetail(long bno) {
+		return session.selectOne(namespace + "selectDetail", bno);
 	}
 	
 	public int insert(BoardDTO boardDTO) {
@@ -54,19 +46,19 @@ public class QnADAO {
 		session.delete(namespace + "deleteAll");
 	}
 	
-	public void delete(long bNo) {
-		session.delete(namespace + "delete", bNo);
+	public void delete(long bno) {
+		session.delete(namespace + "delete", bno);
 	}
 	
-	public List<FileDTO> getFileList(long bNo) {
-		return session.selectList(namespace + "fileList", bNo);
+	public List<FileDTO> getFileList(long bno) {
+		return session.selectList(namespace + "fileList", bno);
 	}
 	
-	public long getReplyCnt(long bNo) {
-		return session.selectOne(namespace + "getReplyCnt", bNo);
+	public long getReplyCnt(long bno) {
+		return session.selectOne(namespace + "getReplyCnt", bno);
 	}
 
-	public int getReadCnt(long bNo) {
-		return session.selectOne(namespace + "getReadCnt", bNo);
+	public int getReadCnt(long bno) {
+		return session.selectOne(namespace + "getReadCnt", bno);
 	}
 }

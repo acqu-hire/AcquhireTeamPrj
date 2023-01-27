@@ -68,10 +68,10 @@
 								<tbody>
 									<c:forEach varStatus="status" var="board" items="${eventMarketingList}">
 										<tr>
-											<th>${board.bNo}</th>
+											<th>${board.bno}</th>
 											<%-- <th>${(boardListCount-status.index)-((page-1)*10)}</th> --%>
 											<td class="text-truncate" style="max-width: 500px;"><a
-												href="./select_detail?bNo=${board.bNo}">${board.title}</a></td>
+												href="./select_detail?bno=${board.bno}">${board.title}</a></td>
 											<td>${board.id}</td>
 											<td>${board.writeDay}</td>
 											<td>${board.readCount}</td>

@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.pagehandler.PageHandler;
@@ -17,8 +16,6 @@ import com.aqh.board.domain.pagehandler.SearchCondition;
 import com.aqh.board.service.QnAService;
 import com.aqh.common.domain.dto.FileDTO;
 import com.aqh.common.service.FileService;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/QnA")
@@ -44,11 +41,10 @@ public class QnAController {
 	}
 
 	@GetMapping("/listDetail")
-	public String qnaListDetail(long bNo, Model model, SearchCondition sc, BoardDTO boardDTO) {
+	public String qnaListDetail(long bno, Model model, SearchCondition sc, BoardDTO boardDTO) {
 		
-//			qnaService.readCntUp(bNo);
-			boardDTO = qnaService.selectDetail(bNo);
-			boardDTO.setFileList(qnaService.getFileList(boardDTO.getbNo()));
+			boardDTO = qnaService.selectDetail(bno);
+			boardDTO.setFileList(qnaService.getFileList(boardDTO.getBno()));
 			
 			model.addAttribute(boardDTO);
 			model.addAttribute("sc", sc);
@@ -74,11 +70,11 @@ public class QnAController {
 	}
 
 	@GetMapping("/update")
-	public String qnaUpdateForm(long bNo, Model model, SearchCondition sc) {
+	public String qnaUpdateForm(long bno, Model model, SearchCondition sc) {
 		model.addAttribute("sc", sc);
 		
-		BoardDTO boardDTO = qnaService.selectDetail(bNo);
-		boardDTO.setFileList(qnaService.getFileList(bNo));
+		BoardDTO boardDTO = qnaService.selectDetail(bno);
+		boardDTO.setFileList(qnaService.getFileList(bno));
 		model.addAttribute(boardDTO);
 		
 		return "board/qna/qna_update_form";
@@ -97,7 +93,7 @@ public class QnAController {
 	@PostMapping("/delete")
 	public String qnaDelete(SearchCondition sc, FileDTO fileDTO, HttpServletRequest request, BoardDTO boardDTO) {
 		fileService.deleteAll(fileDTO, boardDTO);
-		qnaService.delete(fileDTO.getbNo());
+		qnaService.delete(fileDTO.getBno());
 		
 		return "redirect:/QnA/list"+sc.getQueryString();
 	}
