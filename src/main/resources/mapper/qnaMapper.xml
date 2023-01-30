@@ -16,6 +16,7 @@
 	
 	<sql id="search">
 		<trim prefix="WHERE (" prefixOverrides="AND" suffix=")">
+			AND menu = 'QNA'
             <if test="category != null ">
                 AND category = #{category}
             </if>
@@ -42,9 +43,9 @@
 	<select id="getBoardList" resultType="BoardDTO">
         SELECT * FROM 
         	(SELECT bno, title, contents, id, DATE_FORMAT(writeDay, '%Y-%m-%d') writeDay, readCount, category, replyCnt
-			FROM board WHERE menu='QNA' ORDER BY writeDay DESC, bno DESC) SUBQUERY
-        <include refid="search" />
-            
+			FROM board
+			<include refid="search" />
+			ORDER BY writeDay DESC, bno DESC) SUBQUERY
 		LIMIT #{offset},#{limit}
     </select>
 	
@@ -80,7 +81,7 @@
 		WHERE bno=#{bno}
 	</select>
 	
-	<select id="getReplyTotal" resultType="long">
+	<select id="getReplyTotal" resultType="int">
 		SELECT replyCnt FROM board
 		WHERE bno=#{bno}
 	</select>
