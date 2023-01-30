@@ -35,13 +35,13 @@
 		  </div>
 		  <div class="card-body">
 			<div id="BtnCategory" class="category" align="center">
-			  <a class="btn btn-primary float-end all-category-btn" 
+			  <a class="btn btn-primary float-end all-category-btn" data-value=""
 			  href="<c:url value='./list'/>?category=&type=${pagination.criteria.type}&keyword=${pagination.criteria.keyword}">전체</a>								
-			  <a class="btn btn-warning float-end" 
+			  <a class="btn btn-warning float-end" data-value="QNA_TECH"
 			  href="<c:url value='./list'/>?&category=QNA_TECH&type=${pagination.criteria.type}&keyword=${pagination.criteria.keyword}">기술</a>
-			  <a class="btn btn-warning float-end" 
+			  <a class="btn btn-warning float-end" data-value="QNA_CAREER"
 			  href="<c:url value='./list'/>?&category=QNA_CAREER&type=${pagination.criteria.type}&keyword=${pagination.criteria.keyword}">커리어</a>
-			  <a class="btn btn-warning float-end" 
+			  <a class="btn btn-warning float-end" data-value="QNA_ETC"
 			  href="<c:url value='./list'/>?&category=QNA_ETC&type=${pagination.criteria.type}&keyword=${pagination.criteria.keyword}">기타</a>
 			</div>
 			<div class="d-flex justify-content-end">
@@ -257,6 +257,8 @@
 <%@ include file="../../include/footer.jsp"%>
 
 	<!-- Footer -->
-
+<script type="text/javascript">
+var current_category = "${param.category}";
+</script>
 </body>
 </html>
