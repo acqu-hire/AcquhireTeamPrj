@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.Criteria;
+import com.aqh.common.domain.FileDTO;
 
 @Repository
 public class CommunityDAOImpl implements BoardDAO {
@@ -26,7 +27,7 @@ public class CommunityDAOImpl implements BoardDAO {
 	// ! READ
 
 	@Override
-	public List<BoardDTO> getList(Criteria criteria) {
+	public List<BoardDTO> getBoardList(Criteria criteria) {
 		return sessionTemplate.selectList(namespace + "getList", criteria);
 	}
 
@@ -36,9 +37,9 @@ public class CommunityDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public int getReplyTotal(Criteria criteria) {
+	public int getReplyTotal(long bno) {
 		// 구현 필요
-		return sessionTemplate.selectOne(namespace + "getTotal", criteria);
+		return sessionTemplate.selectOne(namespace + "getTotal", bno);
 	};
 
 	@Override
@@ -63,6 +64,12 @@ public class CommunityDAOImpl implements BoardDAO {
 	@Override
 	public int deleteBoard(long bno) {
 		return sessionTemplate.delete(namespace + "deleteBoard", bno);
+	}
+
+	@Override
+	public List<FileDTO> getFileList(long bno) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -42,8 +42,8 @@ public class CommunityService {
 		return uploadDAO.getAttachList(bno);
 	}
 
-	public List<BoardDTO> getList(Criteria criteria) {
-		return communityDAOImpl.getList(criteria);
+	public List<BoardDTO> getBoardList(Criteria criteria) {
+		return communityDAOImpl.getBoardList(criteria);
 	}
 
 	public BoardDTO findByBoardNumber(long bno) {
@@ -54,9 +54,9 @@ public class CommunityService {
 		return communityDAOImpl.getBoardTotal(criteria);
 	}
 
-	public int getReplyTotal(Criteria criteria) {
+	public int getReplyTotal(long bno) {
 		// 구현 필요
-		return communityDAOImpl.getReplyTotal(criteria);
+		return communityDAOImpl.getReplyTotal(bno);
 	}
 
 	// UPDATE
