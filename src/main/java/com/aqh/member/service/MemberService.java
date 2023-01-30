@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.aqh.member.dao.MemberDAO;
-import com.aqh.member.domain.dto.MemberDTO;
+import com.aqh.member.domain.MemberDTO;
 
 @Service
 public class MemberService {

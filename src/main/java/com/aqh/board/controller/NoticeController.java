@@ -31,7 +31,7 @@ import com.aqh.board.domain.dto.BoardDTO.Category;
 import com.aqh.board.domain.dto.CriteriaNotice;
 import com.aqh.board.domain.pagehandler.PaginationNotice;
 import com.aqh.board.service.NoticeService;
-import com.aqh.common.domain.dto.FileNoticeDTO;
+import com.aqh.common.domain.FileNoticeDTO;
 
 import lombok.extern.slf4j.Slf4j;
 

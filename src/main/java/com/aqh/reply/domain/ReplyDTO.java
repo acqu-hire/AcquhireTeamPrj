@@ -1,10 +1,8 @@
-package com.aqh.reply.domain.dto;
+package com.aqh.reply.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 /**
  * 댓글DTO
@@ -15,8 +13,7 @@ import lombok.Setter;
 
 @Data
 @AllArgsConstructor
-@Getter
-@Setter
+@NoArgsConstructor
 public class ReplyDTO {
 
 	private long bno; // 게시글 번호
@@ -25,10 +22,5 @@ public class ReplyDTO {
 	private String writeDay; // 게시글 작성일
 	private String id;
 	private String contents;
-
-	@Builder
-	public ReplyDTO() {
-	}
-
 
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.aqh.board.dao.NoticeDAO;
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.CriteriaNotice;
-import com.aqh.common.domain.dto.FileNoticeDTO;
+import com.aqh.common.domain.FileNoticeDTO;
 
 
 @Service

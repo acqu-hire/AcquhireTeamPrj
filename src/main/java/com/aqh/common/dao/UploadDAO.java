@@ -5,7 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.aqh.common.domain.dto.BoardAttachVO;
+import com.aqh.common.domain.BoardAttachVO;
 
 import lombok.RequiredArgsConstructor;
 

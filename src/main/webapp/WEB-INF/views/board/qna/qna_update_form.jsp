@@ -51,7 +51,7 @@
 		 		 <th>첨부파일 <button type="button" id="addFileBtn">추가</button></th>
 		     	   <td class="file-area">
 		    		<c:forEach var="files" items="${boardDTO.fileList}" varStatus="status">
-		    		  <div class="file-inline" data-fno="${files.fno}">
+		    		  <div class="file-inline" data-fno="${files.fno}" data-fileSize="${boardDTO.fileList.size()}">
 		    	   		 파일${status.count}. 
 					    <c:out value="${files.originName}(${files.fmtFileSize})"/> <a href="#"><i class="fas fa-trash" data-fno="${files.fno}"></i></a> <br/>
 		    	  	  </div>
@@ -63,7 +63,7 @@
 			  <tr>
 		        <th>파일 <button type="button" id="addFileBtn">추가</button></th>
 			     <td class="file-area">
-			       <div class="row file-inline">
+			       <div class="row file-inline" data-fileSize="${boardDTO.fileList.size()}">
 			         <input type="file" name="files">
 			       </div>
 			     </td>
@@ -92,58 +92,7 @@
 
 <!-- Footer -->
 <script>
-$(function() {
- 	$("#btnList").on("click", function() {
-		location.href="<c:url value='/QnA/list'/>${sc.getQueryString(sc.page, sc.category)}"
-	})
-	
-	$("#btnUpdate").on("click", function() {
-		var form = $("#updateForm");
-		form.attr("method", "post");
-		form.attr("action", "<c:url value='./update'/>${sc.getQueryString(sc.page,sc.category)}");
-		form.submit();
-	})
-	
-	var maxAppend = "${boardDTO.fileList.size()}";
-	$("#addFileBtn").on("click", function() {
-		if(maxAppend >= 5) {
-			alert("파일첨부 최대개수는 5개 입니다.");
-			return;
-		}
-		$(".file-area").append('<div class="row file-inline">'
-		+ '<input type="file" name="files">'
-		+ '<button type="button" class="delBtn btn btn-sm float-right">삭제</button>'
-		+ '</div>');
-		maxAppend++;
-	});
-	
-	$(".file-area").on("click", ".delBtn", function() {
-		$(this).closest("div").remove();
-		maxAppend--;
-	});
-	
-	$(".fa-trash").on("click", function() {
-		if(!confirm("첨부파일을 삭제하시겠습니까?")) return;
-		$btn = $(this);
-		$btn.closest("div").html(
-								'<input type="hidden" name="delAttach" value="' + $btn.data('fno') + '" />'
-								);
-		maxAppend--;
-	})
-})
-
-$(document).on("change","input:file",function() {
-		var resetFile = $("input[name='files']");
-		  if(resetFile.length < 1){
-		    console.log("cancel was pressed");
-		    $(resetFile).wrap("<form></form>").closest("form").get(0).reset();
-		    $(resetFile).unwrap();
-		  }
-		  else {
-		    console.log(resetFile[0].name);
-		  }
-	});
-
+var getQueryString = "${cri.getQueryString(cri.getPage(), cri.getCategory())}";
 </script>
 </body>
 </html>

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.aqh.member.domain.dto.MemberDTO;
+import com.aqh.member.domain.MemberDTO;
 import com.aqh.member.service.MemberService;
 
 

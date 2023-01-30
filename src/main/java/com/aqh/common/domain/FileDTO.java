@@ -1,4 +1,4 @@
-package com.aqh.common.domain.dto;
+package com.aqh.common.domain;
 
 import lombok.Data;
 

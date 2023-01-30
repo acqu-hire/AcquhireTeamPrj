@@ -10,7 +10,7 @@
 <html>
 <head>
 <script src="${contextPath}/resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
-<script src="${contextPath}/resources/js/reply-test.js?ver=1" type="text/javascript"></script>
+<script src="${contextPath}/resources/js/reply.js?ver=1" type="text/javascript"></script>
 <meta charset="UTF-8">
 <title>QnA 게시판</title>
 
@@ -98,8 +98,6 @@
 						  <div class="form-inline mb-2">
 							<label for="replyId"><i class="fa fa-user-circle-o fa-2x"></i></label>
 							<input type="text" class="form-control ml-2" id="replyId" value="${sessionScope.id}" readOnly>
-							<!-- <label for="replyPassword" class="ml-4"><i class="fa fa-unlock-alt fa-2x"></i></label>
-							<input type="password" class="form-control ml-2" placeholder="Enter password" id="replyPassword"> -->
 						  </div>
 						  <textarea class="form-control" id="replyContents" rows="3"></textarea>
 						  <button type="button" class="btn btn-dark mt-3" id="regReplyBtn">등록</button>
@@ -114,7 +112,7 @@
 				      <div class="reply-inline">
 					  </div>
 					  <div class="reply-pagenation">
-					   <nav aria-label="Page navigation example">
+					   <nav aria-label="Page navigation">
 					   </nav>
 					</div>
 			  </div>
@@ -155,32 +153,7 @@
 var bno = "${boardDTO.bno}";
 var sessionId = "${sessionScope.id}";
 var writer = "${boardDTO.id}";
-$(function() {
-	$('#btnList').on('click', function() {
-		location.href="<c:url value='./list'/>${sc.getQueryString(sc.page, sc.category)}"
-	})
-	$('#btnRemove').on('click', function() {
-		if(!confirm("게시글을 삭제하시겠습니까?")) return;
-		
-		var writer = '${boardDTO.id}';
-		if(sessionId != writer){
-			alert("삭제할 권한이 없습니다.");
-		} else {
-			var form = $("#boardForm");
-			form.attr("action", "<c:url value='./delete'/>${sc.getQueryString(sc.page, sc.category)}");
-			form.attr("method", "post");
-			form.submit();
-		}
-	})
-	$('#btnModify').on('click', function() {
-		var writer = '${boardDTO.id}';
-		if(sessionId != writer){
-			alert("수정할 권한이 없습니다.");
-		} else {
-			location.href="<c:url value='./update'/>${sc.getQueryString(sc.page, sc.category)}&bno=${boardDTO.bno}";
-		}
-	})
-})
+var getQueryString = "${cri.getQueryString(cri.getPage(), cri.getCategory())}";
 </script>
 </body>
 </html>

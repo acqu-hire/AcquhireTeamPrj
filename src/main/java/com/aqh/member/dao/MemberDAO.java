@@ -6,7 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.aqh.member.domain.dto.MemberDTO;
+import com.aqh.member.domain.MemberDTO;
 
 @Repository
 public class MemberDAO {

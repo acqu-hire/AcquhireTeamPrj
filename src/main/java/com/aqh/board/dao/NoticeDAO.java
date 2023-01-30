@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.CriteriaNotice;
 import com.aqh.common.controller.FileControllerNotice;
-import com.aqh.common.domain.dto.FileNoticeDTO;
+import com.aqh.common.domain.FileNoticeDTO;
 
 @Repository
 public class NoticeDAO {

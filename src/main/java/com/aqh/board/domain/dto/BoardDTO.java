@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.aqh.common.domain.dto.BoardAttachVO;
-import com.aqh.common.domain.dto.FileDTO;
-import com.aqh.common.domain.dto.FileNoticeDTO;
+import com.aqh.common.domain.BoardAttachVO;
+import com.aqh.common.domain.FileDTO;
+import com.aqh.common.domain.FileNoticeDTO;
 
 import lombok.Data;
 
@@ -52,6 +52,5 @@ public class BoardDTO {
 	private String title; // 게시글 제목
 	private String writeDay; // 게시글 작성일
 	private String contents; // 게시글 내용
-
 
 }

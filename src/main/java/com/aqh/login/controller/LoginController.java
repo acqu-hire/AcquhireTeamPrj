@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.aqh.member.domain.dto.MemberDTO;
+import com.aqh.member.domain.MemberDTO;
 import com.aqh.member.service.MemberService;
 
 @Controller
