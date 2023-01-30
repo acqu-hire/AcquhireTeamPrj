@@ -3,15 +3,11 @@
 PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-<!-- 	<settings>
-		<setting name="jdbcTypeForNull" value="NULL"/>
-		 <setting name="mapUnderscoreToCamelCase" value="true"/>
-	</settings> -->
 	<typeAliases>
 		<typeAlias alias="BoardDTO" type="com.aqh.board.domain.dto.BoardDTO"/>
-		<typeAlias alias="MemberDTO" type="com.aqh.member.domain.dto.MemberDTO"/>
-		<typeAlias alias="ReplyDTO" type="com.aqh.reply.domain.dto.ReplyDTO" />
-		<typeAlias alias="FileDTO" type="com.aqh.common.domain.dto.FileDTO" />
+		<typeAlias alias="MemberDTO" type="com.aqh.member.domain.MemberDTO"/>
+		<typeAlias alias="ReplyDTO" type="com.aqh.reply.domain.ReplyDTO" />
+		<typeAlias alias="FileDTO" type="com.aqh.common.domain.FileDTO" />
 		<typeAlias alias="FileNoticeDTO" type="com.aqh.common.domain.dto.FileNoticeDTO" />
 		<typeAlias alias="BoardAttachVO" type="com.aqh.common.domain.dto.BoardAttachVO" />
 	</typeAliases>

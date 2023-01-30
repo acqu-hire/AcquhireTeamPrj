@@ -1,6 +1,8 @@
 package com.aqh.board.domain.dto;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.aqh.board.domain.dto.BoardDTO.Category;
 
@@ -36,4 +38,12 @@ public class Criteria {
 		return this.offset = (page - 1) * limit;
 	}
 
+	public String getQueryString(Integer page, Category category) {
+		return UriComponentsBuilder.newInstance()
+				.queryParam("page", page)
+				.queryParam("category", category)
+				.queryParam("type", type)
+				.queryParam("keyword", keyword)
+				.build().toString();
+	}
 }

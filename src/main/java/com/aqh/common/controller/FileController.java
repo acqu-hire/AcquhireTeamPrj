@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.aqh.common.domain.dto.AttachFile;
-import com.aqh.common.domain.dto.FileDTO;
+import com.aqh.common.domain.AttachFile;
+import com.aqh.common.domain.FileDTO;
 import com.aqh.common.service.FileService;
 
 @Controller

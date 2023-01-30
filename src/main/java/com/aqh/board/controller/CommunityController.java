@@ -19,7 +19,7 @@ import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.Criteria;
 import com.aqh.board.domain.pagehandler.Pagination;
 import com.aqh.board.service.CommunityService;
-import com.aqh.common.domain.dto.BoardAttachVO;
+import com.aqh.common.domain.BoardAttachVO;
 
 import lombok.extern.slf4j.Slf4j;
 

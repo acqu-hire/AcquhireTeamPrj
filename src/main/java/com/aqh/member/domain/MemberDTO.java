@@ -1,4 +1,4 @@
-package com.aqh.member.domain.dto;
+package com.aqh.member.domain;
 
 import org.springframework.context.annotation.Primary;
 

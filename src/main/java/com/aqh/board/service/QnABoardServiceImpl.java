@@ -2,66 +2,65 @@ package com.aqh.board.service;
 
 import java.util.List;
 
-import com.aqh.board.dao.QnADAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.aqh.board.dao.BoardDAO;
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.Criteria;
-import com.aqh.reply.dao.ReplyDAO;
+import com.aqh.common.domain.FileDTO;
 
+@Service
 public class QnABoardServiceImpl implements BoardService{
 	
-	QnADAO qnaDao;
-	ReplyDAO replyDao;
-	
-	public QnABoardServiceImpl(QnADAO qnaDao, ReplyDAO replyDao) {
-		this.qnaDao = qnaDao;
-		this.replyDao = replyDao;
-	}
+	@Autowired
+	BoardDAO qnABoardDAOImpl;
 	
 	@Override
 	public int insertBoard(BoardDTO boardDTO) {
-		return 0;
+		return qnABoardDAOImpl.insertBoard(boardDTO);
 	}
 	
 	@Override
-	public List<BoardDTO> getList(Criteria criteria) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<BoardDTO> getBoardList(Criteria cri) {
+		return qnABoardDAOImpl.getBoardList(cri);
 	}
 	
+	@Override
+	public int getBoardTotal(Criteria criteria) {
+		return qnABoardDAOImpl.getBoardTotal(criteria);
+	}
 	
 	@Override
 	public BoardDTO findByBoardNumber(long bno) {
-		// TODO Auto-generated method stub
-		return null;
+		BoardDTO boardDTO = qnABoardDAOImpl.findByBoardNumber(bno);
+		qnABoardDAOImpl.viewCntUp(bno);
+		return boardDTO;
 	}
 	
 	@Override
 	public int updateBoard(BoardDTO boardDTO) {
-		// TODO Auto-generated method stub
-		return 0;
+		return qnABoardDAOImpl.updateBoard(boardDTO);
 	}
 	
 	@Override
 	public int viewCntUp(long bno) {
-		// TODO Auto-generated method stub
-		return 0;
+		return qnABoardDAOImpl.viewCntUp(bno);
 	}
 	
 	@Override
 	public int deleteBoard(long bno) {
-		// TODO Auto-generated method stub
-		return 0;
+		return qnABoardDAOImpl.deleteBoard(bno);
 	}
-
+	
 	@Override
-	public int getBoardTotal(Criteria criteria) {
-		// TODO Auto-generated method stub
-		return 0;
+	public long getReplyTotal(long bno) {
+		return qnABoardDAOImpl.getReplyTotal(bno);
 	}
-
+	
 	@Override
-	public int getReplyTotal(Criteria criteria) {
-		// TODO Auto-generated method stub
-		return 0;
+	public List<FileDTO> getFileList(long bno) {
+		return qnABoardDAOImpl.getFileList(bno);
 	}
+	
 }

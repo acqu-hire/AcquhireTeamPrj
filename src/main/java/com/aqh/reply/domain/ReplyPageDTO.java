@@ -1,4 +1,4 @@
-package com.aqh.reply.domain.dto;
+package com.aqh.reply.domain;
 
 import java.util.List;
 

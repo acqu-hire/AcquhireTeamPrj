@@ -3,25 +3,40 @@
 PUBLIC "=//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.aqh.reply.domain.dao.ReplyDAO">
+<mapper namespace="com.aqh.reply.dao.ReplyMapper">
 
     <insert id="register">
-        INSERT INTO REPLY( bno, id, contents)
-        VALUES( #{bno} , #{id}, #{contents} )
+        INSERT INTO reply( bno, prno, id, contents)
+        VALUES( #{bno}, #{prno}, #{id}, #{contents} )
     </insert>
-    <select id="getReplyList" resultType="ReplyDTO">
-        SELECT * FROM REPLY where bno = #{bno} 
-        ORDER BY writeDay ASC
-        LIMIT #{offset},#{limit}
+    <select id="getReplyList" resultType="replyDTO">
+        SELECT rno, bno, IFNULL(prno, rno) prno, writeDay, id, contents FROM reply 
+        WHERE bno = #{bno}
+        ORDER BY prno ASC, rno ASC
+        LIMIT #{offset}, #{limit};
     </select>
-    <select id="getReply" resultType="ReplyDTO">
-        SELECT * FROM REPLY where rno = #{rno}
+    <select id="getReply" resultType="replyDTO">
+        SELECT * FROM reply where rno = #{rno}
     </select>
     <update id="modifyReply">
-        UPDATE reply SET contents = #{contents} WHERE rno = #{rno}
+        UPDATE reply SET contents = #{contents} 
+        <if test="id != null">
+        	AND id = ${id}
+        </if>
+        WHERE rno = #{rno}
     </update>
     <delete id="removeReply">
         delete from reply where rno = #{rno}
     </delete>
-
+    
+    <update id="replyCntUpdate">
+    	UPDATE board B
+    	SET replyCnt = 
+    	(SELECT count(*) FROM reply R WHERE bno = #{bno})
+    	WHERE bno = #{bno}
+    </update>
+    
+    <select id="getNestedReplyList" resultType="int" parameterType="long">
+    	SELECT count(*) FROM reply WHERE prno=#{rno}
+    </select>
 </mapper>

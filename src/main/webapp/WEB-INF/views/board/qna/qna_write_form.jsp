@@ -61,7 +61,7 @@
 			   <tr>
 				 <th>파일 <button type="button" id="addFileBtn">추가</button></th>
 				   <td class="file-area">
-				     <div class="row file-inline">
+				     <div class="row file-inline" data-fileSize="${boardDTO.fileList.size()}">
 				       <input type="file" name="files">
 				     </div>
 				   </td>
@@ -87,72 +87,6 @@
 <%@ include file="../../include/footer.jsp" %>
 
 <!-- Footer -->
-<script type="text/javascript">
-	var inputCnt = $(".file-inline input").length
 
-	$(function() {
-		$("form").submit( function() {
-			
-			if(inputCnt > 1){
-				if(!$(".file-inline input[name='files']").val()){
-				alert("파일을 첨부하거나 파일탭을 삭제해주세요.")					
-				return false;
-				}
-			}
-			
-			if($("select[name='category']").val() == ""){
-				alert("카테고리를 선택해주세요.");
-				return false;
-			};
-			if(!$("input[name='title']").val()) {
-				alert("제목을 입력하세요.");
-				return false;
-			}
-			if(!$("textarea[name='contents']").val()) {
-				alert("내용을 입력하세요.");
-				return false;
-			}
-		});
-	});
-	 	
-		$("#btnList").on("click", function() {
-			location.href="<c:url value='./list'/>${sc.getQueryString()}"
-		});
-	
-	$(function () {
-		var maxAppend = 0;
-		$("#addFileBtn").on("click", function() {
-			if(maxAppend >= 5) {
-				alert("파일첨부 최대개수는 5개 입니다.");
-				return;
-			}
-			$(".file-area").append('<div class="row file-inline">'
-			+ '<input type="file" name="files">'
-			+ '<button type="button" class="delBtn btn btn-sm float-right">삭제</button>'
-			+ '</div>');
-			maxAppend++;
-			inputCnt++;
-		});
-		
-		$(".file-area").on("click", ".delBtn", function() {
-			$(this).closest("div").remove();
-			maxAppend--;
-			inputCnt--;
-		});
-	});
-	
-	$(document).on("change","input:file",function() {
-		var resetFile = $("input[name='files']");
-		  if(resetFile.length < 1){
-		    console.log("cancel was pressed");
-		    $(resetFile).wrap("<form></form>").closest("form").get(0).reset();
-		    $(resetFile).unwrap();
-		  }
-		  else {
-		    console.log(resetFile[0].name);
-		  }
-	});
-	
-</script>
 </body>
 </html>

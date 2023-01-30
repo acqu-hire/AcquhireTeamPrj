@@ -6,7 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.aqh.common.domain.dto.FileDTO;
+import com.aqh.common.domain.FileDTO;
 
 @Repository
 public class FileDAO {

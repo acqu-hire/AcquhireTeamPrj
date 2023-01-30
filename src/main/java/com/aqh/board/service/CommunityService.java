@@ -8,7 +8,7 @@ import com.aqh.board.dao.CommunityDAOImpl;
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.Criteria;
 import com.aqh.common.dao.UploadDAO;
-import com.aqh.common.domain.dto.BoardAttachVO;
+import com.aqh.common.domain.BoardAttachVO;
 
 import lombok.RequiredArgsConstructor;
 

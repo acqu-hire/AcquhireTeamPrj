@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.common.dao.FileDAO;
-import com.aqh.common.domain.dto.AttachFile;
-import com.aqh.common.domain.dto.FileDTO;
+import com.aqh.common.domain.AttachFile;
+import com.aqh.common.domain.FileDTO;
 
 @Service
 public class FileService {

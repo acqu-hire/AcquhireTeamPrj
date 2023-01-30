@@ -30,22 +30,22 @@
 		  <div class="card-header">
 			<h3 align="center">QnA</h3>
 			<div align="right">
-				전체 글 : <strong>${ph.boardListCount}</strong>
+				전체 글 : <strong>${pagination.listCnt}</strong>
 			</div>
 		  </div>
 		  <div class="card-body">
 			<div id="BtnCategory" class="category" align="center">
-			  <a class="btn btn-primary float-end" 
-			  href="<c:url value='./list'/>?category=&keyfield=${ph.sc.keyfield}&keyword=${ph.sc.keyword}">전체</a>								
+			  <a class="btn btn-primary float-end all-category-btn" 
+			  href="<c:url value='./list'/>?category=&type=${pagination.criteria.type}&keyword=${pagination.criteria.keyword}">전체</a>								
 			  <a class="btn btn-warning float-end" 
-			  href="<c:url value='./list'/>?&category=QNA_TECH&keyfield=${ph.sc.keyfield}&keyword=${ph.sc.keyword}">기술</a>
+			  href="<c:url value='./list'/>?&category=QNA_TECH&type=${pagination.criteria.type}&keyword=${pagination.criteria.keyword}">기술</a>
 			  <a class="btn btn-warning float-end" 
-			  href="<c:url value='./list'/>?&category=QNA_CAREER&keyfield=${ph.sc.keyfield}&keyword=${ph.sc.keyword}">커리어</a>
+			  href="<c:url value='./list'/>?&category=QNA_CAREER&type=${pagination.criteria.type}&keyword=${pagination.criteria.keyword}">커리어</a>
 			  <a class="btn btn-warning float-end" 
-			  href="<c:url value='./list'/>?&category=QNA_ETC&keyfield=${ph.sc.keyfield}&keyword=${ph.sc.keyword}">기타</a>
+			  href="<c:url value='./list'/>?&category=QNA_ETC&type=${pagination.criteria.type}&keyword=${pagination.criteria.keyword}">기타</a>
 			</div>
 			<div class="d-flex justify-content-end">
-			  <a class="btn btn-warning float-end" href="<c:url value='./write'/>${ph.sc.getQueryString(ph.sc.page, ph.sc.category)}">
+			  <a class="btn btn-warning float-end" href="<c:url value='./write'/>${pagination.getListLink(pagination.criteria.page)}">
 			 	 <i class="fas fa-edit"></i> 글 작성
 			  </a>
 			</div>
@@ -63,19 +63,19 @@
 			  <tbody>
 				<c:forEach varStatus="status" var="board" items="${boardList}">
 				<tr>
-				  <th>${(ph.boardListCount-status.index)-((ph.sc.page-1)*10)}</th>
+				  <th>${(pagination.listCnt-status.index)-((pagination.criteria.page-1)*10)}</th>
 				  <td>${board.category}</td>
 				  <c:choose>
 				    <c:when test="${fn:length(board.title)>15}">
 				      <td title="${board.title}">
-				        <a href="./listDetail${ph.sc.getQueryString(ph.sc.page, ph.sc.category)}&bno=${board.bno}">
+				        <a href="./listDetail${pagination.getListLink(pagination.criteria.page)}&bno=${board.bno}">
 				          <c:out value="${fn:substring(board.title,0,14)}"/>...</a> 
 				          <span class="replyCnt" style="color: red;">${board.replyCnt > 0? [board.replyCnt] : ""}</span>
 				      </td>
 				    </c:when>
 				    <c:otherwise>
 				      <td title="${board.title}">
-				        <a href="./listDetail${ph.sc.getQueryString(ph.sc.page, ph.sc.category)}&bno=${board.bno}">
+				        <a href="./listDetail${pagination.getListLink(pagination.criteria.page)}&bno=${board.bno}">
 				         <c:out value="${board.title}"/></a> 
 				         <span class="replyCnt" style="color: red;">${board.replyCnt > 0? [board.replyCnt] : ""}</span>
 				      </td>
@@ -89,7 +89,7 @@
 			  </tbody>
 			</table>
 			<table class="table table-hover text-center">
-			  <c:if test="${ph.boardListCount==0}">
+			  <c:if test="${pagination.listCnt==0}">
 			  <tr>
 				<td>등록된 게시글이 없습니다.</td>
 			  </tr>
@@ -103,7 +103,7 @@
 
 	<!-- Previous Button -->
 			<c:choose>
-			  <c:when test="${ph.startPage <= 1}">
+			  <c:when test="${pagination.startPage <= 1}">
 				<li class="page-item disabled">
 				  <a class="page-link" href="#" aria-label="Previous-PageBlock"> 
 				    <span aria-hidden="true">&laquo;</span> 
@@ -113,7 +113,7 @@
 			  </c:when>
 			  <c:otherwise>
 				<li class="page-item">
-				  <a class="page-link" href="./list${ph.sc.getQueryString(ph.startPage-1, ph.sc.category)}" 
+				  <a class="page-link" href="./list${pagination.getListLink(pagination.startPage-1)}" 
 				  	 aria-label="Previous-PageBlock"> 
 				    <span aria-hidden="true">&laquo;</span> 
 				    <span class="sr-only">페이지 이전블럭 이동</span>
@@ -122,7 +122,7 @@
 			  </c:otherwise>
 			</c:choose>
 			<c:choose>
-			  <c:when test="${ph.sc.page <= 1}">
+			  <c:when test="${pagination.criteria.page <= 1}">
 				<li class="page-item disabled">
 				  <a class="page-link" href="#" aria-label="Previous-Page"> 
 					<span aria-hidden="true">&lt;</span> 
@@ -132,7 +132,7 @@
 			  </c:when>
 			  <c:otherwise>
 				<li class="page-item">
-				  <a  class="page-link" href="./list${ph.sc.getQueryString(ph.sc.page-1, ph.sc.category)}"
+				  <a  class="page-link" href="./list${pagination.getListLink(pagination.criteria.page-1)}"
 					aria-label="Previous-Page"> 
 				    <span aria-hidden="true">&lt;</span> 
 				    <span class="sr-only">이전 페이지 한칸 이동</span>
@@ -146,15 +146,15 @@
 
 	<!-- Page Number -->
 
-			<c:forEach var="pageNumber" begin="${ph.startPage}" end="${ph.endPage}" step="1">
+			<c:forEach var="pageNumber" begin="${pagination.startPage}" end="${pagination.endPage}" step="1">
 			<c:choose>
-			  <c:when test="${pageNumber eq ph.sc.page}">
+			  <c:when test="${pageNumber eq pagination.criteria.page}">
 				<li class="page-item active">
 				  <a class="page-link">${pageNumber}</a>
 				</li>
 			  </c:when>
 			  <c:otherwise>
-				<li class="page-item"><a class="page-link" href="./list${ph.sc.getQueryString(pageNumber, ph.sc.category)}">${pageNumber}</a></li>
+				<li class="page-item"><a class="page-link" href="./list${pagination.getListLink(pageNumber)}">${pageNumber}</a></li>
 			  </c:otherwise>
 			</c:choose>
 			</c:forEach>
@@ -164,7 +164,7 @@
 	<!-- Next Button -->
 
 			<c:choose>
-			  <c:when test="${ph.sc.page >= ph.totalPage}">
+			  <c:when test="${pagination.criteria.page >= pagination.pageCnt}">
 				<li class="page-item disabled">
 				  <a class="page-link" href="#" aria-label="Next"> 
 				    <span aria-hidden="true">&gt;</span> 
@@ -174,7 +174,7 @@
 			  </c:when>
 			  <c:otherwise>
 				<li class="page-item">
-				  <a class="page-link" href="./list${ph.sc.getQueryString(ph.sc.page+1, ph.sc.category)}" 
+				  <a class="page-link" href="./list${pagination.getListLink(pagination.criteria.page+1)}" 
 					 aria-label="Next"> 
 				    <span aria-hidden="true">&gt;</span> 
 				    <span class="sr-only">다음 페이지 한칸 이동</span>
@@ -184,7 +184,7 @@
 			</c:choose>
 
 			<c:choose>
-			  <c:when test="${ph.endPage == ph.totalPage}">
+			  <c:when test="${pagination.endPage == pagination.pageCnt}">
 				<li class="page-item disabled">
 				  <a class="page-link" href="#" aria-label="Next"> 
 				   <span aria-hidden="true">&raquo;</span> 
@@ -194,7 +194,7 @@
 			  </c:when>
 			  <c:otherwise>
 				<li class="page-item">
-				  <a class="page-link" href="./list${ph.sc.getQueryString(ph.endPage+1, ph.sc.category)}" 
+				  <a class="page-link" href="./list${pagination.getListLink(pagination.endPage+1)}" 
 					 aria-label="Next">
 					<span aria-hidden="true">&raquo;</span> <span class="sr-only">페이지 다음블럭 이동</span>
 				  </a>
@@ -221,23 +221,23 @@
 	    			  <div class="input-group mx-auto">
 	    				<label for="keyword"></label>
 	    			    <div class="col-xs-2">
-	    				  <select id= "keyfield" name="keyfield" class="form-control">
+	    				  <select id= "type" name="type" class="form-control">
 		    				  <optgroup label="검색항목">
-		    				    <option value="title" ${ph.sc.keyfield eq 'title'?'selected':''}>제목</option>
-		    				    <option value="contents" ${ph.sc.keyfield eq 'contents'?'selected':''}>내용</option>
-		    				    <option value="title-contents" ${ph.sc.keyfield eq 'title-contents'?'selected':''}>제목+내용</option>
-		    				    <option value="id" ${ph.sc.keyfield eq 'id'?'selected':''}>아이디</option>
+		    				    <option value="all" ${pagination.criteria.type eq 'all'?'selected':''}>전체</option>
+		    				    <option value="title" ${pagination.criteria.type eq 'title'?'selected':''}>제목</option>
+		    				    <option value="contents" ${pagination.criteria.type eq 'contents'?'selected':''}>내용</option>
+		    				    <option value="id" ${pagination.criteria.type eq 'id'?'selected':''}>아이디</option>
 		    				  </optgroup>
 	    				  </select>
 	    				</div>
 	    				<div class="col-xs-6">
-	    				  <input type="search" id="keyword" name="keyword" class="form-control" placeholder="검색어 입력" value="${ph.sc.keyword}">
+	    				  <input type="search" id="keyword" name="keyword" class="form-control" placeholder="검색어 입력" value="${pagination.criteria.keyword}">
 	    				</div>
 	    				<button class="btn btn-outline-danger input-group-append" type="submit">
 	    				  <i class="fas fa-search"></i>검색
 	    				</button>
 	    				<div>
-	    				  <input type="hidden" id="category" name="category" value="${ph.sc.category}">
+	    				  <input type="hidden" id="category" name="category" value="${pagination.criteria.category}">
 	    				</div>
 	    			  </div>
 	    			</fieldset>
@@ -257,25 +257,6 @@
 <%@ include file="../../include/footer.jsp"%>
 
 	<!-- Footer -->
-
-<script>
-	$(function() {
-		const urlParams = new URL(location.href).searchParams;
-		const category = urlParams.get('category');
-		if(category == 'QNA_TECH') {
-			$(".category a[href*='QNA_TECH']").addClass("active");
-		}
-		if(category == 'QNA_CAREER') {
-			$(".category a[href*='QNA_CAREER']").addClass("active");
-		}
-		if(category == 'QNA_ETC') {
-			$(".category a[href*='QNA_ETC']").addClass("active");
-		}
-		if(category == '') {
-			$(".category a[href*='category=&']").addClass("active");
-		}
-	})
-</script>
 
 </body>
 </html>
