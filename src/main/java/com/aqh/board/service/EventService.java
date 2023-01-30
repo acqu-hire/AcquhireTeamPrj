@@ -17,22 +17,18 @@ public class EventService {
 
 	public List<BoardDTO> eventMenuSelectAll(CriteriaEvent criteriaEvent) {
 		return eventDAO.eventMenuSelectAll(criteriaEvent);
-
 	}
 
 	public List<BoardDTO> eventItEventList(CriteriaEvent criteriaEvent) {
 		return eventDAO.eventItEventList(criteriaEvent);
-
 	}
 
 	public List<BoardDTO> eventMarketingList(CriteriaEvent criteriaEvent) {
 		return eventDAO.eventMarketingList(criteriaEvent);
-
 	}
 
 	public BoardDTO eventSelectDetail(long bNo) {
 		return eventDAO.eventSelectDetail(bNo);
-
 	}
 
 	public void eventInsert(BoardDTO boardDTO) {
@@ -47,11 +43,6 @@ public class EventService {
 		eventDAO.eventDelete(bNo);
 	}
 	
-	public int readCountUp(long bNo) {
-		return eventDAO.readCountUp(bNo);
-		
-	}
-
 	public int BoardListAllCount(CriteriaEvent criteriaEvent) {
 		return eventDAO.BoardCount(criteriaEvent);
 	}
@@ -59,4 +50,9 @@ public class EventService {
 	public int CategoryListCount(CriteriaEvent criteriaEvent) {
 		return eventDAO.CategoryCount(criteriaEvent);
 	}
+	
+	public int readCountUp(long bNo) {
+		return eventDAO.readCountUp(bNo);		
+	}
+
 }
