@@ -20,7 +20,7 @@ public interface BoardDAO {
 
 	public int getBoardTotal(Criteria criteria);
 	
-	public long getReplyTotal(long bno);
+	public int getReplyTotal(long bno);
 
 	public BoardDTO findByBoardNumber(long bno);
 

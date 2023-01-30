@@ -54,7 +54,7 @@ public class QnABoardDAOImpl implements BoardDAO{
 	}
 	
 	@Override
-	public long getReplyTotal(long bno) {
+	public int getReplyTotal(long bno) {
 		return session.selectOne(namespace + "getReplyTotal", bno);
 	}
 	

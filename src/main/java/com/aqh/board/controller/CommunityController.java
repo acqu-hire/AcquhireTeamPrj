@@ -97,7 +97,7 @@ public class CommunityController {
 	public String readCommunityPostList(Model model, Criteria cri) {
 		log.info("PATH" + Path.BOARD_COMMUNITY_SELECT_ALL_VIEW);
 
-		model.addAttribute("boardList", communityService.getList(cri));
+		model.addAttribute("boardList", communityService.getBoardList(cri));
 		model.addAttribute("pagination", new Pagination(communityService.getBoardTotal(cri), cri));
 		return Path.BOARD_COMMUNITY_SELECT_ALL_VIEW.getPath();
 	}
