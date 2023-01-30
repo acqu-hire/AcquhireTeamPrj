@@ -1,7 +1,6 @@
 package com.aqh.board.domain.dto;
 
 import org.springframework.stereotype.Component;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -43,4 +42,4 @@ public class CriteriaEvent {
 		return this.displayPost = (num - 1) * postNum;
 	}
 
-}
+} //CriteriaEvent 클래스는 검색관련 파라미터로 페이지 유지하기 위해 존재하며, SearchCondition와 같은 역할

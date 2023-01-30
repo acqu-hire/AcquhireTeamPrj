@@ -141,7 +141,7 @@
 								</c:choose>
 
 								<c:choose>					
-									<c:when test="${PaginationEvent.endPage >= PaginationEvent.total}">
+									<c:when test="${PaginationEvent.nowPage >= PaginationEvent.endPage_tmp}">
 										<li class="page-item disabled">
 										<a class="page-link" href="#" aria-label="Next"> 
 										<span aria-hidden="true">&raquo;</span> 
@@ -172,17 +172,18 @@
 						<section id="search" class="mb-3 bg-light">
 							<div class="container">
 								<div class="form-row justify-content-center">
-									<form action="./BoardSearch.do" method="post" name="search" id="signupForm"
+									<form action="./menu_select_all" method="get" name="searchType" id="signupForm"
 										enctype="application/x-www-form-urlencoded">
 										<fieldset>
 											<div class="input-group mx-auto">
 												<label for="keyword"></label>
 												<div class="col-xs-2">
-													<select name="keyfield" class="form-control">해당 항목을 기본 선택으로 지정하여 검색한다.
+													<select name="searchType" class="form-control">해당 항목을 기본 선택으로 지정하여 검색한다.
 														<option value="all" selected="selected">전체 검색</option>
-														<option value="title">제목</option>
 														<option value="memberId">아이디</option>
+														<option value="title">제목</option>
 														<option value="content">내용</option>
+														<option value="titleContents">제목+내용</option>
 													</select>
 												</div>
 												<div class="col-xs-6">
