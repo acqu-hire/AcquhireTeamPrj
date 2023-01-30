@@ -1,23 +1,14 @@
 $(function() {
     var maxAppend = $("#addFileBtn div.file-inline").data("fileSize");
     var inputCnt = $("#addFileBtn div.file-inline").data("fileSize");
-    /* 카테고리 동적 활성화 */
+
+    /* 카테고리 활성화 */
 
     const urlParams = new URL(location.href).searchParams;
-		const category = urlParams.get('category');
-		if(category == 'QNA_TECH') {
-			$(".category a[href*='QNA_TECH']").addClass("active");
-		}
-		if(category == 'QNA_CAREER') {
-			$(".category a[href*='QNA_CAREER']").addClass("active");
-		}
-		if(category == 'QNA_ETC') {
-			$(".category a[href*='QNA_ETC']").addClass("active");
-		}
-		if(category == '') {
-			$(".category a[href*='category=&']").addClass("active");
-		}
-    
+		const category = urlParams.get("category");
+        const current_category = $("#BtnCategory a[data-value='" + category + "']");
+        current_category.addClass("active");
+
     /* 글쓰기 폼 유효성 검사 */
 
     $("#QnAWriteForm").submit( function() {
