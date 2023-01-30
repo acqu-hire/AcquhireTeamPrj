@@ -53,7 +53,6 @@
 			  <thead class="thead-dark">
 				<tr>
 				  <th width="4%">번호</th>
-				  <th width="7%">카테고리</th>
 				  <th width="20%">제목</th>
 				  <th width="5%">작성자</th>
 				  <th width="10%">작성일</th>
@@ -64,7 +63,6 @@
 				<c:forEach varStatus="status" var="board" items="${boardList}">
 				<tr>
 				  <th>${(pagination.listCnt-status.index)-((pagination.criteria.page-1)*10)}</th>
-				  <td>${board.category}</td>
 				  <c:choose>
 				    <c:when test="${fn:length(board.title)>15}">
 				      <td title="${board.title}">
@@ -257,8 +255,6 @@
 <%@ include file="../../include/footer.jsp"%>
 
 	<!-- Footer -->
-<script type="text/javascript">
-var current_category = "${param.category}";
-</script>
+
 </body>
 </html>

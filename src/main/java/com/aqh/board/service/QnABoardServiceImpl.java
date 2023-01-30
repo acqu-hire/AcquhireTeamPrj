@@ -33,8 +33,8 @@ public class QnABoardServiceImpl implements BoardService{
 	
 	@Override
 	public BoardDTO findByBoardNumber(long bno) {
-		BoardDTO boardDTO = qnABoardDAOImpl.findByBoardNumber(bno);
 		qnABoardDAOImpl.viewCntUp(bno);
+		BoardDTO boardDTO = qnABoardDAOImpl.findByBoardNumber(bno);
 		return boardDTO;
 	}
 	
