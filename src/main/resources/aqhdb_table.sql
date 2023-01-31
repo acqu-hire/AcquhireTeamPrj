@@ -9,17 +9,19 @@
 
 DROP TABLE IF EXISTS `attachfile`;
 CREATE TABLE `attachfile` (
-  `fno` int NOT NULL AUTO_INCREMENT,
-  `bno` int NOT NULL,
-  `uuid` varchar(80) DEFAULT NULL,
-  `originName` varchar(100) DEFAULT NULL,
-  `uploadPath` varchar(400) DEFAULT NULL,
-  `fileSize` int DEFAULT NULL,
-  `fmtFileSize` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`fno`),
-  KEY `fk_attachfile_board_idx` (`bno`),
-  CONSTRAINT `fk_attachfile_board` FOREIGN KEY (`bno`) REFERENCES `board` (`bno`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3;
+    `fno` INT NOT NULL AUTO_INCREMENT,
+    `bno` INT NOT NULL,
+    `uuid` VARCHAR(80) DEFAULT NULL,
+    `originName` VARCHAR(100) DEFAULT NULL,
+    `uploadPath` VARCHAR(400) DEFAULT NULL,
+    `fileSize` INT DEFAULT NULL,
+    `fmtFileSize` VARCHAR(45) DEFAULT NULL,
+    PRIMARY KEY (`fno`),
+    KEY `fk_attachfile_board_idx` (`bno`),
+    CONSTRAINT `fk_attachfile_board` FOREIGN KEY (`bno`)
+        REFERENCES `board` (`bno`)
+        ON DELETE CASCADE
+)  ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8MB4;
 
 --
 -- Table structure for table `board`
@@ -27,20 +29,22 @@ CREATE TABLE `attachfile` (
 
 DROP TABLE IF EXISTS `board`;
 CREATE TABLE `board` (
-  `bno` int NOT NULL AUTO_INCREMENT,
-  `id` varchar(45) NOT NULL,
-  `menu` enum('QNA','COMMUNITY','EVENT','NOTICE') DEFAULT NULL,
-  `category` enum('QNA_TECH','QNA_CAREER','QNA_ETC','COMMUNITY_LIFE','COMMUNITY_GROUP','EVENT_IT_EVENT','EVENT_MARKETING','NOTICE_NOTICE','NOTICE_EVENT') DEFAULT NULL,
-  `readCount` int DEFAULT '0',
-  `replyCnt` int DEFAULT '0',
-  `files` varchar(100) DEFAULT NULL,
-  `title` varchar(100) DEFAULT NULL,
-  `contents` varchar(3000) DEFAULT NULL,
-  `writeDay` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`bno`),
-  KEY `fk_board_member_idx` (`id`),
-  CONSTRAINT `fk_board_member` FOREIGN KEY (`id`) REFERENCES `member` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3;
+    `bno` INT NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(45) NOT NULL,
+    `menu` ENUM('QNA', 'COMMUNITY', 'EVENT', 'NOTICE') DEFAULT NULL,
+    `category` ENUM('QNA_TECH', 'QNA_CAREER', 'QNA_ETC', 'COMMUNITY_LIFE', 'COMMUNITY_GROUP', 'EVENT_IT_EVENT', 'EVENT_MARKETING', 'NOTICE_NOTICE', 'NOTICE_EVENT') DEFAULT NULL,
+    `readCount` INT DEFAULT '0',
+    `replyCnt` INT DEFAULT '0',
+    `files` VARCHAR(100) DEFAULT NULL,
+    `title` VARCHAR(100) DEFAULT NULL,
+    `contents` VARCHAR(3000) DEFAULT NULL,
+    `writeDay` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`bno`),
+    KEY `fk_board_member_idx` (`id`),
+    CONSTRAINT `fk_board_member` FOREIGN KEY (`id`)
+        REFERENCES `member` (`id`)
+        ON DELETE CASCADE
+)  ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8MB4;
 
 --
 -- Table structure for table `member`
@@ -48,16 +52,16 @@ CREATE TABLE `board` (
 
 DROP TABLE IF EXISTS `member`;
 CREATE TABLE `member` (
-  `id` varchar(45) NOT NULL,
-  `password` varchar(32) DEFAULT NULL,
-  `name` varchar(32) DEFAULT NULL,
-  `gender` varchar(45) DEFAULT NULL,
-  `address` varchar(200) DEFAULT NULL,
-  `phone_number` varchar(45) DEFAULT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `reg_date` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+    `id` VARCHAR(45) NOT NULL,
+    `password` VARCHAR(32) DEFAULT NULL,
+    `name` VARCHAR(32) DEFAULT NULL,
+    `gender` VARCHAR(45) DEFAULT NULL,
+    `address` VARCHAR(200) DEFAULT NULL,
+    `phone_number` VARCHAR(45) DEFAULT NULL,
+    `email` VARCHAR(100) DEFAULT NULL,
+    `reg_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`)
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4;
 
 --
 -- Table structure for table `reply`
@@ -65,17 +69,21 @@ CREATE TABLE `member` (
 
 DROP TABLE IF EXISTS `reply`;
 CREATE TABLE `reply` (
-  `rno` int NOT NULL AUTO_INCREMENT,
-  `bno` int NOT NULL,
-  `prno` int DEFAULT NULL,
-  `writeDay` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `id` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `contents` varchar(3000) DEFAULT NULL,
-  PRIMARY KEY (`rno`),
-  KEY `fk_idx` (`bno`),
-  KEY `fk_reply_member_idx` (`id`),
-  CONSTRAINT `fk_reply_board` FOREIGN KEY (`bno`) REFERENCES `board` (`bno`) ON DELETE CASCADE,
-  CONSTRAINT `fk_reply_member` FOREIGN KEY (`id`) REFERENCES `member` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3;
+    `rno` INT NOT NULL AUTO_INCREMENT,
+    `bno` INT NOT NULL,
+    `prno` INT DEFAULT NULL,
+    `writeDay` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    `id` VARCHAR(45) NOT NULL,
+    `contents` VARCHAR(3000) DEFAULT NULL,
+    PRIMARY KEY (`rno`),
+    KEY `fk_idx` (`bno`),
+    KEY `fk_reply_member_idx` (`id`),
+    CONSTRAINT `fk_reply_board` FOREIGN KEY (`bno`)
+        REFERENCES `board` (`bno`)
+        ON DELETE CASCADE,
+    CONSTRAINT `fk_reply_member` FOREIGN KEY (`id`)
+        REFERENCES `member` (`id`)
+        ON DELETE CASCADE
+)  ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8MB4;
 
 -- Dump completed on 2023-01-26 23:20:34
