@@ -9,6 +9,5 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias alias="ReplyDTO" type="com.aqh.reply.domain.ReplyDTO" />
 		<typeAlias alias="FileDTO" type="com.aqh.common.domain.FileDTO" />
 		<typeAlias alias="FileNoticeDTO" type="com.aqh.common.domain.FileNoticeDTO" />
-		<typeAlias alias="BoardAttachVO" type="com.aqh.common.domain.BoardAttachVO" />
 	</typeAliases>
 </configuration> 
