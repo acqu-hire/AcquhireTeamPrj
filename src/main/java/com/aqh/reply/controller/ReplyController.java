@@ -20,46 +20,46 @@ import com.aqh.reply.service.ReplyService;
 @RestController
 public class ReplyController {
 	ReplyService replySerivceImpl;
-	BoardService qnABoardService;
-	
+	BoardService qnABoardServiceImpl;
+
 	@Autowired
-	public ReplyController(ReplyService replySerivceImpl, BoardService qnABoardService) {
+	public ReplyController(ReplyService replySerivceImpl, BoardService qnABoardServiceImpl) {
 		this.replySerivceImpl = replySerivceImpl;
-		this.qnABoardService = qnABoardService;
+		this.qnABoardServiceImpl = qnABoardServiceImpl;
 	}
-	
+
 	@GetMapping(value = "/reply/{page}")
 	public ResponseEntity<ReplyPageDTO> selectAll(@PathVariable Integer page, ReplyCriteria cri) {
-		return new ResponseEntity<ReplyPageDTO>(replySerivceImpl.getReplyList(page,cri), HttpStatus.OK);
+		return new ResponseEntity<ReplyPageDTO>(replySerivceImpl.getReplyList(page, cri), HttpStatus.OK);
 	}
-	
-	@PostMapping(value =  "/reply")
+
+	@PostMapping(value = "/reply")
 	public ResponseEntity<Long> register(@RequestBody ReplyDTO replyDTO, long bno) {
 		replyDTO.setBno(bno);
 		int result = replySerivceImpl.register(replyDTO);
-		long replyCnt = qnABoardService.getReplyTotal(bno);
-		if(result != 0)
+		long replyCnt = qnABoardServiceImpl.getReplyTotal(bno);
+		if (result != 0)
 			return new ResponseEntity<Long>(replyCnt, HttpStatus.OK);
 		return new ResponseEntity<Long>(HttpStatus.BAD_REQUEST);
 	}
-	
+
 	@DeleteMapping(value = "/reply/{rno}")
-	public ResponseEntity<Long> remove(@PathVariable long rno, long bno){
+	public ResponseEntity<Long> remove(@PathVariable long rno, long bno) {
 		long result = replySerivceImpl.removeReply(rno, bno);
-		long replyCnt = qnABoardService.getReplyTotal(bno);
-		if(result < 1) {
+		long replyCnt = qnABoardServiceImpl.getReplyTotal(bno);
+		if (result < 1) {
 			return new ResponseEntity<Long>(replyCnt, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<Long>(result, HttpStatus.OK);			
+			return new ResponseEntity<Long>(result, HttpStatus.OK);
 		}
 	}
-	
+
 	@PatchMapping(value = "/reply/{rno}")
-	public ResponseEntity<Long> update(@PathVariable long rno, @RequestBody ReplyDTO replyDTO){
+	public ResponseEntity<Long> update(@PathVariable long rno, @RequestBody ReplyDTO replyDTO) {
 		replyDTO.setRno(rno);
 		long result = replySerivceImpl.modify(replyDTO);
-		if(result != 0 )
-			return new ResponseEntity<Long>(result, HttpStatus.OK);			
+		if (result != 0)
+			return new ResponseEntity<Long>(result, HttpStatus.OK);
 		return new ResponseEntity<Long>(HttpStatus.BAD_REQUEST);
 	}
 }

@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.Criteria;
 import com.aqh.board.domain.pagehandler.Pagination;
-import com.aqh.board.service.CommunityService;
+import com.aqh.board.service.BoardService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -45,7 +45,7 @@ public class CommunityController {
 	}
 
 	@Autowired
-	public CommunityService communityService;
+	public BoardService communityServiceImpl;
 
 	/**
 	 * CREATE PART
@@ -65,7 +65,7 @@ public class CommunityController {
 	@PostMapping(value = "/insert_view")
 	public String createCommunityInsertPost(BoardDTO boardDTO, RedirectAttributes rttr) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_INSERT_VIEW);
-		communityService.insertBoard(boardDTO);
+		communityServiceImpl.insertBoard(boardDTO);
 		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath();
 	}
 
@@ -80,17 +80,17 @@ public class CommunityController {
 	public String readCommunityPostList(Model model, Criteria cri) {
 		log.info("PATH" + Path.BOARD_COMMUNITY_SELECT_ALL_VIEW);
 
-		model.addAttribute("boardList", communityService.getBoardList(cri));
-		model.addAttribute("pagination", new Pagination(communityService.getBoardTotal(cri), cri));
+		model.addAttribute("boardList", communityServiceImpl.getBoardList(cri));
+		model.addAttribute("pagination", new Pagination(communityServiceImpl.getBoardTotal(cri), cri));
 		return Path.BOARD_COMMUNITY_SELECT_ALL_VIEW.getPath();
 	}
 
 	@GetMapping(value = "/selectdetail_view")
 	public String readCommunitPost(long bno, Model model) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_SELECT_DETAIL_VIEW);
-		int count = communityService.viewCntUp(bno);
+		int count = communityServiceImpl.viewCntUp(bno);
 		log.info(">>>>>>>>>>>>>" + count);
-		model.addAttribute("boardDTO", communityService.findByBoardNumber(bno));
+		model.addAttribute("boardDTO", communityServiceImpl.findByBoardNumber(bno));
 		return Path.BOARD_COMMUNITY_SELECT_DETAIL_VIEW.getPath();
 	}
 
@@ -105,14 +105,14 @@ public class CommunityController {
 	public String updateCommunityPost(Model model, long bno) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_UPDATE);
 		// TODO 아이디 확인 추가
-		model.addAttribute("boardDTO", communityService.findByBoardNumber(bno));
+		model.addAttribute("boardDTO", communityServiceImpl.findByBoardNumber(bno));
 		return Path.BOARD_COMMUNITY_UPDATE.getPath();
 	}
 
 	@PostMapping(value = "/update")
 	public String updateCommunityPostView(BoardDTO boardDTO) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_UPDATE_VIEW);
-		communityService.updateBoard(boardDTO);
+		communityServiceImpl.updateBoard(boardDTO);
 		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath();
 	}
 
@@ -126,7 +126,7 @@ public class CommunityController {
 	public String deleteCommunityPost(long bno, String id, Criteria cri, RedirectAttributes rttr) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_DELETE);
 		// TODO 아이디 확인 추가
-		communityService.deleteBoard(bno);
+		communityServiceImpl.deleteBoard(bno);
 		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath();
 	}
 
