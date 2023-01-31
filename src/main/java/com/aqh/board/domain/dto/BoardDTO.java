@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.aqh.common.domain.BoardAttachVO;
 import com.aqh.common.domain.FileDTO;
 import com.aqh.common.domain.FileNoticeDTO;
 
@@ -41,13 +40,9 @@ public class BoardDTO {
 	/**
 	 * @author kimdoyeon12
 	 */
+
 	private List<FileNoticeDTO> fileNoList;// 공지사항 파일정보 리스트
 	private MultipartFile uploadFile;// 공지사항 게시글
-
-	/**
-	 * @author Devesg
-	 */
-	private List<BoardAttachVO> attachList;
 
 	private String title; // 게시글 제목
 	private String writeDay; // 게시글 작성일

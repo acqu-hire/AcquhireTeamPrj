@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 import com.aqh.board.dao.CommunityDAOImpl;
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.Criteria;
-import com.aqh.common.dao.UploadDAO;
-import com.aqh.common.domain.BoardAttachVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,23 +23,12 @@ public class CommunityService {
 
 	private final CommunityDAOImpl communityDAOImpl;
 
-	private final UploadDAO uploadDAO;
-
 	// CREATE
 	public int insertBoard(BoardDTO boardDTO) {
 		return communityDAOImpl.insertBoard(boardDTO);
 	}
 
-	public int insert(BoardAttachVO boardAttachVO) {
-		return uploadDAO.insert(boardAttachVO);
-	}
-
 	// READ
-
-	public List<BoardAttachVO> getAttachList(long bno) {
-		return uploadDAO.getAttachList(bno);
-	}
-
 	public List<BoardDTO> getBoardList(Criteria criteria) {
 		return communityDAOImpl.getBoardList(criteria);
 	}
@@ -71,7 +58,6 @@ public class CommunityService {
 
 	// DELETE
 	public int deleteBoard(long bno) {
-		uploadDAO.deleteAttach(bno);
 		return communityDAOImpl.deleteBoard(bno);
 	}
 
