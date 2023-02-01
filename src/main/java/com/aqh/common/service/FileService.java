@@ -21,39 +21,40 @@ import com.aqh.common.domain.FileDTO;
 public class FileService {
 
 	FileDAO fileDAO;
-	
+
 	public FileService(FileDAO fileDAO) {
 		this.fileDAO = fileDAO;
 	}
-	
+
 	@Transactional(rollbackFor = Exception.class)
 	public void upload(HttpServletRequest request, BoardDTO boardDTO) {
-		
-		if(boardDTO.getFiles() == null || boardDTO.getFiles().isEmpty())
+
+		if (boardDTO.getFiles() == null || boardDTO.getFiles().isEmpty())
 			return;
-		
+
 		String uploadPath = request.getServletContext().getRealPath("resources") + "\\upload\\";
 		boardDTO.setFiles(
-				 boardDTO.getFiles().stream()
-				 .filter(file -> !file.getOriginalFilename().equals(""))
-				 .collect(Collectors.toList()));
+				boardDTO.getFiles().stream()
+						.filter(file -> !file.getOriginalFilename().equals(""))
+						.collect(Collectors.toList()));
+
 		boardDTO.setFileList(getFileAttach(uploadPath, boardDTO));
 		fileDAO.upload(boardDTO.getFileList());
 	}
-	
+
 	public List<FileDTO> getFileList(long[] fno) {
 		return fileDAO.getFileList(fno);
 	}
 
 	public int delete(FileDTO fileDTO) {
 		int result = 0;
-		if(fileDTO.getDelAttach()!=null) {
+		if (fileDTO.getDelAttach() != null) {
 			removeFile(fileDAO.getFileList(fileDTO.getDelAttach()));
-		result = fileDAO.delete(fileDTO.getDelAttach());
+			result = fileDAO.delete(fileDTO.getDelAttach());
 		}
 		return result;
 	}
-	
+
 	public FileDTO getFileDetail(long fno) {
 		return fileDAO.getFileDetail(fno);
 	}
@@ -62,70 +63,70 @@ public class FileService {
 	public void deleteAll(FileDTO fileDTO) {
 		delete(fileDTO);
 		fileDAO.deleteAll(fileDTO.getBno());
-		
+
 	}
 
 	public List<FileDTO> getFileAttach(String uploadPath, BoardDTO boardDTO) {
+
 		File fileDir = new File(uploadPath);
+
 		List<FileDTO> list = new ArrayList<>();
-		if(!fileDir.exists()) fileDir.mkdir();
-			for(MultipartFile file : boardDTO.getFiles()) {
-					String uuid = getUuid();
-					FileDTO fileDTO = new FileDTO(boardDTO.getBno(),
-												  uuid,
-												  file.getOriginalFilename(),
-												  uploadPath,
-												  file.getSize(),
-												  getFmtFileSize(file.getSize()));
-					list.add(fileDTO);
-					File saveFile = new File(uploadPath + uuid + getExtension(file));
-					try {
-						file.transferTo(saveFile);
-					} catch (IllegalStateException e) {
-						e.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				} 
-			return list;
+
+		if (!fileDir.exists())
+			fileDir.mkdir();
+		for (MultipartFile file : boardDTO.getFiles()) {
+			String uuid = getUuid();
+
+			FileDTO fileDTO = new FileDTO(boardDTO.getBno(),uuid,file.getOriginalFilename(),uploadPath,file.getSize(),getFmtFileSize(file.getSize()));
+			list.add(fileDTO);
+			File saveFile = new File(uploadPath + uuid + getExtension(file));
+			try {
+				file.transferTo(saveFile);
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-	
+		return list;
+	}
+
 	public void removeFile(List<FileDTO> files) {
-		for(FileDTO file : files) {
-			File delFile = new File(file.getUploadPath() 
-								  + file.getUuid() 
-								  + getExtension(file.getOriginName()));
-			if(delFile.exists()) {
+		for (FileDTO file : files) {
+			File delFile = new File(file.getUploadPath()
+					+ file.getUuid()
+					+ getExtension(file.getOriginName()));
+			if (delFile.exists()) {
 				delFile.delete();
 			}
 		}
-		
+
 	}
-	
+
 	private String getFmtFileSize(long fileSize) {
-		if(fileSize < 1024) { // 1KB 미만
+		if (fileSize < 1024) { // 1KB 미만
 			return fileSize + "Bytes";
-		} else if (fileSize < (1024*1024)) { // 1MB 미만
-			return Math.round(fileSize/1024.0)+"KB";
-		} else if (fileSize < (1024*1024*1024)) { // 1GB 미만
-			return Math.round(fileSize/(1024.0*1024.0))+"MB";
+		} else if (fileSize < (1024 * 1024)) { // 1MB 미만
+			return Math.round(fileSize / 1024.0) + "KB";
+		} else if (fileSize < (1024 * 1024 * 1024)) { // 1GB 미만
+			return Math.round(fileSize / (1024.0 * 1024.0)) + "MB";
 		} else {
-			return Math.round(fileSize/(1024.0*1024.0*1024.0))+"GB";
+			return Math.round(fileSize / (1024.0 * 1024.0 * 1024.0)) + "GB";
 		}
 	}
-	
+
 	public String getExtension(String originName) {
 		return originName.substring(originName.lastIndexOf(".", originName.length()));
 	}
-	
+
 	private String getExtension(MultipartFile file) {
 		String fileName = file.getOriginalFilename();
-		if(!file.isEmpty()) {
+		if (!file.isEmpty()) {
 			return fileName.substring(fileName.lastIndexOf("."), fileName.length());
 		}
 		return null;
 	}
-	
+
 	private String getUuid() {
 		return UUID.randomUUID().toString();
 	}

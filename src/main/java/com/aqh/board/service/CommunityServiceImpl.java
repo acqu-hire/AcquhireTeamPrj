@@ -71,8 +71,7 @@ public class CommunityServiceImpl implements BoardService {
 
 	@Override
 	public List<FileDTO> getFileList(long bno) {
-		// TODO Auto-generated method stub
-		return null;
+		return communityDAOImpl.getFileList(bno);
 	}
 
 }

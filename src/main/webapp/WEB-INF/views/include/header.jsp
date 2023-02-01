@@ -44,7 +44,7 @@
 			  <a class="nav-link ${fn:contains(url ,'event')?'active':''}" href="<c:url value='/event/menu_select_all' />">이벤트</a>
 			</li>
 			<li class="nav-item">
-			  <a class="nav-link ${fn:contains(url ,'community')?'active':''}" href="<c:url value='/community/select_all_view' />">커뮤니티</a>
+			  <a class="nav-link ${fn:contains(url ,'community')?'active':''}" href="<c:url value='/community/list' />">커뮤니티</a>
 			</li>
 			<li class="nav-item dropdown">
 			  <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
@@ -73,7 +73,7 @@
 		    <a class="nav-link ${fn:contains(url ,'event')?'active':''}" href="<c:url value='/event/menu_select_all' />">이벤트</a>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link ${fn:contains(url ,'community')?'active':''}" href="<c:url value='/community/select_all_view' />">커뮤니티</a>
+		    <a class="nav-link ${fn:contains(url ,'community')?'active':''}" href="<c:url value='/community/list' />">커뮤니티</a>
 		  </li>
 		  <li class="nav-item">
 		    <a class="nav-link ${fn:contains(url ,'register')?'active':''}" href="<c:url value='/member/register'/>">회원가입</a>

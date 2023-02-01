@@ -11,7 +11,7 @@
     <!-- READ -->
     
     <select id="getList" resultType="BoardDTO">
-        SELECT * FROM (SELECT * FROM board ORDER BY bno DESC) SUBQUERY
+        SELECT * FROM (SELECT * FROM board where menu = "COMMUNITY" ORDER BY bno DESC) SUBQUERY
         <trim prefix="WHERE (" prefixOverrides="AND" suffix=")">
 				
             <if test="category != null ">
@@ -35,7 +35,7 @@
 	            </if>
             </if>
     </trim>
-            
+
 			limit #{offset},#{limit}
         <!--
             (SELECT * FROM board ORDER BY bno DESC) SUBQUERY LIMIT #{page},#{limit};
@@ -43,7 +43,7 @@
     </select>
     
     <select id="findByBoardNumber" resultType="BoardDTO">
-    SELECT * FROM board where bno = #{bno}
+    SELECT * FROM board where bno = #{bno} and menu = "COMMUNITY"
     </select>
     
     <select id="getTotal" resultType="int">
@@ -67,6 +67,7 @@
                         OR id LIKE concat('%',#{keyword},'%')
                     </if>
                     AND menu = "COMMUNITY"
+                    
                 </if>
             </trim>
     </select>
@@ -87,4 +88,13 @@
     DELETE FROM board WHERE bno = #{bno}
     </delete>
     
+    <select id="getFileList" resultType="FileDTO">
+		SELECT * FROM attachfile
+		WHERE bno=#{bno}
+	</select>
+	
+	<select id="getReplyTotal" resultType="int">
+		SELECT replyCnt FROM board
+		WHERE bno=#{bno}
+	</select>
 </mapper>
