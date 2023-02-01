@@ -68,7 +68,7 @@
 			   </tr>
 			   <tr>
 				 <td colspan="2"  class="text-right">
-				   <input type="submit" value="글쓰기" class="btn btn-success" id="submitWriteForm">
+				   <input type="button" value="글쓰기" class="btn btn-success" id="submitWriteForm">
 				   <input type="reset" value="다시작성" class="btn btn-warning">
 				   <button type="button"  class="btn btn-primary" id="btnList">전체 게시글보기</button>
 				 </td>

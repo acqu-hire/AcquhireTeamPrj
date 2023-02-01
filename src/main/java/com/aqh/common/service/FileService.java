@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,16 +27,18 @@ public class FileService {
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
-	public int upload(HttpServletRequest request, BoardDTO boardDTO) {
-		int result = 0;
+	public void upload(HttpServletRequest request, BoardDTO boardDTO) {
+		
+		if(boardDTO.getFiles() == null || boardDTO.getFiles().isEmpty())
+			return;
+		
 		String uploadPath = request.getServletContext().getRealPath("resources") + "\\upload\\";
-		if(boardDTO.getFiles() != null && !boardDTO.getFiles().isEmpty()) {
-			if(!(boardDTO.getFiles().get(0).getOriginalFilename().equals("")) && boardDTO.getFiles() != null) {
-				boardDTO.setFileList(getFileAttach(uploadPath, boardDTO));
-				result = fileDAO.upload(boardDTO.getFileList());
-			}			
-		}
-			return result;
+		boardDTO.setFiles(
+				 boardDTO.getFiles().stream()
+				 .filter(file -> !file.getOriginalFilename().equals(""))
+				 .collect(Collectors.toList()));
+		boardDTO.setFileList(getFileAttach(uploadPath, boardDTO));
+		fileDAO.upload(boardDTO.getFileList());
 	}
 	
 	public List<FileDTO> getFileList(long[] fno) {
@@ -68,7 +71,6 @@ public class FileService {
 		List<FileDTO> list = new ArrayList<>();
 		if(!fileDir.exists()) fileDir.mkdir();
 			for(MultipartFile file : boardDTO.getFiles()) {
-				if(file.getOriginalFilename() != "") {
 					String uuid = getUuid();
 					FileDTO fileDTO = new FileDTO(boardDTO.getBno(),
 												  uuid,
@@ -85,13 +87,9 @@ public class FileService {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-				} else {
-					boardDTO.getFiles().remove(file);
-				}
-			}
-		
-		return list;
-	}
+				} 
+			return list;
+		}
 	
 	public void removeFile(FileDTO fileDTO, BoardDTO boardDTO) {
 		for(FileDTO file : boardDTO.getFileList()) {
