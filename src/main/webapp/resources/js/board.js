@@ -52,7 +52,6 @@ $(function() {
         + '</div>');
         maxAppend++;
         inputCnt++;
-        alert(maxAppend)
     });
     
     $(".file-area").on("click", ".delBtn", function() {

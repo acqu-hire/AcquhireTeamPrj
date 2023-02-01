@@ -64,7 +64,6 @@
 		        <th>파일 <button type="button" id="addFileBtn">추가</button></th>
 			     <td class="file-area">
 			       <div class="row file-inline" data-fileSize="${boardDTO.fileList.size()}">
-			         <input type="file" name="files">
 			       </div>
 			     </td>
 			   </tr>
