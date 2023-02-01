@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.aqh.board.dao.EventDAO;
 import com.aqh.board.domain.dto.BoardDTO;
-import com.aqh.board.domain.dto.CriteriaEvent;
+import com.aqh.board.domain.dto.Criteria;
 
 @Service
 public class EventService {
@@ -15,44 +15,44 @@ public class EventService {
 	@Autowired
 	private EventDAO eventDAO;
 
-	public List<BoardDTO> eventMenuSelectAll(CriteriaEvent criteriaEvent) {
-		return eventDAO.eventMenuSelectAll(criteriaEvent);
+	//조회
+	public List<BoardDTO> eventMenuSelectAll(Criteria cri) {
+		return eventDAO.eventMenuSelectAll(cri);
 	}
 
-	public List<BoardDTO> eventItEventList(CriteriaEvent criteriaEvent) {
-		return eventDAO.eventItEventList(criteriaEvent);
+	public List<BoardDTO> eventItEventList(Criteria cri) {
+		return eventDAO.eventItEventList(cri);
 	}
 
-	public List<BoardDTO> eventMarketingList(CriteriaEvent criteriaEvent) {
-		return eventDAO.eventMarketingList(criteriaEvent);
+	public List<BoardDTO> eventMarketingList(Criteria cri) {
+		return eventDAO.eventMarketingList(cri);
 	}
 
-	public BoardDTO eventSelectDetail(long bNo) {
-		return eventDAO.eventSelectDetail(bNo);
+	public BoardDTO eventSelectDetail(long bno) {
+		return eventDAO.eventSelectDetail(bno);
 	}
 
+	//등록
 	public void eventInsert(BoardDTO boardDTO) {
 		eventDAO.eventInsert(boardDTO);
 	}
 
+	//수정
 	public void eventUpdate(BoardDTO boardDTO) {
 		eventDAO.eventUpdate(boardDTO);
 	}
 
-	public void eventDelete(long bNo) {
-		eventDAO.eventDelete(bNo);
+	//삭제
+	public void eventDelete(long bno) {
+		eventDAO.eventDelete(bno);
 	}
 	
-	public int BoardListAllCount(CriteriaEvent criteriaEvent) {
-		return eventDAO.BoardCount(criteriaEvent);
+	//추가 기능
+	public int readCountUp(long bno) {
+		return eventDAO.readCountUp(bno);		
 	}
 	
-	public int CategoryListCount(CriteriaEvent criteriaEvent) {
-		return eventDAO.CategoryCount(criteriaEvent);
+	public int BoardListAllCount(Criteria cri) {
+		return eventDAO.BoardCount(cri);
 	}
-	
-	public int readCountUp(long bNo) {
-		return eventDAO.readCountUp(bNo);		
-	}
-
 }

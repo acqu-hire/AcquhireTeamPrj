@@ -1,4 +1,4 @@
-package com.aqh.board.domain.pagehandler;
+ package com.aqh.board.domain.pagehandler;
 
 import org.springframework.web.util.UriComponentsBuilder;
 

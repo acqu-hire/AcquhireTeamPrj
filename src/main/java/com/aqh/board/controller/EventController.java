@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.aqh.board.domain.dto.BoardDTO;
+import com.aqh.board.domain.dto.Criteria;
 import com.aqh.board.domain.dto.BoardDTO.Category;
-import com.aqh.board.domain.dto.CriteriaEvent;
-import com.aqh.board.domain.pagehandler.PaginationEvent;
+import com.aqh.board.domain.pagehandler.Pagination;
 import com.aqh.board.service.EventService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -25,20 +25,18 @@ public class EventController {
 
 	// 이벤트 게시판 전체 조회
 	@GetMapping("/menu_select_all")
-	public String SelectAll(Model model, CriteriaEvent criteriaEvent) {
-		model.addAttribute("eventMenuSelectAll", eventService.eventMenuSelectAll(criteriaEvent));
-		model.addAttribute("PaginationEvent",
-				new PaginationEvent(criteriaEvent, (int) eventService.BoardListAllCount(criteriaEvent)));
+	public String SelectAll(Model model, Criteria cri) {
+		model.addAttribute("eventMenuSelectAll", eventService.eventMenuSelectAll(cri));
+		model.addAttribute("pagination", new Pagination((int) eventService.BoardListAllCount(cri), cri));
 		log.info("이벤트 게시판 전체 조회 : " + model);
 		return "board/event/eventList";
 	}
 
 	// it 이벤트 게시판 전체 조회
 	@GetMapping("/it_event_list")
-	public String itEventList(Model model, CriteriaEvent criteriaEvent) {
-		model.addAttribute("eventList", eventService.eventItEventList(criteriaEvent));
-		model.addAttribute("PaginationEvent",
-				new PaginationEvent(criteriaEvent, (int) eventService.BoardListAllCount(criteriaEvent)));
+	public String itEventList(Model model, Criteria cri) {
+		model.addAttribute("eventList", eventService.eventItEventList(cri));
+		model.addAttribute("pagination", new Pagination((int) eventService.BoardListAllCount(cri), cri));
 		log.info("it 이벤트 게시판 전체 조회 : " + model);
 		return "board/event/event_it_event_list";
 
@@ -46,8 +44,10 @@ public class EventController {
 
 	// 마케팅 게시판 전체 조회
 	@GetMapping("/marketing_list")
-	public String marketingList(Model model, CriteriaEvent criteriaEvent) {
-		model.addAttribute("eventMarketingList", eventService.eventMarketingList(criteriaEvent));
+	public String marketingList(Model model, Criteria cri) {
+		model.addAttribute("marketingList", eventService.eventMarketingList(cri));
+		model.addAttribute("pagination", new Pagination((int) eventService.BoardListAllCount(cri), cri));
+		log.info("it 마케팅 게시판 전체 조회 : " + model);
 		return "board/event/event_marketing_list";
 
 	}
