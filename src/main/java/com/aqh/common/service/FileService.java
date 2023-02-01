@@ -45,11 +45,10 @@ public class FileService {
 		return fileDAO.getFileList(fno);
 	}
 
-	public int delete(FileDTO fileDTO, BoardDTO boardDTO) {
+	public int delete(FileDTO fileDTO) {
 		int result = 0;
 		if(fileDTO.getDelAttach()!=null) {
-			boardDTO.setFileList(fileDAO.getFileList(fileDTO.getDelAttach()));
-			removeFile(fileDTO, boardDTO);
+			removeFile(fileDAO.getFileList(fileDTO.getDelAttach()));
 		result = fileDAO.delete(fileDTO.getDelAttach());
 		}
 		return result;
@@ -60,8 +59,8 @@ public class FileService {
 	}
 
 	@Transactional(rollbackFor = Exception.class)
-	public void deleteAll(FileDTO fileDTO, BoardDTO boardDTO) {
-		delete(fileDTO, boardDTO);
+	public void deleteAll(FileDTO fileDTO) {
+		delete(fileDTO);
 		fileDAO.deleteAll(fileDTO.getBno());
 		
 	}
@@ -91,8 +90,8 @@ public class FileService {
 			return list;
 		}
 	
-	public void removeFile(FileDTO fileDTO, BoardDTO boardDTO) {
-		for(FileDTO file : boardDTO.getFileList()) {
+	public void removeFile(List<FileDTO> files) {
+		for(FileDTO file : files) {
 			File delFile = new File(file.getUploadPath() 
 								  + file.getUuid() 
 								  + getExtension(file.getOriginName()));

@@ -82,14 +82,14 @@ public class QnAController {
 	public String qnaUpdate(BoardDTO boardDTO, Criteria cri, FileDTO fileDTO, HttpServletRequest request) {
 		qnABoardServiceImpl.updateBoard(boardDTO);
 		fileService.upload(request, boardDTO);
-		fileService.delete(fileDTO, boardDTO);
+		fileService.delete(fileDTO);
 
 		return "redirect:/QnA/list" + cri.getQueryString(cri.getPage(), cri.getCategory());
 	}
 
 	@PostMapping("/delete")
-	public String qnaDelete(Criteria cri, FileDTO fileDTO, HttpServletRequest request, BoardDTO boardDTO) {
-		fileService.deleteAll(fileDTO, boardDTO);
+	public String qnaDelete(Criteria cri, FileDTO fileDTO, HttpServletRequest request) {
+		fileService.deleteAll(fileDTO);
 		qnABoardServiceImpl.deleteBoard(fileDTO.getBno());
 
 		return "redirect:/QnA/list" + cri.getQueryString(cri.getPage(), cri.getCategory());
