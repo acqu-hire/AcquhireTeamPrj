@@ -36,6 +36,7 @@
 				<label for="password" class="text-info">Password:</label><br> 
 				<input type="password" name="password" id="password" class="form-control">
 			  </div>
+			  <input type="hidden" name="requestURL" value="${requestURL}">
 			  <div class="form-group">
 				<label for="save" class="text-info"><span>Remember me</span> 
 				  <span><input name="rememberId" type="checkbox" value="on" ${!empty cookie.id.value?'checked':''}></span>

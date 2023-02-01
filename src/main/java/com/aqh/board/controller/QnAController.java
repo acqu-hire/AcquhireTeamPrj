@@ -38,14 +38,12 @@ public class QnAController {
 	}
 
 	@GetMapping("/listDetail")
-	public String qnaListDetail(long bno, Model model, Criteria cri, BoardDTO boardDTO) {
-
-		boardDTO = qnABoardServiceImpl.findByBoardNumber(bno);
-		boardDTO.setFileList(qnABoardServiceImpl.getFileList(boardDTO.getBno()));
+	public String qnaListDetail(long bno, Model model, Criteria cri) {
+		BoardDTO boardDTO = qnABoardServiceImpl.findByBoardNumber(bno);
+		boardDTO.setFileList(qnABoardServiceImpl.getFileList(bno));
 
 		model.addAttribute(boardDTO);
 		model.addAttribute("cri", cri);
-		model.addAttribute("fileList", boardDTO.getFileList());
 		return "board/qna/qna_list_detail";
 	}
 
@@ -58,7 +56,6 @@ public class QnAController {
 
 	@PostMapping("/write")
 	public String qnaInsert(BoardDTO boardDTO, Model model, HttpServletRequest request) {
-		System.out.println("boardDTO = " + boardDTO.getFiles());
 		model.addAttribute(boardDTO.getCategory());
 		qnABoardServiceImpl.insertBoard(boardDTO);
 		fileService.upload(request, boardDTO);
