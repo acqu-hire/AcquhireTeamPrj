@@ -25,7 +25,7 @@ public class LoginController {
 	MemberService service;
 	
 	@GetMapping("/login")
-	public String loginForm() {
+	public String loginForm(HttpServletRequest request) {
 		return "login/login_form";
 	}
 	
@@ -36,32 +36,33 @@ public class LoginController {
 	}
 	
 	@PostMapping("/login")
-	public String login(String id, String password, boolean rememberId, HttpServletRequest request, HttpServletResponse response) {
+	public String login(MemberDTO memberDTO, String requestURL, boolean rememberId, HttpServletRequest request, HttpServletResponse response) {
 		
-		if(!loginCheck(id, password)) {
+		if(!loginCheck(memberDTO.getId(), memberDTO.getPassword())) {
 			try {
 				String msg = URLEncoder.encode("ID 또는 비밀번호가 일치하지 않습니다.", "utf-8");
 				return "redirect:/login/login?msg="+msg;
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
-				return "redirect:/exception/error404";
+				return "redirect:/";
 			}
 
 		}
 		HttpSession session = request.getSession();
-		session.setAttribute("name", service.memberDetail(id).getName());
-		session.setAttribute("id", id);
+		session.setAttribute("name", service.memberDetail(memberDTO.getId()).getName());
+		session.setAttribute("id", memberDTO.getId());
 		
 		if(rememberId) {
-			Cookie cookie = new Cookie("id", id);
+			Cookie cookie = new Cookie("id", memberDTO.getId());
 			response.addCookie(cookie);
 		} else {
-			Cookie cookie = new Cookie("id", id);
+			// 혹시 모를 쿠키 비워주기
+			Cookie cookie = new Cookie("id", memberDTO.getId());
 			cookie.setMaxAge(0);
 			response.addCookie(cookie);
 		}
-		
-		return "redirect:/";
+		requestURL = requestURL!=null?requestURL:"";
+		return "redirect:/"+requestURL;
 	}
 
 	private boolean loginCheck(String id, String password) {
