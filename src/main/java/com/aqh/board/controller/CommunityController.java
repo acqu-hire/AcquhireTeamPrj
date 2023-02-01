@@ -1,17 +1,20 @@
 package com.aqh.board.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.Criteria;
 import com.aqh.board.domain.pagehandler.Pagination;
 import com.aqh.board.service.BoardService;
+import com.aqh.common.domain.FileDTO;
+import com.aqh.common.service.FileService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,7 +33,7 @@ public class CommunityController {
 		BOARD_COMMUNITY_UPDATE_VIEW(JSP_PATH.getPath() + "/update_view"),
 		BOARD_COMMUNITY_DELETE(JSP_PATH.getPath() + "/delete"),
 		BOARD_COMMUNITY_DELETE_VIEW(JSP_PATH.getPath() + "/delete_view"),
-		BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW(REDIRECT_PATH.getPath() + "/select_all_view");
+		BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW(REDIRECT_PATH.getPath() + "/list");
 
 		private String returnPath;
 
@@ -47,6 +50,9 @@ public class CommunityController {
 	@Autowired
 	public BoardService communityServiceImpl;
 
+	@Autowired
+	public FileService fileService;
+
 	/**
 	 * CREATE PART
 	 * 
@@ -55,17 +61,18 @@ public class CommunityController {
 	 * @return
 	 */
 	// @LoginCheck
-	@GetMapping(value = "/insert")
+	@GetMapping(value = "/write")
 	public String createCommunityPost() {
 		// TODO 아이디 확인 추가
 		log.info("PATH " + Path.BOARD_COMMUNITY_INSERT);
 		return Path.BOARD_COMMUNITY_INSERT.getPath();
 	}
 
-	@PostMapping(value = "/insert_view")
-	public String createCommunityInsertPost(BoardDTO boardDTO, RedirectAttributes rttr) {
+	@PostMapping(value = "/write")
+	public String createCommunityInsertPost(BoardDTO boardDTO, HttpServletRequest request) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_INSERT_VIEW);
 		communityServiceImpl.insertBoard(boardDTO);
+		fileService.upload(request, boardDTO);
 		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath();
 	}
 
@@ -76,7 +83,7 @@ public class CommunityController {
 	 * @param param
 	 * @return
 	 */
-	@GetMapping(value = "/select_all_view")
+	@GetMapping(value = "/list")
 	public String readCommunityPostList(Model model, Criteria cri) {
 		log.info("PATH" + Path.BOARD_COMMUNITY_SELECT_ALL_VIEW);
 
@@ -86,11 +93,17 @@ public class CommunityController {
 	}
 
 	@GetMapping(value = "/selectdetail_view")
-	public String readCommunitPost(long bno, Model model) {
+	public String readCommunitPost(long bno, Model model, Criteria cri) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_SELECT_DETAIL_VIEW);
-		int count = communityServiceImpl.viewCntUp(bno);
-		log.info(">>>>>>>>>>>>>" + count);
-		model.addAttribute("boardDTO", communityServiceImpl.findByBoardNumber(bno));
+		BoardDTO boardDTO = new BoardDTO();
+		
+		communityServiceImpl.viewCntUp(bno);
+		boardDTO = communityServiceImpl.findByBoardNumber(bno);
+		boardDTO.setFileList(communityServiceImpl.getFileList(bno));
+
+		model.addAttribute("boardDTO", boardDTO);
+		model.addAttribute("cri", cri);
+
 		return Path.BOARD_COMMUNITY_SELECT_DETAIL_VIEW.getPath();
 	}
 
@@ -102,18 +115,29 @@ public class CommunityController {
 	 */
 
 	@GetMapping(value = "/update")
-	public String updateCommunityPost(Model model, long bno) {
+	public String updateCommunityPost(Model model, long bno, Criteria cri) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_UPDATE);
 		// TODO 아이디 확인 추가
-		model.addAttribute("boardDTO", communityServiceImpl.findByBoardNumber(bno));
+		
+		BoardDTO boardDTO = communityServiceImpl.findByBoardNumber(bno);
+		boardDTO.setFileList(communityServiceImpl.getFileList(bno));
+
+		model.addAttribute("cri", cri);
+		model.addAttribute("boardDTO", boardDTO);
+		
 		return Path.BOARD_COMMUNITY_UPDATE.getPath();
 	}
 
 	@PostMapping(value = "/update")
-	public String updateCommunityPostView(BoardDTO boardDTO) {
+	public String updateCommunityPostView(BoardDTO boardDTO, FileDTO fileDTO, HttpServletRequest request,
+			Criteria cri) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_UPDATE_VIEW);
 		communityServiceImpl.updateBoard(boardDTO);
-		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath();
+		fileService.upload(request, boardDTO);
+		fileService.delete(fileDTO);
+
+		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath()
+				+ cri.getQueryString(cri.getPage(), cri.getCategory());
 	}
 
 	/**
@@ -122,12 +146,14 @@ public class CommunityController {
 	 * @author Devesg
 	 * @return
 	 */
-	@GetMapping(value = "/delete")
-	public String deleteCommunityPost(long bno, String id, Criteria cri, RedirectAttributes rttr) {
+	@PostMapping(value = "/delete")
+	public String deleteCommunityPost(Criteria cri, FileDTO fileDTO, HttpServletRequest request) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_DELETE);
 		// TODO 아이디 확인 추가
-		communityServiceImpl.deleteBoard(bno);
-		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath();
+		fileService.deleteAll(fileDTO);
+		communityServiceImpl.deleteBoard(fileDTO.getBno());
+		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath()
+				+ cri.getQueryString(cri.getPage(), cri.getCategory());
 	}
 
 }

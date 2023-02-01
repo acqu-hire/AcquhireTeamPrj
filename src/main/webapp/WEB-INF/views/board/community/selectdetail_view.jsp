@@ -1,392 +1,154 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-		<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-		<%-- <c:if test="${empty sessionScope.memberId}">
-			<script type="text/javascript">
-				location.href = "./LoginView.me"
-			</script>
-			</c:if> --%>
-			<!DOCTYPE html>
-			<html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<!DOCTYPE html>
+<html>
+<head>
+<script src="${contextPath}/resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
+<script src="${contextPath}/resources/js/reply.js?ver=1" type="text/javascript"></script>
+<meta charset="UTF-8">
+<title>커뮤니티 게시판</title>
 
-			<head>
-				<meta charset="UTF-8">
-				<title>커뮤니티 게시판</title>
-				<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.min.css">
-				<script src="https://kit.fontawesome.com/58abbffa46.js"></script>
-				<script type="text/javascript" src="${contextPath}/resources/js/reply.js"> </script>
-				<script src="${contextPath}/resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
-				<script src="${contextPath}/resources/js/bootstrap.min.js" type="text/javascript"></script>
-				
-				<div class="bigPictureWrapper">
-					<div class="bigPicture"></div>
+</head>
+<body>
+	<!-- Header -->
+
+<%@ include file="../../include/header.jsp" %>
+
+	<!-- Header -->
+
+	<!-- Board Insert Form -->
+
+<div class="container-fluid">
+	<div class="row justify-content-center">
+		<div class="col-md-8 mt-3 mb-3">
+			<div class="card">
+				<div class="card-header">
+					<h2 class="text-center mt-4 mb-4">게시글</h2>
 				</div>
-
-				<style>
-					.uploadResult {
-						width: 100%;
-						background-color: gray;
-					}
-
-					.uploadResult ul {
-						display: flex;
-						flex-flow: row;
-						justify-content: center;
-						align-items: center;
-					}
-
-					.uploadResult ul li {
-						list-style: none;
-						padding: 10px;
-						align-content: center;
-						text-align: center;
-					}
-
-					.uploadResult ul li img {
-						width: 100px;
-					}
-
-					.uploadResult ul li span {
-						color: white;
-					}
-
-					.bigPictureWrapper {
-						position: absolute;
-						display: none;
-						justify-content: center;
-						align-items: center;
-						top: 0%;
-						width: 100%;
-						height: 100%;
-						background-color: rgb(158, 158, 158);
-						z-index: 100;
-						background: rgba(255, 255, 255, 0.5)
-					}
-
-					.bigPicture {
-						position: relative;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-					}
-
-					.bigPicture img {
-						width: 600px;
-					}
-				</style>
-				<script type="text/javascript">
-					$(document).ready(function () {
-						
-
-						$(".uploadResult").on("click","li",function () {
-							var liobj = $(this);
-							var path = encodeURIComponent(liobj.data("path")+"/"+liobj.data("uuid")+"_"+liobj.data("filename"));
+				<div class="card-body">
+				  <form method="get" action="" id="boardForm">
+					<table class="table">
+						<tr>
+							<th>조회수</th>
 							
-							if (liobj.data("type")) {
-								showImage(path.replace(new RegExp(/\\/g),"/"));
-							} else 
-							{
-								self.location = "/download?fileName="+path;
-							}
-						});
-						/** 
-						 * show Wrapper
-						*/
-						function showImage(fileCallPath) {
-							$(".bigPictureWrapper").css("display", "flex").show();
-							$(".bigPicture")
-							.html("<img src='/display?fileName="+ fileCallPath + "'>")
-							.animate({ width: '100%', height: '100%' }, 1000);
-						}
-						$(".bigPictureWrapper").on("click", function () {
-							$(".bigPicture").animate({ width: '0%', height: '0%' }, 1000);
-							setTimeout(() => {
-								$(this).hide();
-							}, 1000);
-						});
-						var bnoValue = '<c:out value="${boardDTO.bno}"/>';
-						$.getJSON("/community/getAttachList", { bno: bnoValue },
-
-							function (arr) {
-								console.log('arr :>> ', arr);
-								var str = "";
-
-								$(arr).each(function (i, attach) {
-									//image type
-									if (attach.fileType) {
-										var fileCallPath = encodeURIComponent(attach.uploadPath + "/s_" + attach.uuid + "_" + attach.fileName);
-										str += "<li data-path='" + attach.uploadPath + "' data-uuid='" + attach.uuid + "' data-filename='" + attach.fileName + "' data-type='" + attach.fileType + "'><div>";
-										str += "<img src='/display?fileName="+ fileCallPath + "'>";
-										str += "</div>";
-										str += "</li>";
-									}
-									else {
-										str += "<li data-path='" + attach.uploadPath + "' data-uuid='" + attach.uuid + "' data-filename='" + attach.fileName + "' data-type='" + attach.fileType + "'><div>";
-										str += "<span> " + attach.fileName + "</span><br/>";
-										str += "<img src='${contextPath}/resources/img/attach.png'>";
-										str += "</div>";
-										str += "</li>";
-									}
-									$(".uploadResult ul").html(str);
-								});
-							}
-						);
-
-						var replyUL = $(".chat");
-
-						showList(1);
-						function showList(page) {
-							replyService.getList({ bno: bnoValue, page: page || 1 }, function (list) {
-								var str = "";
-								if (list == null || list.length == 0) {
-									replyUL.html("");
-									return;
-								}
-								for (var i = 0, len = list.length || 0; i < len; i++) {
-									str += "<li class='left clearfix' data-rno='" + list[i].rno + "'>";
-									str += "<div><div class='header'><strong class='primary-font'>" + list[i].id + "</Strong>";
-									str += "<small class='pull-right text-muted'>" + list[i].writeDay + "</small></div>";
-									str += "<p>" + list[i].contents + "</p></div></li>";
-								}
-								replyUL.html(str);
-							})
-						}
-
-						var modal = $(".modal");
-						var modalInputId = modal.find("input[name='id']");
-						var modalInputContents = modal.find("input[name='contents']");
-						var modalInputReplyData = modal.find("input[name='writeDay']");
-
-						var modalModBtn = $("#modalModBtn");
-						var modalRemoveBtn = $("#modalRemoveBtn");
-						var modalRegisterBtn = $("#modalRegisterBtn");
-						var modalCloseBtn = $("#modalCloseBtn");
-
-						modalCloseBtn.on("click", function () {
-							modal.modal("hide")
-						})
-
-						// if addREplyBtn click -> show modal
-						$("#addReplyBtn").on("click", function (e) {
-							modal.find("input").val("");
-							modalInputReplyData.closest("div").hide();
-							modal.find("button[id !='modalCloseBtn']").hide();
-							modalRegisterBtn.show();
-							modal.modal("show");
-						});
-
-						// if 댓글 click -> show modal
-						$(".chat").on("click", "li", function (e) {
-							var rno = $(this).data("rno");
-							console.log('rno :>> ', rno);
-							replyService.get(rno, function (reply) {
-								console.log('reply :>> ', reply);
-								modalInputId.val(reply.id);
-								modalInputContents.val(reply.contents);
-								modalInputReplyData.val(reply.writeDay).attr("readonly", "readonly");
-								modal.data("rno", reply.rno);
-
-								modal.find("button[id !='modalCloseBtn']").hide();
-								modalModBtn.show();
-								modalRemoveBtn.show();
-
-								modal.modal("show");
-							})
-						});
-
-						modalRegisterBtn.on("click", function (e) {
-							console.log("123214214");
-							var reply = {
-								bno: bnoValue,
-								id: modalInputId.val(),
-								contents: modalInputContents.val()
-							};
-							replyService.add(reply, function (result) {
-								alert(result);
-								modal.find("input").val("");
-								modal.modal("hide");
-								showList(1);
-							})
-						});
-
-						// if modalmodifyBtn Click -> hide model and showlist
-						modalModBtn.on("click", function (e) {
-							var reply = { rno: modal.data("rno"), contents: modalInputContents.val() }
-							replyService.update(reply, function (result) {
-								alert(result);
-								modal.modal("hide");
-								showList(1);
-							})
-						});
-
-						modalRemoveBtn.on("click", function (e) {
-							var rno = modal.data("rno");
-
-							replyService.remove(rno, function (result) {
-								alert(result);
-								modal.modal("hide");
-								showList(1);
-							})
-						})
-					});
-
-				</script>
-			</head>
-
-			<body>
-				<!-- Header -->
-
-				<%@ include file="../../include/header.jsp" %>
-
-					<!-- Header -->
-
-					<!-- Board Insert Form -->
-
-					<div class="container-fluid">
-						<div class="row justify-content-center">
-							<div class="col-md-8 mt-3 mb-3">
-								<div class="card">
-									<div class="card-header">
-										<h2 class="text-center mt-4 mb-4">게시글</h2>
-									</div>
-									<div class="card-body">
-										<table class="table">
-											<tr>
-												<th>게시글 번호</th>
-												<td>
-													<c:out value="${boardDTO.bno}" />
-												</td>
-											</tr>
-											<tr>
-												<th>조회수</th>
-												<td>
-													<c:out value="${boardDTO.readCount}" />
-												</td>
-											</tr>
-											<tr>
-												<th>작성일</th>
-												<td>
-													<c:out value="${boardDTO.writeDay}" />
-												</td>
-											</tr>
-											<tr>
-												<th>작성자</th>
-												<td>
-													<c:out value="${boardDTO.id}" />
-												</td>
-											</tr>
-											<tr>
-												<th>제목</th>
-												<td>
-													<c:out value="${boardDTO.title}" />
-												</td>
-											</tr>
-										</table>
-										<hr />
-										<div class="col-12">
-											<c:out value="${boardDTO.contents}" />
-										</div>
-
-										<div class="row">
-											<div class="col-lg-12">
-
-												<div class="pannel pannel-default">
-													<div class="pannel-heading">
-														<i class="fa fa-comments fa-fw"></i> 댓글
-													</div>
-
-													<div class="pannel-body">
-														<ul class="chat">
-															<!-- Start Reply -->
-															<li class="left clearfix" data-rno='12'>
-																<div>
-																	<div class="header">
-																		<strong class="primary-font">user00</strong>
-																		<small class="pull-right text-muted">2018-01-01
-																			13:13</small>
-																	</div>
-																	<p>good job</p>
-																</div>
-															</li>
-															<!-- end Reply-->
-														</ul>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="row">
-												<div class="col-lg-12">
-													<div class="panel panel-default">Files</div>
-													<divp class="panel-body">
-														<div class="uploadResult">
-															<ul>
-
-															</ul>
-														</div>
-													</divp>
-												</div>
-											</div>
-											<div class="col-12 text-right">
-												<button id="addReplyBtn" class="btn btn-primary btn-xs pull-right">댓글
-													달기</button>
-												<input type="button" value="글수정" class="btn btn-success"
-													onclick="location.href='./update?bno=${boardDTO.bno}&id=${boardDTO.id}'">
-												<input type="button" value="글삭제" class="btn btn-warning"
-													onclick="location.href='./delete?bno=${boardDTO.bno}&id=${boardDTO.id}'">
-												<button type="button" class="btn btn-primary"
-													onclick="location.href='./select_all_view'">전체 게시글보기</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+							<td>${boardDTO.readCount}</td>
+						</tr>
+						<tr>
+							<th>작성일</th>
+							<td>${boardDTO.writeDay}</td>
+						</tr>
+						<tr>
+							<th>작성자</th>
+							<td>${boardDTO.id}</td>
+						</tr>
+						<tr>
+							<th>제목</th>
+							<td><c:out value="${boardDTO.title}"/></td>
+						</tr>
+						
+					</table>
+				<hr/>
+					<input type="hidden" name="bno" value="${boardDTO.bno}">
+					<div class="card-header bg-light">
+	        		  <i class="fas fa-laugh-beam"></i> Contents
+					</div>
+					<div class="card-body">
+					  <c:out value="${boardDTO.contents}"/>
+					</div>
+					<div class="row">
+ 						<div class="col-12 text-right">
+							<button type="button" class="btn btn-success" id="btnModify">글수정</button>
+							<button type="button" class="btn btn-warning" id="btnRemove">글삭제</button>
+							<button type="button" class="btn btn-primary" id="btnList">게시글 목록</button>
 						</div>
 					</div>
-
-					<!-- Modal -->
-					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-						aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal"
-										aria-hidden="true">&times;</button>
-									<h4 class="modal-title" id="myModalLabel">댓글</h4>
-								</div>
-								<div class="modal-body">
-									<div class="form-group">
-										<label>Reply</label>
-										<input class="form-control" name='contents' value='New Reply!!!!'>
-									</div>
-									<div class="form-group">
-										<label>Replyer</label>
-										<input class="form-control" name='id' value='replyer'>
-									</div>
-									<div class="form-group">
-										<label>Reply Date</label>
-										<input class="form-control" name='writeDay' value='2018-01-01 13:13'>
-									</div>
-
-								</div>
-								<div class="modal-footer">
-									<button id='modalModBtn' type="button" class="btn btn-warning">수정</button>
-									<button id='modalRemoveBtn' type="button" class="btn btn-danger">삭제</button>
-									<button id='modalRegisterBtn' type="button" class="btn btn-primary">등록</button>
-									<button id='modalCloseBtn' type="button" class="btn btn-default">닫기</button>
-								</div>
-							</div>
-							<!-- /.modal-content -->
-						</div>
-						<!-- /.modal-dialog -->
+				<hr/>
+				<c:if test="${!empty boardDTO.fileList}">
+				  <div class="row col-12">
+					<table id="fileArea">
+					   <tr>
+					 	 <th>첨부파일</th>
+					      <td>
+					    	<c:forEach var="files" items="${boardDTO.fileList}" varStatus="status" >
+					    	  <div data-fno="${files.fno}" class="file-inline">
+					    	    파일${status.count}<a href="<c:out value='/file/download/${files.fno}'/>"><i class="fa-sharp fa-solid fa-download"></i></a>
+								<c:out value="${files.originName}(${files.fmtFileSize})"/> <br/>
+					    	  </div>
+					    	   <input type="hidden" name="delAttach" value="${files.fno}">
+							</c:forEach>
+						  </td>
+						</tr>
+					  </table>
 					</div>
-					<!-- /.modal -->
+				</c:if>
+				  </form>
+				  <div class="card mb-2">
+					<div class="card-header bg-light">
+	        		  <i class="fa fa-comment fa"></i> 댓글
+					</div>
+					<div class="card-body">
+					  <ul class="list-group list-group-flush">
+		   				<li class="list-group-item">
+						  <div class="form-inline mb-2">
+							<label for="replyId"><i class="fa fa-user-circle-o fa-2x"></i></label>
+							<input type="text" class="form-control ml-2" id="replyId" value="${sessionScope.id}" readOnly>
+						  </div>
+						  <textarea class="form-control" id="replyContents" rows="3"></textarea>
+						  <button type="button" class="btn btn-dark mt-3" id="regReplyBtn">등록</button>
+		   				</li>
+					  </ul>
+					</div>
+				  </div>
+				 
+				  <hr/>
+				  <!-- reply contents -->
+				    <div class="p-1 bg-warning"><span class="reply-tab">댓글목록(${boardDTO.replyCnt})</span></div>
+				      <div class="reply-inline">
+					  </div>
+					  <div class="reply-pagenation">
+					   <nav aria-label="Page navigation">
+					   </nav>
+					</div>
+			  </div>
+			</div>
+		</div>
+	</div>
+</div>
+  <div class="d-flex" id="reReplyForm">
+  	<div class="p-2 icon" style="display: none;"><i class="mt-3 fa fa-reply fa fa-rotate-180" aria-hidden="true"></i></div>
+  	<div class="flex-fill content"  style="display: none;">
+  <div class="card mb-2" >
+	<div class="card-header bg-light">
+     		  <i class="fa fa-comment fa"></i> 댓글
+	</div>
+	<div class="card-body">
+	  <ul class="list-group list-group-flush">
+ 		<li class="list-group-item">
+		  <div class="form-inline mb-2">
+			<label for="replyId"><i class="fa fa-user-circle-o fa-2x"></i></label>
+			<input type="text" class="form-control ml-2" id="reReplyId" value="${sessionScope.id}" readOnly>
+		  </div>
+		  <textarea class="form-control" id="reReplyContents" rows="3"></textarea>
+		  <button type="button" class="btn btn-dark mt-3" id="regReReplyBtn">등록</button>
+		  <button type="button" class="btn btn-dark mt-3 reply-cancel">취소</button>
+ 		</li>
+	  </ul>
+	</div>
+  </div>
+  </div>
+  </div>
 
-					<!-- Footer -->
+	<!-- Footer -->
 
-					<%@ include file="../../include/footer.jsp" %>
+<%@ include file="../../include/footer.jsp" %>
 
-						<!-- Footer -->
-			</body>
-
-			</html>
+	<!-- Footer -->
+<script>
+var bno = "${boardDTO.bno}";
+var sessionId = "${sessionScope.id}";
+var writer = "${boardDTO.id}";
+var getQueryString = "${cri.getQueryString(cri.getPage(), cri.getCategory())}";
+</script>
+</body>
+</html>

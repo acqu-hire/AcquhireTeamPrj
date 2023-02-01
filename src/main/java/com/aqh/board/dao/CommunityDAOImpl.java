@@ -68,8 +68,7 @@ public class CommunityDAOImpl implements BoardDAO {
 
 	@Override
 	public List<FileDTO> getFileList(long bno) {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionTemplate.selectList(namespace + "getFileList", bno);
 	}
 
 }
