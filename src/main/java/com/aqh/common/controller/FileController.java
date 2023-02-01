@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.aqh.common.domain.AttachFile;
 import com.aqh.common.domain.FileDTO;
 import com.aqh.common.service.FileService;
 
@@ -21,22 +22,24 @@ import com.aqh.common.service.FileService;
 public class FileController {
 
 	FileService fileService;
-
-	public FileController(FileService fileService) {
+	AttachFile attach;
+	
+	public FileController (FileService fileService, AttachFile attach) {
 		this.fileService = fileService;
+		this.attach = attach;
 	}
-
+	
 	@GetMapping("/download/{fno}")
-	public void download(@PathVariable(name = "fno") long fno, HttpServletResponse response) {
+	public void download(@PathVariable(name="fno") long fno, HttpServletResponse response) {
 		FileDTO fileDTO = fileService.getFileDetail(fno);
 		try {
 			String originName = new String(fileDTO.getOriginName().getBytes("utf-8"), "iso-8859-1");
-			String extension = fileService.getExtension(originName);
+			String extension = attach.getExtension(originName);		
 			String filePath = fileDTO.getUploadPath();
 			String saveName = fileDTO.getUuid() + extension;
-
+			
 			File file = new File(filePath, saveName);
-			if (!file.exists()) {
+			if(!file.exists()) {
 				throw new FileNotFoundException("경로에 파일이 없습니다.");
 			}
 			response.setHeader("Content-type", "application/octet-stream;");
@@ -46,7 +49,7 @@ public class FileController {
 			response.setHeader("Expries", "-1;");
 			FileUtils.copyFile(file, response.getOutputStream());
 			response.getOutputStream().close();
-
+			
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
