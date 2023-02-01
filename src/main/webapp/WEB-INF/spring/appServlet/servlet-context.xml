@@ -33,6 +33,20 @@
 		<beans:property name="defaultEncoding" value="UTF-8" />
 	</beans:bean>
 	
+	<interceptors>
+		<interceptor>
+			<mapping path="/QnA/**"/>
+			<mapping path="/notice/**"/>
+			<mapping path="/event/**"/>
+			<mapping path="/community/**"/>
+			<exclude-mapping path="/"/>
+			<exclude-mapping path="/resources/**"/>
+			<exclude-mapping path="/member/register"/>
+			<exclude-mapping path="/member/idCheck"/>
+			<beans:bean class="com.aqh.common.interceptor.LoginInterceptor" />
+		</interceptor>
+	</interceptors>
+	
 	<view-controller path="/" view-name="index"/>
 	
 </beans:beans>
