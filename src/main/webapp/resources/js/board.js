@@ -37,7 +37,8 @@ $(function() {
     /* 글쓰기, 수정 폼 파일 관련 이벤트 */
     var inputCnt = $(".file-inline input").length;
     var maxAppend = $("div.file-inline").attr("data-fileSize");
-    if(maxAppend == undefined){
+    
+    if(maxAppend == ''){
         maxAppend = 1;
     }
     $("#addFileBtn").on("click", function() {
@@ -51,6 +52,7 @@ $(function() {
         + '</div>');
         maxAppend++;
         inputCnt++;
+        alert(maxAppend)
     });
     
     $(".file-area").on("click", ".delBtn", function() {
@@ -119,6 +121,18 @@ $(function() {
 		var form = $("#updateForm");
 		form.attr("method", "post");
 		form.attr("action", "./update" + getQueryString);
+		form.submit();
+	})
+    $(document).on("click", "#submitWriteForm", function() {
+        if(inputCnt > 1){
+            if(!$(".file-inline input[name='files']").val() || $(".file-inline input[name='files']").length == 0){
+            alert("파일을 첨부하거나 파일탭을 삭제해주세요.")					
+            return false;
+            }
+        }
+		var form = $("#QnAWriteForm");
+		form.attr("method", "post");
+		form.attr("action", "./write");
 		form.submit();
 	})
 })
