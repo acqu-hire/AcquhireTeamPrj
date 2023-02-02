@@ -25,7 +25,7 @@ public class LoginController {
 	MemberService service;
 	
 	@GetMapping("/login")
-	public String loginForm(HttpServletRequest request) {
+	public String loginForm() {
 		return "login/login_form";
 	}
 	

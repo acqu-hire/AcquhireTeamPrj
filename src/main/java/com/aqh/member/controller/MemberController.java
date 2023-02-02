@@ -40,10 +40,16 @@ public class MemberController {
 	}
 	
 	@GetMapping("/detail")
-	public String memberDetailForm(String id, Model model, MemberDTO memberDTO) {
-		memberDTO = service.memberDetail(id);
-		model.addAttribute(memberDTO);
-		return "member/member_info";
+	public String memberDetailForm(String id, Model model, MemberDTO memberDTO, HttpSession session) throws Exception {
+		if(!session.getAttribute("id").equals(id) && !session.getAttribute("id").equals("admin")) {
+			String msg = "잘못된 접근입니다.";
+			model.addAttribute("msg", msg);
+			return "redirect:/";
+		} else {
+			memberDTO = service.memberDetail(id);
+			model.addAttribute(memberDTO);
+			return "member/member_info";
+		}
 	}
 	
 	@PostMapping("/delete")
