@@ -64,6 +64,8 @@
 <%@ include file="include/footer.jsp" %>
 
 <!-- Footer -->
-
+<c:if test="${!empty param.msg}">
+	<script>alert("${param.msg}")</script>
+</c:if>
 </body>
 </html>

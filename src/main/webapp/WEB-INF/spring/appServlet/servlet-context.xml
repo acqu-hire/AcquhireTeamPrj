@@ -41,8 +41,6 @@
 			<mapping path="/community/**"/>
 			<exclude-mapping path="/"/>
 			<exclude-mapping path="/resources/**"/>
-			<exclude-mapping path="/member/register"/>
-			<exclude-mapping path="/member/idCheck"/>
 			<beans:bean class="com.aqh.common.interceptor.LoginInterceptor" />
 		</interceptor>
 	</interceptors>
