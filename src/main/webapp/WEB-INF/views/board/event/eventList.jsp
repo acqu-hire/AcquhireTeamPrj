@@ -34,9 +34,9 @@
 						</div>
 						<div class="card-body">
 							<div class="category" align="center">
-								<a class="btn btn-primary float-end" href="./menu_select_all?category=">전체</a> 
-								<a class="btn btn-primary float-end" href="./it_event_list?category=EVENT_IT_EVENT">IT 이벤트</a> 
-								<a class="btn btn-primary float-end" href="./marketing_list?category=EVENT_MARKETING">마케팅</a>
+								<a class="btn btn-primary float-end" href="./menu_select_all">전체</a> 
+								<a class="btn btn-primary float-end" href="./it_event_list">IT 이벤트</a> 
+								<a class="btn btn-primary float-end" href="./marketing_list">마케팅</a>
 							</div>
 							<div class="d-flex justify-content-end">
 								<a class="btn btn-warning float-end" href="./eventInsert_view"> <i class="fas fa-edit"></i> 글 작성
