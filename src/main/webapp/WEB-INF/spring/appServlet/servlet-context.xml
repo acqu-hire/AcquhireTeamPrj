@@ -21,11 +21,9 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.aqh.member" />
-	<context:component-scan base-package="com.aqh.board" />
-	<context:component-scan base-package="com.aqh.login" />
-	<context:component-scan base-package="com.aqh.reply" />
-	<context:component-scan base-package="com.aqh.common" />
+	<context:component-scan base-package="com.aqh" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
 	
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="-1" />
@@ -33,7 +31,7 @@
 		<beans:property name="defaultEncoding" value="UTF-8" />
 	</beans:bean>
 	
-	<interceptors>
+ 	<interceptors>
 		<interceptor>
 			<mapping path="/QnA/**"/>
 			<mapping path="/notice/**"/>
@@ -46,5 +44,4 @@
 	</interceptors>
 	
 	<view-controller path="/" view-name="index"/>
-	
 </beans:beans>
