@@ -13,8 +13,8 @@
 	            	and contents like concat('%',#{keyword},'%')
 	            </if>
 	            <if test="type == 'all'">
-	                and (contents like concat('%',#{keyword},'%')
-	                or id like concat('%',#{keyword},'%'))
+	                and (
+	                id like concat('%',#{keyword},'%'))
 	                or title like concat('%',#{keyword},'%')
 	                or contents like concat('%',#{keyword},'%')
 	            </if>
