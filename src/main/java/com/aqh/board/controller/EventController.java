@@ -47,7 +47,7 @@ public class EventController {
 	public String marketingList(Model model, Criteria cri) {
 		model.addAttribute("marketingList", eventService.eventMarketingList(cri));
 		model.addAttribute("pagination", new Pagination((int) eventService.BoardListAllCount(cri), cri));
-		log.info("it 마케팅 게시판 전체 조회 : " + model);
+		log.info("마케팅 게시판 전체 조회 : " + model);
 		return "board/event/event_marketing_list";
 
 	}
