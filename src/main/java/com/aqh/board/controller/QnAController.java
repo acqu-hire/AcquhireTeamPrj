@@ -30,7 +30,8 @@ public class QnAController {
 
 	@GetMapping("/list")
 	public String qnaList(Model model, Criteria cri) {
-		model.addAttribute("pagination", new Pagination((int) qnABoardServiceImpl.getBoardTotal(cri), cri));
+		Pagination pg = new Pagination((int) qnABoardServiceImpl.getBoardTotal(cri), cri);
+		model.addAttribute("pagination", pg);
 		List<BoardDTO> list = qnABoardServiceImpl.getBoardList(cri);
 		model.addAttribute("boardList", list);
 
