@@ -84,31 +84,34 @@
 	
 	<!-- 게시판 개수 -->
 	<select id="BoardListAllCount" resultType="integer">
-		select count(*) from board 
-		<where>
-			<if test="searchType != null">
-				<choose>
-					<when test='searchType.equals("all")'>
-						id like concat('%',#{keyword},'%')
-						or title like concat('%',#{keyword},'%')
-						or contents like concat('%',#{keyword},'%')
-					</when>
-					<when test='searchType.equals("id")'>
-						id like concat('%',#{keyword},'%')
-					</when>
-					<when test='searchType.equals("title")'>
-						title like concat('%',#{keyword},'%')
-					</when>
-					<when test='searchType.equals("contents")'>
-						contents like concat('%',#{keyword},'%')
-					</when>
-					<when test='searchType.equals("titleContents")'>
-						title like concat('%',#{keyword},'%')
-						or contents like concat('%',#{keyword},'%')
-					</when>
-				</choose>
-			</if>
-		</where>
+		select count(*) from 
+			(select * from board
+			<where>
+				<if test="searchType != null">
+					<choose>
+						<when test='searchType.equals("all")'>
+							id like concat('%',#{keyword},'%')
+							or title like concat('%',#{keyword},'%')
+							or contents like concat('%',#{keyword},'%')
+						</when>
+						<when test='searchType.equals("id")'>
+							id like concat('%',#{keyword},'%')
+						</when>
+						<when test='searchType.equals("title")'>
+							title like concat('%',#{keyword},'%')
+						</when>
+						<when test='searchType.equals("contents")'>
+							contents like concat('%',#{keyword},'%')
+						</when>
+						<when test='searchType.equals("titleContents")'>
+							title like concat('%',#{keyword},'%')
+							or contents like concat('%',#{keyword},'%')
+						</when>
+					</choose>
+				</if>
+			</where>
+			)
+		board where menu = "NOTICE";
 	</select>
 	<select id="CategoryListCount" resultType="integer">
 		select count(*) from
@@ -172,7 +175,13 @@
 	<delete id="fileDeleteAll"  parameterType="int">
 		delete from board_file where bno = #{bno};
 	</delete>
-	<delete id="fileSelectDelete"  parameterType="String">
-		delete from board_file where uuid = #{uuid};
+	<delete id="fileSelectDelete" parameterType="hashmap">
+		delete from board_file
+		<where>
+			uuid IN
+			<foreach collection="uuid" item="item" index="index" separator="," open="(" close=")">
+				#{item}
+			</foreach>
+		</where>
 	</delete>
 </mapper>

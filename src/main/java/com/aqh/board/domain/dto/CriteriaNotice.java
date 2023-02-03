@@ -12,9 +12,9 @@ import lombok.ToString;
 @Component
 public class CriteriaNotice {
 
-	private int num; //현재 페이징 번호
-	private int displayPost; //시작번호
-	private int postNum; //게시물범위
+	private int num; //현재 페이징 번호 page
+	private int displayPost; //시작번호 offest
+	private int postNum; //게시물범위 limit
 	private String category;
 	private String searchType;
 	private String keyword;

@@ -14,44 +14,40 @@ import lombok.Setter;
 public class PaginationNotice {
 	
 	//현재 페이지 번호
-	private int num =1;
+	private int num =1; //page
 	
 	//게시물 총 갯수
-	private int count;
+	private int count; //listCnt
 	
 	//한 페이지 안에 출력할 게시물 수
-	private int postNum=5;
+	private int postNum=5; //pageSize
 	
 	//하단 페이징 번호 ([게시물 총 갯수 / 한페이지에 출력할 갯수]의 올림)
-	private int pageNum;
-	
-	//출력할 게시물의 시작 번호
-	private int displayPost;
+	private int pageNum; //rangeCnt
 	
 	//한번에 표시할 페이징 번호의 갯수
-	private int pageNumCnt = 5;
+	private int pageNumCnt = 5; //rangeSize
 	
 	//표시되는 페이지 번호 중 마지막 번호
-	private int endPageNum;
+	private int endPageNum; //endPage
 	
 	//표시되는 페이지 번호 중 첫밴째 번호
-	private int startPageNum;
+	private int startPageNum; //startPage
 	
 	//마지막 번호 재계산
 	private int endPageNum_tmp;
 	
-	
-	
-	private boolean prev;
-	private boolean next;
+	private boolean prev; //prevPage
+	private boolean next; //nextPage
 	
 	private CriteriaNotice criteriaNotice;
 	
 	public PaginationNotice(CriteriaNotice criteriaNotice, int count) {
 		setNum(criteriaNotice.getNum());
 		this.count=count;
-		dataCalc();
 		//게시물 총 갯수를 알고난 시점부터 계산을 할 수 있으므로, setCount에서 메서드를 호출
+		dataCalc();
+		
 		this.criteriaNotice = criteriaNotice;
 		System.out.println("확인" + criteriaNotice);
 	}
@@ -62,7 +58,7 @@ public class PaginationNotice {
 		//하단 페이징 번호 ([게시물 총 갯수 / 한페이지에 출력할 갯수]의 올림)
 		pageNum = (int)Math.ceil((double)count/postNum);
 	
-		//출력할 게시물 ex)[1,2,3,4,5],[6,7,8,9,10]...
+		//출력할 게시물 ex)[(1),2,3,4,5],[(6),7,8,9,10]...
 		//displayPost = (num-1) * postNum;
 		
 		//표시되는 페이지 번호 중 마지막 번호

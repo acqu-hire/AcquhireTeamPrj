@@ -59,7 +59,7 @@
 										<tr>
 											<th>${bno}</th>
 											<%-- <th>${(boardListCount-status.index)-((page-1)*10)}</th> --%>
-											<td class="text-truncate" style="max-width: 500px;"><a href="./select_Detail_view?bno=${board.bno}">${board.title}</a></td>
+											<td class="text-truncate" style="max-width: 500px;"><a href="./select_Detail_view${PaginationNotice.getUrlLink(PaginationNotice.num)}&bno=${board.bno}">${board.title}</a></td>
 											<td>${board.id}</td>
 											<td>${board.writeDay}</td>
 											<td>${board.readCount}</td>

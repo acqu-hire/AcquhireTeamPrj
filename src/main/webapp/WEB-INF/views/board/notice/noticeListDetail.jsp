@@ -72,16 +72,22 @@
 						</tr>
 					</table>
 				<hr/>
-					<div class="col-12">
-					${boardDTO.contents}
-					</div>
-					<div class="row">
- 						<div class="col-12 text-right">
-							<input type="button" value="글수정" class="btn btn-success" onclick="location.href='./update_view?bno=${selectDetail.bno}'"> 
-							<input type="button" value="글삭제" class="btn btn-warning" onclick="location.href='./delete?bno=${selectDetail.bno}'">
-							<button type="button" class="btn btn-primary" onclick="location.href='./select_all_view?num=1'">전체 게시글보기</button>
-						</div> 
-					</div>
+
+						<div class="row">
+	 						<div class="col-12 text-right">
+								<input type="button" value="글수정" class="btn btn-success" onclick="location.href='./update_view?num=${criteriaNotice.num}&category=${criteriaNotice.category}&bno=${selectDetail.bno}'"> 
+								<input type="button" value="글삭제" class="btn btn-warning" onclick="location.href='./delete?num=${criteriaNotice.num}&category=${criteriaNotice.category}&bno=${selectDetail.bno}'">
+								<c:choose>
+									<c:when test="${empty criteriaNotice.category}">
+										<button type="button" class="btn btn-primary" onclick="location.href='./select_all_view?num=${criteriaNotice.num}'">전체 게시글보기</button>
+									</c:when>
+									<c:otherwise>
+										<button type="button" class="btn btn-primary" onclick="location.href='./select_category_view?num=${criteriaNotice.num}&category=${criteriaNotice.category}'">공지 게시글보기</button>
+									</c:otherwise>
+								</c:choose>						
+							</div> 
+						</div>
+
 				</div>
 			</div>
 		</div>

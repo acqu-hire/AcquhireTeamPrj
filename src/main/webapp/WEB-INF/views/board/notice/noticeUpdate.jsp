@@ -31,7 +31,7 @@
 		        <h2 class="text-center mt-4 mb-4"><strong>안내문 작성</strong></h2>
 		    	</div>
 			    	<div class="card-body">
-				        <form action="./update" method="post" enctype="multipart/form-data">
+				        <form action="./update" method="post" enctype="multipart/form-data" id="updateForm">
 				          <table class="table table-striped">
 				            <tr>
 			                	<th>카테고리</th>
@@ -68,24 +68,30 @@
 				            	<td>첨부파일</td>
 				            	<td>
 				            		<c:forEach items="${fileNoList}" var="fileNoList" varStatus="idx" step="1">
-				            			<p class="index">
-											<a class="downlink" href="${fileNoList.original_file_name}">${fileNoList.original_file_name}</a> 
+				            			<p class="index" id="destroy_block">
+											<a class="downlink" href="${fileNoList.original_file_name}"  data-uuids="${fileNoList.uuid}">${fileNoList.original_file_name}</a> 
 											<!-- <span id="fileUuid" style="display:none;">${fileNoList.uuid}</span>-->
-											<input id="fileUuid" name ="fileUuid" value="${fileNoList.uuid}" type="hidden"/>
-											<button type="button" id="destroy_btn" onclick="deletFile()">삭제</button>
+											<button type="button" id="destroy_btn" >삭제</button>
 										</p>
 									</c:forEach>
 				            	</td>
 				            </tr>
 				            <tr>
 				            	<td>첨부파일 추가</td>
-				            	<td><input type="file" name="file" multiple="multiple" /></td>
+				            	<td><input type="file" name="uploadFile" multiple="multiple" /></td>
 				            </tr>
 				            <tr>
 				                <td colspan="2"  class="text-right">
-				                    <input type="submit" value="글쓰기" class="btn btn-success" />
+				                    <input type="submit" value="글쓰기" class="btn btn-success" id="btn-success" onclick="deletFile()"/>
 				                    <input type="reset" value="다시작성" class="btn btn-warning" />
-				                    <button type="button" onclick="location.href='./select_all_view?num=1'">전체 게시글보기</button>
+				                    <c:choose>
+										<c:when test="${empty criteriaNotice.category}">
+											<button type="button" class="btn btn-primary" onclick="location.href='./select_all_view?num=${criteriaNotice.num}'">전체 게시글보기</button>
+										</c:when>
+										<c:otherwise>
+											<button type="button" class="btn btn-primary" onclick="location.href='./select_category_view?num=${criteriaNotice.num}&category=${criteriaNotice.category}'">공지 게시글보기</button>
+										</c:otherwise>
+									</c:choose>
 				                </td>
 				            </tr>
 				             
@@ -116,18 +122,41 @@ $(document).ready(function() {
 
 		  
 		  const destroyBtn = document.querySelectorAll("#destroy_btn");
-		  console.log("확인"+destroyBtn[0]);
+		  console.log("삭제버튼개수"+destroyBtn.length);
 		  destroyBtn.forEach((el, index) => {
 			  el.onclick = () => {
-				  console.log("확인인덱스"+index)
-				  $($(".index")[index]).css("display" ,"none");
-				  var item = $($("#fileUuid")[index]);
-				  item.name = "uuid";
-				  console.log("확인 아이템"+item.name);
+				  console.log("삭제버튼번호"+index)
+				  const destroyBlock = document.querySelectorAll("#destroy_block");
+				  console.log("삭제구역개수"+Object.keys(destroy_block).length);
+				  if(Object.keys(destroy_block).length > 0){
+					  destroyBlock.forEach((el1, num) => {
+						  if(index === num){
+							  console.log("index : " + index)
+							  console.log("num : " + num)
+							  destroy_block[num].style.display='none';
+							  
+							  var input = document.createElement('input');
+							  input.setAttribute("type","hidden");
+							  input.setAttribute("name","uuid");
+							  input.setAttribute("value",$($(".downlink")[num]).data("uuids"));
+							  destroy_block[num].appendChild(input);
+						  }
+					  });
+				  }else{
+					  console.log("여기");
+					  destroy_block.style.display='none';
+					  var input = document.createElement('input');
+					  input.setAttribute("type","hidden");
+					  input.setAttribute("name","uuid");
+					  input.setAttribute("value",$(".downlink").data("uuids"));
+					  destroy_block.appendChild(input);
+				  }
+				  
+				  
+				  
 			  }
 		  });
 		 
-	 
 	  
 	  
 	 

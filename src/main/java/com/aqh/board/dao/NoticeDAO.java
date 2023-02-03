@@ -1,6 +1,9 @@
 package com.aqh.board.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,8 +59,8 @@ public class NoticeDAO {
 	public void fileDeleteAll(int bNo) {
 		sqlSessionTemplate.delete("fileDeleteAll",bNo);
 	}
-	public void fileSelectDelete(String uuid) {
-		sqlSessionTemplate.delete("fileSelectDelete",uuid);
+	public void fileSelectDelete(HashMap<String, Object> uuidList) {
+		sqlSessionTemplate.delete("fileSelectDelete", uuidList);
 	}
 
 }
