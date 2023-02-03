@@ -17,14 +17,14 @@
 <script src="https://kit.fontawesome.com/58abbffa46.js" ></script>
 <title>Header</title>
 </head>
-<body>
+<body pt-5>
 
-<header>
-  <nav class="navbar navbar-expand-lg navbar-light bg-warning static-top">
+<header style="padding-top: 68px;">
+  <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top" style="border-bottom: 2px solid #000000;">
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu">
 	  <span class="navbar-toggler-icon"></span>
 	</button>
-	<a class="navbar-brand" href="<c:url value='/' />"><i class="far fa-smile-wink"></i> Aqh</a>
+	<a class="navbar-brand" style="margin-left: 27rem" href="<c:url value='/' />"><img width="40" height="40" src="../resources/img/logo.png"> <b> ACQHIRE</b> </a>
 	<div class="collapse navbar-collapse" id="navbarMenu">
 	  <ul class="navbar-nav mx-auto">
 		<li class="nav-item">

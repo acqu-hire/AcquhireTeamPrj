@@ -64,6 +64,8 @@
 						</div>
 					</div>
 				<hr/>
+				
+				
 				<c:if test="${!empty boardDTO.fileList}">
 				  <div class="row col-12">
 					<table id="fileArea">
@@ -82,7 +84,10 @@
 					  </table>
 					</div>
 				</c:if>
-				  </form>
+			 </form>
+			 
+			 
+				<c:if test="${!empty sessionScope.id}">
 				  <div class="card mb-2">
 					<div class="card-header bg-light">
 	        		  <i class="fa fa-comment fa"></i> 댓글
@@ -100,6 +105,9 @@
 					  </ul>
 					</div>
 				  </div>
+				 </c:if>
+				 
+				 
 				 
 				  <hr/>
 				  <!-- reply contents -->

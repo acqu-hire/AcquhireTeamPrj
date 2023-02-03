@@ -3,10 +3,8 @@ package com.aqh.aop;
 import javax.servlet.http.HttpSession;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -14,11 +12,11 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
-@Aspect
+//@Component
+//@Aspect
 public class LoginCheckAspect {
 
-	@Before("@annotation(com.aqh.aop.LoginCheck)")
+	@AfterThrowing("@annotation(com.aqh.aop.LoginCheck)")
 	public void loginCheck(JoinPoint jp) throws Throwable {
 		log.info("AOP - Login Check Started");
 
