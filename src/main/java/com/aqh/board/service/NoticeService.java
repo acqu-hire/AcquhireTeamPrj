@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.aqh.board.dao.NoticeDAO;
 import com.aqh.board.domain.dto.BoardDTO;
-import com.aqh.board.domain.dto.CriteriaNotice;
+import com.aqh.board.domain.dto.Criteria;
 import com.aqh.common.domain.FileNoticeDTO;
 
 
@@ -20,20 +20,20 @@ public class NoticeService{
 	@Autowired
 	private NoticeDAO noticeDAO;
 	
-	public List<BoardDTO> menuSelectAll(CriteriaNotice criteriaNotice){
-		return noticeDAO.menuSelectAll(criteriaNotice);
+	public List<BoardDTO> menuSelectAll(Criteria criteria){
+		return noticeDAO.menuSelectAll(criteria);
 	}
-	public List<BoardDTO> categorySelectAll(CriteriaNotice criteriaNotice){
-		return noticeDAO.categorySelectAll(criteriaNotice);
+	public List<BoardDTO> categorySelectAll(Criteria criteria){
+		return noticeDAO.categorySelectAll(criteria);
 	}
 	public BoardDTO selectDetail(Integer bno) {
 		return noticeDAO.selectDetail(bno);
 	}
-	public int BoardListAllCount(CriteriaNotice criteriaNotice) {
-		return noticeDAO.BoardListAllCount(criteriaNotice);
+	public int BoardListAllCount(Criteria criteria) {
+		return noticeDAO.BoardListAllCount(criteria);
 	}
-	public int CategoryListCount(CriteriaNotice criteriaNotice) {
-		return noticeDAO.CategoryListCount(criteriaNotice);
+	public int CategoryListCount(Criteria criteria) {
+		return noticeDAO.CategoryListCount(criteria);
 	}
 	public void insert(BoardDTO boardDTO) {
 		noticeDAO.insert(boardDTO);

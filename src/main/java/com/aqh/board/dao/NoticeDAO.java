@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.aqh.board.domain.dto.BoardDTO;
-import com.aqh.board.domain.dto.CriteriaNotice;
+import com.aqh.board.domain.dto.Criteria;
 import com.aqh.common.controller.FileControllerNotice;
 import com.aqh.common.domain.FileNoticeDTO;
 
@@ -21,20 +21,20 @@ public class NoticeDAO {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
-	public List<BoardDTO> menuSelectAll(CriteriaNotice criteriaNotice){
-		return sqlSessionTemplate.selectList("menuSelectAll",criteriaNotice);
+	public List<BoardDTO> menuSelectAll(Criteria criteria){
+		return sqlSessionTemplate.selectList("menuSelectAll",criteria);
 	}
-	public List<BoardDTO> categorySelectAll(CriteriaNotice criteriaNotice) {
-		return sqlSessionTemplate.selectList("categorySelectAll", criteriaNotice);
+	public List<BoardDTO> categorySelectAll(Criteria criteria) {
+		return sqlSessionTemplate.selectList("categorySelectAll", criteria);
 	}
 	public BoardDTO selectDetail(Integer bNo) {
 		return sqlSessionTemplate.selectOne("noticeSelectDetail", bNo);
 	}
-	public int BoardListAllCount(CriteriaNotice criteriaNotice) {
-		return sqlSessionTemplate.selectOne("BoardListAllCount",criteriaNotice);
+	public int BoardListAllCount(Criteria criteria) {
+		return sqlSessionTemplate.selectOne("BoardListAllCount",criteria);
 	}
-	public int CategoryListCount(CriteriaNotice criteriaNotice) {
-		return sqlSessionTemplate.selectOne("CategoryListCount", criteriaNotice);
+	public int CategoryListCount(Criteria criteria) {
+		return sqlSessionTemplate.selectOne("CategoryListCount", criteria);
 	}
 	public void insert(BoardDTO boardDTO) {
 		sqlSessionTemplate.insert("noticeInsert", boardDTO);
