@@ -2,9 +2,12 @@ package com.aqh.aop;
 
 import javax.servlet.http.HttpSession;
 
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,16 +16,64 @@ import lombok.extern.slf4j.Slf4j;
 //@Aspect
 public class LoginCheckAspect {
 
-	// CheckLogin 어노테이션이 붙은 메소드가 실행하기 전 해당 로직을 실행
-	@Before("@annotation(com.aqh.aop.LoginCheck)")
-	public void checkLogin(HttpSession httpSession) throws HttpClientErrorException {
+	@AfterThrowing("@annotation(com.aqh.aop.LoginCheck)")
+	public void loginCheck(JoinPoint jp) throws Throwable {
+		log.info("AOP - Login Check Started");
 
-		// 세션에 저장된 사용자의 ID를 가져온다.
-		String currentUserId = (String) httpSession.getAttribute("id");
-		log.info("" + currentUserId);
-		// 세션에 사용자의 ID가 없는 경우, 권한이 없다는 에러 발생
-		if (currentUserId == null) {
-			throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
+		HttpSession session = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes()))
+				.getRequest().getSession();
+		String id = (String) session.getAttribute("id");
+		log.info("\037 \u001B[43m" + id + "\u001B[0m");
+
+		if (id == null) {
+			log.debug("AOP - Owner Login Check Result - NO_LOGIN");
+			throw new HttpStatusCodeException(HttpStatus.UNAUTHORIZED, "NO_LOGIN") {
+			};
 		}
 	}
 }
+//		switch (loginCheck.type()) {
+//
+//		case ADMIN:
+//			AdminLogin(jp);
+//			break;
+//
+//		case MEMBER:
+//			memberLogin(jp);
+//			break;
+//
+//		default:
+//			UnknownLogin(jp);
+//			break;
+//		}
+
+//
+//	@Before("@annotation(com.aqh.aop.MemberLogin)")
+//	public void memberLogin(JoinPoint jp) throws Throwable {
+//		log.debug("AOP - Member Login Started");
+//
+//		HttpSession session = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes()))
+//				.getRequest().getSession();
+//		String memberId = (String) session.getAttribute("id");
+//
+//	}
+//
+//	@Before("@annotation(com.aqh.aop.UnknownLogin)")
+//	public void UnknownLogin(JoinPoint jp) throws Throwable {
+//		log.debug("AOP - UnknownLogin");
+//
+//		HttpSession session = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes()))
+//				.getRequest().getSession();
+//		String memberId = (String) session.getAttribute("id");
+//
+//	}
+//
+//	@Before("@annotation(com.aqh.aop.AdminLogin)")
+//	public void AdminLogin(JoinPoint jp) throws Throwable {
+//		log.debug("AOP - AdminLogin");
+//
+//		HttpSession session = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes()))
+//				.getRequest().getSession();
+//		String memberId = (String) session.getAttribute("id");
+//
+//	}

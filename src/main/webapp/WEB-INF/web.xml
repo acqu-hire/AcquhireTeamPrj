@@ -44,6 +44,11 @@
 		<url-pattern>/jusoPopup</url-pattern>
 	</servlet-mapping>
 	
+	<mime-mapping>
+	<extension>ico</extension>
+	<mime-type>image/x-icon</mime-type>
+</mime-mapping>
+
 	<!-- 인코딩 필터 -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
