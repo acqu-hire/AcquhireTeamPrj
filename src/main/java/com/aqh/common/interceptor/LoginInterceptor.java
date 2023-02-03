@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 
 public class LoginInterceptor implements HandlerInterceptor{
 
@@ -19,10 +20,9 @@ public class LoginInterceptor implements HandlerInterceptor{
 		}
 		if(member == null) {
 			request.getSession().setAttribute("requestURL", requestURL);
-			response.sendRedirect("/login/login");
+			response.sendRedirect(contextPath+"/login/login");
 			return false;
 		}
 		return true;
 	}
-	
 }
