@@ -85,11 +85,11 @@
 				                    <input type="submit" value="글쓰기" class="btn btn-success" id="btn-success" onclick="deletFile()"/>
 				                    <input type="reset" value="다시작성" class="btn btn-warning" />
 				                    <c:choose>
-										<c:when test="${empty criteriaNotice.category}">
-											<button type="button" class="btn btn-primary" onclick="location.href='./select_all_view?num=${criteriaNotice.num}'">전체 게시글보기</button>
+										<c:when test="${empty criteria.category}">
+											<button type="button" class="btn btn-primary" onclick="location.href='./select_all_view?page=${criteria.page}'">전체 게시글보기</button>
 										</c:when>
 										<c:otherwise>
-											<button type="button" class="btn btn-primary" onclick="location.href='./select_category_view?num=${criteriaNotice.num}&category=${criteriaNotice.category}'">공지 게시글보기</button>
+											<button type="button" class="btn btn-primary" onclick="location.href='./select_category_view?page=${criteria.page}&category=${criteria.category}'">공지 게시글보기</button>
 										</c:otherwise>
 									</c:choose>
 				                </td>

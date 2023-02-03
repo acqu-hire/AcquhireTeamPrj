@@ -31,9 +31,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.aqh.board.domain.dto.BoardDTO;
+import com.aqh.board.domain.dto.Criteria;
 import com.aqh.board.domain.dto.BoardDTO.Category;
-import com.aqh.board.domain.dto.CriteriaNotice;
-import com.aqh.board.domain.pagehandler.PaginationNotice;
+import com.aqh.board.domain.pagehandler.Pagination;
 import com.aqh.board.service.NoticeService;
 import com.aqh.common.domain.FileNoticeDTO;
 
@@ -50,28 +50,29 @@ public class NoticeController {
 
 
 	@GetMapping(value = "/select_all_view")
-	public String menuSelectAll(Model model, CriteriaNotice criteriaNotice) {
+	public String menuSelectAll(Model model, Criteria criteria) {
 		
-		model.addAttribute("menuSelectAll", noticeService.menuSelectAll(criteriaNotice));
-		model.addAttribute("PaginationNotice", new PaginationNotice( criteriaNotice, (int) noticeService.BoardListAllCount(criteriaNotice)));
-		log.info("전체조회 카운트"+noticeService.BoardListAllCount(criteriaNotice));
+		model.addAttribute("menuSelectAll", noticeService.menuSelectAll(criteria));
+		model.addAttribute("Pagination", new Pagination((int) noticeService.BoardListAllCount(criteria), criteria ));
+		log.info("전체조회 카운트"+noticeService.BoardListAllCount(criteria));
 		log.info("전체조회"+model);
 
 		return "board/notice/noticeList";
 	}
 
 	@GetMapping(value = "/select_category_view")
-	public String categorySelectAll(Model model, CriteriaNotice criteriaNotice) {
+	public String categorySelectAll(Model model, Criteria criteria) {
 		
-		model.addAttribute("categorySelectAll", noticeService.categorySelectAll(criteriaNotice));
-		model.addAttribute("PaginationNotice", new PaginationNotice(criteriaNotice, (int) noticeService.CategoryListCount(criteriaNotice)));
+		model.addAttribute("categorySelectAll", noticeService.categorySelectAll(criteria));
+		model.addAttribute("Pagination", new Pagination((int) noticeService.CategoryListCount(criteria), criteria));
+		log.info("카테고리 확인"+ criteria.getCategory());
 		
 		return "board/notice/noticeCategoryList";
 	}
 
 
 	@GetMapping(value = "/select_Detail_view")
-	public String noticeSelectDetail(Model model, Integer bno, CriteriaNotice criteriaNotice) {
+	public String noticeSelectDetail(Model model, Integer bno, Criteria criteria) {
 		noticeService.noticeReadCount(bno);
 		model.addAttribute("selectDetail", noticeService.selectDetail(bno));
 		
@@ -79,7 +80,7 @@ public class NoticeController {
 		model.addAttribute("fileNoList", fileNoticeDTOs);
 		
 		//게시판 조회 후 해당 페이지로 넘어가기
-		model.addAttribute("criteriaNotice", criteriaNotice);
+		model.addAttribute("criteria", criteria);
 		
 		return "board/notice/noticeListDetail";
 	}
@@ -167,12 +168,12 @@ public class NoticeController {
 	
 	
 	@GetMapping(value = "/update_view")
-	public String updateView(Model model,Integer bno, CriteriaNotice criteriaNotice) {
+	public String updateView(Model model,Integer bno, Criteria criteria) {
 		model.addAttribute("boardDTO", noticeService.selectDetail(bno));
 		List<FileNoticeDTO> fileNoticeDTOs = noticeService.fileUpList(bno);
 		model.addAttribute("fileNoList", fileNoticeDTOs);
 		//게시판 조회 후 해당 페이지로 넘어가기
-		model.addAttribute("criteriaNotice", criteriaNotice);
+		model.addAttribute("criteriaNotice", criteria);
 		return "board/notice/noticeUpdate";
 	}
 	
@@ -242,17 +243,17 @@ public class NoticeController {
 	}
 	
 	@GetMapping(value = "/delete")
-	public String delete(Model model,Integer bno, CriteriaNotice criteriaNotice) {
+	public String delete(Model model,Integer bno, Criteria criteria) {
 		noticeService.delete(bno);
 		noticeService.fileDeleteAll(bno);
 		
 		//게시판 조회 후 해당 페이지로 넘어가기
-		PaginationNotice paginationNotice = new PaginationNotice(criteriaNotice, 0);
+		Pagination pagination = new Pagination(0, criteria);
 		
-		if(criteriaNotice.getCategory()==null || criteriaNotice.getCategory() == "") {
-			return "redirect:/notice/select_all_view" + paginationNotice.getUrlLink(criteriaNotice.getNum());
+		if(criteria.getCategory()==null) {
+			return "redirect:/notice/select_all_view" + pagination.getListLink(criteria.getPage());
 		}else {
-			return "redirect:/notice/select_category_view" + paginationNotice.getUrlLink(criteriaNotice.getNum());
+			return "redirect:/notice/select_category_view" + pagination.getListLink(criteria.getPage());
 		}
 		
 	}
