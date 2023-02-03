@@ -1,15 +1,19 @@
 package com.aqh.board.controller;
 
+import java.awt.print.Pageable;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -48,12 +52,10 @@ public class NoticeController {
 	@GetMapping(value = "/select_all_view")
 	public String menuSelectAll(Model model, CriteriaNotice criteriaNotice) {
 		
-		
 		model.addAttribute("menuSelectAll", noticeService.menuSelectAll(criteriaNotice));
 		model.addAttribute("PaginationNotice", new PaginationNotice( criteriaNotice, (int) noticeService.BoardListAllCount(criteriaNotice)));
 		log.info("전체조회 카운트"+noticeService.BoardListAllCount(criteriaNotice));
 		log.info("전체조회"+model);
-
 
 		return "board/notice/noticeList";
 	}
@@ -69,14 +71,15 @@ public class NoticeController {
 
 
 	@GetMapping(value = "/select_Detail_view")
-	public String noticeSelectDetail(Model model, Integer bno) {
+	public String noticeSelectDetail(Model model, Integer bno, CriteriaNotice criteriaNotice) {
 		noticeService.noticeReadCount(bno);
 		model.addAttribute("selectDetail", noticeService.selectDetail(bno));
 		
 		List<FileNoticeDTO> fileNoticeDTOs = noticeService.fileUpList(bno);
 		model.addAttribute("fileNoList", fileNoticeDTOs);
-
-		log.info("게시판 내용 보기" + model);
+		
+		//게시판 조회 후 해당 페이지로 넘어가기
+		model.addAttribute("criteriaNotice", criteriaNotice);
 		
 		return "board/notice/noticeListDetail";
 	}
@@ -128,31 +131,35 @@ public class NoticeController {
 				file.mkdir(); //디렉토리 생성 메소드
 			}
 			
-			Iterator<String> iterator = mhsr.getFileNames();
-			while(iterator.hasNext()) {
-				List<MultipartFile> list = mhsr.getFiles(iterator.next());
-				for (MultipartFile multipartFile : list) {
-					
-					UUID uuid = UUID.randomUUID();
-		            log.info("랜덤아이디"+uuid.toString());
-		            String[] uuids = uuid.toString().split("-");
-		            String uniqueName = uuids[0];
-		            
-					FileNoticeDTO fileNoticeDTO = new FileNoticeDTO();
-					fileNoticeDTO.setBno(boardDTO.getBno());
-					fileNoticeDTO.setUuid(uniqueName);
-					fileNoticeDTO.setFile_size(multipartFile.getSize());
-					fileNoticeDTO.setFile_path(root_path+attach_path);
-					fileNoticeDTO.setOriginal_file_name(multipartFile.getOriginalFilename());
-					fileNoList.add(fileNoticeDTO);
-					
-					file = new File(root_path+attach_path+uniqueName+"_"+multipartFile.getOriginalFilename()); // [./resources/upload//파일명_uuid]
-					multipartFile.transferTo(file);
+			//null일 경우 파일 생성 억제  
+			List<MultipartFile> fileList = mhsr.getFiles("uploadFile");
+			if(fileList.size() > 0 && !fileList.get(0).getOriginalFilename().equals("")){
+				Iterator<String> iterator = mhsr.getFileNames();
+				while(iterator.hasNext()) {
+					List<MultipartFile> list = mhsr.getFiles(iterator.next());
+					for (MultipartFile multipartFile : list) {
+						
+						UUID uuid = UUID.randomUUID();
+			            log.info("랜덤아이디"+uuid.toString());
+			            String[] uuids = uuid.toString().split("-");
+			            String uniqueName = uuids[0];
+			            
+						FileNoticeDTO fileNoticeDTO = new FileNoticeDTO();
+						fileNoticeDTO.setBno(boardDTO.getBno());
+						fileNoticeDTO.setUuid(uniqueName);
+						fileNoticeDTO.setFile_size(multipartFile.getSize());
+						fileNoticeDTO.setFile_path(root_path+attach_path);
+						fileNoticeDTO.setOriginal_file_name(multipartFile.getOriginalFilename());
+						fileNoList.add(fileNoticeDTO);
+						
+						file = new File(root_path+attach_path+uniqueName+"_"+multipartFile.getOriginalFilename()); // [./resources/upload//파일명_uuid]
+						multipartFile.transferTo(file);
+					}
 				}
+				
+				noticeService.fileInsert(fileNoList);
+				log.info("파일내용확인"+fileNoList);
 			}
-			
-			noticeService.fileInsert(fileNoList);
-			log.info("파일내용확인"+fileNoList);
 			
 
 		return "redirect:/notice/select_all_view";
@@ -160,17 +167,19 @@ public class NoticeController {
 	
 	
 	@GetMapping(value = "/update_view")
-	public String updateView(Model model,Integer bno) {
+	public String updateView(Model model,Integer bno, CriteriaNotice criteriaNotice) {
 		model.addAttribute("boardDTO", noticeService.selectDetail(bno));
 		List<FileNoticeDTO> fileNoticeDTOs = noticeService.fileUpList(bno);
 		model.addAttribute("fileNoList", fileNoticeDTOs);
+		//게시판 조회 후 해당 페이지로 넘어가기
+		model.addAttribute("criteriaNotice", criteriaNotice);
 		return "board/notice/noticeUpdate";
 	}
 	
 
 	@PostMapping(value = "/update")
-	public String update(Model model, BoardDTO boardDTO, HttpServletRequest request, MultipartHttpServletRequest mhsr, String uuid) throws Exception, IOException {
-
+	public String update(Model model, BoardDTO boardDTO, HttpServletRequest request, MultipartHttpServletRequest mhsr,@RequestParam(required = false) String[] uuid) throws Exception, IOException {
+		//log.info("uuid길이확인 : "+uuid.length);
 		log.info("글 수정 1차 확인" + boardDTO);
 		Category selectCategory;
 		if (boardDTO.getCategory().toString().equals("NOTICE_NOTICE"))
@@ -194,44 +203,58 @@ public class NoticeController {
 		if(file.exists()==false) {
 			file.mkdir(); //디렉토리 생성 메소드
 		}
-		
-		Iterator<String> iterator = mhsr.getFileNames();
-		while(iterator.hasNext()) {
-			List<MultipartFile> list = mhsr.getFiles(iterator.next());
-			for (MultipartFile multipartFile : list) {
-				
-				UUID updateUuid = UUID.randomUUID();
-	            log.info("랜덤아이디"+updateUuid.toString());
-	            String[] uuids = updateUuid.toString().split("-");
-	            String uniqueName = uuids[0];
-	            
-				FileNoticeDTO fileNoticeDTO = new FileNoticeDTO();
-				fileNoticeDTO.setBno(boardDTO.getBno());
-				fileNoticeDTO.setUuid(uniqueName);
-				fileNoticeDTO.setFile_size(multipartFile.getSize());
-				fileNoticeDTO.setFile_path(root_path+attach_path);
-				fileNoticeDTO.setOriginal_file_name(multipartFile.getOriginalFilename());
-				fileNoList.add(fileNoticeDTO);
-				
-				file = new File(root_path+attach_path+uniqueName+"_"+multipartFile.getOriginalFilename()); // [./resources/upload//파일명_uuid]
-				multipartFile.transferTo(file);
+		//null일 경우 파일 생성 억제
+		List<MultipartFile> fileList = mhsr.getFiles("uploadFile");
+		if(fileList.size() > 0 && !fileList.get(0).getOriginalFilename().equals("")){
+			Iterator<String> iterator = mhsr.getFileNames();
+			while(iterator.hasNext()) {
+				List<MultipartFile> list = mhsr.getFiles(iterator.next());
+				for (MultipartFile multipartFile : list) {
+					UUID updateUuid = UUID.randomUUID();
+		            log.info("랜덤아이디"+updateUuid.toString());
+		            String[] uuids = updateUuid.toString().split("-");
+		            String uniqueName = uuids[0];
+		            
+					FileNoticeDTO fileNoticeDTO = new FileNoticeDTO();
+					fileNoticeDTO.setBno(boardDTO.getBno());
+					fileNoticeDTO.setUuid(uniqueName);
+					fileNoticeDTO.setFile_size(multipartFile.getSize());
+					fileNoticeDTO.setFile_path(root_path+attach_path);
+					fileNoticeDTO.setOriginal_file_name(multipartFile.getOriginalFilename());
+					fileNoList.add(fileNoticeDTO);
+					
+					file = new File(root_path+attach_path+uniqueName+"_"+multipartFile.getOriginalFilename()); // [./resources/upload//파일명_uuid]
+					multipartFile.transferTo(file);
+				}
 			}
+			noticeService.fileInsert(fileNoList);	
 		}
 		
-
-		log.info("uuid확인"+uuid);
-		//uuid="6d86a747";
-		noticeService.fileInsert(fileNoList);
-		noticeService.fileSelectDelete(uuid);
+		//파일 삭제
+		if(uuid != null) {
+			HashMap<String, Object> uuidList = new HashMap<String, Object>();
+			uuidList.put("uuid", uuid);
+			log.info("map 확인" + uuidList.get(uuid));
+			noticeService.fileSelectDelete(uuidList);
+		}
+		
 		return "redirect:/notice/select_all_view";
 	}
 	
 	@GetMapping(value = "/delete")
-	public String delete(Model model,Integer bno) {
+	public String delete(Model model,Integer bno, CriteriaNotice criteriaNotice) {
 		noticeService.delete(bno);
 		noticeService.fileDeleteAll(bno);
-
-		return "redirect:/notice/select_all_view";
+		
+		//게시판 조회 후 해당 페이지로 넘어가기
+		PaginationNotice paginationNotice = new PaginationNotice(criteriaNotice, 0);
+		
+		if(criteriaNotice.getCategory()==null || criteriaNotice.getCategory() == "") {
+			return "redirect:/notice/select_all_view" + paginationNotice.getUrlLink(criteriaNotice.getNum());
+		}else {
+			return "redirect:/notice/select_category_view" + paginationNotice.getUrlLink(criteriaNotice.getNum());
+		}
+		
 	}
 	
 

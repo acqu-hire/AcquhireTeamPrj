@@ -1,6 +1,9 @@
 package com.aqh.board.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +15,7 @@ import com.aqh.common.domain.FileNoticeDTO;
 
 
 @Service
-public class NoticeService {
+public class NoticeService{
 
 	@Autowired
 	private NoticeDAO noticeDAO;
@@ -48,13 +51,16 @@ public class NoticeService {
 	public List<FileNoticeDTO> fileUpList(long bno){
 		return noticeDAO.fileUpList(bno);
 	}
+	
 	public void fileInsert(List<FileNoticeDTO> fileNoList) {
 		noticeDAO.fileInsert(fileNoList);
 	}
+	
 	public void fileDeleteAll(int bno) {
 		noticeDAO.fileDeleteAll(bno);
 	}
-	public void fileSelectDelete(String uuid) {
-		noticeDAO.fileSelectDelete(uuid);
+	
+	public void fileSelectDelete(HashMap<String,Object> uuidList) {
+		noticeDAO.fileSelectDelete(uuidList);
 	}
 }
