@@ -7,10 +7,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.aqh.board.dao.NoticeDAO;
-import com.aqh.board.domain.dto.BoardDTO;
-import com.aqh.board.domain.dto.Criteria;
 import com.aqh.board.domain.dto.BoardDTO.Category;
-import com.aqh.board.domain.dto.BoardDTO.Menu;
+import com.aqh.board.domain.dto.Criteria;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/root-context.xml")

@@ -1,7 +1,5 @@
-package com.aqh.common.controller;
-
+package com.aqh.file.controller;
 
 public class FileControllerNotice {
-
 
 }

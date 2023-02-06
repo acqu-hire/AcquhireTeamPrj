@@ -8,13 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.aqh.aop.LoginCheck;
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.Criteria;
 import com.aqh.board.domain.pagehandler.Pagination;
 import com.aqh.board.service.BoardService;
-import com.aqh.common.domain.FileDTO;
-import com.aqh.common.service.FileService;
+import com.aqh.file.domain.FileDTO;
+import com.aqh.file.service.FileService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,7 +52,6 @@ public class CommunityController {
 
 	private final FileService fileService;
 
-	@LoginCheck
 	@GetMapping(value = "/write")
 	public String createCommunityPost() {
 		log.info("PATH " + Path.BOARD_COMMUNITY_INSERT);
@@ -68,7 +66,6 @@ public class CommunityController {
 		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath();
 	}
 
-	@LoginCheck
 	@GetMapping(value = "/list")
 	public String readCommunityPostList(Model model, Criteria cri) {
 		log.info("PATH" + Path.BOARD_COMMUNITY_SELECT_ALL_VIEW);
@@ -93,11 +90,9 @@ public class CommunityController {
 		return Path.BOARD_COMMUNITY_SELECT_DETAIL_VIEW.getPath();
 	}
 
-	@LoginCheck
 	@GetMapping(value = "/update")
 	public String updateCommunityPost(Model model, long bno, Criteria cri) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_UPDATE);
-		// TODO 아이디 확인 추가
 
 		BoardDTO boardDTO = communityServiceImpl.findByBoardNumber(bno);
 		boardDTO.setFileList(communityServiceImpl.getFileList(bno));
@@ -123,7 +118,7 @@ public class CommunityController {
 	@PostMapping(value = "/delete")
 	public String deleteCommunityPost(Criteria cri, FileDTO fileDTO, HttpServletRequest request) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_DELETE);
-		// TODO 아이디 확인 추가
+		
 		fileService.deleteAll(fileDTO);
 		communityServiceImpl.deleteBoard(fileDTO.getBno());
 		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath()

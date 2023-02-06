@@ -1,4 +1,4 @@
-package com.aqh.common.domain;
+package com.aqh.file.domain;
 
 import lombok.Data;
 
@@ -13,11 +13,11 @@ public class FileDTO {
 	private String uploadPath;
 	private long fileSize;
 	private String fmtFileSize;
-	
-	public FileDTO() {}
-	
-	public FileDTO(long bno, String uuid, String originName,
-			String uploadPath, long fileSize, String fmtFileSize) {
+
+	public FileDTO() {
+	}
+
+	public FileDTO(long bno, String uuid, String originName, String uploadPath, long fileSize, String fmtFileSize) {
 		this.bno = bno;
 		this.uuid = uuid;
 		this.originName = originName;
@@ -25,5 +25,5 @@ public class FileDTO {
 		this.fileSize = fileSize;
 		this.fmtFileSize = fmtFileSize;
 	}
-	
+
 }

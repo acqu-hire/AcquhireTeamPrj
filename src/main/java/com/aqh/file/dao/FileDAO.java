@@ -1,4 +1,4 @@
-package com.aqh.common.dao;
+package com.aqh.file.dao;
 
 import java.util.List;
 
@@ -6,16 +6,16 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.aqh.common.domain.FileDTO;
+import com.aqh.file.domain.FileDTO;
 
 @Repository
 public class FileDAO {
 
 	@Autowired
 	SqlSessionTemplate session;
-	
-	String namespace = "com.aqh.common.dao.FileMapper.";
-	
+
+	String namespace = "com.aqh.file.dao.FileMapper.";
+
 	public int upload(List<FileDTO> files) {
 		return session.insert(namespace + "upload", files);
 	}
@@ -27,7 +27,7 @@ public class FileDAO {
 	public List<FileDTO> getFileList(long[] fno) {
 		return session.selectList(namespace + "fileList", fno);
 	}
-	
+
 	public FileDTO getFileDetail(long fno) {
 		return session.selectOne(namespace + "fileDetail", fno);
 	}

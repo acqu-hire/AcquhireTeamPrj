@@ -1,4 +1,4 @@
-package com.aqh.common.service;
+package com.aqh.file.service;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.aqh.board.domain.dto.BoardDTO;
-import com.aqh.common.dao.FileDAO;
-import com.aqh.common.domain.FileDTO;
+import com.aqh.file.dao.FileDAO;
+import com.aqh.file.domain.FileDTO;
 
 @Service
 public class FileService {
@@ -33,10 +33,8 @@ public class FileService {
 			return;
 
 		String uploadPath = request.getServletContext().getRealPath("resources") + "\\upload\\";
-		boardDTO.setFiles(
-				boardDTO.getFiles().stream()
-						.filter(file -> !file.getOriginalFilename().equals(""))
-						.collect(Collectors.toList()));
+		boardDTO.setFiles(boardDTO.getFiles().stream().filter(file -> !file.getOriginalFilename().equals(""))
+				.collect(Collectors.toList()));
 
 		boardDTO.setFileList(getFileAttach(uploadPath, boardDTO));
 		fileDAO.upload(boardDTO.getFileList());
@@ -77,7 +75,8 @@ public class FileService {
 		for (MultipartFile file : boardDTO.getFiles()) {
 			String uuid = getUuid();
 
-			FileDTO fileDTO = new FileDTO(boardDTO.getBno(),uuid,file.getOriginalFilename(),uploadPath,file.getSize(),getFmtFileSize(file.getSize()));
+			FileDTO fileDTO = new FileDTO(boardDTO.getBno(), uuid, file.getOriginalFilename(), uploadPath,
+					file.getSize(), getFmtFileSize(file.getSize()));
 			list.add(fileDTO);
 			File saveFile = new File(uploadPath + uuid + getExtension(file));
 			try {
@@ -93,9 +92,7 @@ public class FileService {
 
 	public void removeFile(List<FileDTO> files) {
 		for (FileDTO file : files) {
-			File delFile = new File(file.getUploadPath()
-					+ file.getUuid()
-					+ getExtension(file.getOriginName()));
+			File delFile = new File(file.getUploadPath() + file.getUuid() + getExtension(file.getOriginName()));
 			if (delFile.exists()) {
 				delFile.delete();
 			}

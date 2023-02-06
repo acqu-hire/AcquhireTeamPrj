@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.aqh.board.dao.BoardDAO;
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.Criteria;
-import com.aqh.common.domain.FileDTO;
+import com.aqh.file.domain.FileDTO;
 
 @Service
 public class QnABoardServiceImpl implements BoardService {
