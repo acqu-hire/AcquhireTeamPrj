@@ -1,4 +1,4 @@
-package com.aqh.common.exception;
+package com.aqh.exception;
 
 import java.nio.file.AccessDeniedException;
 import java.security.InvalidParameterException;
@@ -19,6 +19,7 @@ public class CommonExceptionAdvice {
 	public static final String FONT_CYAN = "\u001B[36m";
 	public static final String RESET = "\u001B[0m";
 	public static final String FONT_GREEN = "\u001B[32m";
+	public static final String START_END_FONT ="\037 \u001B[43m";
 	
 	
 	@ExceptionHandler({NoHandlerFoundException.class,InvalidParameterException.class})
@@ -79,6 +80,7 @@ public class CommonExceptionAdvice {
 	private void printExceptionStackTrace(Exception ex) {
 		for(StackTraceElement exLog : ex.getStackTrace())
 			log.info(FONT_CYAN + "stack trace : {}",exLog + RESET);
+		log.info(START_END_FONT + "error message : {}", ex.getMessage() + RESET);
 	}
 	
 }
