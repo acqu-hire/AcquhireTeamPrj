@@ -73,10 +73,9 @@ public class EventController {
 
 	// 게시판 글 등록 뷰 페이지
 	@PostMapping("/eventInsert")
-	public String eventInsert(Model model, BoardDTO boardDTO, Category category) {
+	public String eventInsert(Model model, BoardDTO boardDTO) {
 		log.info("insert boardDTO 확인 : " + boardDTO);
 		eventService.eventInsert(boardDTO);
-		model.addAttribute(category);
 		return "redirect:/event/menu_select_all";
 
 	}
