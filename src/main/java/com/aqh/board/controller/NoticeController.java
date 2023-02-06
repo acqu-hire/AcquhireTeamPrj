@@ -1,6 +1,5 @@
 package com.aqh.board.controller;
 
-import java.awt.print.Pageable;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -8,12 +7,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -31,11 +28,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.aqh.board.domain.dto.BoardDTO;
-import com.aqh.board.domain.dto.Criteria;
 import com.aqh.board.domain.dto.BoardDTO.Category;
+import com.aqh.board.domain.dto.Criteria;
 import com.aqh.board.domain.pagehandler.Pagination;
 import com.aqh.board.service.NoticeService;
-import com.aqh.common.domain.FileNoticeDTO;
+import com.aqh.file.domain.FileNoticeDTO;
 
 import lombok.extern.slf4j.Slf4j;
 

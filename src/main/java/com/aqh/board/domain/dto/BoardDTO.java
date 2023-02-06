@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.aqh.common.domain.FileDTO;
-import com.aqh.common.domain.FileNoticeDTO;
+import com.aqh.file.domain.FileDTO;
+import com.aqh.file.domain.FileNoticeDTO;
 
 import lombok.Data;
 
@@ -17,10 +17,8 @@ public class BoardDTO {
 	}
 
 	public enum Category {
-		QNA_TECH, QNA_CAREER, QNA_ETC,
-		COMMUNITY_LIFE, COMMUNITY_GROUP,
-		EVENT_IT_EVENT, EVENT_MARKETING,
-		NOTICE_NOTICE, NOTICE_EVENT
+		QNA_TECH, QNA_CAREER, QNA_ETC, COMMUNITY_LIFE, COMMUNITY_GROUP, EVENT_IT_EVENT, EVENT_MARKETING, NOTICE_NOTICE,
+		NOTICE_EVENT
 	}
 
 	private String id; // 회원 아이디

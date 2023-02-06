@@ -1,7 +1,6 @@
 package com.aqh.board.domain.dto;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.aqh.board.domain.dto.BoardDTO.Category;

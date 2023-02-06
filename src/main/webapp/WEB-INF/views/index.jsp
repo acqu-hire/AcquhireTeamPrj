@@ -112,6 +112,7 @@ color: white;
   opacity: 0.7;
   color: white;
 }
+
 </style>
 
 

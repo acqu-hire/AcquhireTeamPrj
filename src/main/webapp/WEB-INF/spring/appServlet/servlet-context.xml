@@ -43,7 +43,7 @@
 			<exclude-mapping path="/community/list"/>
 			<exclude-mapping path="/community/selectdetail_view"/>
 			<exclude-mapping path="/resources/**"/>
-			<beans:bean class="com.aqh.common.interceptor.LoginInterceptor" />
+			<beans:bean class="com.aqh.interceptor.LoginInterceptor" />
 		</interceptor>
 	</interceptors>
 	

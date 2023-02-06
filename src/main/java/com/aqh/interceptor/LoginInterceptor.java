@@ -1,10 +1,9 @@
-package com.aqh.common.interceptor;
+package com.aqh.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 
 public class LoginInterceptor implements HandlerInterceptor{
 
