@@ -14,7 +14,7 @@ public class FileDAO {
 	@Autowired
 	SqlSessionTemplate session;
 	
-	String namespace = "com.aqh.common.domain.dao.FileMapper.";
+	String namespace = "com.aqh.common.dao.FileMapper.";
 	
 	public int upload(List<FileDTO> files) {
 		return session.insert(namespace + "upload", files);
