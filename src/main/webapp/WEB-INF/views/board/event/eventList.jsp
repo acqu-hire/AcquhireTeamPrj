@@ -169,20 +169,21 @@
 						<!-- Pagination -->
 
 
+<!-- 수정중임 일단 안됨 왜 안될까 -->
 						<!-- Search -->
 						<section id="search" class="mb-3 bg-light">
 							<div class="container">
 								<div class="form-row justify-content-center">
-									<form action="./menu_select_all${pagination.getListLink(pageNumber)}" method="get" name="search" id="signupForm" enctype="application/x-www-form-urlencoded">
+									<form action="./menu_select_all" method="get" name="search" id="signupForm" enctype="application/x-www-form-urlencoded">
 										<fieldset>
 											<div class="input-group mx-auto">
 												<label for="keyword"></label>
 												<div class="col-xs-2">
 													<select id="type" name="type" class="form-control">
-														<option value="all" ${pagination.criteria.type eq 'all'?'selected':''}>전체 검색</option>
-														<option value="id" ${pagination.criteria.type eq 'id'?'selected':''}>아이디</option>
-														<option value="title"${pagination.criteria.type eq 'title'?'selected':''}>제목</option>
-														<option value="contents"${pagination.criteria.type eq 'content'?'selected':''}>내용</option>
+														<option value="all" selected="selected">전체 검색</option>
+														<option value="id">아이디</option>
+														<option value="title">제목</option>
+														<option value="contents">내용</option>
 													</select>
 												</div>
 												<div class="col-xs-6">
@@ -191,7 +192,7 @@
 												<button class="btn btn-outline-danger input-group-append" type="submit">
 													<i class="fas fa-search"></i>검색
 												</button>
-												<div> <input type="hidden" id="category" name="category" value="${pagination.criteria.category}"> </div>
+												<%-- <div> <input type="hidden" id="category" name="category" value="${pagination.criteria.category}"> </div> --%>
 												
 											</div>
 										</fieldset>
