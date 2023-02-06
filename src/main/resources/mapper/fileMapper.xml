@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.aqh.common.domain.dao.FileMapper">
+<mapper namespace="com.aqh.common.dao.FileMapper">
 	<insert id="upload" parameterType="java.util.List">
 				INSERT INTO attachfile
 			(
@@ -28,7 +28,7 @@
 		DELETE FROM attachfile 
 		WHERE fno IN
 		<foreach collection="array" item="fno" open="(" close=")" separator=",">
-		${fno}
+		#{fno}
 		</foreach>
 	</delete>
 	
@@ -36,7 +36,7 @@
 		SELECT * FROM attachfile
 		WHERE fno IN
 		<foreach collection="array" item="fno" open="(" close=")" separator=",">
-		${fno}
+		#{fno}
 		</foreach>
 	</select>
 	
