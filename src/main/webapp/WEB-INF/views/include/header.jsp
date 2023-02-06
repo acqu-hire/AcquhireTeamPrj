@@ -54,13 +54,11 @@
 			    <a class="dropdown-item" href="<c:url value='/member/detail?id=${sessionScope.id}'/>">회원정보</a>
 			    <div class="dropdown-divider"></div>
 			    <a class="dropdown-item" id="logout" href="#">로그아웃</a>
+			    <c:if test="${sessionScope.id == 'admin'}">
+			      <a class="dropdown-item" href="#"><i class="fa-solid fa-user-tie"></i>관리자 페이지</a>
+			    </c:if>
 			  </div>
 			</li>
-			<c:if test="${sessionScope.id == 'admin'}">
-			  <li class="nav-item">
-			    <a class="nav-link" href="<c:url value='#'/>"><i class="fa-solid fa-user-tie"></i> 관리자 페이지</a>
-			  </li>
-			</c:if>
 		  </c:when>
 		<c:otherwise>
 		  <li class="nav-item">
