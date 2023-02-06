@@ -130,7 +130,7 @@ color: white;
 			<div class="row">
 				<div class="col-md-12">
 					<div class="row align-items-center">
-						<div class="col-md-8" style="padding : 0;">
+						<div class="col-md-8">
 								<div class="slideshow-container">
 									<div class="mySlides fade">
 									
