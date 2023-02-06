@@ -77,7 +77,42 @@ img {vertical-align: middle;}
   .text {font-size: 11px}
 }
 
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
 
+.title {
+  color: grey;
+  font-size: 18px;
+}
+
+button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+
+.icon{
+font-size: 22px;
+text-decoration: none;
+color: white;
+}
+.icon :hover {
+  opacity: 0.7;
+  color: white;
+}
 </style>
 
 
@@ -132,14 +167,88 @@ img {vertical-align: middle;}
 	<section>
 		<div class="row align-items-center justify-content-center">
 
-			<div class="col-md-2 " style="background-color: rgb(108, 177, 241);">
-			<b>공지사항</b>
-			<div>가나다라마바사아자차카타파낭ㄴ망남ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</div>
+			<!-- KSH -->
+			<div class="col-md-2 ">
+
+				<div class="card">
+					<img src="https://avatars.githubusercontent.com/u/117618309?v=4" alt="image" style="width: 100%;">
+					<h1><b>KSH</b></h1>
+					<p class="title">PM</p>
+					<p>Q&A</p>
+					<div style="margin: 15px 0 0 0;">
+						<div style="font-size: 18px;"><i class="fa fa-envelope" aria-hidden="true"></i> makemegrowup4@gmail.com </div>
+					</div>
+					<p>
+						<div style="background-color: black; padding: 8px;">
+							<a class="icon" href="https://github.com/makemegrowup">
+								<i class="fa fa-github"></i>
+							</a>
+						</div>
+					</p>
+				</div>	
 			</div>
-			<div class="col-md-2" style="background-color: rgb(156, 224, 128);">커뮤니티</div>
-			<div class="col-md-2" style="background-color: rgb(161, 147, 245);">QNA</div>
-			<div class="col-md-2" style="background-color: rgb(156, 224, 128);">이벤트</div>
+			
+			<!-- KDY -->
+			<div class="col-md-2 ">
+
+				<div class="card">
+					<img src="https://avatars.githubusercontent.com/u/119023832?v=4" alt="image" style="width: 100%;">
+					<h1><b>KDY</b></h1>
+					<p class="title">PA</p>
+					<p>공지사항</p>
+					<div style="margin: 15px 0 0 0;">
+						<div style="font-size: 18px;"><i class="fa fa-envelope" aria-hidden="true"></i> last_1234@naver.com </div>
+					</div>
+					<p>
+						<div style="background-color: black; padding: 8px;">
+							<a class="icon" href="https://github.com/kimdoyeon12"><i class="fa fa-github"></i>
+							</a>
+						</div>
+					</p>
+				</div>	
+			</div>
+			
+			<!-- ESG -->
+			<div class="col-md-2 ">
+
+				<div class="card">
+					<img src="https://avatars.githubusercontent.com/u/114354313?v=4" alt="image" style="width: 100%;">
+					<h1><b>ESG</b></h1>
+					<p class="title">PL</p>
+					<p>커뮤니티</p>
+					<div style="margin: 15px 0 0 0;">
+						<div style="font-size: 18px;"><i class="fa fa-envelope" aria-hidden="true"></i> e_s_g@naver.com </div>
+					</div>
+					<p>
+						<div style="background-color: black; padding: 8px;">
+							<a class="icon" href="https://github.com/Devesg"> <i class="fa fa-github"></i>
+							</a>
+						</div>
+					</p>
+				</div>	
+			</div>
+			
+			<!-- PSY -->
+			<div class="col-md-2 ">
+
+				<div class="card">
+					<img src="https://avatars.githubusercontent.com/u/119025218?v=4" alt="image" style="width: 100%;">
+					<h1><b>PSY</b></h1>
+					<p class="title">PA</p>
+					<p>이벤트</p>
+					<div style="margin: 15px 0 0 0;">
+						<div style="font-size: 18px;"><i class="fa fa-envelope" aria-hidden="true"></i> wytts6783@naver.com </div>
+					</div>
+					<p>
+						<div style="background-color: black; padding: 8px;">
+							<a class="icon" href="https://github.com/ori52"> <i class="fa fa-github"></i>
+							</a>
+						</div>
+					</p>
+				</div>	
+			</div>
 		</div>
+		
 	</section>
 	<!-- Footer -->
 
