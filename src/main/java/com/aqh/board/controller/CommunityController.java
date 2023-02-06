@@ -93,7 +93,6 @@ public class CommunityController {
 	@GetMapping(value = "/update")
 	public String updateCommunityPost(Model model, long bno, Criteria cri) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_UPDATE);
-		// TODO 아이디 확인 추가
 
 		BoardDTO boardDTO = communityServiceImpl.findByBoardNumber(bno);
 		boardDTO.setFileList(communityServiceImpl.getFileList(bno));
@@ -119,7 +118,7 @@ public class CommunityController {
 	@PostMapping(value = "/delete")
 	public String deleteCommunityPost(Criteria cri, FileDTO fileDTO, HttpServletRequest request) {
 		log.info("PATH " + Path.BOARD_COMMUNITY_DELETE);
-		// TODO 아이디 확인 추가
+		
 		fileService.deleteAll(fileDTO);
 		communityServiceImpl.deleteBoard(fileDTO.getBno());
 		return Path.BOARD_COMMUNITY_REDIRECT_SELECT_ALL_VIEW.getPath()

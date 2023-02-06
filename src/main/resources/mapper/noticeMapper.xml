@@ -10,23 +10,23 @@
 			(select RN1.* from
 				(select * from board 
 				<where>
-					<if test="searchType != null">
+					<if test="type != null">
 						<choose>
-							<when test='searchType.equals("all")'>
+							<when test='type.equals("all")'>
 								id like concat('%',#{keyword},'%')
 								or title like concat('%',#{keyword},'%')
 								or contents like concat('%',#{keyword},'%')
 							</when>
-							<when test='searchType.equals("id")'>
+							<when test='type.equals("id")'>
 								id like concat('%',#{keyword},'%')
 							</when>
-							<when test='searchType.equals("title")'>
+							<when test='type.equals("title")'>
 								title like concat('%',#{keyword},'%')
 							</when>
-							<when test='searchType.equals("contents")'>
+							<when test='type.equals("contents")'>
 								contents like concat('%',#{keyword},'%')
 							</when>
-							<when test='searchType.equals("titleContents")'>
+							<when test='type.equals("titleContents")'>
 								title like concat('%',#{keyword},'%')
 								or contents like concat('%',#{keyword},'%')
 							</when>
@@ -35,7 +35,7 @@
 				</where>
 				)
 			RN1 where menu="NOTICE" order by writeDay desc) 
-		RN limit #{displayPost},#{postNum};
+		RN limit #{offset},#{limit};
 	</select>
 
 	<!-- 카테고리 전체조회(category 메뉴 클릭 시) -->
@@ -44,23 +44,23 @@
 			(select RN. bno,id,readCount,title,writeDay from 
 				(select * from board
 				<where>
-					<if test="searchType != null">
+					<if test="type != null">
 						<choose>
-							<when test='searchType.equals("all")'>
+							<when test='type.equals("all")'>
 								id like concat('%',#{keyword},'%')
 								or title like concat('%',#{keyword},'%')
 								or contents like concat('%',#{keyword},'%')
 							</when>
-							<when test='searchType.equals("id")'>
+							<when test='type.equals("id")'>
 								id like concat('%',#{keyword},'%')
 							</when>
-							<when test='searchType.equals("title")'>
+							<when test='type.equals("title")'>
 								title like concat('%',#{keyword},'%')
 							</when>
-							<when test='searchType.equals("contents")'>
+							<when test='type.equals("contents")'>
 								contents like concat('%',#{keyword},'%')
 							</when>
-							<when test='searchType.equals("titleContents")'>
+							<when test='type.equals("titleContents")'>
 								title like concat('%',#{keyword},'%')
 								or contents like concat('%',#{keyword},'%')
 							</when>
@@ -69,7 +69,7 @@
 				</where>
 				)
 			RN where category = #{category} order by writeDay desc) 
-		RN1 limit #{displayPost},#{postNum};
+		RN1 limit #{offset},#{limit};
 	</select>
 	
 	<!-- 선택조회(게시판 제목 클릭 시) -->
@@ -84,53 +84,56 @@
 	
 	<!-- 게시판 개수 -->
 	<select id="BoardListAllCount" resultType="integer">
-		select count(*) from board 
-		<where>
-			<if test="searchType != null">
-				<choose>
-					<when test='searchType.equals("all")'>
-						id like concat('%',#{keyword},'%')
-						or title like concat('%',#{keyword},'%')
-						or contents like concat('%',#{keyword},'%')
-					</when>
-					<when test='searchType.equals("id")'>
-						id like concat('%',#{keyword},'%')
-					</when>
-					<when test='searchType.equals("title")'>
-						title like concat('%',#{keyword},'%')
-					</when>
-					<when test='searchType.equals("contents")'>
-						contents like concat('%',#{keyword},'%')
-					</when>
-					<when test='searchType.equals("titleContents")'>
-						title like concat('%',#{keyword},'%')
-						or contents like concat('%',#{keyword},'%')
-					</when>
-				</choose>
-			</if>
-		</where>
+		select count(*) from 
+			(select * from board
+			<where>
+				<if test="type != null">
+					<choose>
+						<when test='type.equals("all")'>
+							id like concat('%',#{keyword},'%')
+							or title like concat('%',#{keyword},'%')
+							or contents like concat('%',#{keyword},'%')
+						</when>
+						<when test='type.equals("id")'>
+							id like concat('%',#{keyword},'%')
+						</when>
+						<when test='type.equals("title")'>
+							title like concat('%',#{keyword},'%')
+						</when>
+						<when test='type.equals("contents")'>
+							contents like concat('%',#{keyword},'%')
+						</when>
+						<when test='type.equals("titleContents")'>
+							title like concat('%',#{keyword},'%')
+							or contents like concat('%',#{keyword},'%')
+						</when>
+					</choose>
+				</if>
+			</where>
+			)
+		board where menu = "NOTICE";
 	</select>
 	<select id="CategoryListCount" resultType="integer">
 		select count(*) from
 			(select * from board 
 			<where>
-				<if test="searchType != null">
+				<if test="type != null">
 					<choose>
-						<when test='searchType.equals("all")'>
+						<when test='type.equals("all")'>
 							id like concat('%',#{keyword},'%')
 							or title like concat('%',#{keyword},'%')
 							or contents like concat('%',#{keyword},'%')
 						</when>
-						<when test='searchType.equals("id")'>
+						<when test='type.equals("id")'>
 							id like concat('%',#{keyword},'%')
 						</when>
-						<when test='searchType.equals("title")'>
+						<when test='type.equals("title")'>
 							title like concat('%',#{keyword},'%')
 						</when>
-						<when test='searchType.equals("contents")'>
+						<when test='type.equals("contents")'>
 							contents like concat('%',#{keyword},'%')
 						</when>
-						<when test='searchType.equals("titleContents")'>
+						<when test='type.equals("titleContents")'>
 							title like concat('%',#{keyword},'%')
 							or contents like concat('%',#{keyword},'%')
 						</when>
@@ -172,7 +175,13 @@
 	<delete id="fileDeleteAll"  parameterType="int">
 		delete from board_file where bno = #{bno};
 	</delete>
-	<delete id="fileSelectDelete"  parameterType="String">
-		delete from board_file where uuid = #{uuid};
+	<delete id="fileSelectDelete" parameterType="hashmap">
+		delete from board_file
+		<where>
+			uuid IN
+			<foreach collection="uuid" item="item" index="index" separator="," open="(" close=")">
+				#{item}
+			</foreach>
+		</where>
 	</delete>
 </mapper>

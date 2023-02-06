@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.Criteria;
-import com.aqh.board.domain.dto.BoardDTO.Category;
 import com.aqh.board.domain.pagehandler.Pagination;
 import com.aqh.board.service.EventService;
 
@@ -28,6 +27,7 @@ public class EventController {
 	public String SelectAll(Model model, Criteria cri) {
 		model.addAttribute("eventMenuSelectAll", eventService.eventMenuSelectAll(cri));
 		model.addAttribute("pagination", new Pagination((int) eventService.BoardListAllCount(cri), cri));
+		log.info("뭐가 문제일까" + cri);
 		log.info("이벤트 게시판 전체 조회 : " + model);
 		return "board/event/eventList";
 	}
@@ -73,10 +73,9 @@ public class EventController {
 
 	// 게시판 글 등록 뷰 페이지
 	@PostMapping("/eventInsert")
-	public String eventInsert(Model model, BoardDTO boardDTO, Category category) {
+	public String eventInsert(Model model, BoardDTO boardDTO) {
 		log.info("insert boardDTO 확인 : " + boardDTO);
 		eventService.eventInsert(boardDTO);
-		model.addAttribute(category);
 		return "redirect:/event/menu_select_all";
 
 	}

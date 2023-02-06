@@ -65,23 +65,29 @@
 							<td>
 								<c:forEach items="${fileNoList}" var="fileNoList" varStatus="idx" step="1">
 									<p>
-										<a class="downlink" href="${fileNoList.original_file_name}">${fileNoList.original_file_name}</a> 
+										<a class="downlink" href="${fileNoList.uuid}_${fileNoList.original_file_name}">${fileNoList.original_file_name}</a>
 									</p>		
 								</c:forEach>
 							</td>
 						</tr>
 					</table>
 				<hr/>
-					<div class="col-12">
-					${boardDTO.contents}
-					</div>
-					<div class="row">
- 						<div class="col-12 text-right">
-							<input type="button" value="글수정" class="btn btn-success" onclick="location.href='./update_view?bno=${selectDetail.bno}'"> 
-							<input type="button" value="글삭제" class="btn btn-warning" onclick="location.href='./delete?bno=${selectDetail.bno}'">
-							<button type="button" class="btn btn-primary" onclick="location.href='./select_all_view?num=1'">전체 게시글보기</button>
-						</div> 
-					</div>
+
+						<div class="row">
+	 						<div class="col-12 text-right">
+								<input type="button" value="글수정" class="btn btn-success" onclick="location.href='./update_view?page=${criteria.page}&category=${criteria.category}&bno=${selectDetail.bno}'"> 
+								<input type="button" value="글삭제" class="btn btn-warning" onclick="location.href='./delete?page=${criteria.page}&category=${criteria.category}&bno=${selectDetail.bno}'">
+								<c:choose>
+									<c:when test="${empty criteria.category}">
+										<button type="button" class="btn btn-primary" onclick="location.href='./select_all_view?page=${criteria.page}'">전체 게시글보기</button>
+									</c:when>
+									<c:otherwise>
+										<button type="button" class="btn btn-primary" onclick="location.href='./select_category_view?page=${criteria.page}&category=${criteria.category}'">공지 게시글보기</button>
+									</c:otherwise>
+								</c:choose>						
+							</div> 
+						</div>
+
 				</div>
 			</div>
 		</div>

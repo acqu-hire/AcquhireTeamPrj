@@ -1,7 +1,6 @@
 package com.aqh.board.domain.dto;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.aqh.board.domain.dto.BoardDTO.Category;
@@ -14,11 +13,11 @@ import lombok.Data;
 //@RequiredArgsConstructor //기본 생성자보다 우선순위가 낮다.
 @AllArgsConstructor
 public class Criteria {
-	private Integer page; // 페이징
-	private Integer limit; // 페이징 범위
-	private Integer offset; // offest
+	private Integer page; // 페이징 num
+	private Integer limit; // 페이징 범위 postNum
+	private Integer offset; // offest displayPost
 	private Category category; // 카테고리
-	private String type; // 검색할 카테고리
+	private String type; // 검색할 카테고리 searchType
 	private String keyword; // 검색 내용
 
 	public Criteria() {

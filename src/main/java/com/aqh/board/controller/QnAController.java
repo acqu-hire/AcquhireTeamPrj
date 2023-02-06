@@ -15,7 +15,6 @@ import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.Criteria;
 import com.aqh.board.domain.pagehandler.Pagination;
 import com.aqh.board.service.BoardService;
-import com.aqh.file.dao.FileDAO;
 import com.aqh.file.domain.FileDTO;
 import com.aqh.file.service.FileService;
 
@@ -31,7 +30,8 @@ public class QnAController {
 
 	@GetMapping("/list")
 	public String qnaList(Model model, Criteria cri) {
-		model.addAttribute("pagination", new Pagination((int) qnABoardServiceImpl.getBoardTotal(cri), cri));
+		Pagination pg = new Pagination((int) qnABoardServiceImpl.getBoardTotal(cri), cri);
+		model.addAttribute("pagination", pg);
 		List<BoardDTO> list = qnABoardServiceImpl.getBoardList(cri);
 		model.addAttribute("boardList", list);
 

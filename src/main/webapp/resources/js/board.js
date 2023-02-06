@@ -38,9 +38,6 @@ $(function() {
     var inputCnt = $(".file-inline input").length;
     var maxAppend = $("div.file-inline").attr("data-fileSize");
     
-    if(maxAppend == ''){
-        maxAppend = 1;
-    }
     $("#addFileBtn").on("click", function() {
         if(maxAppend >= 5) {
             alert("파일첨부 최대개수는 5개 입니다.");
@@ -122,8 +119,10 @@ $(function() {
 		form.attr("action", "./update" + getQueryString);
 		form.submit();
 	})
+
+    /* 글쓰기 폼 전송 버튼 */
     $(document).on("click", "#submitWriteForm", function() {
-        if(inputCnt > 1){
+        if(inputCnt >= 1){
             if(!$(".file-inline input[name='files']").val() || $(".file-inline input[name='files']").length == 0){
             alert("파일을 첨부하거나 파일탭을 삭제해주세요.")					
             return false;

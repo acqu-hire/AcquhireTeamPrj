@@ -19,10 +19,9 @@ public class LoginInterceptor implements HandlerInterceptor{
 		}
 		if(member == null) {
 			request.getSession().setAttribute("requestURL", requestURL);
-			response.sendRedirect("/login/login");
+			response.sendRedirect(contextPath+"/login/login");
 			return false;
 		}
 		return true;
 	}
-	
 }

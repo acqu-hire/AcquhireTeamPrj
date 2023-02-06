@@ -5,7 +5,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="shortcut icon" href="<c:url value='../resources/img/fabicon.ico'/>" type="image/x-icon"/>
 <meta charset="UTF-8">
 <title>Acq-Hire</title>
 </head>
@@ -136,21 +135,21 @@ color: white;
 									
 										<div class="numbertext">1 / 3</div>
 										<a href="#">
-										<img src="../resources/img/banner2.png" style="width: 100%">
+										<img src="./resources/img/banner2.png" style="width: 100%">
 										</a>
 									</div>
 
 									<div class="mySlides fade">
 										<div class="numbertext">2 / 3</div>
 										<a href="#">
-										<img src="../resources/img/banner1.png" style="width: 100%">
+										<img src="./resources/img/banner1.png" style="width: 100%">
 										</a>
 									</div>
 
 									<div class="mySlides fade">
 										<div class="numbertext">3 / 3</div>
 										<a href="#">
-										<img src="../resources/img/banner3.png" style="width: 100%">
+										<img src="./resources/img/banner3.png" style="width: 100%">
 										</a>
 									</div>
 								</div>

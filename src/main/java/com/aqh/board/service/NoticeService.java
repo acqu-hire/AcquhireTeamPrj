@@ -1,5 +1,6 @@
 package com.aqh.board.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,33 +8,31 @@ import org.springframework.stereotype.Service;
 
 import com.aqh.board.dao.NoticeDAO;
 import com.aqh.board.domain.dto.BoardDTO;
-import com.aqh.board.domain.dto.CriteriaNotice;
+import com.aqh.board.domain.dto.Criteria;
 import com.aqh.file.domain.FileNoticeDTO;
 
+
 @Service
-public class NoticeService {
+public class NoticeService{
 
 	@Autowired
 	private NoticeDAO noticeDAO;
-
-	public List<BoardDTO> menuSelectAll(CriteriaNotice criteriaNotice) {
-		return noticeDAO.menuSelectAll(criteriaNotice);
+	
+	public List<BoardDTO> menuSelectAll(Criteria criteria){
+		return noticeDAO.menuSelectAll(criteria);
 	}
-
-	public List<BoardDTO> categorySelectAll(CriteriaNotice criteriaNotice) {
-		return noticeDAO.categorySelectAll(criteriaNotice);
+	public List<BoardDTO> categorySelectAll(Criteria criteria){
+		return noticeDAO.categorySelectAll(criteria);
 	}
 
 	public BoardDTO selectDetail(Integer bno) {
 		return noticeDAO.selectDetail(bno);
 	}
-
-	public int BoardListAllCount(CriteriaNotice criteriaNotice) {
-		return noticeDAO.BoardListAllCount(criteriaNotice);
+	public int BoardListAllCount(Criteria criteria) {
+		return noticeDAO.BoardListAllCount(criteria);
 	}
-
-	public int CategoryListCount(CriteriaNotice criteriaNotice) {
-		return noticeDAO.CategoryListCount(criteriaNotice);
+	public int CategoryListCount(Criteria criteria) {
+		return noticeDAO.CategoryListCount(criteria);
 	}
 
 	public void insert(BoardDTO boardDTO) {
@@ -55,16 +54,16 @@ public class NoticeService {
 	public List<FileNoticeDTO> fileUpList(long bno) {
 		return noticeDAO.fileUpList(bno);
 	}
-
+	
 	public void fileInsert(List<FileNoticeDTO> fileNoList) {
 		noticeDAO.fileInsert(fileNoList);
 	}
-
+	
 	public void fileDeleteAll(int bno) {
 		noticeDAO.fileDeleteAll(bno);
 	}
-
-	public void fileSelectDelete(String uuid) {
-		noticeDAO.fileSelectDelete(uuid);
+	
+	public void fileSelectDelete(HashMap<String,Object> uuidList) {
+		noticeDAO.fileSelectDelete(uuidList);
 	}
 }
