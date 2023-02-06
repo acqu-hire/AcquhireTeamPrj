@@ -16,17 +16,7 @@
 <script src="${contextPath}/resources/js/board.js?ver=1" type="text/javascript"></script>
 <script src="${contextPath}/resources/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="https://kit.fontawesome.com/58abbffa46.js" ></script>
-<style>
-	
-	.navbar-brand{width: 150px; float:left;}
-	@media screen and (max-width: 991px) {
-		.navbar-brand {
-			float:none;
-			display:block;
-			margin:0 auto;
-		}
-	}
-</style>
+
 <title>Header</title>
 </head>
 <body pt-5>
@@ -34,13 +24,12 @@
 <header style="padding-top : 68px;">
 	<div>
   <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top" style="border-bottom : 2px solid #000;">
-  	<div style="width: 67%; overflow: hidden; margin: 0 auto;">
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu">
 		  <span class="navbar-toggler-icon"></span>
 		</button>
-		<a class="navbar-brand" href="<c:url value='/' />"><img width="40" height="40" src="../resources/img/logo.png"> <b> ACQHIRE</b> </a>
-		<div class="collapse navbar-collapse" id="navbarMenu" style="width: 445px; float:right;">
-		  <ul class="navbar-nav">
+		<a class="navbar-brand" style="margin-left: 27rem" href="<c:url value='/' />"><img width="40" height="40" src="../resources/img/logo.png"> <b> ACQHIRE</b> </a>
+		<div class="collapse navbar-collapse" id="navbarMenu">
+		  <ul class="navbar-nav mx-auto">
 			<li class="nav-item">
 			  <a class="nav-link ${url == '/'?'active':''}" href="<c:url value='/' />">
 				<i class="fa-solid fa-house"></i>Home
@@ -97,7 +86,6 @@
 		    </c:choose>
 		  </ul>
 		</div>
-	</div>
   </nav>
 	</div>
 </header>

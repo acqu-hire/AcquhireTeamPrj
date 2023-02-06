@@ -92,9 +92,19 @@ public class NoticeController {
 		Resource resource = new FileSystemResource(path + fileName);
 		log.info("파일경로이름확인"+resource);
 		String resourceName = resource.getFilename();
+		
+		//uuid 제거
+		String[] idx = resourceName.split("_",2);
+		String downOriginalName = null;
+		for (int i = 0; i < idx.length; i++) {
+			String downName = idx[1];
+			downOriginalName = downName;
+			System.out.println("다운파일이름" + downName);
+		}
+		
 		HttpHeaders headers = new HttpHeaders();
 		try {
-			headers.add("Content-Disposition", "attachment; filename=" + new String(resourceName.getBytes("UTF-8"),	"ISO-8859-1"));
+			headers.add("Content-Disposition", "attachment; filename=" + new String(downOriginalName.getBytes("UTF-8"),	"ISO-8859-1"));
 		} catch(UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
