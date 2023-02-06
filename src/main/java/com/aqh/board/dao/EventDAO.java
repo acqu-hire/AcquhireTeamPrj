@@ -14,7 +14,7 @@ public class EventDAO {
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
 
-	String namespace = "com.aqh.board.domain.dao.EventMapper.";
+	String namespace = "com.aqh.board.dao.EventMapper.";
 
 	//조회
 	public List<BoardDTO> eventMenuSelectAll(Criteria cri) {

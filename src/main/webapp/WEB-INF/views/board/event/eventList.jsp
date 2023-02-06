@@ -169,17 +169,18 @@
 						<!-- Pagination -->
 
 
-<!-- 수정중임 일단 안됨 왜 안될까 -->
 						<!-- Search -->
+
 						<section id="search" class="mb-3 bg-light">
 							<div class="container">
 								<div class="form-row justify-content-center">
-									<form action="./menu_select_all" method="get" name="search" id="signupForm" enctype="application/x-www-form-urlencoded">
+									<form action="/event/menu_select_all${pagination.getListLink(pagination.page)}" method="get" name="type" id="signupForm"
+										enctype="application/x-www-form-urlencoded">
 										<fieldset>
 											<div class="input-group mx-auto">
 												<label for="keyword"></label>
 												<div class="col-xs-2">
-													<select id="type" name="type" class="form-control">
+													<select name="type" class="form-control">
 														<option value="all" selected="selected">전체 검색</option>
 														<option value="id">아이디</option>
 														<option value="title">제목</option>
@@ -189,17 +190,16 @@
 												<div class="col-xs-6">
 													<input type="search" id="keyword" name="keyword" class="form-control" placeholder="검색어 입력">
 												</div>
-												<button class="btn btn-outline-danger input-group-append" type="submit">
-													<i class="fas fa-search"></i>검색
-												</button>
-												<%-- <div> <input type="hidden" id="category" name="category" value="${pagination.criteria.category}"> </div> --%>
-												
+													<button class="btn btn-outline-danger input-group-append" type="submit">
+														<i class="fas fa-search"></i>검색
+													</button>
 											</div>
 										</fieldset>
 									</form>
 								</div>
 							</div>
 						</section>
+
 						<!-- Search -->
 						
 						
