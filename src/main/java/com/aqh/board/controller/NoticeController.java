@@ -88,9 +88,12 @@ public class NoticeController {
 	@GetMapping(value = "/fileDownLoad")
 	@ResponseBody
 	public ResponseEntity<Resource> fileDownLoad(@RequestParam("fileName") String fileName, @RequestParam("bno") Integer bno ,HttpServletRequest request){
-		
-		String path = request.getSession().getServletContext().getRealPath("/") + "/resources/upload/";
+		log.info("파일이름확인"+fileName);
+		log.info("파일번호확인"+bno);
+		String path = request.getSession().getServletContext().getRealPath("\\") + "\\resources\\upload\\";
+		log.info("파일경로확인"+path);
 		Resource resource = new FileSystemResource(path + fileName);
+		log.info("파일경로이름확인"+resource);
 		String resourceName = resource.getFilename();
 		HttpHeaders headers = new HttpHeaders();
 		try {

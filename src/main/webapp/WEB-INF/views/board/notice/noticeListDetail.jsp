@@ -65,7 +65,7 @@
 							<td>
 								<c:forEach items="${fileNoList}" var="fileNoList" varStatus="idx" step="1">
 									<p>
-										<a class="downlink" href="${fileNoList.original_file_name}">${fileNoList.original_file_name}</a> 
+										<a class="downlink" href="${fileNoList.uuid}_${fileNoList.original_file_name}">${fileNoList.original_file_name}</a>
 									</p>		
 								</c:forEach>
 							</td>
