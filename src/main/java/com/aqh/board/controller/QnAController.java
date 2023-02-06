@@ -15,8 +15,9 @@ import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.Criteria;
 import com.aqh.board.domain.pagehandler.Pagination;
 import com.aqh.board.service.BoardService;
-import com.aqh.common.domain.FileDTO;
-import com.aqh.common.service.FileService;
+import com.aqh.file.dao.FileDAO;
+import com.aqh.file.domain.FileDTO;
+import com.aqh.file.service.FileService;
 
 @Controller
 @RequestMapping("/QnA")

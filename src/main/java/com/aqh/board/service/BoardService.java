@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.Criteria;
-import com.aqh.common.domain.FileDTO;
+import com.aqh.file.domain.FileDTO;
 
 public interface BoardService {
 
-    // ! CREATE
+	// ! CREATE
 
 	public int insertBoard(BoardDTO boardDTO);
 
@@ -21,9 +21,8 @@ public interface BoardService {
 	public int getBoardTotal(Criteria criteria);
 
 	public long getReplyTotal(long bno);
-	
+
 	public BoardDTO findByBoardNumber(long bno);
-	
 
 	// ! UPDATE
 
