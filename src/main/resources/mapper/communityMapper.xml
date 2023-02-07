@@ -11,7 +11,8 @@
     <!-- READ -->
     
     <select id="getList" resultType="BoardDTO">
-        SELECT * FROM (SELECT * FROM board where menu = "COMMUNITY" ORDER BY bno DESC) SUBQUERY
+        SELECT * FROM (SELECT bno, title, id, DATE_FORMAT(writeDay, '%Y-%m-%d') writeDay, readCount, category, replyCnt 
+        FROM board where menu = "COMMUNITY" ORDER BY bno DESC) SUBQUERY
         <trim prefix="WHERE (" prefixOverrides="AND" suffix=")">
 				
             <if test="category != null ">
