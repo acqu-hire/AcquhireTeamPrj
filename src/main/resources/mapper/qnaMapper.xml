@@ -42,7 +42,7 @@
 	
 	<select id="getBoardList" resultType="BoardDTO">
         SELECT * FROM 
-        	(SELECT bno, title, contents, id, DATE_FORMAT(writeDay, '%Y-%m-%d') writeDay, readCount, category, replyCnt
+        	(SELECT bno, title, id, DATE_FORMAT(writeDay, '%Y-%m-%d') writeDay, readCount, category, replyCnt
 			FROM board
 			<include refid="search" />
 			ORDER BY writeDay DESC, bno DESC) SUBQUERY

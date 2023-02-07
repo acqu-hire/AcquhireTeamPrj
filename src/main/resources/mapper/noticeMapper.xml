@@ -7,7 +7,7 @@
 	<!-- 메뉴 전체조회(notice 메뉴 클릭 시) -->
 	<select id="menuSelectAll" resultType="BoardDTO">
 		select RN.* from
-			(select RN1.* from
+			(select RN1. bno,id,readCount,title,DATE_FORMAT(writeDay, '%Y-%m-%d') writeDay from
 				(select * from board 
 				<where>
 					<if test="type != null">
@@ -41,7 +41,7 @@
 	<!-- 카테고리 전체조회(category 메뉴 클릭 시) -->
 	<select id="categorySelectAll" resultType="BoardDTO">
 		select RN1.* from
-			(select RN. bno,id,readCount,title,writeDay from 
+			(select RN. bno,id,readCount,title,DATE_FORMAT(writeDay, '%Y-%m-%d') writeDay from 
 				(select * from board
 				<where>
 					<if test="type != null">
