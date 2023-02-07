@@ -175,7 +175,7 @@ color: white;
 					<img src="https://avatars.githubusercontent.com/u/117618309?v=4" alt="image" style="width: 100%;">
 					<h1><b>KSH</b></h1>
 					<p class="title">PM</p>
-					<p>Q&A</p>
+					<p>Q&amp;A</p>
 					<div style="margin: 15px 0 0 0;">
 						<div style="font-size: 18px;"><i class="fa fa-envelope" aria-hidden="true"></i> makemegrowup4@gmail.com </div>
 					</div>
@@ -185,7 +185,7 @@ color: white;
 								<i class="fa fa-github"></i>
 							</a>
 						</div>
-					</p>
+					
 				</div>	
 			</div>
 			
@@ -205,7 +205,7 @@ color: white;
 							<a class="icon" href="https://github.com/kimdoyeon12"><i class="fa fa-github"></i>
 							</a>
 						</div>
-					</p>
+					
 				</div>	
 			</div>
 			
@@ -225,7 +225,7 @@ color: white;
 							<a class="icon" href="https://github.com/Devesg"> <i class="fa fa-github"></i>
 							</a>
 						</div>
-					</p>
+					
 				</div>	
 			</div>
 			
@@ -245,7 +245,7 @@ color: white;
 							<a class="icon" href="https://github.com/ori52"> <i class="fa fa-github"></i>
 							</a>
 						</div>
-					</p>
+					
 				</div>	
 			</div>
 		</div>

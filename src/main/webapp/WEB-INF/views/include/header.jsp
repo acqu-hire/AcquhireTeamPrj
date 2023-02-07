@@ -19,7 +19,7 @@
 
 <title>Header</title>
 </head>
-<body pt-5>
+<body>
 
 <header style="padding-top : 68px;">
 	<div>
