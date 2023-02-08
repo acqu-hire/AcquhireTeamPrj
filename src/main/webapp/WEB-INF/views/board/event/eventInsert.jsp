@@ -24,7 +24,7 @@
 				                		<div class="input-group mx-auto">
 											<label for="category"></label>
 												<div class="col-xs-2">
-													<select name="category" class="form-control">
+													<select name="category" id="category" class="form-control">
 														<option value="">==카테고리선택==</option>
 														<option value="EVENT_IT_EVENT">IT 이벤트</option>
 														<option value="EVENT_MARKETING">이벤트 마케팅</option>
@@ -39,11 +39,11 @@
 				            </tr>
 				            <tr>
 				                <th>제목</th>
-				                <td><input type="text"  class="form-control" name="title"></td>
+				                <td><input type="text"  class="form-control" name="title" id="title"></td>
 				            </tr>
  				             <tr>
 				                <td>내용</td>
-				                <td><textarea name="contents" class="form-control"></textarea></td>
+				                <td><textarea name="contents" id="contents" class="form-control"></textarea></td>
 				            </tr>
 				            <!--<tr>
 				            	<td>첨부파일</td>

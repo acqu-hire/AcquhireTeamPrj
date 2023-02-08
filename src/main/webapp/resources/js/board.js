@@ -36,23 +36,6 @@ $(function() {
             return false;
         }
     });
-    
-    	$("#EventInsertForm").submit( function() {
-        
-        if($("select[name='category']").val() == ""){
-            alert("카테고리를 선택해주세요.");
-            return false;
-        };
-        if(!$("input[name='title']").val()) {
-            alert("제목을 입력하세요.");
-            return false;
-        }
-        if(!$("textarea[name='contents']").val()) {
-            alert("내용을 입력하세요.");
-            return false;
-        }
-    });
-
  
     /* 글쓰기, 수정 폼 파일 관련 이벤트 */
     var inputCnt = $(".file-inline input").length;
@@ -176,39 +159,27 @@ $(function() {
 			return false;
 		}
 	})
+	
+	
+	
+	/*********** EVENT ***********/
+	$("#EventInsertForm, #EventUpdateForm").submit( function() {
+		
+		if($("select[name='category']").val() == ""){
+			alert("카테고리를 선택해주세요.");
+			return false;
+		};
+		if(!$("input[name='title']").val()) {
+			alert("제목을 입력하세요.");
+			return false;
+		}
+		if(!$("textarea[name='contents']").val()) {
+			alert("내용을 입력하세요.");
+			return false;
+		}
+	})
+	
 })
 
 
-	/*********** EVENT ***********/
-    $("#EventInsertForm").submit( function() {
-        
-        if($("select[name='category']").val() == ""){
-            alert("카테고리를 선택해주세요.");
-            return false;
-        };
-        if(!$("input[name='title']").val()) {
-            alert("제목을 입력하세요.");
-            return false;
-        }
-        if(!$("textarea[name='contents']").val()) {
-            alert("내용을 입력하세요.");
-            return false;
-        }
-    });
-
-	$("#EventUpdateForm").submit( function() {
-    
-		if($("select[name='category']").val() == ""){
-        alert("카테고리를 선택해주세요.");
-        return false;
-		};
- 	  if(!$("input[name='title']").val()) {
-        alert("제목을 입력하세요.");
-        return false;
- 	  }
- 	  if(!$("textarea[name='contents']").val()) {
-        alert("내용을 입력하세요.");
-        return false;
- 	  	}
-	});
 
