@@ -17,7 +17,7 @@
 		        <h2 class="text-center mt-4 mb-4"><strong>안내문 작성</strong></h2>
 		    	</div>
 			    	<div class="card-body">
-				        <form action="./update" method="post" enctype="multipart/form-data" id="updateForm">
+				        <form action="./update" method="post" enctype="multipart/form-data" id="noticeUpdateForm">
 				          <table class="table table-striped">
 				            <tr>
 			                	<th>카테고리</th>
@@ -44,7 +44,7 @@
 				            </tr>
 				            <tr>
 				                <th>제목</th>
-				                <td><input type="text"  class="form-control" name="title"></td>
+				                <td><input type="text"  class="form-control"  name="title"></td>
 				            </tr>
  				             <tr>
 				                <td>글내용</td>
