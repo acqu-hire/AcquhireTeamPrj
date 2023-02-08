@@ -18,7 +18,7 @@
 		        <h2 class="text-center mt-4 mb-4"><strong>안내문 작성</strong></h2>
 		    	</div>
 			    	<div class="card-body">
-				        <form action="./insert" name="QnAWriteForm" method="post" enctype="multipart/form-data">
+				        <form action="./insert" id="noticeInsertForm" method="post" enctype="multipart/form-data">
 				          <table class="table table-striped">
 				            <tr>
 			                	<th>카테고리</th>
@@ -26,7 +26,7 @@
 				                		<div class="input-group mx-auto">
 											<label for="category"></label>
 												<div class="col-xs-2">
-													<select name="category" class="form-control">
+													<select name="category" class="noticeCateSelect" id="noticeCateSelect">
 														<option value="">==카테고리선택==</option>
 														<option value="NOTICE_NOTICE">공지사항</option>
 														<option value="NOTICE_EVENT">이벤트</option>

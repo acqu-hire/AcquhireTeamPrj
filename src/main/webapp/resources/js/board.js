@@ -1,5 +1,8 @@
 $(function() {
-    var maxAppend = $("#addFileBtn div.file-inline").data("fileSize");
+
+	/*********** QNA ***********/
+	
+	var maxAppend = $("#addFileBtn div.file-inline").data("fileSize");
     var inputCnt = $("#addFileBtn div.file-inline").data("fileSize");
 
     /* 카테고리 활성화 */
@@ -132,5 +135,28 @@ $(function() {
 		form.attr("method", "post");
 		form.attr("action", "./write");
 		form.submit();
+	})
+	
+	
+	
+	/*********** NOTICE ***********/
+	
+	$("#noticeInsertForm, #noticeUpdateForm").submit(function(){
+		if(!$("input[name='title']").val()){
+			alert("제목을 입력해주세요.");
+			$("input[name='title']").focus();
+			return false;
+		}
+		
+		if(!$("textarea[name='contents']").val()){
+			alert("내용을 입력해주세요.");
+			$("textarea[name='contents']").focus();
+			return false;
+		}
+		
+		if($("select[name='category']").val() == ""){
+			alert("카테고리를 선택해주세요.");
+			return false;
+		}
 	})
 })

@@ -40,11 +40,11 @@
 						</tr>
 						<tr>
 							<th>제목</th>
-							<td>${selectDetail.title}</td>
+							<td><c:out value="${selectDetail.title}"/></td>
 						</tr>
 						<tr>
 							<th>내용</th>
-							<td>${selectDetail.contents}</td>
+							<td><c:out value="${selectDetail.contents}"/></td>
 						</tr>
 						<tr>
 							<th>파일</th>
