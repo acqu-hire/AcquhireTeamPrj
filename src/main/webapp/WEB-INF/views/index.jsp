@@ -116,7 +116,6 @@ color: white;
 
 </style>
 
-
 <body>
 
 	<!-- Header -->

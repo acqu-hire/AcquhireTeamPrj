@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 <title>이벤트 게시판</title>
 </head>
 <body>
@@ -38,14 +34,14 @@
 							<th>작성일</th>
 							<td>${boardDTO.writeDay}</td>
 						</tr>
-						<tr>
-							<th>내용</th>
-							<td></td>
 							
 					</table>
 				<hr/>
-					<div class="col-12">
-					<c:out value="${boardDTO.contents}"/>
+					<div class="card-header bg-light">
+	        		  <i class="fas fa-laugh-beam"></i> Contents
+					</div>
+					<div class="card-body">
+					  ${boardDTO.contents}
 					</div>
 					<input type="hidden" name="bno" value="${boardDTO.bno}">
 					<div class="row">
@@ -62,10 +58,7 @@
 </div>
 
 
-<!-- Footer -->
-
 <%@ include file="../../include/footer.jsp" %>
 
-<!-- Footer -->
 </body>
 </html>

@@ -1,17 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
+<%@ include file="../../include/header.jsp" %>
 <html>
 <head>
-<meta charset="UTF-8">
 <title>게시글 작성</title>
 </head>
 <body>
-	<!-- Header -->
-
-<%@ include file="../../include/header.jsp" %>
-
-	<!-- Header -->
 
 	<!-- Board Insert Form -->
 	
@@ -74,12 +67,7 @@
   </div>
 </div>
 	
-
-<!-- Footer -->
-
 <%@ include file="../../include/footer.jsp" %>
-
-<!-- Footer -->
 
 </body>
 </html>
