@@ -4,6 +4,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.aqh.login.domain.dto.RoleDTO;
+
+
 @Repository
 public class RoleDAO {
 
@@ -12,7 +15,8 @@ public class RoleDAO {
 
 	String namespace = "com.aqh.login.dao.RoleMapper.";
 
-//	public void findByUserID(String id) {
-//		return session.select("", id);
-//	}
+	public RoleDTO findByUserID(String id) {
+		return session.selectOne(namespace+"findByUserID", id);
+	}
+	
 }

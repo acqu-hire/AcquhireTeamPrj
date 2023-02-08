@@ -9,5 +9,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias alias="ReplyDTO" type="com.aqh.reply.domain.ReplyDTO" />
 		<typeAlias alias="FileDTO" type="com.aqh.file.domain.FileDTO" />
 		<typeAlias alias="FileNoticeDTO" type="com.aqh.file.domain.FileNoticeDTO" />
+		<typeAlias alias="RoleDTO" type="com.aqh.login.domain.dto.RoleDTO" />
 	</typeAliases>
 </configuration> 
