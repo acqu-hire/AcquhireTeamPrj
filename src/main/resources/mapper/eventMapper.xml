@@ -132,18 +132,18 @@
                <if test="type != null">
                   <choose>
                      <when test='type.equals("all")'>
-                        AND (id like concat('%',#{keyword},'%')
+                        and (id like concat('%',#{keyword},'%')
                         or title like concat('%',#{keyword},'%')
                         or contents like concat('%',#{keyword},'%'))
                      </when>
                      <when test='type.equals("id")'>
-                        AND id like concat('%',#{keyword},'%')
+                        and id like concat('%',#{keyword},'%')
                      </when>
                      <when test='type.equals("title")'>
-                        AND title like concat('%',#{keyword},'%')
+                        and title like concat('%',#{keyword},'%')
                      </when>
                      <when test='type.equals("contents")'>
-                        AND contents like concat('%',#{keyword},'%')
+                        and contents like concat('%',#{keyword},'%')
                      </when>
                   </choose>
                </if>
