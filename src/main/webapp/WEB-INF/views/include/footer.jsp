@@ -1,13 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+
 	<!-- Footer -->
 <hr>
 <footer class="page-footer font-small teal pt-2">
@@ -42,13 +33,7 @@
 
 	<!-- Copyright -->
   <div class="footer-copyright text-center py-3">
-    Â© 2020 Copyright: <font color="blue"><b>Team Acquhire</b></font>
+    © 2020 Copyright: <font color="blue"><b>Team Acquhire</b></font>
   </div>
-	<!-- Copyright -->
 
 </footer>
-	
-	<!-- Footer -->
-
-</body>
-</html>

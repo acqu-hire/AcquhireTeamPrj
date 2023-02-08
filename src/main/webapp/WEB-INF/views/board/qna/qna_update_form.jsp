@@ -1,20 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ include file="../../include/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 <title>게시글 수정</title>
 
 </head>
 
 <body>
-	<!-- Header -->
-
-<%@ include file="../../include/header.jsp" %>
-
-	<!-- Header -->
 
 	<!-- Board Insert Form -->
 	
@@ -80,12 +73,8 @@
   </div>
 </div>
 	
-
-<!-- Footer -->
-
 <%@ include file="../../include/footer.jsp" %>
 
-<!-- Footer -->
 <script>
 var getQueryString = "${cri.getQueryString(cri.getPage(), cri.getCategory())}";
 </script>

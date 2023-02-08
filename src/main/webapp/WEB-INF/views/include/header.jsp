@@ -1,26 +1,23 @@
+<!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<head>
+<meta charset="UTF-8">
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <c:set var="url_" value="${requestScope['javax.servlet.forward.servlet_path']}" />
 <c:set var="url" value="${fn:toLowerCase(url_)}" />
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
 <link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.min.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/style.css?ver=1">
-<link rel="shortcut icon" href="${contextPath}/resources/img/fabicon.ico" type="image/x-icon"/>
+<link rel="shortcut icon" href="/resources/img/favicon.ico" type="image/x-icon"/>
 <script src="${contextPath}/resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
-<script src="${contextPath}/resources/js/board.js?ver=1" type="text/javascript"></script>
 <script src="${contextPath}/resources/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="${contextPath}/resources/js/board.js?ver=1" type="text/javascript"></script>
 <script src="https://kit.fontawesome.com/58abbffa46.js" ></script>
-
-<title>Header</title>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 </head>
-<body>
-
 <header style="padding-top : 68px;">
 	<div>
   <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top" style="border-bottom : 2px solid #000;">
@@ -95,5 +92,3 @@
 		location.href="<c:url value='/login/logout'/>"
 	})
 </script>
-</body>
-</html>

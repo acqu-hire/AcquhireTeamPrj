@@ -1,20 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<!DOCTYPE html>
+<%@ include file="../../include/header.jsp" %>
 <html>
 <head>
-<meta charset="UTF-8">
 <title>이벤트 게시물 작성</title>
-
 </head>
-
 <body>
-<!-- Header -->
-
-<%@ include file="../../include/header.jsp" %>
-
-<!-- Header -->
 
 	<!-- Board Insert Form -->
 	
@@ -53,7 +43,7 @@
 				            </tr>
  				             <tr>
 				                <td>내용</td>
-				                <td><textarea rows="10" cols="50" name="contents" class="form-control"></textarea></td>
+				                <td><textarea name="contents" class="form-control"></textarea></td>
 				            </tr>
 				            <!--<tr>
 				            	<td>첨부파일</td>
@@ -65,7 +55,6 @@
 				                    <button type="button"  class="btn btn-primary" onclick="location.href='./menu_select_all'">전체 게시글보기</button>
 				                </td>
 				            </tr>
-				             
 				          </table>
 				        </form>
 			    	</div>
@@ -73,12 +62,10 @@
 		    </div>
 		</div>
 	</div>
-	
 
 <!-- Footer -->
 
 <%@ include file="../../include/footer.jsp" %>
-
 
 </body>
 </html>

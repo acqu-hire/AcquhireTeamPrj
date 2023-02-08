@@ -1,24 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<%-- <c:if test="${empty sessionScope.memberId}">
-	<script type="text/javascript">
-		location.href = "./LoginView.me"
-	</script>
-</c:if> --%>
-<!DOCTYPE html>
+<%@ include file="../../include/header.jsp" %>
 <html>
 <head>
-<meta charset="UTF-8">
 <title>NOTICE 게시판</title>
-
 </head>
 <body>
-<!-- Header -->
-
-<%@ include file="../../include/header.jsp" %>
-
-<!-- Header -->
 
 	<!-- Board Insert Form -->
 
@@ -94,12 +80,7 @@
 	</div>
 </div>
 
-
-<!-- Footer -->
-
 <%@ include file="../../include/footer.jsp" %>
-
-<!-- Footer -->
 
 </body>
 <script type="text/javascript">
