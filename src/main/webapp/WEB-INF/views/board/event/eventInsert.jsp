@@ -16,7 +16,7 @@
 		        <h2 class="text-center mt-4 mb-4"><strong>안내문 작성</strong></h2>
 		    	</div>
 			    	<div class="card-body">
-				        <form action="./eventInsert" name="EventInsertForm" method="post" enctype="multipart/form-data">
+				        <form action="./eventInsert" name="EventInsertForm" id="EventInsertForm" method="post" enctype="multipart/form-data">
 				          <table class="table table-striped">
 				            <tr>
 			                	<th>카테고리</th>

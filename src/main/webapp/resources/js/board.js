@@ -160,3 +160,38 @@ $(function() {
 		}
 	})
 })
+
+
+	/*********** EVENT ***********/
+    $("#EventInsertForm").submit( function() {
+        
+        if($("select[name='category']").val() == ""){
+            alert("카테고리를 선택해주세요.");
+            return false;
+        };
+        if(!$("input[name='title']").val()) {
+            alert("제목을 입력하세요.");
+            return false;
+        }
+        if(!$("textarea[name='contents']").val()) {
+            alert("내용을 입력하세요.");
+            return false;
+        }
+    });
+
+	$("#EventUpdateForm").submit( function() {
+    
+		if($("select[name='category']").val() == ""){
+        alert("카테고리를 선택해주세요.");
+        return false;
+		};
+ 	  if(!$("input[name='title']").val()) {
+        alert("제목을 입력하세요.");
+        return false;
+ 	  }
+ 	  if(!$("textarea[name='contents']").val()) {
+        alert("내용을 입력하세요.");
+        return false;
+ 	  	}
+	});
+
