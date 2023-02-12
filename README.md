@@ -26,7 +26,7 @@
 |***👨🏽‍💻김시형(팀장)***|***👨‍💻엄성규(팀원)***|***👩‍💻김도연(팀원)***|***👩🏻‍💻박소연(팀원)***|
 |:---------:|:---------:|:---------:|:---------:|
 |**QnA,회원가입, 로그인**|**커뮤니티**|**공지사항**|**이벤트**|
-| https://github.com/makemegrowup | https://github.com/Devesg | https://github.com/kimdoyeon12 | https://github.com/ori52 |
+| [GitHub](https://github.com/makemegrowup) | [GitHub](https://github.com/Devesg) | [GitHub](https://github.com/kimdoyeon12) | [GitHub](https://github.com/ori52) |
 | makemegrowup4@gmail.com | z9rehwa@gmail.com | do.younkim.944@gmail.com | 1225kcal@gmail.com |
   
 ***5. 📌 메뉴 구조***
