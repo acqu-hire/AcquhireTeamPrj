@@ -28,16 +28,15 @@
 <a href="https://jquery.com/"><img src="https://img.shields.io/badge/jquery(3.5.1)-0769AD?style=for-the-badge&logo=jquery&logoColor=white"></a><a href="https://getbootstrap.com/docs/4.5/getting-started/introduction/"><img src="https://img.shields.io/badge/bootstrap(4.5.3)-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white"></a><a href="https://git-scm.com/"><img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"></a><a href="https://github.com/"><img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"></a><a href="https://aws.amazon.com/ko/ec2/"><img src="https://img.shields.io/badge/AWS EC2(window)-FF9900?style=for-the-badge&logo=aws&logoColor=white">
  
 ***4. 🙍‍♂️🙍 팀 구성 및 역할***  
-`이름(역할)`|***👨🏽‍💻김시형(팀장)***|***👨‍💻엄성규(팀원)***|***👩‍💻김도연(팀원)***|***👩🏻‍💻박소연(팀원)***|
-|:---------:|:---------:|:---------:|:---------:|:---------:|
-`개발`|**QnA,회원가입, 로그인**|**커뮤니티**|**공지사항**|**이벤트**|
-`깃허브`| [GitHub](https://github.com/makemegrowup) | [GitHub](https://github.com/Devesg) | [GitHub](https://github.com/kimdoyeon12) | [GitHub](https://github.com/ori52) |
-`이메일`| makemegrowup4@gmail.com | z9rehwa@gmail.com | do.younkim.944@gmail.com | 1225kcal@gmail.com |
+|`👨🏽‍💻김시형(팀장)`|`👨‍💻엄성규(팀원)`|`👩‍💻김도연(팀원)`|`👩🏻‍💻박소연(팀원)`|
+|:---------:|:---------:|:---------:|:---------:|
+|**QnA,회원가입, 로그인**|**커뮤니티**|**공지사항**|**이벤트**|
+| [GitHub](https://github.com/makemegrowup) | [GitHub](https://github.com/Devesg) | [GitHub](https://github.com/kimdoyeon12) | [GitHub](https://github.com/ori52) |
+| makemegrowup4@gmail.com | z9rehwa@gmail.com | do.younkim.944@gmail.com | 1225kcal@gmail.com |
   
 ***5. 📌 메뉴 구조***
 
 <img src="https://user-images.githubusercontent.com/117618309/218298624-ed0266dc-5555-41b9-bdff-dad3596d0778.png" width="60%">   
-- [메뉴상세](https://github.com/acqu-hire/AcquhireTeamPrj/wiki/%EB%A9%94%EB%89%B4-%EC%83%81%EC%84%B8%EA%B8%B0%EB%8A%A5)
 
 ## ✅ Preview
  
