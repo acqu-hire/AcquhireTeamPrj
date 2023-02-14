@@ -22,8 +22,11 @@
 				  <form method="get" action="" id="boardForm">
 					<table class="table">
 						<tr>
+							<th>카테고리</th>			
+							<td>QnA > ${boardDTO.category}</td>
+						</tr>
+						<tr>
 							<th>조회수</th>
-							
 							<td>${boardDTO.readCount}</td>
 						</tr>
 						<tr>
@@ -46,7 +49,7 @@
 	        		  <i class="fas fa-laugh-beam"></i> Contents
 					</div>
 					<div class="card-body">
-					  <c:out value="${boardDTO.contents}"/>
+					  ${boardDTO.contents}
 					</div>
 					<div class="row">
  						<div class="col-12 text-right">

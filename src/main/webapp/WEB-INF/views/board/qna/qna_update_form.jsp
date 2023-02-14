@@ -61,7 +61,7 @@
 			  <tr>
                 <td colspan="2" class="text-right">
                   <button type="button" class="btn btn-success" id="btnUpdate">글저장</button>
-                  <button type="reset"  class="btn btn-warning">다시작성</button>
+                  <button type="reset"  class="btn btn-warning" id="btnReset">다시작성</button>
                   <button type="button"  class="btn btn-primary" id="btnList">게시글 목록</button>
 				</td>
 			  </tr>
@@ -74,6 +74,6 @@
 </div>
 	
 <%@ include file="../../include/footer.jsp" %>
-
+<script src="${contextPath}/resources/js/ckeditor.js" type="text/javascript"></script>
 </body>
 </html>

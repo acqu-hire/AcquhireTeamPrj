@@ -38,7 +38,7 @@
 		<interceptor>
 			<mapping path="/QnA/**"/>
 			<mapping path="/notice/**"/>
-			<mapping path="/event/**"/>
+			<mapping path="/Event/**"/>
 			<mapping path="/community/**"/>
 			<exclude-mapping path="/"/>
 			<exclude-mapping path="/community/list"/>

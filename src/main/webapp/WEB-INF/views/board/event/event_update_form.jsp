@@ -42,6 +42,7 @@
 								<tr>
 									<td colspan="2" class="text-right">
 										<button type="submit" class="btn btn-success">글저장</button>
+										<button type="reset"  class="btn btn-warning" id="btnReset">다시작성</button>
 										<button type="button" class="btn btn-primary" id="btnList">게시글
 											목록</button>
 									</td>
