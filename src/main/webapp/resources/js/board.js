@@ -22,7 +22,6 @@ $(function () {
                 return false;
             }
         }
-
         if ($("select[name='category']").val() == "") {
             alert("카테고리를 선택해주세요.");
             return false;
@@ -31,15 +30,21 @@ $(function () {
             alert("제목을 입력하세요.");
             return false;
         }
-        if (!$("textarea[name='contents']").val()) {
-            alert("내용을 입력하세요.");
+        if (CKEDITOR.instances.contents.getData() == ''
+            || CKEDITOR.instances.contents.getData().length == 0) {
+            alert("내용을 입력해주세요.");
+            $("#contents").focus();
             return false;
-        }
+            }
     });
 
     /* 글쓰기, 수정 폼 파일 관련 이벤트 */
     var inputCnt = $(".file-inline input").length;
     var maxAppend = $("div.file-inline").attr("data-fileSize");
+
+    $("#btnReset").on("click", function() {
+        CKEDITOR.instances.contents.setData("");
+    })
 
     $("#addFileBtn").on("click", function () {
         if (maxAppend >= 5) {
@@ -148,9 +153,10 @@ $(function () {
             return false;
         }
 
-        if (!$("textarea[name='contents']").val()) {
+        if (CKEDITOR.instances.contents.getData() == ''
+            || CKEDITOR.instances.contents.getData().length == 0) {
             alert("내용을 입력해주세요.");
-            $("textarea[name='contents']").focus();
+            $("#contents").focus();
             return false;
         }
 

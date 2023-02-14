@@ -54,7 +54,7 @@
 				            <tr>
 				                <td colspan="2"  class="text-right">
 				                    <input type="submit" value="글쓰기" class="btn btn-success" />
-				                    <input type="reset" value="다시작성" class="btn btn-warning" />
+				                    <button type="reset"  class="btn btn-warning" id="btnReset">다시작성</button>
 				                    <button type="button"  class="btn btn-primary" onclick="location.href='./select_all_view${PaginationNotice.getUrlLink(PaginationNotice.num)}'">전체 게시글보기</button>
 				                    
 				                </td>
@@ -70,6 +70,6 @@
 
 <%@ include file="../../include/footer.jsp" %>
 
-
+<script src="${contextPath}/resources/js/ckeditor.js" type="text/javascript"></script>
 </body>
 </html>

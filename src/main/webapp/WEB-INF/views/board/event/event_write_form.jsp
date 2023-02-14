@@ -48,6 +48,7 @@
 				            <tr>
 				                <td colspan="2"  class="text-right">
 				                    <input type="submit" value="등록" class="btn btn-success" />
+				                    <button type="reset"  class="btn btn-warning" id="btnReset">다시작성</button>
 				                     <button type="button"  class="btn btn-primary" id="btnList">전체 게시글보기</button>
 				                </td>
 				            </tr>
@@ -62,38 +63,7 @@
 <!-- Footer -->
 
 <%@ include file="../../include/footer.jsp" %>
-<script>
-    var editorConfig = {
-        filebrowserUploadUrl : "${contextPath}/file/fileUpload",//이미지 업로드
-        height : 400,
-    };
-    CKEDITOR.on('dialogDefinition', function( ev ){
-        var dialogName = ev.data.name;
-        var dialogDefinition = ev.data.definition;
-        var dialog = ev.data.definition.dialog;
-        if (dialogName == 'image') {
-			dialog.on('show', function (obj) {
-			this.selectPage('Upload'); //업로드텝으로 시작
-		});
-        }
-        switch (dialogName) {
-            case 'image': 
-            dialogDefinition.removeContents('Link');
-            dialogDefinition.removeContents('advanced');
-            var infoTab = dialogDefinition.getContents( 'info' ); 
-          	//info 탭 내에 불필요한 엘레멘트들 제거 
-            infoTab.remove( 'txtAlt'); // 대체 문자열
-            infoTab.remove( 'txtBorder'); // 테두리 
-            infoTab.remove( 'txtHSpace'); // 세로여백 
-            infoTab.remove( 'txtVSpace'); // 가로여백 
-            infoTab.remove( 'ratioLock'); // 비율유지 
-            infoTab.remove( 'browse'); //원래 크기로 	         
-        
-        }
-    });
- window.onload = function(){
-      ck = CKEDITOR.replace("contents", editorConfig);
- };
-</script>
+
+<script src="${contextPath}/resources/js/ckeditor.js" type="text/javascript"></script>
 </body>
 </html>

@@ -44,7 +44,7 @@
 						</tr>
 						<tr>
 							<th>내용</th>
-							<td><c:out value="${selectDetail.contents}"/></td>
+							<td>${selectDetail.contents}</td>
 						</tr>
 						<tr>
 							<th>파일</th>

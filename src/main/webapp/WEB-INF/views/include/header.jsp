@@ -13,7 +13,7 @@
 <link rel="shortcut icon" href="/resources/img/favicon.ico" type="image/x-icon"/>
 <script src="${contextPath}/resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
 <script src="${contextPath}/resources/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="${contextPath}/resources/js/board.js?ver=1" type="text/javascript"></script>
+<script src="${contextPath}/resources/js/board.js" type="text/javascript"></script>
 <script src="https://kit.fontawesome.com/58abbffa46.js" ></script>
 <script src="${contextPath}/resources/ckeditor/ckeditor.js" type="text/javascript"></script>
 </head>

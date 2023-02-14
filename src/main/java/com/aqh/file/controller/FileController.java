@@ -16,8 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -84,21 +82,22 @@ public class FileController {
 				try {
 					String extension = fileService.getExtension(upload.getOriginalFilename());
 					if (!fileService.isAllowedExtension(extension)) {
-						throw new IllegalArgumentException("Invalid file extension: " + extension);
+						json.addProperty("responseError", "허용되지 않는 확장자 또는 파일입니다.");
+					} else {
+						String fileName = UUID.randomUUID().toString() + extension;
+						Path uploadPath = Paths.get(request.getServletContext().getRealPath("/resources/image/"))
+								.toAbsolutePath();
+						Files.createDirectories(uploadPath);
+						Path filePath = uploadPath.resolve(fileName);
+						Files.write(filePath, upload.getBytes());
+	
+						printWriter = response.getWriter();
+						String fileUrl = request.getContextPath() + "/resources/image/" + fileName;
+						json.addProperty("uploaded", 1);
+						json.addProperty("fileName", fileName);
+						json.addProperty("url", fileUrl);
+						printWriter.print(json);
 					}
-					String fileName = UUID.randomUUID().toString() + extension;
-					Path uploadPath = Paths.get(request.getServletContext().getRealPath("/resources/image/"))
-							.toAbsolutePath();
-					Files.createDirectories(uploadPath);
-					Path filePath = uploadPath.resolve(fileName);
-					Files.write(filePath, upload.getBytes());
-
-					printWriter = response.getWriter();
-					String fileUrl = request.getContextPath() + "/resources/image/" + fileName;
-					json.addProperty("uploaded", 1);
-					json.addProperty("fileName", fileName);
-					json.addProperty("url", fileUrl);
-					printWriter.print(json);
 				} catch (IOException | IllegalArgumentException e) {
 					json.addProperty("error", e.getMessage());
 					printWriter.print(json);

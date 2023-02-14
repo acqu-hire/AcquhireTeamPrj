@@ -44,11 +44,11 @@
 				            </tr>
 				            <tr>
 				                <th>제목</th>
-				                <td><input type="text"  class="form-control"  name="title"></td>
+				                <td><input type="text"  class="form-control"  name="title" value="${boardDTO.title}"></td>
 				            </tr>
  				             <tr>
 				                <td>글내용</td>
-				                <td><textarea rows="10" cols="50" name="contents" class="form-control"></textarea></td>
+				                <td><textarea rows="10" cols="50" name="contents" class="form-control">${boardDTO.contents}</textarea></td>
 				            </tr>
 				            <tr>
 				            	<td>첨부파일</td>
@@ -69,7 +69,7 @@
 				            <tr>
 				                <td colspan="2"  class="text-right">
 				                    <input type="submit" value="글쓰기" class="btn btn-success" id="btn-success" onclick="deletFile()"/>
-				                    <input type="reset" value="다시작성" class="btn btn-warning" />
+				                    <button type="reset"  class="btn btn-warning" id="btnReset">다시작성</button>
 				                    <c:choose>
 										<c:when test="${empty criteria.category}">
 											<button type="button" class="btn btn-primary" onclick="location.href='./select_all_view?page=${criteria.page}'">전체 게시글보기</button>
@@ -92,6 +92,7 @@
 <%@ include file="../../include/footer.jsp" %>
 
 </body>
+<script src="${contextPath}/resources/js/ckeditor.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	  $(".downlink").click(function(e){ 

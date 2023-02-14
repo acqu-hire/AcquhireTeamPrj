@@ -18,6 +18,11 @@
 				<div class="card-body" >
 					<table class="table">
 						<tr>
+							<th>카테고리</th>
+							
+							<td>EVENT > ${boardDTO.category}</td>
+						</tr>
+						<tr>
 							<th>조회수</th>
 							
 							<td>${boardDTO.readCount}</td>
