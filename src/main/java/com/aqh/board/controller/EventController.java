@@ -1,6 +1,7 @@
 package com.aqh.board.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,99 +11,77 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.aqh.board.domain.dto.BoardDTO;
 import com.aqh.board.domain.dto.Criteria;
 import com.aqh.board.domain.pagehandler.Pagination;
-import com.aqh.board.service.EventService;
+import com.aqh.board.service.BoardService;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Controller
-@RequestMapping("/event")
+@RequestMapping("/Event")
 public class EventController {
 
-	@Autowired
-	EventService eventService;
-
-	// 이벤트 게시판 전체 조회
-	@GetMapping("/menu_select_all")
-	public String SelectAll(Model model, Criteria cri) {
-		model.addAttribute("eventMenuSelectAll", eventService.eventMenuSelectAll(cri));
-		model.addAttribute("pagination", new Pagination((int) eventService.BoardListAllCount(cri), cri));
-		log.info("뭐가 문제일까" + cri);
-		log.info("이벤트 게시판 전체 조회 : " + model);
-		return "board/event/eventList";
+	private BoardService eventServiceImpl;
+	
+	public EventController(BoardService eventServiceImpl) {
+		this.eventServiceImpl = eventServiceImpl;
 	}
 
-	// it 이벤트 게시판 전체 조회
-	@GetMapping("/it_event_list")
-	public String itEventList(Model model, Criteria cri) {
-		model.addAttribute("eventList", eventService.eventItEventList(cri));
-		model.addAttribute("pagination", new Pagination((int) eventService.BoardListAllCount(cri), cri));
-		log.info("it 이벤트 게시판 전체 조회 : " + model);
-		return "board/event/event_it_event_list";
+	@GetMapping("/list")
+	public String eventList(Model model, Criteria cri) {
+		Pagination pg = new Pagination((int) eventServiceImpl.getBoardTotal(cri), cri);
+		model.addAttribute("pagination", pg);
+		List<BoardDTO> list = eventServiceImpl.getBoardList(cri);
+		model.addAttribute("boardList", list);
 
+		return "board/event/event_list";
 	}
 
-	// 마케팅 게시판 전체 조회
-	@GetMapping("/marketing_list")
-	public String marketingList(Model model, Criteria cri) {
-		model.addAttribute("marketingList", eventService.eventMarketingList(cri));
-		model.addAttribute("pagination", new Pagination((int) eventService.BoardListAllCount(cri), cri));
-		log.info("마케팅 게시판 전체 조회 : " + model);
-		return "board/event/event_marketing_list";
+	@GetMapping("/listDetail")
+	public String evenetListDetail(long bno, Model model, Criteria cri) {
+		BoardDTO boardDTO = eventServiceImpl.findByBoardNumber(bno);
+		boardDTO.setFileList(eventServiceImpl.getFileList(bno));
 
-	}
-
-	// 게시판 상세 조회
-	@GetMapping("/select_detail")
-	public String selectDetail(Model model, long bno) {
-		BoardDTO boardDTO = eventService.eventSelectDetail(bno);
 		model.addAttribute(boardDTO);
-		log.info("게시판 상세 조회 : " + model);
-		eventService.readCountUp(bno);
-		log.info("게시판 조회수 : " + bno);
-		return "board/event/eventListDetail";
+		model.addAttribute("cri", cri);
+		return "board/event/event_list_detail";
+	}
+
+	@GetMapping("/write")
+	public String eventInsertForm(Model model, Criteria cri) {
+		model.addAttribute("cri", cri);
+
+		return "board/event/event_write_form";
+	}
+
+	@PostMapping("/write")
+	public String eventInsert(BoardDTO boardDTO, Model model) {
+		model.addAttribute(boardDTO.getCategory());
+		eventServiceImpl.insertBoard(boardDTO);
+
+		return "redirect:/Event/list";
+	}
+
+	@GetMapping("/update")
+	public String evenetUpdateForm(long bno, Model model, Criteria cri) {
+		model.addAttribute("cri", cri);
+
+		BoardDTO boardDTO = eventServiceImpl.findByBoardNumber(bno);
+		boardDTO.setFileList(eventServiceImpl.getFileList(bno));
+		model.addAttribute(boardDTO);
+
+		return "board/event/event_update_form";
 
 	}
 
-	// 게시판 글 등록
-	@GetMapping("/eventInsert_view")
-	public String InsertForm() {
-		return "board/event/eventInsert";
+	@PostMapping("/update")
+	public String eventUpdate(BoardDTO boardDTO, Criteria cri) {
+		eventServiceImpl.updateBoard(boardDTO);
 
+		return "redirect:/Event/list" + cri.getQueryString(cri.getPage(), cri.getCategory());
 	}
 
-	// 게시판 글 등록 뷰 페이지
-	@PostMapping("/eventInsert")
-	public String eventInsert(Model model, BoardDTO boardDTO) {
-		log.info("insert boardDTO 확인 : " + boardDTO);
-		eventService.eventInsert(boardDTO);
-		return "redirect:/event/menu_select_all";
+	@PostMapping("/delete")
+	public String eventDelete(Criteria cri, long bno) {
+		eventServiceImpl.deleteBoard(bno);
 
+		return "redirect:/Event/list" + cri.getQueryString(cri.getPage(), cri.getCategory());
 	}
 
-	// 게시판 글 수정
-	@GetMapping("/eventUpdate_view")
-	public String updateForm(Model model, BoardDTO boardDTO) {
-		model.addAttribute("boardList", eventService.eventSelectDetail(boardDTO.getBno()));
-		return "board/event/eventUpdate";
-
-	}
-
-	// 게시판 글 수정 뷰 페이지
-	@PostMapping("/eventUpdate")
-	public String eventUpdate(Model model, BoardDTO boardDTO) {
-		eventService.eventUpdate(boardDTO);
-		log.info("update boardDTO 확인 : " + boardDTO);
-		log.info("update model 확인 : " + model);
-		return "redirect:/event/menu_select_all";
-
-	}
-
-	// 게시판 글 삭제
-	@GetMapping("/eventDelete")
-	public String eventDelete(Model model, long bno) {
-		eventService.eventDelete(bno);
-		return "redirect:/event/menu_select_all";
-
-	}
 }

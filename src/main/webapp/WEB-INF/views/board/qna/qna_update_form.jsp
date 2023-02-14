@@ -75,8 +75,5 @@
 	
 <%@ include file="../../include/footer.jsp" %>
 
-<script>
-var getQueryString = "${cri.getQueryString(cri.getPage(), cri.getCategory())}";
-</script>
 </body>
 </html>

@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,17 +21,19 @@ import com.aqh.file.service.FileService;
 @RequestMapping("/QnA")
 public class QnAController {
 
-	@Autowired
-	private BoardService qnABoardServiceImpl;
-
-	@Autowired
+	private BoardService qnAServiceImpl;
 	private FileService fileService;
+	
+	public QnAController(BoardService qnAServiceImpl, FileService fileService) {
+		this.qnAServiceImpl = qnAServiceImpl;
+		this.fileService = fileService;
+	}
 
 	@GetMapping("/list")
 	public String qnaList(Model model, Criteria cri) {
-		Pagination pg = new Pagination((int) qnABoardServiceImpl.getBoardTotal(cri), cri);
+		Pagination pg = new Pagination((int) qnAServiceImpl.getBoardTotal(cri), cri);
 		model.addAttribute("pagination", pg);
-		List<BoardDTO> list = qnABoardServiceImpl.getBoardList(cri);
+		List<BoardDTO> list = qnAServiceImpl.getBoardList(cri);
 		model.addAttribute("boardList", list);
 
 		return "board/qna/qna_list";
@@ -40,8 +41,8 @@ public class QnAController {
 
 	@GetMapping("/listDetail")
 	public String qnaListDetail(long bno, Model model, Criteria cri) {
-		BoardDTO boardDTO = qnABoardServiceImpl.findByBoardNumber(bno);
-		boardDTO.setFileList(qnABoardServiceImpl.getFileList(bno));
+		BoardDTO boardDTO = qnAServiceImpl.findByBoardNumber(bno);
+		boardDTO.setFileList(qnAServiceImpl.getFileList(bno));
 
 		model.addAttribute(boardDTO);
 		model.addAttribute("cri", cri);
@@ -58,7 +59,7 @@ public class QnAController {
 	@PostMapping("/write")
 	public String qnaInsert(BoardDTO boardDTO, Model model, HttpServletRequest request) {
 		model.addAttribute(boardDTO.getCategory());
-		qnABoardServiceImpl.insertBoard(boardDTO);
+		qnAServiceImpl.insertBoard(boardDTO);
 		fileService.upload(request, boardDTO);
 
 		return "redirect:/QnA/list";
@@ -68,8 +69,8 @@ public class QnAController {
 	public String qnaUpdateForm(long bno, Model model, Criteria cri) {
 		model.addAttribute("cri", cri);
 
-		BoardDTO boardDTO = qnABoardServiceImpl.findByBoardNumber(bno);
-		boardDTO.setFileList(qnABoardServiceImpl.getFileList(bno));
+		BoardDTO boardDTO = qnAServiceImpl.findByBoardNumber(bno);
+		boardDTO.setFileList(qnAServiceImpl.getFileList(bno));
 		model.addAttribute(boardDTO);
 
 		return "board/qna/qna_update_form";
@@ -78,7 +79,7 @@ public class QnAController {
 
 	@PostMapping("/update")
 	public String qnaUpdate(BoardDTO boardDTO, Criteria cri, FileDTO fileDTO, HttpServletRequest request) {
-		qnABoardServiceImpl.updateBoard(boardDTO);
+		qnAServiceImpl.updateBoard(boardDTO);
 		fileService.upload(request, boardDTO);
 		fileService.delete(fileDTO);
 
@@ -86,9 +87,9 @@ public class QnAController {
 	}
 
 	@PostMapping("/delete")
-	public String qnaDelete(Criteria cri, FileDTO fileDTO, HttpServletRequest request) {
+	public String qnaDelete(Criteria cri, FileDTO fileDTO) {
 		fileService.deleteAll(fileDTO);
-		qnABoardServiceImpl.deleteBoard(fileDTO.getBno());
+		qnAServiceImpl.deleteBoard(fileDTO.getBno());
 
 		return "redirect:/QnA/list" + cri.getQueryString(cri.getPage(), cri.getCategory());
 	}

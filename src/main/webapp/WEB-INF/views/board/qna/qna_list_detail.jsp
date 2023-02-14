@@ -134,11 +134,6 @@
 <%@ include file="../../include/footer.jsp" %>
 
 <script src="${contextPath}/resources/js/reply.js?ver=1" type="text/javascript"></script>
-<script>
-var bno = "${boardDTO.bno}";
-var sessionId = "${sessionScope.id}";
-var writer = "${boardDTO.id}";
-var getQueryString = "${cri.getQueryString(cri.getPage(), cri.getCategory())}";
-</script>
+
 </body>
 </html>
