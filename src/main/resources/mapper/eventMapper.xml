@@ -1,160 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aqh.board.dao.EventMapper">
-
-	<!-- 이벤트 메뉴 전체조회(메뉴 내 모든 게시판 조회) -->
-	<select id="eventMenuSelectAll" resultType="BoardDTO">
-		select RN.* from
-		(select RN1. bno,id,readCount,title,DATE_FORMAT(writeDay, '%Y-%m-%d') writeDay from
-		(select * from board
-		<where>
-					<if test="type != null">
-						<choose>
-							<when test='type.equals("all")'>
-								id like concat('%',#{keyword},'%')
-								or title like concat('%',#{keyword},'%')
-								or contents like concat('%',#{keyword},'%')
-							</when>
-							<when test='type.equals("id")'>
-								id like concat('%',#{keyword},'%')
-							</when>
-							<when test='type.equals("title")'>
-								title like concat('%',#{keyword},'%')
-							</when>
-							<when test='type.equals("contents")'>
-								contents like concat('%',#{keyword},'%')
-							</when>
-						</choose>
-					</if>
-				</where>
-		)RN1 where menu="EVENT" order by writeDay desc)RN 
-		limit #{offset}, #{limit}
+	
+	<select id="getBoardTotal" resultType="int">
+		SELECT count(*) 
+		FROM board
+		<include refid="search" />
 	</select>
-
-
-	<!-- 이벤트 IT 이벤트 카테고리 전체조회(메뉴 내 카테고리 선택 후 해당 게시판 조회) -->
-	<select id="eventItEventList" resultType="BoardDTO">
-		select RN.* from
-		(select RN1. bno,id,readCount,title,DATE_FORMAT(writeDay, '%Y-%m-%d') writeDay from
-		(select * from board
-		<where>
-					<if test="type != null">
-						<choose>
-							<when test='type.equals("all")'>
-								id like concat('%',#{keyword},'%')
-								or title like concat('%',#{keyword},'%')
-								or contents like concat('%',#{keyword},'%')
-							</when>
-							<when test='type.equals("id")'>
-								id like concat('%',#{keyword},'%')
-							</when>
-							<when test='type.equals("title")'>
-								title like concat('%',#{keyword},'%')
-							</when>
-							<when test='type.equals("contents")'>
-								contents like concat('%',#{keyword},'%')
-							</when>
-						</choose>
-					</if>
-				</where>
-		)RN1 where category = "EVENT_IT_EVENT" order by writeDay desc)RN 
-		limit #{offset}, #{limit}
+	
+	<update id="viewCntUp" parameterType="long">
+		UPDATE board 
+		SET readCount=readCount+1
+		WHERE bno=#{bno} AND menu='Event'
+	</update>
+	
+	<sql id="search">
+		<trim prefix="WHERE (" prefixOverrides="AND" suffix=")">
+			AND menu = 'Event'
+            <if test="category != null ">
+                AND category = #{category}
+            </if>
+            
+			<if test="type != null &amp;&amp; !type.equals('')">
+				<if test="type == 'contents'">
+	            	AND contents LIKE concat('%',#{keyword},'%')
+	            </if>
+	            <if test="type == 'title'">
+	            	AND title LIKE concat('%',#{keyword},'%')
+	            </if>
+	            <if test="type == 'id'">
+	            	AND id LIKE concat('%',#{keyword},'%')
+	            </if>
+	            <if test="type == 'all'">
+	                AND (contents LIKE concat('%',#{keyword},'%')
+	                OR title LIKE concat('%',#{keyword},'%')
+	                OR id LIKE concat('%',#{keyword},'%'))
+	            </if>
+            </if>
+       </trim>
+	</sql>
+	
+	<select id="getBoardList" resultType="BoardDTO">
+        SELECT * FROM 
+        	(SELECT bno, title, id, DATE_FORMAT(writeDay, '%Y-%m-%d') writeDay, readCount, category, replyCnt
+			FROM board
+			<include refid="search" />
+			ORDER BY writeDay DESC, bno DESC) SUBQUERY
+		LIMIT #{offset},#{limit}
+    </select>
+	
+	<select id="findByBoardNumber" parameterType="long" resultType="BoardDTO">
+		SELECT bno, title, contents, id, writeDay, readCount, category, replyCnt
+		FROM board
+		WHERE bno=#{bno} AND menu='Event'
 	</select>
-
-
-	<!-- 이벤트 마케팅 카테고리 전체조회(메뉴 내 카테고리 선택 후 해당 게시판 조회) -->
-	<select id="eventMarketingList" resultType="BoardDTO">
-		select RN.* from
-		(select RN1.* from
-		(select * from board
-		<where>
-					<if test="type != null">
-						<choose>
-							<when test='type.equals("all")'>
-								id like concat('%',#{keyword},'%')
-								or title like concat('%',#{keyword},'%')
-								or contents like concat('%',#{keyword},'%')
-							</when>
-							<when test='type.equals("id")'>
-								id like concat('%',#{keyword},'%')
-							</when>
-							<when test='type.equals("title")'>
-								title like concat('%',#{keyword},'%')
-							</when>
-							<when test='type.equals("contents")'>
-								contents like concat('%',#{keyword},'%')
-							</when>
-						</choose>
-					</if>
-				</where>
-		)RN1 where category = "EVENT_MARKETING" order by writeDay desc)RN 
-		limit #{offset}, #{limit}
-	</select>
-
-
-	<!-- 이벤트 게시판 상세 조회 -->
-	<select id="eventSelectDetail" parameterType="long"
-		resultType="BoardDTO">
-		select * from board
-		where bno = #{bno} and menu = 'EVENT'
-	</select>
-
-
-	<!-- 이벤트 게시판 글 등록 -->
-	<insert id="eventInsert" parameterType="BoardDTO">
-		insert into
-		board(id,title,contents,menu,category)
-		values(#{id}, #{title},
-		#{contents}, 'EVENT', #{category})
+	
+	<insert id="insertBoard" parameterType="BoardDTO" useGeneratedKeys="true" keyProperty="bno">
+		INSERT INTO board(id, title, contents, menu, category)
+		VALUES (#{id}, #{title}, #{contents}, 'Event', #{category})
 	</insert>
-
-
-	<!-- 이벤트 게시판 글 수정 -->
-	<update id="eventUpdate" parameterType="BoardDTO">
-		update board
-		set category = #{category}, title = #{title}, contents = #{contents}
-		where bno =	#{bno} and menu = 'EVENT'
+	
+	<update id="updateBoard" parameterType="BoardDTO">
+		UPDATE board
+		SET title=#{title}, contents=#{contents}
+		WHERE bno=#{bno} AND menu='Event'
 	</update>
-
-
-	<!-- 이벤트 게시판 글 삭제 -->
-	<delete id="eventDelete" parameterType="long">
-		delete from board where
-		bno = #{bno} and menu ='EVENT'
+	
+	<delete id="deleteAll">
+		DELETE FROM board
+		WHERE menu='Event'
 	</delete>
-
-
-	<!-- 게시판 개수 -->
-<select id="BoardCount" resultType="integer">
-      select count(*) from board
-      where menu = 'EVENT' 
-      <!-- <where> -->
-               <if test="type != null">
-                  <choose>
-                     <when test='type.equals("all")'>
-                        and (id like concat('%',#{keyword},'%')
-                        or title like concat('%',#{keyword},'%')
-                        or contents like concat('%',#{keyword},'%'))
-                     </when>
-                     <when test='type.equals("id")'>
-                        and id like concat('%',#{keyword},'%')
-                     </when>
-                     <when test='type.equals("title")'>
-                        and title like concat('%',#{keyword},'%')
-                     </when>
-                     <when test='type.equals("contents")'>
-                        and contents like concat('%',#{keyword},'%')
-                     </when>
-                  </choose>
-               </if>
-            <!-- </where> -->
-   </select>
-
-
-	<!-- 조회수 기능 -->
-	<update id="readCountUp">
-		update board
-		set readcount = readcount + 1
-		where bno = #{bno} and menu = 'EVENT'
-	</update>
+	
+	<delete id="deleteBoard" parameterType="long">
+		DELETE FROM board
+		WHERE bno=#{bno} AND menu='Event'
+	</delete>
+	
+	<select id="getFileList" resultType="FileDTO">
+		SELECT * FROM attachfile
+		WHERE bno=#{bno}
+	</select>
+	
+	<select id="getReplyTotal" resultType="int">
+		SELECT replyCnt FROM board
+		WHERE bno=#{bno}
+	</select>
+	
 </mapper>

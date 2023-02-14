@@ -3,6 +3,7 @@ package com.aqh.file.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -20,6 +21,8 @@ import com.aqh.file.domain.FileDTO;
 @Service
 public class FileService {
 
+	private final List<String> allowedExtensions = Arrays.asList(".jpg", ".jpeg", ".png", ".gif");
+	
 	FileDAO fileDAO;
 
 	public FileService(FileDAO fileDAO) {
@@ -126,5 +129,9 @@ public class FileService {
 
 	private String getUuid() {
 		return UUID.randomUUID().toString();
+	}
+	
+	public boolean isAllowedExtension(String extension) {
+		return allowedExtensions.contains(extension.toLowerCase());
 	}
 }

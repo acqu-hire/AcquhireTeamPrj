@@ -23,7 +23,6 @@ public class CommonExceptionAdvice {
 	
 	
 	@ExceptionHandler({NoHandlerFoundException.class,InvalidParameterException.class})
-//	@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason="BAD REQUEST")
 	public String error400(Exception ex ,Model m) {
 		String exception = ex.toString().contains("NoHandlerFoundException")?"NoHandlerFoundException(404)":"InvalidParameterException(400)";
 		String code = exception=="NoHandlerFoundException(404)"?"404":"400";
@@ -36,7 +35,6 @@ public class CommonExceptionAdvice {
 	}
 	
 	@ExceptionHandler({SQLException.class, DataAccessException.class})
-//	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "SERVER ERROR")
 	public String error500(Exception ex, Model m) {
 		String exception = ex.toString().contains("SQLException")?"SQLException(500)":"DataAccessException(500)";
 		String code = "500";
@@ -49,7 +47,6 @@ public class CommonExceptionAdvice {
 	}
 	
 	@ExceptionHandler(AccessDeniedException.class)
-//	@ResponseStatus(value = HttpStatus.FORBIDDEN, reason = "has no authority")
 	public String noAuthority(Exception ex, Model m) {
 		log.info(FONT_GREEN + "AccessDeniedException : {}", ex.toString() + RESET);
 		printExceptionStackTrace(ex);

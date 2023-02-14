@@ -1,18 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<!DOCTYPE html>
+<%@ include file="../include/header.jsp"%>
 <html>
 <head>
-<meta charset="UTF-8">
 <title>${memberDTO.id}님의회원정보 수정페이지</title>
-<script src="${contextPath}/resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
-<script src="${contextPath}/resources/js/member.js"></script>
+<script src="${contextPath}/resources/js/member.js?ver=1"></script>
 </head>
 <body>
-	<!-- Header -->
-	<%@ include file="../include/header.jsp"%>
-	<!-- Header -->
 	<!-- Board Insert Form -->
 	<div class="container-fluid">
 		<div class="row justify-content-center">
@@ -46,7 +39,7 @@
 							</div>
 							<div class="form-group row">
 								<label for="address" class="col-md-4 col-form-label text-md-right"></label>
-								<div class="col-sm-5">
+								<div class="col-sm-5 address-tab">
 									<input type="text" id="roadAddrPart1" name="roadAddrPart1" placeholder="주소" class="form-control input-md" readonly>
 									<input type="text" id="addrDetail" name="addrDetail" placeholder="상세주소" class="form-control input-md" >
 									<input type="text" id="roadAddrPart2" name="roadAddrPart2" placeholder="참고항목" class="form-control input-md" readonly>
@@ -88,8 +81,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- Footer -->
 	<%@ include file="../include/footer.jsp"%>
-	<!-- Footer -->
 </body>
 </html>

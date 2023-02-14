@@ -13,11 +13,11 @@ import com.aqh.reply.domain.ReplyPageDTO;
 public class ReplyServiceImpl implements ReplyService {
 
 	private ReplyDAO replyDAOImpl;
-	private BoardDAO qnABoardDAOImpl;
+	private BoardDAO qnADAOImpl;
 	
-	public ReplyServiceImpl(ReplyDAO replyDAOImpl, BoardDAO qnABoardDAOImpl) {
+	public ReplyServiceImpl(ReplyDAO replyDAOImpl, BoardDAO qnADAOImpl) {
 		this.replyDAOImpl = replyDAOImpl;
-		this.qnABoardDAOImpl = qnABoardDAOImpl;
+		this.qnADAOImpl = qnADAOImpl;
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class ReplyServiceImpl implements ReplyService {
 			page = 1;
 		}
 		ReplyPageDTO replyPageDTO = new ReplyPageDTO();
-		replyPageDTO.setCri(new ReplyCriteria(cri.getBno(), page ,qnABoardDAOImpl.getReplyTotal(cri.getBno())));
+		replyPageDTO.setCri(new ReplyCriteria(cri.getBno(), page ,qnADAOImpl.getReplyTotal(cri.getBno())));
 		replyDAOImpl.replyCntUpdate(cri.getBno());
 		replyPageDTO.setList(replyDAOImpl.getReplyList(replyPageDTO.getCri()));
 		return replyPageDTO;

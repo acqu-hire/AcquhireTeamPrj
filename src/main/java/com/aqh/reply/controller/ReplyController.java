@@ -20,12 +20,12 @@ import com.aqh.reply.service.ReplyService;
 @RestController
 public class ReplyController {
 	ReplyService replySerivceImpl;
-	BoardService qnABoardServiceImpl;
+	BoardService qnAServiceImpl;
 
 	@Autowired
-	public ReplyController(ReplyService replySerivceImpl, BoardService qnABoardServiceImpl) {
+	public ReplyController(ReplyService replySerivceImpl, BoardService qnAServiceImpl) {
 		this.replySerivceImpl = replySerivceImpl;
-		this.qnABoardServiceImpl = qnABoardServiceImpl;
+		this.qnAServiceImpl = qnAServiceImpl;
 	}
 
 	@GetMapping(value = "/reply/{page}")
@@ -37,7 +37,7 @@ public class ReplyController {
 	public ResponseEntity<Long> register(@RequestBody ReplyDTO replyDTO, long bno) {
 		replyDTO.setBno(bno);
 		int result = replySerivceImpl.register(replyDTO);
-		long replyCnt = qnABoardServiceImpl.getReplyTotal(bno);
+		long replyCnt = qnAServiceImpl.getReplyTotal(bno);
 		if (result != 0)
 			return new ResponseEntity<Long>(replyCnt, HttpStatus.OK);
 		return new ResponseEntity<Long>(HttpStatus.BAD_REQUEST);
@@ -46,7 +46,7 @@ public class ReplyController {
 	@DeleteMapping(value = "/reply/{rno}")
 	public ResponseEntity<Long> remove(@PathVariable long rno, long bno) {
 		long result = replySerivceImpl.removeReply(rno, bno);
-		long replyCnt = qnABoardServiceImpl.getReplyTotal(bno);
+		long replyCnt = qnAServiceImpl.getReplyTotal(bno);
 		if (result < 1) {
 			return new ResponseEntity<Long>(replyCnt, HttpStatus.OK);
 		} else {

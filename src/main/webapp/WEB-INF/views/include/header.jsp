@@ -9,14 +9,13 @@
 <c:set var="url_" value="${requestScope['javax.servlet.forward.servlet_path']}" />
 <c:set var="url" value="${fn:toLowerCase(url_)}" />
 <link rel="stylesheet" href="${contextPath}/resources/css/bootstrap.min.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/style.css?ver=1">
+<link rel="stylesheet" href="${contextPath}/resources/css/style.css">
 <link rel="shortcut icon" href="/resources/img/favicon.ico" type="image/x-icon"/>
 <script src="${contextPath}/resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
 <script src="${contextPath}/resources/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="${contextPath}/resources/js/board.js?ver=1" type="text/javascript"></script>
 <script src="https://kit.fontawesome.com/58abbffa46.js" ></script>
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+<script src="${contextPath}/resources/ckeditor/ckeditor.js" type="text/javascript"></script>
 </head>
 <header style="padding-top : 68px;">
 	<div>
@@ -41,7 +40,7 @@
 				  <a class="nav-link ${fn:contains(url ,'qna')?'active':''}" href="<c:url value='/QnA/list' />">QnA</a>
 				</li>
 				<li class="nav-item">
-				  <a class="nav-link ${fn:contains(url ,'event')?'active':''}" href="<c:url value='/event/menu_select_all' />">이벤트</a>
+				  <a class="nav-link ${fn:contains(url ,'event')?'active':''}" href="<c:url value='/Event/list' />">이벤트</a>
 				</li>
 				<li class="nav-item">
 				  <a class="nav-link ${fn:contains(url ,'community')?'active':''}" href="<c:url value='/community/list' />">커뮤니티</a>
@@ -68,7 +67,7 @@
 				    <a class="nav-link ${fn:contains(url ,'qna')?'active':''}" href="<c:url value='/QnA/list' />">QnA</a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link ${fn:contains(url ,'event')?'active':''}" href="<c:url value='/event/menu_select_all' />">이벤트</a>
+				    <a class="nav-link ${fn:contains(url ,'event')?'active':''}" href="<c:url value='/Event/list' />">이벤트</a>
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link ${fn:contains(url ,'community')?'active':''}" href="<c:url value='/community/list' />">커뮤니티</a>
@@ -91,4 +90,8 @@
 		if(!confirm('로그아웃 하시겠습니까?')) return
 		location.href="<c:url value='/login/logout'/>"
 	})
+var bno = "${boardDTO.bno}";
+var sessionId = "${sessionScope.id}";
+var writer = "${boardDTO.id}";
+var getQueryString = "${cri.getQueryString(cri.getPage(), cri.getCategory())}";
 </script>

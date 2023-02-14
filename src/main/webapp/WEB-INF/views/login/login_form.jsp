@@ -1,18 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
+<%@ include file="../include/header.jsp" %>
 <head>
-<meta charset="UTF-8">
 <title>로그인</title>
 </head>
 <body>
-	<!-- Header -->
-
-<%@ include file="../include/header.jsp" %>
-
-	<!-- Header -->
-
 	<!-- Login Form -->
 <div id="login">
   <h3 class="text-center text-white pt-5">Login form</h3>
@@ -53,13 +44,8 @@
 	  </div>
 	</div>
 </div>
-	
-	<!-- Login Form -->
-
-	<!-- Footer -->
 
 <%@ include file="../include/footer.jsp" %>
 
-	<!-- Footer -->
 </body>
 </html>
