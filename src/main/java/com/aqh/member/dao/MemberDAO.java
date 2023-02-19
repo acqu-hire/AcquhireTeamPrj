@@ -39,4 +39,8 @@ public class MemberDAO {
 	public int idCheck(String id) {
 		return session.selectOne(namespace + "idCheck", id);
 	}
+
+	public int pwdCheck(MemberDTO memberDTO) {
+		return session.selectOne(namespace + "pwdCheck", memberDTO);
+	}
 }

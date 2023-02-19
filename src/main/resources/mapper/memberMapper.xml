@@ -25,7 +25,11 @@
 	
 	<update id="memberUpdate" parameterType="MemberDTO">
 		UPDATE member 
-		SET name=#{name}, address=#{address}, phone_number=#{phone_number}, email=#{email}
+		SET name=#{name}, password=#{password}, address=#{address}, phone_number=#{phone_number}, email=#{email}
 		WHERE id=#{id}
 	</update>
+	
+	<select id="pwdCheck" resultType="int" parameterType="MemberDTO">
+		SELECT count(*) FROM member WHERE id = #{id} AND password = #{password}
+	</select>
 </mapper>
