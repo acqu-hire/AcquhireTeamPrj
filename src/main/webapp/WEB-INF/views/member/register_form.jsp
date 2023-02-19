@@ -1,22 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<!DOCTYPE html>
+<%@ include file="../include/header.jsp"%>
 <html>
 <head>
-<meta charset="UTF-8">
 <title>회원가입</title>
-<script src="${contextPath}/resources/js/jquery-3.5.1.min.js" type="text/javascript"></script>
-<script src="${contextPath}/resources/js/register.js?ver=1"></script>
-<script type="text/javascript">
-</script>
 </head>
 <body>
-	<!-- Header -->
 
-<%@ include file="../include/header.jsp"%>
-
-	<!-- Header -->
 
 	<!-- 회원가입 폼 -->
 
@@ -133,6 +122,6 @@
 <%@ include file="../include/footer.jsp"%>
 
 	<!-- Footer -->
-
+<script src="${contextPath}/resources/js/register.js"></script>
 </body>
 </html>
