@@ -1,6 +1,7 @@
 # ✨ ACQ-HIRE 커뮤니티 게시판
 > - 개발자 관련 정보를 공유하는 커뮤니티 게시판 입니다.   
-> - 공지사항, QnA, 이벤트, 커뮤니티 게시판 형태입니다.   
+> - 공지사항, QnA, 이벤트, 커뮤니티 게시판 형태입니다.
+> - 상세한 내용은 Wiki 또는 프로젝트 첨부 pdf에 작성   
 > - 도메인 주소 : www.aqh-hire.link
 ## ✅ 프로젝트 개요
 
@@ -40,12 +41,12 @@
 
 ## ✅ Preview
  
-`Home`|`회원가입`|`로그인`|
+[`Home`](https://github.com/acqu-hire/AcquhireTeamPrj/wiki/main(index.jsp))|[`회원가입`](https://github.com/acqu-hire/AcquhireTeamPrj/wiki/register(register_form.jsp))|[`로그인`]()|
 :-------:|:-------:|:-------:|
 ![image](https://user-images.githubusercontent.com/117618309/218314186-57d880f0-c3e5-472e-8153-13b0503d77f1.png)|![image](https://user-images.githubusercontent.com/117618309/218315152-f36601be-c29b-4edf-822c-ef8f2762eca9.png)|![image](https://user-images.githubusercontent.com/117618309/218315194-b656c074-4953-497b-bebc-19f6ca12e072.png)|
-`회원정보`|`회원정보 수정`|`게시판 list`|
+[`회원정보`]()|[`회원정보 수정`]()|[`게시판 list`]()|
 ![image](https://user-images.githubusercontent.com/117618309/218315248-85778e14-7c7c-4bf8-871d-8f6cb9cb5d9a.png)|![image](https://user-images.githubusercontent.com/117618309/218315282-db785206-b150-43e9-8029-da4050ee0291.png)|![image](https://user-images.githubusercontent.com/117618309/218315315-a3d16357-b6f4-4db1-98b9-edb29f4ab562.png)|
-`게시물 쓰기`|`게시물 수정`|`게시물 보기`|
+[`게시물 쓰기`]()|[`게시물 수정`]()|[`게시물 보기`]()|
 ![image](https://user-images.githubusercontent.com/117618309/218315376-7069186f-901d-4b46-ac9f-7fa69d04df87.png)|![image](https://user-images.githubusercontent.com/117618309/218315430-040cf7e1-1006-49b9-91fb-f7792bd75c5e.png)|![image](https://user-images.githubusercontent.com/117618309/218315455-02ef1182-2163-43a4-a32b-985a9793c540.png)
 
 ## 📚 [Project Wiki(세부내용)](https://github.com/acqu-hire/AcquhireTeamPrj/wiki)

@@ -34,7 +34,6 @@ public class FileDAO {
 
 	public void deleteAll(long bno) {
 		session.delete(namespace + "deleteAll", bno);
-//		throw new Exception();
 	}
 
 }

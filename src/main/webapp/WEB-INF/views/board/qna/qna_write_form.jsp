@@ -70,6 +70,6 @@
 </div>
 	
 <%@ include file="../../include/footer.jsp" %>
-<script src="${contextPath}/resources/js/ckeditor.js" type="text/javascript"></script>
+<script src="${contextPath}/resources/js/ckeditor.js?ver=1" type="text/javascript"></script>
 </body>
 </html>

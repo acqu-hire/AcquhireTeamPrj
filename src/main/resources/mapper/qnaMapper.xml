@@ -5,6 +5,7 @@
 	<select id="getBoardTotal" resultType="int">
 		SELECT count(*) 
 		FROM board
+		WHERE menu = 'QNA'
 		<include refid="search" />
 	</select>
 	
@@ -15,35 +16,34 @@
 	</update>
 	
 	<sql id="search">
-		<trim prefix="WHERE (" prefixOverrides="AND" suffix=")">
-			AND menu = 'QNA'
-            <if test="category != null ">
-                AND category = #{category}
-            </if>
-            
-			<if test="type != null &amp;&amp; !type.equals('')">
-				<if test="type == 'contents'">
-	            	AND contents LIKE concat('%',#{keyword},'%')
-	            </if>
-	            <if test="type == 'title'">
-	            	AND title LIKE concat('%',#{keyword},'%')
-	            </if>
-	            <if test="type == 'id'">
-	            	AND id LIKE concat('%',#{keyword},'%')
-	            </if>
-	            <if test="type == 'all'">
-	                AND (contents LIKE concat('%',#{keyword},'%')
-	                OR title LIKE concat('%',#{keyword},'%')
-	                OR id LIKE concat('%',#{keyword},'%'))
-	            </if>
-            </if>
-       </trim>
+		<if test="category != null">
+			AND category = #{category}
+		</if>
+		<if test="type != null &amp;&amp; !type.equals('')">
+		<choose>
+			<when test="type == 'contents'">
+            	AND contents LIKE concat('%',#{keyword},'%')
+            </when>
+            <when test="type == 'title'">
+            	AND title LIKE concat('%',#{keyword},'%')
+            </when>
+            <when test="type == 'id'">
+            	AND id LIKE concat('%',#{keyword},'%')
+            </when>
+            <when test="type == 'all'">
+                AND (contents LIKE concat('%',#{keyword},'%')
+                OR title LIKE concat('%',#{keyword},'%')
+                OR id LIKE concat('%',#{keyword},'%'))
+            </when>
+          </choose>
+		</if>
 	</sql>
 	
 	<select id="getBoardList" resultType="BoardDTO">
         SELECT * FROM 
         	(SELECT bno, title, id, DATE_FORMAT(writeDay, '%Y-%m-%d') writeDay, readCount, category, replyCnt
 			FROM board
+			WHERE menu = 'QNA'
 			<include refid="search" />
 			ORDER BY writeDay DESC, bno DESC) SUBQUERY
 		LIMIT #{offset},#{limit}

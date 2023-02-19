@@ -1,8 +1,4 @@
 
-var editorConfig = {
-    filebrowserUploadUrl: "/file/fileUpload",//이미지 업로드
-    height: "400",
-};
 CKEDITOR.on('dialogDefinition', function (ev) {
     var dialogName = ev.data.name;
     var dialogDefinition = ev.data.definition;
@@ -27,5 +23,5 @@ CKEDITOR.on('dialogDefinition', function (ev) {
     }
 });
 window.onload = function () {
-    ck = CKEDITOR.replace("contents", editorConfig);
+    ck = CKEDITOR.replace("contents");
 };

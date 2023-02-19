@@ -42,18 +42,16 @@ public class FileService {
 		boardDTO.setFileList(getFileAttach(uploadPath, boardDTO));
 		fileDAO.upload(boardDTO.getFileList());
 	}
-
+	
 	public List<FileDTO> getFileList(long[] fno) {
 		return fileDAO.getFileList(fno);
 	}
 
-	public int delete(FileDTO fileDTO) {
-		int result = 0;
+	public void delete(FileDTO fileDTO) {
 		if (fileDTO.getDelAttach() != null) {
 			removeFile(fileDAO.getFileList(fileDTO.getDelAttach()));
-			result = fileDAO.delete(fileDTO.getDelAttach());
+			fileDAO.delete(fileDTO.getDelAttach());
 		}
-		return result;
 	}
 
 	public FileDTO getFileDetail(long fno) {
