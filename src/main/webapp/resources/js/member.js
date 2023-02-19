@@ -15,6 +15,30 @@ $(function(){
 			$("input[name='name']").focus();
 			return false;
 		}
+		/* 기존 비밀번호 확인 */
+		if($("#pwdCheck").val() != 1) {
+			alert("비밀번호 확인을 해주세요");
+			return false;
+		}
+		/* 비밀번호 유효성 검사 */
+		if (!$("input[name='password']").val()) {
+			alert("비밀번호를 입력하세요.");
+			$("input[name='password']").focus();
+			return false;
+		}
+		var regexp_password = /^[A-Za-z0-9]{8,16}$/;
+		var password_check = $("input[name='password']").val();
+		if (!regexp_password.test(password_check)) {
+			alert("비밀번호는 공백을 제외한 영문이나 숫자 형태의 8~16자리만 입력할 수 있습니다.");
+			$("input[name='password']").focus();
+			return false;
+		}
+		/* 비밀번호 일치 검사 */
+		if($("input[name='password']").val() != $("input[name='pwdConfirm']").val()) {
+			alert("비밀번호가 일치하지 않습니다.");
+			$("input[name='pwdConfirm']").focus();
+			return false;
+		}
 		/* 휴대폰 번호 유효성 검사 */
 		if(!$("input[name='phone_number']").val()) {
 			alert("휴대폰 번호를 입력하세요.");
@@ -61,6 +85,39 @@ $(function(){
 		}
 	})
 });
+
+/* 비밀번호 체크 */
+$(function(){
+	$("#dbPwdCheck").on("click",function() {
+		var pwd = $("#currentPwd").val();
+		var id = $("#id").val();
+		if (pwd.search(/\s/) != -1) {
+			alert("비밀번호에는 공백이 들어갈 수 없습니다.");
+		} else {
+			if (pwd.trim().length != 0) {
+				$.ajax({
+					url : './pwdCheck',
+					type : 'post',
+					data : {password : pwd, id : id},
+					dataType : 'json',
+					success : function(result) {
+						if ($.trim(result) == 1) {
+							alert("비밀번호가 일치합니다.");
+							$("#pwdCheck").val("1");
+							$("#currentPwd").attr("readonly","readonly");
+							$("#findPostalcode").focus();
+						} else {
+							alert("비밀번호가 일치하지 않습니다.");
+							$("#currentPwd").focus();
+						}
+					}
+				});
+			} else {
+				alert("현재 비밀번호를 입력해주세요.");
+			}
+		}
+	});
+})
 
 function goPopup(){
 	var pop = window.open("/jusoPopup","pop", "width=570,height=420,scrollbars=yes,resizable=yes");	

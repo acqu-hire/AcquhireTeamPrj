@@ -33,6 +33,13 @@ public class MemberController {
 		return result;
 	}
 	
+	@PostMapping("/pwdCheck")
+	@ResponseBody
+	public int pwdCheck(MemberDTO memberDTO) {
+		int result = service.pwdCheck(memberDTO);
+		return result;
+	}
+	
 	@PostMapping("/register")
 	public String register(MemberDTO memberDTO) {
 		service.register(memberDTO);

@@ -37,4 +37,8 @@ public class MemberService {
 	public int idCheck(String id) {
 		return memberDAO.idCheck(id);
 	}
+
+	public int pwdCheck(MemberDTO memberDTO) {
+		return memberDAO.pwdCheck(memberDTO);
+	}
 }

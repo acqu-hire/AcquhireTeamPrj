@@ -37,7 +37,6 @@ public class LoginController {
 	
 	@PostMapping("/login")
 	public String login(MemberDTO memberDTO, String requestURL, boolean rememberId, HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("!!!" + rememberId);
 		if(!loginCheck(memberDTO.getId(), memberDTO.getPassword())) {
 			try {
 				String msg = URLEncoder.encode("ID 또는 비밀번호가 일치하지 않습니다.", "utf-8");

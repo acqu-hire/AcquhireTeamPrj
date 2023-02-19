@@ -3,7 +3,7 @@
 <html>
 <head>
 <title>${memberDTO.id}님의회원정보 수정페이지</title>
-<script src="${contextPath}/resources/js/member.js?ver=1"></script>
+<script src="${contextPath}/resources/js/member.js"></script>
 </head>
 <body>
 	<!-- Board Insert Form -->
@@ -27,6 +27,30 @@
 								<div class="col-sm-5">
 									<input type="text" id="name" class="form-control" name="name" value="${memberDTO.name}">
 								</div>
+							</div>
+							<div class="form-group row">
+								<label for="name" class="col-md-4 col-form-label text-md-right"><span class="text-danger">*</span>비밀번호</label>
+								<div class="col-sm-5">
+									<input type="password" id="currentPwd" class="form-control" name="currentPwd" placeholder="현재 비밀번호">
+								</div>
+									<button type="button" class="btn btn-warning" id="dbPwdCheck">비밀번호 확인</button>
+									<input type="hidden" name="pwdCheck" id="pwdCheck">
+							</div>
+							<div class="form-group row">
+					 		    <label for="password" class="col-md-4 col-form-label text-md-right">
+					   			  새로운 비밀번호
+					 			</label>
+					 		 <div class="col-md-5">
+								<input type="password" id="password" class="form-control" name="password" placeholder="새로운 비밀번호">
+						  	</div>
+							</div>
+							<div class="form-group row">
+							  <label for="pwdConfirm" class="col-md-4 col-form-label text-md-right">
+							    비밀번호 확인
+							  </label>
+							  <div class="col-md-5">
+							    <input type="password" id="pwdConfirm" class="form-control" name="pwdConfirm" placeholder="비밀번호 확인">
+							  </div>
 							</div>
 							<div class="form-group row">
 								<label for="address" class="col-md-4 col-form-label text-md-right">주소(변경)</label>
@@ -82,5 +106,8 @@
 		</div>
 	</div>
 	<%@ include file="../include/footer.jsp"%>
+<script type="text/javascript">
+
+</script>
 </body>
 </html>
