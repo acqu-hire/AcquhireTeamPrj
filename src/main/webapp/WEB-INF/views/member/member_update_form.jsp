@@ -3,7 +3,7 @@
 <html>
 <head>
 <title>${memberDTO.id}님의회원정보 수정페이지</title>
-<script src="${contextPath}/resources/js/member.js"></script>
+<script src="${contextPath}/resources/js/member.js?ver=2"></script>
 </head>
 <body>
 	<!-- Board Insert Form -->
