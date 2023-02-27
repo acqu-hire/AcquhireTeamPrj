@@ -9,6 +9,7 @@ $(function () {
 			alert("댓글의 내용을 입력해주세요.")
 			return;
 		}
+		contents = contents.replace(/(?:\r\n|\r|\n)/g, '<br>'); // 엔터 -> <br>태그 삽입해주기
 		var replyCnt = $("span.reply-tab").text();
 		$.ajax({
 			type: "POST",
@@ -56,7 +57,8 @@ $(function () {
 	})
 	// 댓글 수정버튼 클릭 이벤트
 	$(document).on("click", "button.modReply", function () {
-		var contents = $(this).prev("span.card-text").text();
+		var contents = $(this).prev("span.card-text").html();
+		contents = contents.split('<br>').join("\r\n"); // <br>태그 -> escape문자로 바꾸기
 		var rWriter = $(this).parent("div").siblings().data("writer");
 		var modReplyBox = '<textarea class="form-control" name="changeContents" rows="3">';
 		if (sessionId == rWriter || sessionId == 'admin') {
@@ -73,6 +75,7 @@ $(function () {
 	$(document).on("click", "button.reply-submit", function () {
 		var rno = $(this).parents("div.reply-card").data("rno");
 		var contents = $("textarea[name='changeContents']").val();
+		contents = contents.replace(/(?:\r\n|\r|\n)/g, '<br>'); // 엔터 -> <br>태그 삽입해주기
 		if (!confirm("수정사항을 반영하시겠습니까?")) return;
 		$.ajax({
 			type: "PATCH",
@@ -107,6 +110,7 @@ $(function () {
 
 	$(document).on("click", "#regReReplyBtn", function () {
 		var contents = $("#reReplyContents").val();
+		contents = contents.replace(/(?:\r\n|\r|\n)/g, '<br>'); // 엔터 -> <br>태그 삽입해주기
 		var prno = $("#reReplyForm").parent("div.reply-card").data("prno");
 		if (contents.trim() == "") {
 			alert("댓글의 내용을 입력해주세요.")
