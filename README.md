@@ -3,6 +3,7 @@
 > - 공지사항, QnA, 이벤트, 커뮤니티 게시판 형태입니다.
 > - 상세한 내용은 Wiki 또는 프로젝트 첨부 pdf에 작성   
 > - 도메인 주소 : www.aqh-hire.link
+> - 메뉴명과 카테고리명은 okky.kr 사이트를 참고하였습니다.
 ## ✅ 프로젝트 개요
 
 ***1. 📅 프로젝트 기간***
@@ -46,11 +47,13 @@
 ![image](https://user-images.githubusercontent.com/117618309/218314186-57d880f0-c3e5-472e-8153-13b0503d77f1.png)|![image](https://user-images.githubusercontent.com/117618309/218315152-f36601be-c29b-4edf-822c-ef8f2762eca9.png)|![image](https://user-images.githubusercontent.com/117618309/218315194-b656c074-4953-497b-bebc-19f6ca12e072.png)|
 [`회원정보`](https://github.com/acqu-hire/AcquhireTeamPrj/wiki/member-info(member_info.jsp))|[`회원정보 수정`](https://github.com/acqu-hire/AcquhireTeamPrj/wiki/update-member-info(member_update_form.jsp))|[`게시판 list`](https://github.com/acqu-hire/AcquhireTeamPrj/wiki/board-list(board_List.jsp))|
 ![image](https://user-images.githubusercontent.com/117618309/218315248-85778e14-7c7c-4bf8-871d-8f6cb9cb5d9a.png)|![image](https://user-images.githubusercontent.com/117618309/218315282-db785206-b150-43e9-8029-da4050ee0291.png)|![image](https://user-images.githubusercontent.com/117618309/218315315-a3d16357-b6f4-4db1-98b9-edb29f4ab562.png)|
-[`게시물 쓰기`](https://github.com/acqu-hire/AcquhireTeamPrj/wiki/write-board-content-form(board_write_form.jsp))|[`게시물 수정`](https://github.com/acqu-hire/AcquhireTeamPrj/wiki/update-board-content(board_update_form.jsp))|[`게시물 보기`](https://github.com/acqu-hire/AcquhireTeamPrj/wiki/board-detail(board_list_detail.jsp))|
+[`게시물 쓰기`](https://github.com/acqu-hire/AcquhireTeamPrj/wiki/write-board-content(board_write_form.jsp))|[`게시물 수정`](https://github.com/acqu-hire/AcquhireTeamPrj/wiki/update-board-content(board_update_form.jsp))|[`게시물 보기`](https://github.com/acqu-hire/AcquhireTeamPrj/wiki/board-detail(board_list_detail.jsp))|
 ![image](https://user-images.githubusercontent.com/117618309/218315376-7069186f-901d-4b46-ac9f-7fa69d04df87.png)|![image](https://user-images.githubusercontent.com/117618309/218315430-040cf7e1-1006-49b9-91fb-f7792bd75c5e.png)|![image](https://user-images.githubusercontent.com/117618309/218315455-02ef1182-2163-43a4-a32b-985a9793c540.png)
 
-## 📚 [Project Wiki(세부내용)](https://github.com/acqu-hire/AcquhireTeamPrj/wiki)
+### 📚 [Project Wiki(세부내용)](https://github.com/acqu-hire/AcquhireTeamPrj/wiki)
 
-
+## 🚀 Update
+- 23.02.15~16 글쓰기폼, 수정폼 CKEditor 변경 [김시형]
+- 23.02.19 회원 정보 수정폼 비밀번호 확인 및 새로운 비밀번호 수정 추가 [김시형]
 
 
