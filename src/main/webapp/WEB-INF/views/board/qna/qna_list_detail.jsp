@@ -136,7 +136,7 @@
 
 <%@ include file="../../include/footer.jsp" %>
 
-<script src="${contextPath}/resources/js/reply.js?ver=1" type="text/javascript"></script>
+<script src="${contextPath}/resources/js/reply.js" type="text/javascript"></script>
 
 </body>
 </html>

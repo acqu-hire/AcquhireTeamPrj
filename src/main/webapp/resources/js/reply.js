@@ -1,5 +1,6 @@
 $(function () {
-	var page = 1;
+	
+	var page=1;
 
 	replyList(bno, page); // 댓글 전체조회 함수실행
 

@@ -19,29 +19,17 @@ public class Pagination {
      /** 현재 페이지 **/
      private int page = 1; 
      
-     /** 현재 블럭(range) **/
-     private int curRange = 1;
-     
      /** 총 게시글 수 **/
      private int listCnt; 
      
      /** 총 페이지 수 **/
      private int pageCnt; 
      
-     /** 총 블럭(range) 수 **/
-     private int rangeCnt; 
-     
      /** 시작 페이지 **/
      private int startPage = 1;
      
      /** 끝 페이지 **/
      private int endPage = 1; 
-
-     /** 이전 페이지 **/
-     private int prevPage;
-     
-     /** 다음 페이지 **/
-     private int nextPage;
      
 
      private Criteria criteria;
@@ -63,9 +51,8 @@ public class Pagination {
         
         /** 1. 총 페이지 수 **/
         setPageCnt(listCnt);
-        /** 2. 총 블럭(range)수 **/
-        setRangeCnt(pageCnt);
-        /** 3. 블럭(range) setting **/
+        
+        /** 2. 블럭(range) setting **/
         rangeSetting(page);
         
         
@@ -76,31 +63,21 @@ public class Pagination {
         this.pageCnt = (int) Math.ceil(listCnt*1.0/pageSize);
         // 페이지가 몇개인지?
     }
-    public void setRangeCnt(int pageCnt) {
-        this.rangeCnt = (int) Math.ceil(pageCnt*1.0/rangeSize);
-        // 10 ~ 기준 ~ 10을 할것인지?
-    }
-    public void rangeSetting(int Page){
-        
-        setCurRange(Page);        
-        this.startPage = (curRange - 1) * rangeSize + 1;
-        this.endPage = startPage + rangeSize - 1;
+  
+    public void rangeSetting(int page){
+    	
+    	this.endPage = (int)(Math.ceil(page/(float)rangeSize) * rangeSize);
+        this.startPage = endPage-rangeSize+1;
         
         if(endPage > pageCnt){
             this.endPage = pageCnt;
         }
         
-        this.prevPage = Page - 1;
-        this.nextPage = Page + 1;
-    }
-    public void setCurRange(int Page) {
-        this.curRange = (int)((Page-1)/rangeSize) + 1;
     }
 
-
-	public String getListLink(int _page) {
+	public String getListLink(int page) {
 		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
-        .queryParam("page", _page)
+        .queryParam("page", page)
 		.queryParam("category", this.criteria.getCategory())
         .queryParam("type", this.criteria.getType())
 		.queryParam("keyword", this.criteria.getKeyword());

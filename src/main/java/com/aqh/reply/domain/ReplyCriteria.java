@@ -24,7 +24,7 @@ public class ReplyCriteria {
 	public ReplyCriteria() {}
 	
 	public ReplyCriteria(long bno, Integer page, long replyCnt) {
-		this(bno ,page, replyCnt, 30);
+		this(bno ,page, replyCnt, 10);
 	}
 
     @Builder
