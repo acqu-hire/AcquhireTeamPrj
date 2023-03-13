@@ -30,7 +30,7 @@
 			  <input type="hidden" name="requestURL" value="${requestURL}">
 			  <div class="form-group">
 				<label for="save" class="text-info"><span>Remember me</span> 
-				  <span><input name="rememberId" type="checkbox" value="on" ${!empty cookie.id.value?'checked':''}></span>
+				  <span><input name="rememberId" type="checkbox" ${!empty cookie.id.value?'checked':''}></span>
 				</label><br>
 				<button type="submit" class="btn btn-info btn-md">로그인</button>
 			  </div>

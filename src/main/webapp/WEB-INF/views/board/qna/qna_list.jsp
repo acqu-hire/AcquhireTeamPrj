@@ -139,7 +139,9 @@
 				</li>
 			  </c:when>
 			  <c:otherwise>
-				<li class="page-item"><a class="page-link" href="./list${pagination.getListLink(pageNumber)}">${pageNumber}</a></li>
+				<li class="page-item">
+				  <a class="page-link" href="./list${pagination.getListLink(pageNumber)}">${pageNumber}</a>
+				</li>
 			  </c:otherwise>
 			</c:choose>
 			</c:forEach>
